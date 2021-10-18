@@ -6,21 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamability</title>
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Project CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-    <!-- Movie Search Form -->
-    <form id='search-form'>
-        <input id='user-input' type='text' />
-        <button id='form-submit' tpye='submit'>Search</button>
-    </form>
-
-    <section id="search-results-modal">
-        <div id="search-results">
-            
+    <div class="container is-max-desktop">
+        <div class="columns is-centered is-vcentered mt-5" id="logo-row">
+            <div class="column image is-one-quarter">
+                <img class="is-rounded" src="https://via.placeholder.com/500.png?text=Streamability+Logo">
+            </div>
+            <div class="column is-one-third">
+                <h1 class="is-size-1">streamability</h1>
+            </div>
         </div>
-    </section>
+        <form class="field has-addons" id="search-form">
+            <div class="control is-expanded">
+              <input class="input is-primary is-medium is-rounded" id="user-input" type="text" placeholder="What're you lookin' for?">
+            </div>
+            <div class="control">
+              <button class="button is-primary is-medium is-rounded" id="form-submit" type="submit">Search</button>
+            </div>
+        </form>
+        <!-- <section id="search-results-modal">
+            <div id="search-results"></div>
+            </section> -->
+    </div>
 
+    <!-- Scripts -->
     <script src='./assets/js/script.js'></script>
 </body>
 
