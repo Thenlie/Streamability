@@ -19,3 +19,11 @@ input,select{vertical-align:middle}
 * {
     font-family: 'Josefin Sans', sans-serif;
 }
+
+.tile {
+    border-radius: 30px;
+}
+
+img {
+    border-radius: 15px;
+}
