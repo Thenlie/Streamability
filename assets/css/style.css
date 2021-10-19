@@ -16,6 +16,12 @@ table{border-collapse:collapse;border-spacing:0}
 hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
 input,select{vertical-align:middle}
 
+/* BEGIN CSS Variables */
+:root {
+    --gutter: 20px;
+}
+/* END CSS Variables */
+
 * {
     font-family: 'Josefin Sans', sans-serif;
 }
@@ -35,3 +41,57 @@ img {
 .title {
     color: #4a4a4a;
 }
+
+.tile {
+  min-width: 218.131px;
+}
+
+/* BEGIN CSS Grid Styles */
+/* CSS Grid based on tutorial by Dannie Vinther, located here https://uxdesign.cc/creating-horizontal-scrolling-containers-the-right-way-css-grid-c256f64fc585 */
+.app {
+    padding: var(--gutter) 0;
+    display: grid;
+    grid-gap: var(--gutter) 0;
+    grid-template-columns: var(--gutter) 1fr var(--gutter);
+    align-content: start;
+  }
+  
+.app > * {
+  grid-column: 2 / -2;
+}
+
+.app > .full {
+  grid-column: 1 / -1;
+}
+
+.carousel {
+  display: grid;
+  grid-gap: calc(var(--gutter) / 2);
+  grid-template-columns: 10px repeat(var(--total), calc(50% - var(--gutter) * 2)) 10px;
+  grid-template-rows: minmax(150px, 1fr);
+  
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+  padding-bottom: calc(.75 * var(--gutter));
+  margin-bottom: calc(-.25 * var(--gutter));
+}
+
+.carousel:before,
+.carousel:after {
+  content: "";
+}
+
+.app {
+  overflow-y: scroll;
+}
+
+.carousel > .tile {
+  scroll-snap-align: start;
+  padding: calc(var(--gutter) / 2 * 1.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* END CSS Grid Styles */
