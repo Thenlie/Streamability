@@ -6,12 +6,12 @@ let userInputEl = document.querySelector('#user-input');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 
-let selectedTitle = document.querySelector('#selected-title');
-let sekectedScore = document.querySelector('#selected-score');
-let selectedPoster = document.querySelector('#selected-poster');
-let selectedPlot = document.querySelector('#selected-plot');
-let selectedProviders = document.querySelector('#selected-providers');
-let selectedQueue = document.querySelector('#selected-queue');
+let selectedTitleEl = document.querySelector('#selected-title');
+let selectedScoreEl = document.querySelector('#selected-score');
+let selectedPosterEl = document.querySelector('#selected-poster');
+let selectedPlotEl = document.querySelector('#selected-plot');
+let selectedProvidersEl = document.querySelector('#selected-providers');
+let selectedQueueEl = document.querySelector('#selected-queue');
 
 let suggestionContainerEl = document.querySelector('#suggestion-container')
 
@@ -182,7 +182,8 @@ suggestionContainerEl.addEventListener('click', suggestionSelect)
 
 // Find the provider for searched title on MovieDB
 function watchProviders(showType, showID) {
-    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
+    // fetch info for selected title
+    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '?api_key=14b7c2e67f36427d72ce8c1df6482552')
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -193,14 +194,54 @@ function watchProviders(showType, showID) {
         .then(function(data) {
             try {
                 console.log(data);
-                for (let i = 0; i < providerData.length; i++) {
-                    var providerData = data.results.US.flatrate[i]
-                }
+                var selectedTitleData = data;
+
+                // fetch watch providers for selected title
+                fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
+                .then(function(res) {
+                    if (res.ok) {
+                        return res.json();
+                    } else {
+                        console.log('Error');
+                    }
+                })
+                .then(function(data) {
+                    try {
+                        // assign selected title, viewer rating, poster, plot, and wath providers to the page
+                        // title
+                        if (selectedTitleData.title) {
+                            selectedTitleEl.innerHTML = selectedTitleData.title;
+                        } else {
+                            selectedTitleEl.innerHTML = selectedTitleData.name;
+                        }
+
+                        // viewer rating
+                        selectedScoreEl.innerHTML = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
+
+                        // poster
+                        if (selectedTitleData.poster_path) {
+                            selectedPosterEl.src = 'https://image.tmdb.org/t/p/w500' + selectedTitleData.poster_path; 
+                        } else {
+                            selectedPosterEl.src = 'https://via.placeholder.com/500x750.png?text=Movie+Poster';
+                        }
+
+                        // plot
+                        selectedPlotEl = selectedTitleData.overview;
+                        
+                        console.log(data);
+                        // watch providers
+                        for (let i = 0; i < providerData.length; i++) {
+                            var providerData = data.results.US.flatrate[i]
+                        }
+                    } catch {
+                        console.log('This show is not available to stream');
+                    }
+                })
+                .catch(function(err) {
+                    console.log('This show is not available to stream');
+                })
             } catch {
-                console.log('This show is not available to stream');
+                console.log('error');
             }
-        })
-        .catch(function(err) {
-            console.log('This show is not available to stream');
         })
 }
