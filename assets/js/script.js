@@ -5,8 +5,18 @@ let searchFormEl = document.querySelector('#search-form');
 let userInputEl = document.querySelector('#user-input');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
+
+let selectedTitle = document.querySelector('#selected-title');
+let sekectedScore = document.querySelector('#selected-score');
+let selectedPoster = document.querySelector('#selected-poster');
+let selectedPlot = document.querySelector('#selected-plot');
+let selectedProviders = document.querySelector('#selected-providers');
+let selectedQueue = document.querySelector('#selected-queue');
+
 let suggestionContainerEl = document.querySelector('#suggestion-container')
+
 let showID = '';
+let showType = '';
 
 // reset modal upon user entering new search
 function removeAllChildNodes(parent) {
@@ -56,7 +66,9 @@ let run = function(event) {
                     showTypeEl.classList.add("currentType")
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
+
                     titleIDSpan.classList.add("titleID");
+                    showTypeEl.classList.add("showType");
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -68,7 +80,10 @@ let run = function(event) {
                     // if search result item is a 'MOVIE' type
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
+
+
                         titleSpan.innerHTML = current.title;
+
                         showTypeEl.innerHTML = current.media_type;
 
                         if (current.release_date) { //Check if there is a release date
@@ -78,7 +93,10 @@ let run = function(event) {
                         }
                         titleIDSpan.innerHTML = current.id;
                     } else { // search result item is 'TV' type
+
+
                         titleSpan.innerHTML = current.name;
+
                         showTypeEl.innerHTML = current.media_type;
                         titleIDSpan.innerHTML = current.id;
                         if (current.first_air_date) {
@@ -88,12 +106,15 @@ let run = function(event) {
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
+
+
                     resultEl.appendChild(posterImg);
                     resultEl.appendChild(titleSpan);
                     resultEl.appendChild(showTypeEl);
                     resultEl.appendChild(showYear);
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
+
                 }
             } catch {
                 console.log('That search was invalid!');
@@ -109,8 +130,16 @@ let selected = function(evt) {
     let currentTitle = parent.querySelector('.currentTitle').textContent
     let currentType = parent.querySelector('.currentType').textContent
     if (classes.contains('result')) {
-        watchProviders(currentID);
+
+        //console.log('In')
+        showID = parent.querySelector('.titleID').textContent;
+        showType = parent.querySelector('.showType').textContent;
+        console.log("Type: " + showType + " ID: " + showID);
+        //create a function to display the movie info passing through the titleID
+        watchProviders(showType, showID);
+
         suggestions(currentTitle, currentType);
+
     } else {
         console.log('Out')
     }
@@ -168,24 +197,28 @@ suggestionContainerEl.addEventListener('click', suggestionSelect)
 
 // COMMENTS
 
-// Find the provider for searched Movie on MovieDB
-// fetch('https://api.themoviedb.org/3/movie/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552&language=en-US')
-//     .then(function(res) {
-//         if (res.ok) {
-//             return res.json();
-//         } else {
-//             console.log('Error');
-//         }
-//     })
-//     .then(function(data) {
-//         try {
-//             console.log('AVAILABLE TO STREAM ON: ' + data.results.US.flatrate[0].provider_name); // Log streaming provider
-//         } catch {
-//             console.log('This show is not available to stream');
-//         }
-//     })
-//     .catch(function(err) {
-//         console.log('This show is not available to stream');
-//     })
 
-// https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=toy+story&type=movie&k=425677-LeithenC-C01G9X9L
+// Find the provider for searched title on MovieDB
+function watchProviders(showType, showID) {
+    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
+    .then(function(res) {
+        if (res.ok) {
+            return res.json();
+        } else {
+            console.log('Error');
+        }
+    })
+    .then(function(data) {
+        try {
+            console.log(data);
+            for (let i = 0; i < providerData.length; i++) {
+                var providerData = data.results.US.flatrate[i]
+            }
+        } catch {
+            console.log('This show is not available to stream');
+        }
+    })
+    .catch(function(err) {
+        console.log('This show is not available to stream');
+    })
+}
