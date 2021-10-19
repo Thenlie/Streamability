@@ -41,7 +41,7 @@ let run = function(event) {
         })
         .then(function(data) {
             try {
-                removeAllChildNodes(searchResults)
+                removeAllChildNodes(searchResults);
 
                 // ensure there are at least 10 shows
                 let x = 0
@@ -81,27 +81,27 @@ let run = function(event) {
                         // assign movie title, type, release year, and movie ID to variables
 
 
-                        titleSpan.innerHTML = current.title;
+                        titleSpan.innerText = current.title;
 
-                        showTypeEl.innerHTML = current.media_type;
+                        showTypeEl.innerText = current.media_type;
 
                         if (current.release_date) { //Check if there is a release date
-                            showYear.innerHTML = current.release_date.substring(0, 4) + " ID: ";
+                            showYear.innerText = current.release_date.substring(0, 4) + " ID: ";
                         } else {
                             continue;
                         }
-                        titleIDSpan.innerHTML = current.id;
+                        titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
 
 
-                        titleSpan.innerHTML = current.name;
+                        titleSpan.innerText = current.name;
 
-                        showTypeEl.innerHTML = current.media_type;
-                        titleIDSpan.innerHTML = current.id;
+                        showTypeEl.innerText = current.media_type;
+                        titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
-                            showYear.innerHTML = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
+                            showYear.innerText = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
                         } else {
-                            showYear.innerHTML = 'N/A '
+                            showYear.innerText = 'N/A '
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
@@ -163,7 +163,7 @@ let suggestions = function(currentTitle, currentType) {
                 console.log('Hit')
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div')
-                    suggestionEl.innerHTML = current[i].Name
+                    suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
@@ -182,6 +182,7 @@ suggestionContainerEl.addEventListener('click', suggestionSelect)
 
 // Find the provider for searched title on MovieDB
 function watchProviders(showType, showID) {
+    removeAllChildNodes(searchResults);
     // fetch info for selected title
     fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '?api_key=14b7c2e67f36427d72ce8c1df6482552')
         .then(function(res) {
@@ -193,7 +194,6 @@ function watchProviders(showType, showID) {
         })
         .then(function(data) {
             try {
-                console.log(data);
                 var selectedTitleData = data;
 
                 // fetch watch providers for selected title
@@ -226,12 +226,19 @@ function watchProviders(showType, showID) {
                         }
 
                         // plot
-                        selectedPlotEl = selectedTitleData.overview;
+                        selectedPlotEl.innerText = selectedTitleData.overview;
                         
-                        console.log(data);
                         // watch providers
+                        var providerData = data.results.US.flatrate;
+                        removeAllChildNodes(selectedProvidersEl);
+                        console.log(providerData);
                         for (let i = 0; i < providerData.length; i++) {
-                            var providerData = data.results.US.flatrate[i]
+                            if (providerData.length >= 1) {
+                                var providerLogo = document.createElement('img');
+                                providerLogo.src = 'https://image.tmdb.org/t/p/original' + providerData[i].logo_path;
+                                providerLogo.alt = providerData[i].provider_name;
+                                selectedProvidersEl.appendChild(providerLogo);
+                            }
                         }
                     } catch {
                         console.log('This show is not available to stream');
