@@ -4,7 +4,14 @@
 let searchFormEl = document.querySelector('#search-form');
 let userInputEl = document.querySelector('#user-input');
 let searchResults = document.querySelector('#search-results');
+let selectedTitle = document.querySelector('#selected-title');
+let sekectedScore = document.querySelector('#selected-score');
+let selectedPoster = document.querySelector('#selected-poster');
+let selectedPlot = document.querySelector('#selected-plot');
+let selectedProviders = document.querySelector('#selected-providers');
+let selectedQueue = document.querySelector('#selected-queue');
 let showID = '';
+let showType = '';
 
 let run = function(event) {
     event.preventDefault();
@@ -50,10 +57,11 @@ let run = function(event) {
                     resultDiv.classList.add("result");
                     var posterImg = document.createElement(`img`);
                     var titleSpan = document.createElement(`span`);
-                    var showType = document.createElement(`span`);
+                    var showTypeEl = document.createElement(`span`);
                     var showYear = document.createElement(`span`);
                     var titleIDSpan = document.createElement(`span`);
                     titleIDSpan.classList.add("titleID");
+                    showTypeEl.classList.add("showType");
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -66,7 +74,7 @@ let run = function(event) {
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
                         titleSpan.innerHTML = current.title + ' ';
-                        showType.innerHTML = current.media_type + `, `;
+                        showTypeEl.innerHTML = current.media_type;
 
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerHTML = current.release_date.substring(0, 4) + " ID: ";
@@ -76,7 +84,7 @@ let run = function(event) {
                         titleIDSpan.innerHTML = current.id;
                     } else { // search result item is 'TV' type
                         titleSpan.innerHTML = current.name + ' ';
-                        showType.innerHTML = current.media_type + ', ';
+                        showTypeEl.innerHTML = current.media_type;
                         titleIDSpan.innerHTML = current.id;
                         if (current.first_air_date) {
                             showYear.innerHTML = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
@@ -87,13 +95,11 @@ let run = function(event) {
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
                     resultDiv.appendChild(posterImg);
                     resultDiv.appendChild(titleSpan);
-                    resultDiv.appendChild(showType);
+                    resultDiv.appendChild(showTypeEl);
                     resultDiv.appendChild(showYear);
                     resultDiv.appendChild(titleIDSpan)
                     searchResults.appendChild(resultDiv);
                 }
-                //showID = (data.results[0].id); // Set id to MovieDB ID
-                //console.log(data.results[0].original_title); // Log MovieDB official title
             } catch {
                 console.log('That search was invalid!');
             }
@@ -106,8 +112,11 @@ let selected = function(evt) {
     let classes = parent.classList
     if (classes.contains('result')) {
         //console.log('In')
-        console.log('This shows ID is: ' + parent.querySelector('.titleID').textContent)
-            //create a function to display the movie info passing through the titleID
+        showID = parent.querySelector('.titleID').textContent;
+        showType = parent.querySelector('.showType').textContent;
+        console.log("Type: " + showType + " ID: " + showID);
+        //create a function to display the movie info passing through the titleID
+        watchProviders(showType, showID);
     } else {
         console.log('Out')
     }
@@ -120,26 +129,30 @@ searchResults.addEventListener('click', selected); // Listen for click of show o
 
 // COMMENTS
 
-// Find the provider for searched Movie on MovieDB
-// fetch('https://api.themoviedb.org/3/movie/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552&language=en-US')
-//     .then(function(res) {
-//         if (res.ok) {
-//             return res.json();
-//         } else {
-//             console.log('Error');
-//         }
-//     })
-//     .then(function(data) {
-//         try {
-//             console.log('AVAILABLE TO STREAM ON: ' + data.results.US.flatrate[0].provider_name); // Log streaming provider
-//         } catch {
-//             console.log('This show is not available to stream');
-//         }
-//     })
-//     .catch(function(err) {
-//         console.log('This show is not available to stream');
-//     })
-
+// Find the provider for searched title on MovieDB
+function watchProviders(showType, showID) {
+    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
+    .then(function(res) {
+        if (res.ok) {
+            return res.json();
+        } else {
+            console.log('Error');
+        }
+    })
+    .then(function(data) {
+        try {
+            console.log(data);
+            for (let i = 0; i < providerData.length; i++) {
+                var providerData = data.results.US.flatrate[i]
+            }
+        } catch {
+            console.log('This show is not available to stream');
+        }
+    })
+    .catch(function(err) {
+        console.log('This show is not available to stream');
+    })
+}
 
 // Taste Dive API Request
 // fetch('https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=' + search + '&k=425677-LeithenC-C01G9X9L')
