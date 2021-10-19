@@ -195,30 +195,27 @@ searchResults.addEventListener('click', selected); // Listen for click of show o
 suggestionContainerEl.addEventListener('click', suggestionSelect)
 
 
-// COMMENTS
-
-
 // Find the provider for searched title on MovieDB
 function watchProviders(showType, showID) {
     fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
-    .then(function(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            console.log('Error');
-        }
-    })
-    .then(function(data) {
-        try {
-            console.log(data);
-            for (let i = 0; i < providerData.length; i++) {
-                var providerData = data.results.US.flatrate[i]
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            } else {
+                console.log('Error');
             }
-        } catch {
+        })
+        .then(function(data) {
+            try {
+                console.log(data);
+                for (let i = 0; i < providerData.length; i++) {
+                    var providerData = data.results.US.flatrate[i]
+                }
+            } catch {
+                console.log('This show is not available to stream');
+            }
+        })
+        .catch(function(err) {
             console.log('This show is not available to stream');
-        }
-    })
-    .catch(function(err) {
-        console.log('This show is not available to stream');
-    })
+        })
 }
