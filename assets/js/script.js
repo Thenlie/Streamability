@@ -63,12 +63,11 @@ let run = function(event) {
                     var titleSpan = document.createElement('span');
                     titleSpan.classList.add("currentTitle");
                     var showTypeEl = document.createElement('span');
-                    showTypeEl.classList.add("currentType")
+                    showTypeEl.classList.add("showType");
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
-
                     titleIDSpan.classList.add("titleID");
-                    showTypeEl.classList.add("showType");
+
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -125,20 +124,14 @@ let run = function(event) {
 //Function to run when a show option is clicked
 let selected = function(evt) {
     let parent = evt.target.parentNode
-    let classes = parent.classList
     let currentTitle = parent.querySelector('.currentTitle').textContent
-    let currentType = parent.querySelector('.currentType').textContent
-    if (classes.contains('result')) {
 
-        //console.log('In')
+    if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
         showType = parent.querySelector('.showType').textContent;
         console.log("Type: " + showType + " ID: " + showID);
-        //create a function to display the movie info passing through the titleID
         watchProviders(showType, showID);
-
-        suggestions(currentTitle, currentType);
-
+        suggestions(currentTitle, showType);
     } else {
         console.log('Out')
     }
@@ -149,14 +142,7 @@ let suggestionSelect = function(evt) {
     console.log(current.textContent)
 }
 
-let watchProviders = function(currentID) {
-    console.log(currentID)
-}
-
 let suggestions = function(currentTitle, currentType) {
-    console.log(currentTitle)
-    console.log(currentType)
-
     if (currentType === 'movie') { // If user selects a Movie
         currentType = 'movies'
     } else { // If user selects a TV Show
