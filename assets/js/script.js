@@ -41,9 +41,9 @@ let run = function(event) {
         })
         .then(function(data) {
             try {
+                console.log(data)
                 removeAllChildNodes(searchResults)
-
-                // ensure there are at least 10 shows
+                    // ensure there are at least 10 shows
                 let x = 0
                 if (data.results.length > 10) {
                     x = 10
