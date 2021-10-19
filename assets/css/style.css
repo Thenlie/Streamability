@@ -20,10 +20,18 @@ input,select{vertical-align:middle}
     font-family: 'Josefin Sans', sans-serif;
 }
 
+img {
+    border-radius: 15px;
+}
+
 .tile {
     border-radius: 30px;
 }
 
-img {
-    border-radius: 15px;
+.notification {
+    padding: 1.25rem;
+}
+
+.title {
+    color: #4a4a4a;
 }
