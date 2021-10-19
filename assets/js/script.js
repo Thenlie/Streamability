@@ -210,13 +210,13 @@ function watchProviders(showType, showID) {
                         // assign selected title, viewer rating, poster, plot, and wath providers to the page
                         // title
                         if (selectedTitleData.title) {
-                            selectedTitleEl.innerHTML = selectedTitleData.title;
+                            selectedTitleEl.innerText = selectedTitleData.title;
                         } else {
-                            selectedTitleEl.innerHTML = selectedTitleData.name;
+                            selectedTitleEl.innerText = selectedTitleData.name;
                         }
 
                         // viewer rating
-                        selectedScoreEl.innerHTML = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
+                        selectedScoreEl.innerText = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
 
                         // poster
                         if (selectedTitleData.poster_path) {
