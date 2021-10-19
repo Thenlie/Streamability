@@ -126,7 +126,6 @@ let run = function(event) {
 let selected = function(evt) {
     let parent = evt.target.parentNode
     let classes = parent.classList
-    let currentID = parent.querySelector('.titleID').textContent
     let currentTitle = parent.querySelector('.currentTitle').textContent
     let currentType = parent.querySelector('.currentType').textContent
     if (classes.contains('result')) {
