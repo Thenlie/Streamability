@@ -18,28 +18,28 @@ input,select{vertical-align:middle}
 
 /* BEGIN CSS Variables */
 :root {
-    --gutter: 20px;
+  --gutter: 20px;
 }
 /* END CSS Variables */
 
 * {
-    font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 img {
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 .tile {
-    border-radius: 30px;
+  border-radius: 30px;
 }
 
 .notification {
-    padding: 1.25rem;
+  padding: 1.25rem;
 }
 
 .title {
-    color: #4a4a4a;
+  color: #4a4a4a;
 }
 
 .tile {
@@ -48,31 +48,13 @@ img {
 
 /* BEGIN CSS Grid Styles */
 /* CSS Grid based on tutorial by Dannie Vinther, located here https://uxdesign.cc/creating-horizontal-scrolling-containers-the-right-way-css-grid-c256f64fc585 */
-.app {
-    padding: var(--gutter) 0;
-    display: grid;
-    grid-gap: var(--gutter) 0;
-    grid-template-columns: var(--gutter) 1fr var(--gutter);
-    align-content: start;
-  }
-  
-.app > * {
-  grid-column: 2 / -2;
-}
-
-.app > .full {
-  grid-column: 1 / -1;
-}
-
 .carousel {
   display: grid;
-  grid-gap: calc(var(--gutter) / 2);
+  grid-gap: calc((var(--gutter) / 2) + 5px);
   grid-template-columns: 10px repeat(var(--total), calc(50% - var(--gutter) * 2)) 10px;
   grid-template-rows: minmax(150px, 1fr);
-  
-  overflow-x: scroll;
+  overflow-x: auto;
   scroll-snap-type: x proximity;
-  padding-bottom: calc(.75 * var(--gutter));
   margin-bottom: calc(-.25 * var(--gutter));
 }
 
@@ -81,17 +63,30 @@ img {
   content: "";
 }
 
-.app {
-  overflow-y: scroll;
-}
-
 .carousel > .tile {
   scroll-snap-align: start;
   padding: calc(var(--gutter) / 2 * 1.5);
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+}
+/* END CSS Grid Styles */
+
+/* BEGIN Scrollbar Styles */
+::-webkit-scrollbar {
+  height: 10px;
 }
 
-/* END CSS Grid Styles */
+::-webkit-scrollbar-thumb {
+  background: hsl(348, 100%, 61%);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(348, 100%, 47%)
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 95%);
+  border-radius: 20px;
+}
+
+/* END Scrollbar Styles */
