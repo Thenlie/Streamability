@@ -68,6 +68,7 @@ img {
 /* BEGIN Scrollbar Styles */
 ::-webkit-scrollbar {
   height: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
