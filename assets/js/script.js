@@ -13,8 +13,9 @@ let selectedPlotEl = document.querySelector('#selected-plot');
 let selectedProvidersEl = document.querySelector('#selected-providers');
 let selectedQueueEl = document.querySelector('#selected-queue');
 
-let suggestionContainerEl = document.querySelector('#suggestion-container')
+let suggestionContainerEl = document.querySelector('#suggestion-container');
 
+let input = '';
 let showID = '';
 let showType = '';
 
@@ -27,11 +28,14 @@ function removeAllChildNodes(parent) {
 
 let run = function(event) {
     event.preventDefault();
-    let search = (userInputEl.value);
+    input = (userInputEl.value);
     userInputEl.value = '';
+    search(input);
+}
 
+let search = function(input) {
     // Find the movie and log the ID from MovieDB
-    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + search)
+    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input)
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -41,15 +45,15 @@ let run = function(event) {
         })
         .then(function(data) {
             try {
-                console.log(data)
-                removeAllChildNodes(searchResults)
+                console.log(data);
+                removeAllChildNodes(searchResults);
 
                 // ensure there are at least 10 shows
-                let x = 0
+                let x = 0;
                 if (data.results.length > 10) {
-                    x = 10
+                    x = 10;
                 } else {
-                    x = data.results.length
+                    x = data.results.length;
                 }
 
 
@@ -102,7 +106,7 @@ let run = function(event) {
                         if (current.first_air_date) {
                             showYear.innerText = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
                         } else {
-                            showYear.innerText = 'N/A '
+                            showYear.innerText = 'N/A ';
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
@@ -124,8 +128,8 @@ let run = function(event) {
 
 //Function to run when a show option is clicked
 let selected = function(evt) {
-    let parent = evt.target.parentNode
-    let currentTitle = parent.querySelector('.currentTitle').textContent
+    let parent = evt.target.parentNode;
+    let currentTitle = parent.querySelector('.currentTitle').textContent;
 
     if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
@@ -138,15 +142,16 @@ let selected = function(evt) {
     }
 }
 
-let suggestionSelect = function(evt) {
+let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
     let current = evt.target
-    console.log(current.textContent)
+    search(current.textContent)
 }
 
 let suggestions = function(currentTitle, currentType) {
-    if (currentType === 'movie') { // If user selects a Movie
+    // Check if show or movie was searched for
+    if (currentType === 'movie') {
         currentType = 'movies'
-    } else { // If user selects a TV Show
+    } else {
         currentType = 'shows'
     }
 
@@ -156,30 +161,27 @@ let suggestions = function(currentTitle, currentType) {
             return (res.json());
         })
         .then(function(data) {
-            let current = data.Similar.Results
-            console.log(current)
+            let current = data.Similar.Results;
+            console.log(data.Similar);
+            // Remove suggestions from last search
             removeAllChildNodes(suggestionContainerEl);
 
             if (current.length) {
-                console.log('Hit')
                 for (let i = 0; i < current.length; i++) {
-                    let suggestionEl = document.createElement('div')
+                    let suggestionEl = document.createElement('div');
                     suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
-                console.log('No suggestions :(')
+                let suggestionEl = document.createElement('div');
+                suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+                suggestionContainerEl.appendChild(suggestionEl);
             }
         })
         .catch(function(err) {
             console.log('Unfortunately there are no suggestions for that title');
         })
 }
-
-searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchResults.addEventListener('click', selected); // Listen for click of show option
-suggestionContainerEl.addEventListener('click', suggestionSelect)
-
 
 // Find the provider for searched title on MovieDB
 function watchProviders(showType, showID) {
@@ -253,3 +255,7 @@ function watchProviders(showType, showID) {
             }
         })
 }
+
+searchFormEl.addEventListener('submit', run); // Listen for submission of search form
+searchResults.addEventListener('click', selected); // Listen for click of show option
+suggestionContainerEl.addEventListener('click', suggestionSelect)
