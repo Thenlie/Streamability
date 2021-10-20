@@ -58,11 +58,6 @@ img {
   margin-bottom: calc(-.25 * var(--gutter));
 }
 
-.carousel:before,
-.carousel:after {
-  content: "";
-}
-
 .carousel > .tile {
   scroll-snap-align: start;
   padding: calc(var(--gutter) / 2 * 1.5);
@@ -83,10 +78,10 @@ img {
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(348, 100%, 47%)
 }
-
-::-webkit-scrollbar-track {
-  background: hsl(0, 0%, 95%);
-  border-radius: 20px;
-}
-
 /* END Scrollbar Styles */
+
+hr.rounded {
+  border-top: 10px solid hsl(0, 0%, 86%);
+  border-radius: 5px;
+  margin-top: 50px;
+}
