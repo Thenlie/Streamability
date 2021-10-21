@@ -26,6 +26,10 @@ input,select{vertical-align:middle}
   font-family: 'Josefin Sans', sans-serif;
 }
 
+button {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
 img {
   border-radius: 15px;
 }
