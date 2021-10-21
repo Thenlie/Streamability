@@ -148,6 +148,7 @@ let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
 }
 
 let suggestions = function(currentTitle, currentType) {
+    removeAllChildNodes(suggestionContainerEl);
     // Check if show or movie was searched for
     if (currentType === 'movie') {
         currentType = 'movies'
@@ -164,7 +165,6 @@ let suggestions = function(currentTitle, currentType) {
             let current = data.Similar.Results;
             console.log(data.Similar);
             // Remove suggestions from last search
-            removeAllChildNodes(suggestionContainerEl);
 
             if (current.length) {
                 for (let i = 0; i < current.length; i++) {
@@ -179,7 +179,9 @@ let suggestions = function(currentTitle, currentType) {
             }
         })
         .catch(function(err) {
-            console.log('Unfortunately there are no suggestions for that title');
+            let suggestionEl = document.createElement('div');
+            suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+            suggestionContainerEl.appendChild(suggestionEl);
         })
 }
 
