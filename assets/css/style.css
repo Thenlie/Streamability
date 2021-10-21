@@ -26,6 +26,7 @@ input,select{vertical-align:middle}
   font-family: 'Josefin Sans', sans-serif;
 }
 
+/* BEGIN HTML Element Styles */
 button {
   font-family: 'Josefin Sans', sans-serif;
 }
@@ -33,7 +34,9 @@ button {
 img {
   border-radius: 15px;
 }
+/* END HTML Element Styles */
 
+/* BEGIN Class Styles */
 .tile {
   border-radius: 30px;
 }
@@ -49,6 +52,31 @@ img {
 .tile {
   min-width: 218.131px;
 }
+
+.message {
+  border-radius: 20px;
+}
+
+.message-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* END Class Styles */
+
+/* BEGIN ID Styles */
+#suggestions,
+#search-queue {
+  min-height: 25em;
+  max-height: 40em;
+  overflow-y: auto;
+}
+
+#suggestions img,
+#search-queue img {
+  margin: 1em;
+} 
+/* END ID Styles */
 
 /* BEGIN CSS Grid Styles */
 /* CSS Grid based on tutorial by Dannie Vinther, located here https://uxdesign.cc/creating-horizontal-scrolling-containers-the-right-way-css-grid-c256f64fc585 */
@@ -85,6 +113,9 @@ img {
 }
 /* END Scrollbar Styles */
 
+
+
+/* Temporary for page-divider */
 hr.rounded {
   border-top: 10px solid hsl(0, 0%, 86%);
   border-radius: 5px;
