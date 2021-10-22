@@ -38,20 +38,8 @@ img {
 /* END HTML Element Styles */
 
 /* BEGIN Class Styles */
-.tile {
-  border-radius: 30px;
-}
-
-.notification {
-  padding: 1.25rem;
-}
-
-.title {
-  color: #4a4a4a;
-}
-
-.tile {
-  min-width: 218.131px;
+.box {
+  border-radius: 20px;
 }
 
 .message {
@@ -63,6 +51,10 @@ img {
   border-top-right-radius: 20px;
 }
 
+.notification {
+  padding: 1.25rem;
+}
+
 .scrolly {
   scroll-snap-type: y proximity;
   overflow-y: auto;
@@ -72,20 +64,34 @@ img {
 .scrolly > div {
   scroll-snap-align: start;
 }
+
+.tile {
+  border-radius: 30px;
+  min-width: 218.131px;
+}
+
+.title {
+  color: #4a4a4a;
+}
 /* END Class Styles */
 
 /* BEGIN ID Styles */
-#suggestions,
-#search-queue {
+#search-queue,
+#suggestions {
   min-height: 25em;
   max-height: 40em;
   overflow-y: auto;
 }
 
-#suggestions img,
-#search-queue img {
+#search-queue img,
+#suggestions img {
   margin: 1em;
 } 
+
+#search-results img {
+  margin: 1em;
+  max-height: 100px;
+}
 /* END ID Styles */
 
 /* BEGIN CSS Grid Styles */
