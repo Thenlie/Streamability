@@ -62,6 +62,15 @@ img {
   border-top-right-radius: 20px;
 }
 
+.scrolly {
+  scroll-snap-type: y proximity;
+  overflow-y: auto;
+}
+
+.scrolly > .is-flex,
+.scrolly > div {
+  scroll-snap-align: start;
+}
 /* END Class Styles */
 
 /* BEGIN ID Styles */
@@ -112,6 +121,8 @@ img {
   background: hsl(348, 100%, 47%)
 }
 /* END Scrollbar Styles */
+
+
 
 
 
