@@ -6,15 +6,16 @@ let userInputEl = document.querySelector('#user-input');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 
-let selectedTitle = document.querySelector('#selected-title');
-let sekectedScore = document.querySelector('#selected-score');
-let selectedPoster = document.querySelector('#selected-poster');
-let selectedPlot = document.querySelector('#selected-plot');
-let selectedProviders = document.querySelector('#selected-providers');
-let selectedQueue = document.querySelector('#selected-queue');
+let selectedTitleEl = document.querySelector('#selected-title');
+let selectedScoreEl = document.querySelector('#selected-score');
+let selectedPosterEl = document.querySelector('#selected-poster');
+let selectedPlotEl = document.querySelector('#selected-plot');
+let selectedProvidersEl = document.querySelector('#selected-providers');
+let selectedQueueEl = document.querySelector('#selected-queue');
 
-let suggestionContainerEl = document.querySelector('#suggestion-container')
+let suggestionContainerEl = document.querySelector('#suggestion-container');
 
+let input = '';
 let showID = '';
 let showType = '';
 
@@ -27,11 +28,14 @@ function removeAllChildNodes(parent) {
 
 let run = function(event) {
     event.preventDefault();
-    let search = (userInputEl.value);
+    input = (userInputEl.value);
     userInputEl.value = '';
+    search(input);
+}
 
+let search = function(input) {
     // Find the movie and log the ID from MovieDB
-    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + search)
+    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input)
         .then(function(res) {
             if (res.ok) {
                 return res.json();
@@ -41,14 +45,15 @@ let run = function(event) {
         })
         .then(function(data) {
             try {
-                removeAllChildNodes(searchResults)
+                console.log(data);
+                removeAllChildNodes(searchResults);
 
                 // ensure there are at least 10 shows
-                let x = 0
+                let x = 0;
                 if (data.results.length > 10) {
-                    x = 10
+                    x = 10;
                 } else {
-                    x = data.results.length
+                    x = data.results.length;
                 }
 
 
@@ -63,12 +68,11 @@ let run = function(event) {
                     var titleSpan = document.createElement('span');
                     titleSpan.classList.add("currentTitle");
                     var showTypeEl = document.createElement('span');
-                    showTypeEl.classList.add("currentType")
+                    showTypeEl.classList.add("showType");
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
-
                     titleIDSpan.classList.add("titleID");
-                    showTypeEl.classList.add("showType");
+
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -82,27 +86,27 @@ let run = function(event) {
                         // assign movie title, type, release year, and movie ID to variables
 
 
-                        titleSpan.innerHTML = current.title;
+                        titleSpan.innerText = current.title;
 
-                        showTypeEl.innerHTML = current.media_type;
+                        showTypeEl.innerText = current.media_type;
 
                         if (current.release_date) { //Check if there is a release date
-                            showYear.innerHTML = current.release_date.substring(0, 4) + " ID: ";
+                            showYear.innerText = current.release_date.substring(0, 4) + " ID: ";
                         } else {
                             continue;
                         }
-                        titleIDSpan.innerHTML = current.id;
+                        titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
 
 
-                        titleSpan.innerHTML = current.name;
+                        titleSpan.innerText = current.name;
 
-                        showTypeEl.innerHTML = current.media_type;
-                        titleIDSpan.innerHTML = current.id;
+                        showTypeEl.innerText = current.media_type;
+                        titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
-                            showYear.innerHTML = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
+                            showYear.innerText = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
                         } else {
-                            showYear.innerHTML = 'N/A '
+                            showYear.innerText = 'N/A ';
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
@@ -124,43 +128,31 @@ let run = function(event) {
 
 //Function to run when a show option is clicked
 let selected = function(evt) {
-    let parent = evt.target.parentNode
-    let classes = parent.classList
-    let currentID = parent.querySelector('.titleID').textContent
-    let currentTitle = parent.querySelector('.currentTitle').textContent
-    let currentType = parent.querySelector('.currentType').textContent
-    if (classes.contains('result')) {
+    let parent = evt.target.parentNode;
+    let currentTitle = parent.querySelector('.currentTitle').textContent;
 
-        //console.log('In')
+    if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
         showType = parent.querySelector('.showType').textContent;
         console.log("Type: " + showType + " ID: " + showID);
-        //create a function to display the movie info passing through the titleID
         watchProviders(showType, showID);
-
-        suggestions(currentTitle, currentType);
-
+        suggestions(currentTitle, showType);
     } else {
         console.log('Out')
     }
 }
 
-let suggestionSelect = function(evt) {
+let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
     let current = evt.target
-    console.log(current.textContent)
-}
-
-let watchProviders = function(currentID) {
-    console.log(currentID)
+    search(current.textContent)
 }
 
 let suggestions = function(currentTitle, currentType) {
-    console.log(currentTitle)
-    console.log(currentType)
-
-    if (currentType === 'movie') { // If user selects a Movie
+    removeAllChildNodes(suggestionContainerEl);
+    // Check if show or movie was searched for
+    if (currentType === 'movie') {
         currentType = 'movies'
-    } else { // If user selects a TV Show
+    } else {
         currentType = 'shows'
     }
 
@@ -170,55 +162,102 @@ let suggestions = function(currentTitle, currentType) {
             return (res.json());
         })
         .then(function(data) {
-            let current = data.Similar.Results
-            console.log(current)
-            removeAllChildNodes(suggestionContainerEl);
+            let current = data.Similar.Results;
+            console.log(data.Similar);
+            // Remove suggestions from last search
 
             if (current.length) {
-                console.log('Hit')
                 for (let i = 0; i < current.length; i++) {
-                    let suggestionEl = document.createElement('div')
-                    suggestionEl.innerHTML = current[i].Name
+                    let suggestionEl = document.createElement('div');
+                    suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
-                console.log('No suggestions :(')
+                let suggestionEl = document.createElement('div');
+                suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+                suggestionContainerEl.appendChild(suggestionEl);
             }
         })
         .catch(function(err) {
-            console.log('Unfortunately there are no suggestions for that title');
+            let suggestionEl = document.createElement('div');
+            suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+            suggestionContainerEl.appendChild(suggestionEl);
+        })
+}
+
+// Find the provider for searched title on MovieDB
+function watchProviders(showType, showID) {
+    removeAllChildNodes(searchResults);
+    // fetch info for selected title
+    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '?api_key=14b7c2e67f36427d72ce8c1df6482552')
+        .then(function(res) {
+            if (res.ok) {
+                return res.json();
+            } else {
+                console.log('Error');
+            }
+        })
+        .then(function(data) {
+            try {
+                var selectedTitleData = data;
+
+                // fetch watch providers for selected title
+                fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
+                    .then(function(res) {
+                        if (res.ok) {
+                            return res.json();
+                        } else {
+                            console.log('Error');
+                        }
+                    })
+                    .then(function(data) {
+                        try {
+                            // assign selected title, viewer rating, poster, plot, and wath providers to the page
+                            // title
+                            if (selectedTitleData.title) {
+                                selectedTitleEl.innerText = selectedTitleData.title;
+                            } else {
+                                selectedTitleEl.innerText = selectedTitleData.name;
+                            }
+
+                            // viewer rating
+                            selectedScoreEl.innerText = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
+
+                            // poster
+                            if (selectedTitleData.poster_path) {
+                                selectedPosterEl.src = 'https://image.tmdb.org/t/p/w500' + selectedTitleData.poster_path;
+                            } else {
+                                selectedPosterEl.src = 'https://via.placeholder.com/500x750.png?text=Movie+Poster';
+                            }
+
+                            // plot
+                            selectedPlotEl.innerText = selectedTitleData.overview;
+
+                            // watch providers
+                            var providerData = data.results.US.flatrate;
+                            removeAllChildNodes(selectedProvidersEl);
+                            console.log(providerData);
+                            for (let i = 0; i < providerData.length; i++) {
+                                if (providerData.length >= 1) {
+                                    var providerLogo = document.createElement('img');
+                                    providerLogo.src = 'https://image.tmdb.org/t/p/original' + providerData[i].logo_path;
+                                    providerLogo.alt = providerData[i].provider_name;
+                                    selectedProvidersEl.appendChild(providerLogo);
+                                }
+                            }
+                        } catch {
+                            console.log('This show is not available to stream');
+                        }
+                    })
+                    .catch(function(err) {
+                        console.log('This show is not available to stream');
+                    })
+            } catch {
+                console.log('error');
+            }
         })
 }
 
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect)
-
-
-// COMMENTS
-
-
-// Find the provider for searched title on MovieDB
-function watchProviders(showType, showID) {
-    fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '/watch/providers?api_key=14b7c2e67f36427d72ce8c1df6482552')
-    .then(function(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            console.log('Error');
-        }
-    })
-    .then(function(data) {
-        try {
-            console.log(data);
-            for (let i = 0; i < providerData.length; i++) {
-                var providerData = data.results.US.flatrate[i]
-            }
-        } catch {
-            console.log('This show is not available to stream');
-        }
-    })
-    .catch(function(err) {
-        console.log('This show is not available to stream');
-    })
-}

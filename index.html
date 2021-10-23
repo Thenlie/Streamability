@@ -19,7 +19,27 @@
 </head>
 
 <body>
-    <!-- Landing Page -->
+
+    <!-- Movie Search Form  CREATED BY TYLER-->
+    <form id='search-form'>
+        <input id='user-input' type='text' />
+        <button id='form-submit' tpye='submit'>Search</button>
+    </form>
+
+    <!-- Search Results Container-->
+    <section id="search-results-modal">
+        <div id="search-results"></div>
+    </section>
+
+    <section id="selected-hero">
+        <div id="title-score-poster">
+            <div id="selected-title"></div>
+
+            <div id="selected-score"></div>
+
+            <img id="selected-poster">
+
+    <!-- Landing Page  CREATED BY BEN-->
     <div class="container is-max-desktop">
         <!-- Header/Title Row -->
         <div class="columns is-centered is-vcentered mt-5" id="logo-row">
@@ -29,6 +49,7 @@
             <div class="column is-one-third">
                 <h1 class="is-size-1">streamability</h1>
             </div>
+
         </div>
         <!-- Search Form -->
         <form class="field has-addons" id="search-form">
@@ -142,7 +163,15 @@
         </section>    
     </div>
 
-    <!-- Divider to separate landing "page" from search-result "page" -->
+ <!-- CREATED BY TYLER -->
+        <div id="plot-providers-queue">
+            <div id="selected-plot"></div>
+
+            <div id="selected-providers"></div>
+
+            <button id="selected-queue">Add to watch queue</button>
+
+    <!-- Divider to separate landing "page" from search-result "page"  CREATED BY BEN -->
     <hr class="rounded">
 
     <!-- Search Results Page -->
@@ -424,7 +453,14 @@
             <!-- If we even want to keep this button (in top right corner), make sure to have it toggle the "is-active" class on the modal section too -->
     </section>
 
+
+    <!-- Suggestion Container-->
+    <h3>Suggestions</h3>
+    <section id='suggestion-container'></section>
+
+
     <!-- Scripts -->
+
     <script src='./assets/js/script.js'></script>
 </body>
 
