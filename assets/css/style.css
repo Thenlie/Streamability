@@ -16,12 +16,6 @@ table{border-collapse:collapse;border-spacing:0}
 hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
 input,select{vertical-align:middle}
 
-/* BEGIN CSS Variables */
-:root {
-  --gutter: 20px;
-}
-/* END CSS Variables */
-
 * {
   font-family: 'Josefin Sans', sans-serif;
   line-height: 1.5;
@@ -67,11 +61,6 @@ img {
   overflow-y: auto;
 }
 
-/* .tile {
-  border-radius: 30px;
-  min-width: 218.131px;
-} */
-
 .title {
   color: #4a4a4a;
 }
@@ -80,7 +69,6 @@ img {
 /* BEGIN ID Styles */
 #search-queue,
 #suggestions {
-  /* min-height: 25em; */
   max-height: 40em;
   overflow-y: auto;
 }
@@ -95,23 +83,6 @@ img {
   max-height: 100px;
 }
 /* END ID Styles */
-
-/* BEGIN CSS Grid Styles */
-/* CSS Grid based on tutorial by Dannie Vinther, located here https://uxdesign.cc/creating-horizontal-scrolling-containers-the-right-way-css-grid-c256f64fc585 */
-/* .carousel {
-  display: grid;
-  grid-gap: calc((var(--gutter) / 2) + 5px);
-  grid-template-columns: 10px repeat(var(--total), calc(50% - var(--gutter) * 2)) 10px;
-  grid-template-rows: minmax(150px, 1fr);
-  overflow-x: auto;
-  margin-bottom: calc(-.25 * var(--gutter));
-}
-
-.carousel > .tile {
-  padding: calc(var(--gutter) / 2 * 1.5);
-  justify-content: center;
-} */
-/* END CSS Grid Styles */
 
 /* BEGIN Scrollbar Styles */
 ::-webkit-scrollbar {

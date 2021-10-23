@@ -39,15 +39,13 @@
               <button class="button is-primary is-medium is-rounded" id="form-submit" type="submit">Search</button>
             </div>
         </form>
-        <!-- <section id="search-results-modal">
-        <div id="search-results"></div>
-        </section> -->
         <!-- Watch Queue -->
         <section id="watch-queue">
             <h2 class="title is-size-1 has-text-centered mt-6">Your Queue</h2>
             <div class="message is-primary">
                 <p class="message-header is-size-4"></p>
                 <div class="message-body scrolly" id="search-queue">
+                    <!-- These divs are all individual movies/shows -->
                     <div class="is-flex is-align-items-center">
                         <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
                         <div>
@@ -223,6 +221,7 @@
                 <div class="column is-4">
                     <div class="message is-link">
                         <p class="message-header is-size-4 ">You might also like...</p>
+                        <!-- Suggestions -->
                         <div class="message-body scrolly" id="suggestions">
                             <div><img src="https://via.placeholder.com/300.png?text=Movie+Poster"></div>
                             <div><img src="https://via.placeholder.com/300.png?text=Movie+Poster"></div>
@@ -237,6 +236,7 @@
                     <div class="message is-primary">
                         <p class="message-header is-size-4">Your Queue</p>
                         <div class="message-body scrolly" id="search-queue">
+                            <!-- These divs are all individual movies/shows -->
                             <div class="is-flex is-align-items-center">
                                 <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
                                 <div>
@@ -335,92 +335,92 @@
         </section>
     </div>
 
-    <!-- Divider to separate search-result page from modal -->
-    <hr class="rounded">
-   
-    <section class="container is-max-desktop" id="search-results-modal">
-        <p class="title has-text-centered">
-            THE GREAT MODAL
-        </p>
-        <div class="message is-warning">
-            <p class="message-header is-size-5">Search Results</p>
-            <div class="message-body columns" id="search-results">
-                <div class="column is-6">
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+    <!-- Search Results Modal -->
+    <section class="modal">
+        <!-- To toggle this modal, simply add/remove the class "is-active" to the ABOVE section tag -->
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="message is-warning">
+                <p class="message-header is-size-5">Search Results</p>
+                <div class="message-body " id="search-results">
+                    <div class="">
+                        <!-- These divs are all individual movie/show search-results -->
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="column is-6">
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-4 has-text-left">Movie Title</p>
-                            <p class="has-text-left">Film – 1969</p>
+                        <div class="is-flex is-align-items-center">
+                            <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
+                            <div>
+                                <p class="is-size-4 has-text-left">Movie Title</p>
+                                <p class="has-text-left">Film – 1969</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+            <!-- If we even want to keep this button (in top right corner), make sure to have it toggle the "is-active" class on the modal section too -->
     </section>
 
     <!-- Scripts -->
