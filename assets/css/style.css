@@ -56,13 +56,7 @@ img {
 }
 
 .scrolly {
-  scroll-snap-type: y proximity;
   overflow-y: auto;
-}
-
-.scrolly > .is-flex,
-.scrolly > div {
-  scroll-snap-align: start;
 }
 
 .tile {
@@ -102,12 +96,10 @@ img {
   grid-template-columns: 10px repeat(var(--total), calc(50% - var(--gutter) * 2)) 10px;
   grid-template-rows: minmax(150px, 1fr);
   overflow-x: auto;
-  scroll-snap-type: x proximity;
   margin-bottom: calc(-.25 * var(--gutter));
 }
 
 .carousel > .tile {
-  scroll-snap-align: start;
   padding: calc(var(--gutter) / 2 * 1.5);
   justify-content: center;
 }
