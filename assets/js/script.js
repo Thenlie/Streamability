@@ -157,6 +157,8 @@ let selected = function(evt) {
         suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
+    } else {
+        console.log(parent)
     }
 }
 
