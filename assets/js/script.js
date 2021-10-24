@@ -82,7 +82,7 @@ let search = function(input) {
                     showTypeEl.classList.add("has-text-left", "showType");
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
-                    titleIDSpan.classList.add("titleID");
+                    titleIDSpan.classList.add("is-hidden", "titleID");
 
 
                     // set poster src for each search result if there is one, otherwise use placeholder
@@ -95,27 +95,23 @@ let search = function(input) {
                     // if search result item is a 'MOVIE' type
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
-
-
                         titleSpan.innerText = current.title;
 
                         showTypeEl.innerText = current.media_type;
 
                         if (current.release_date) { //Check if there is a release date
-                            showYear.innerText = current.release_date.substring(0, 4) + " ID: ";
+                            showYear.innerText = current.release_date.substring(0, 4);
                         } else {
                             continue;
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
-
-
                         titleSpan.innerText = current.name;
 
                         showTypeEl.innerText = current.media_type;
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
-                            showYear.innerText = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
+                            showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
                         } else {
                             showYear.innerText = 'N/A ';
                         }
@@ -145,21 +141,44 @@ let closeModal = function() {
 
 //Function to run when a show option is clicked
 let selected = function(evt) {
-    let parent = evt.target.parentNode;
-    let currentTitle = parent.querySelector('.currentTitle').textContent;
+    let current = evt.target;
+    let parent = current.parentNode;
 
-    if (parent.classList.contains('result')) {
-        showID = parent.querySelector('.titleID').textContent;
-        showType = parent.querySelector('.showType').textContent;
-        console.log("Type: " + showType + " ID: " + showID);
+    if (current.classList.contains('result')) {
+        showID = current.querySelector('.titleID').textContent;
+        showType = current.querySelector('.showType').textContent;
         searchResultsModal.classList.remove('is-active');
+        let currentTitle = current.querySelector('.currentTitle').textContent;
         watchProviders(showType, showID);
         suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
+        console.log('Hit');
+    } else if (parent.classList.contains('result')) {
+        showID = parent.querySelector('.titleID').textContent;
+        showType = parent.querySelector('.showType').textContent;
+        searchResultsModal.classList.remove('is-active');
+        let currentTitle = parent.querySelector('.currentTitle').textContent;
+        watchProviders(showType, showID);
+        suggestions(currentTitle, showType);
+        landingPageEl.classList.add('is-hidden');
+        resultPageEl.classList.remove('is-hidden');
+        console.log('Hit2')
     } else {
-        console.log(parent)
+        console.log('Miss');
     }
+    // if (parent.classList.contains('result')) {
+    //     showID = parent.querySelector('.titleID').textContent;
+    //     showType = parent.querySelector('.showType').textContent;
+    //     console.log("Type: " + showType + " ID: " + showID);
+    //     searchResultsModal.classList.remove('is-active');
+    //     watchProviders(showType, showID);
+    //     suggestions(currentTitle, showType);
+    //     landingPageEl.classList.add('is-hidden');
+    //     resultPageEl.classList.remove('is-hidden');
+    // } else {
+    //     console.log('Miss')
+    // }
 }
 
 let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
@@ -284,7 +303,7 @@ function watchProviders(showType, showID) {
 }
 
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form
+searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect) // Listen for click of a suggested show
 modalCloseEl.addEventListener('click', closeModal) // Listen for click of modal close button
