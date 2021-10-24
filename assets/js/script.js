@@ -3,6 +3,8 @@
 
 let searchFormEl = document.querySelector('#search-form');
 let userInputEl = document.querySelector('#user-input');
+let searchFormEl2 = document.querySelector('#search-form2');
+let userInputEl2 = document.querySelector('#user-input2');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 let modalCloseEl = document.querySelector('#modal-close')
@@ -12,8 +14,9 @@ let selectedPosterEl = document.querySelector('#selected-poster');
 let selectedPlotEl = document.querySelector('#selected-plot');
 let selectedProvidersEl = document.querySelector('#selected-providers');
 let selectedQueueEl = document.querySelector('#selected-queue');
-
+let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
+let resultPageEl = document.querySelector('#result-page');
 
 let input = '';
 let showID = '';
@@ -30,6 +33,13 @@ let run = function(event) {
     event.preventDefault();
     input = (userInputEl.value);
     userInputEl.value = '';
+    search(input);
+}
+
+let run2 = function(event) {
+    event.preventDefault();
+    input = (userInputEl2.value);
+    userInputEl2.value = '';
     search(input);
 }
 
@@ -145,8 +155,8 @@ let selected = function(evt) {
         searchResultsModal.classList.remove('is-active');
         watchProviders(showType, showID);
         suggestions(currentTitle, showType);
-    } else {
-        console.log('Out')
+        landingPageEl.classList.add('is-hidden');
+        resultPageEl.classList.remove('is-hidden');
     }
 }
 
@@ -165,29 +175,32 @@ let suggestions = function(currentTitle, currentType) {
     }
 
     // Taste Dive API Request
-    fetch('https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=' + currentTitle + '&type=' + currentType + '&limit=5&k=425677-LeithenC-C01G9X9L')
+    fetch('https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=' + currentTitle + '&type=' + currentType + '&limit=5&info=1&k=425677-LeithenC-C01G9X9L')
         .then(function(res) {
             return (res.json());
         })
         .then(function(data) {
             let current = data.Similar.Results;
-            console.log(data.Similar);
+            console.log(data);
             // Remove suggestions from last search
 
             if (current.length) {
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div');
+                    suggestionEl.classList.add('p-2', 'box');
                     suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
                 let suggestionEl = document.createElement('div');
+                suggestionEl.classList.add('p-2');
                 suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
                 suggestionContainerEl.appendChild(suggestionEl);
             }
         })
         .catch(function(err) {
             let suggestionEl = document.createElement('div');
+            suggestionEl.classList.add('p-2');
             suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
             suggestionContainerEl.appendChild(suggestionEl);
         })
@@ -267,6 +280,7 @@ function watchProviders(showType, showID) {
 }
 
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
+searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form
 searchResults.addEventListener('click', selected); // Listen for click of show option
-suggestionContainerEl.addEventListener('click', suggestionSelect)
-modalCloseEl.addEventListener('click', closeModal)
+suggestionContainerEl.addEventListener('click', suggestionSelect) // Listen for click of a suggested show
+modalCloseEl.addEventListener('click', closeModal) // Listen for click of modal close button
