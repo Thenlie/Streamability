@@ -267,11 +267,18 @@ function watchProviders(showType, showID) {
                                     var providerLogo = document.createElement('img');
                                     providerLogo.src = 'https://image.tmdb.org/t/p/original' + providerData[i].logo_path;
                                     providerLogo.alt = providerData[i].provider_name;
-                                    selectedProvidersEl.appendChild(providerLogo);
+                                    var logoDiv = document.createElement('div');
+                                    logoDiv.classList.add('column', 'is-2', 'has-text-centered');
+                                    logoDiv.appendChild(providerLogo);
+                                    selectedProvidersEl.appendChild(logoDiv);
                                 }
                             }
                         } catch {
                             console.log('This show is not available to stream');
+                            removeAllChildNodes(selectedProvidersEl);
+                            var noProvidersP = document.createElement('p');
+                            noProvidersP.innerText = "Sorry, there are no watch providers for this title.";
+                            selectedProvidersEl.appendChild(noProvidersP);
                         }
                     })
                     .catch(function(err) {
