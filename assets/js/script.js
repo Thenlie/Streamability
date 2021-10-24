@@ -5,7 +5,7 @@ let searchFormEl = document.querySelector('#search-form');
 let userInputEl = document.querySelector('#user-input');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
-
+let modalCloseEl = document.querySelector('#modal-close')
 let selectedTitleEl = document.querySelector('#selected-title');
 let selectedScoreEl = document.querySelector('#selected-score');
 let selectedPosterEl = document.querySelector('#selected-poster');
@@ -44,6 +44,7 @@ let search = function(input) {
             }
         })
         .then(function(data) {
+            //debugger;
             try {
                 console.log(data);
                 removeAllChildNodes(searchResults);
@@ -63,12 +64,12 @@ let search = function(input) {
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
-                    resultEl.classList.add("result");
+                    resultEl.classList.add("is-flex", "is-align-items-center", "result");
                     var posterImg = document.createElement('img');
-                    var titleSpan = document.createElement('span');
-                    titleSpan.classList.add("currentTitle");
-                    var showTypeEl = document.createElement('span');
-                    showTypeEl.classList.add("showType");
+                    var titleSpan = document.createElement('p');
+                    titleSpan.classList.add("is-size-4", "has-text-left", "currentTitle");
+                    var showTypeEl = document.createElement('p');
+                    showTypeEl.classList.add("has-text-left", "showType");
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("titleID");
@@ -118,12 +119,18 @@ let search = function(input) {
                     resultEl.appendChild(showYear);
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
+                    searchResultsModal.classList.add('is-active');
 
                 }
             } catch {
                 console.log('That search was invalid!');
             }
         })
+}
+
+//Function to close the modal when the X is clicked
+let closeModal = function() {
+    searchResultsModal.classList.remove('is-active');
 }
 
 //Function to run when a show option is clicked
@@ -135,6 +142,7 @@ let selected = function(evt) {
         showID = parent.querySelector('.titleID').textContent;
         showType = parent.querySelector('.showType').textContent;
         console.log("Type: " + showType + " ID: " + showID);
+        searchResultsModal.classList.remove('is-active');
         watchProviders(showType, showID);
         suggestions(currentTitle, showType);
     } else {
@@ -261,3 +269,4 @@ function watchProviders(showType, showID) {
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect)
+modalCloseEl.addEventListener('click', closeModal)
