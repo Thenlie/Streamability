@@ -17,6 +17,7 @@ let selectedQueueEl = document.querySelector('#selected-queue');
 let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
+let logoEl = document.querySelector('#logo');
 
 let input = '';
 let showID = '';
@@ -27,6 +28,10 @@ function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+}
+
+let refresh = function() {
+    location.reload();
 }
 
 let run = function(event) {
@@ -289,5 +294,6 @@ function watchProviders(showType, showID) {
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
-suggestionContainerEl.addEventListener('click', suggestionSelect) // Listen for click of a suggested show
-modalCloseEl.addEventListener('click', closeModal) // Listen for click of modal close button
+suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for click of a suggested show
+modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
+logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
