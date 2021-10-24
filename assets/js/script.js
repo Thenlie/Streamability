@@ -54,7 +54,6 @@ let search = function(input) {
             }
         })
         .then(function(data) {
-            //debugger;
             try {
                 console.log(data);
                 removeAllChildNodes(searchResults);
@@ -67,7 +66,6 @@ let search = function(input) {
                     x = data.results.length;
                 }
 
-
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
@@ -77,13 +75,12 @@ let search = function(input) {
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
                     var titleSpan = document.createElement('p');
-                    titleSpan.classList.add("is-size-4", "has-text-left", "currentTitle");
+                    titleSpan.classList.add("is-size-4", "has-text-left", "p-1", "currentTitle");
                     var showTypeEl = document.createElement('p');
-                    showTypeEl.classList.add("has-text-left", "showType");
-                    var showYear = document.createElement('span');
+                    showTypeEl.classList.add("has-text-left", "p-1", "showType");
+                    var showYear = document.createElement('p');
                     var titleIDSpan = document.createElement('span');
-                    titleIDSpan.classList.add("titleID");
-
+                    titleIDSpan.classList.add("is-hidden", "titleID");
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -95,34 +92,26 @@ let search = function(input) {
                     // if search result item is a 'MOVIE' type
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
-
-
                         titleSpan.innerText = current.title;
-
                         showTypeEl.innerText = current.media_type;
-
                         if (current.release_date) { //Check if there is a release date
-                            showYear.innerText = current.release_date.substring(0, 4) + " ID: ";
+                            showYear.innerText = current.release_date.substring(0, 4);
                         } else {
                             continue;
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
-
-
                         titleSpan.innerText = current.name;
 
                         showTypeEl.innerText = current.media_type;
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
-                            showYear.innerText = current.first_air_date.substring(0, 4) + " ID: "; //sometimes set to none
+                            showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
                         } else {
                             showYear.innerText = 'N/A ';
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
-
-
                     resultEl.appendChild(posterImg);
                     resultEl.appendChild(titleSpan);
                     resultEl.appendChild(showTypeEl);
@@ -130,7 +119,6 @@ let search = function(input) {
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
                     searchResultsModal.classList.add('is-active');
-
                 }
             } catch {
                 console.log('That search was invalid!');
@@ -145,20 +133,28 @@ let closeModal = function() {
 
 //Function to run when a show option is clicked
 let selected = function(evt) {
-    let parent = evt.target.parentNode;
-    let currentTitle = parent.querySelector('.currentTitle').textContent;
+    let current = evt.target;
+    let parent = current.parentNode;
 
-    if (parent.classList.contains('result')) {
-        showID = parent.querySelector('.titleID').textContent;
-        showType = parent.querySelector('.showType').textContent;
-        console.log("Type: " + showType + " ID: " + showID);
+    if (current.classList.contains('result')) {
+        showID = current.querySelector('.titleID').textContent;
+        showType = current.querySelector('.showType').textContent;
         searchResultsModal.classList.remove('is-active');
+        let currentTitle = current.querySelector('.currentTitle').textContent;
         watchProviders(showType, showID);
         suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
-    } else {
-        console.log(parent)
+        console.log('Hit');
+    } else if (parent.classList.contains('result')) {
+        showID = parent.querySelector('.titleID').textContent;
+        showType = parent.querySelector('.showType').textContent;
+        searchResultsModal.classList.remove('is-active');
+        let currentTitle = parent.querySelector('.currentTitle').textContent;
+        watchProviders(showType, showID);
+        suggestions(currentTitle, showType);
+        landingPageEl.classList.add('is-hidden');
+        resultPageEl.classList.remove('is-hidden');
     }
 }
 
@@ -291,7 +287,7 @@ function watchProviders(showType, showID) {
 }
 
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form
+searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect) // Listen for click of a suggested show
 modalCloseEl.addEventListener('click', closeModal) // Listen for click of modal close button
