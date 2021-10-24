@@ -54,7 +54,6 @@ let search = function(input) {
             }
         })
         .then(function(data) {
-            //debugger;
             try {
                 console.log(data);
                 removeAllChildNodes(searchResults);
@@ -67,7 +66,6 @@ let search = function(input) {
                     x = data.results.length;
                 }
 
-
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
@@ -77,13 +75,12 @@ let search = function(input) {
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
                     var titleSpan = document.createElement('p');
-                    titleSpan.classList.add("is-size-4", "has-text-left", "currentTitle");
+                    titleSpan.classList.add("is-size-4", "has-text-left", "p-1", "currentTitle");
                     var showTypeEl = document.createElement('p');
-                    showTypeEl.classList.add("has-text-left", "showType");
+                    showTypeEl.classList.add("has-text-left", "p-1", "showType");
                     var showYear = document.createElement('p');
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
-
 
                     // set poster src for each search result if there is one, otherwise use placeholder
                     if (current.poster_path) {
@@ -115,8 +112,6 @@ let search = function(input) {
                         }
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
-
-
                     resultEl.appendChild(posterImg);
                     resultEl.appendChild(titleSpan);
                     resultEl.appendChild(showTypeEl);
@@ -124,7 +119,6 @@ let search = function(input) {
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
                     searchResultsModal.classList.add('is-active');
-
                 }
             } catch {
                 console.log('That search was invalid!');
