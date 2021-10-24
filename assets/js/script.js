@@ -80,7 +80,7 @@ let search = function(input) {
                     titleSpan.classList.add("is-size-4", "has-text-left", "currentTitle");
                     var showTypeEl = document.createElement('p');
                     showTypeEl.classList.add("has-text-left", "showType");
-                    var showYear = document.createElement('span');
+                    var showYear = document.createElement('p');
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -96,9 +96,7 @@ let search = function(input) {
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
                         titleSpan.innerText = current.title;
-
                         showTypeEl.innerText = current.media_type;
-
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
@@ -163,22 +161,7 @@ let selected = function(evt) {
         suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
-        console.log('Hit2')
-    } else {
-        console.log('Miss');
     }
-    // if (parent.classList.contains('result')) {
-    //     showID = parent.querySelector('.titleID').textContent;
-    //     showType = parent.querySelector('.showType').textContent;
-    //     console.log("Type: " + showType + " ID: " + showID);
-    //     searchResultsModal.classList.remove('is-active');
-    //     watchProviders(showType, showID);
-    //     suggestions(currentTitle, showType);
-    //     landingPageEl.classList.add('is-hidden');
-    //     resultPageEl.classList.remove('is-hidden');
-    // } else {
-    //     console.log('Miss')
-    // }
 }
 
 let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
