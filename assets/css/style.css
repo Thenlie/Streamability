@@ -220,6 +220,13 @@ img {
 }
 
 
+/* MODAL STYLES */
+
+.result:hover {
+    background-color: rgb(211, 209, 209);
+}
+
+
 /* END Class Styles */
 
 

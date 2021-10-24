@@ -74,7 +74,7 @@ let search = function(input) {
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
-                    resultEl.classList.add("is-flex", "is-align-items-center", "result");
+                    resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
                     var titleSpan = document.createElement('p');
                     titleSpan.classList.add("is-size-4", "has-text-left", "currentTitle");
@@ -161,8 +161,10 @@ let selected = function(evt) {
 }
 
 let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
-    let current = evt.target
-    search(current.textContent)
+    let current = evt.target;
+    if (current.id !== 'suggestion-container') { //Ensure a suggestion is clicked on
+        search(current.textContent);
+    }
 }
 
 let suggestions = function(currentTitle, currentType) {
