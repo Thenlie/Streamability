@@ -20,6 +20,7 @@ let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
 let selectedIdEL = document.querySelector('#selected-id')
 let queButtonEl = document.querySelector("#queue-button");
+let queueContainerEl = document.querySelector('#search-queue');
 
 let input = '';
 let showID = '';
@@ -46,7 +47,7 @@ let run2 = function(event) {
     search(input);
 };
 
-
+movie_info_list = [];
 let queClicked = function(event){
     event.preventDefault();
     let movieInfo = event.target.parentNode.parentNode
@@ -54,14 +55,30 @@ let queClicked = function(event){
     movie_year = movieInfo.querySelector("#selected-year").innerText;
     movie_id = movieInfo.querySelector("#selected-id").innerText;
     movie_poster_link = movieInfo.querySelector("#selected-poster").src;
-    localStorage.setItem(movie_id, [movie_title, movie_year, movie_poster_link])
+    for (let index = 0; index < 3; index++) {
+        let movie_info = [movie_title,movie_year,movie_poster_link]
+        items = movie_info[index]
+        movie_info_list.push(items)
+    }
+    localStorage.setItem(movie_id, movie_info_list);
+    movie_info_list = [];
     loadQueue();
 }
 
 let loadQueue = function(){
     for (const [key,value] of Object.entries(localStorage)) {
-        console.log(key,value)
-        var resultEl = document.createElement('div');
+        var valueSplit = value.split(',');
+        console.log(valueSplit[0]);
+        
+        var queueEl = document.createElement('div');
+        queueEl.classList.add('is-flex', 'is-align-items-center')
+        var quePosterEl = document.createElement('img');
+        var queTextEl = document.createElement('div');
+        var queTitleEl = document.createElement('p');
+        queTitleEl.classList.add('is-size-3', 'has-text-left');
+        var queYearEl = document.createElement('p');
+        queYearEl.classList.add('is-size-3', 'has-text-left');
+
     }
     
 };
