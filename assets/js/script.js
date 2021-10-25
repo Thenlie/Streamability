@@ -8,6 +8,7 @@ let userInputEl2 = document.querySelector('#user-input2');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 let modalCloseEl = document.querySelector('#modal-close')
+let modalBackgroundEl = document.querySelector(".modal-background");
 let selectedTitleEl = document.querySelector('#selected-title');
 let selectedScoreEl = document.querySelector('#selected-score');
 let selectedPosterEl = document.querySelector('#selected-poster');
@@ -85,10 +86,12 @@ let search = function(input) {
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
                     var resultTitleEl = document.createElement('div');
-                    var titleSpan = document.createElement('p');
-                    titleSpan.classList.add("is-size-4", "currentTitle");
+                    var titleSpanEl = document.createElement('p');
+                    titleSpanEl.classList.add("is-size-4", "currentTitle");
                     var showTypeEl = document.createElement('span');
                     showTypeEl.classList.add("showType");
+                    var spacerEl = document.createElement('span');
+                    spacerEl.innerText = (' – ');
                     var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
@@ -103,8 +106,9 @@ let search = function(input) {
                     // if search result item is a 'MOVIE' type
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
-                        titleSpan.innerText = current.title;
-                        showTypeEl.innerText = capitalizeFirstLetter(current.media_type) + ' – ';
+                        titleSpanEl.innerText = current.title;
+                        // showTypeEl.innerText = capitalizeFirstLetter(current.media_type) + ' – ';
+                        showTypeEl.innerText = current.media_type;
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
@@ -112,8 +116,9 @@ let search = function(input) {
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
-                        titleSpan.innerText = current.name;
-                        showTypeEl.innerText = current.media_type.toUpperCase() + ' – ';
+                        titleSpanEl.innerText = current.name;
+                        // showTypeEl.innerText = current.media_type.toUpperCase() + ' – ';
+                        showTypeEl.innerText = current.media_type;
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
                             showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
@@ -123,8 +128,9 @@ let search = function(input) {
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
                     resultEl.appendChild(posterImg);
-                    resultTitleEl.appendChild(titleSpan);
+                    resultTitleEl.appendChild(titleSpanEl);
                     resultTitleEl.appendChild(showTypeEl);
+                    resultTitleEl.appendChild(spacerEl);
                     resultTitleEl.appendChild(showYear);
                     resultEl.appendChild(resultTitleEl);
                     resultEl.appendChild(titleIDSpan)
@@ -302,4 +308,5 @@ searchFormEl2.addEventListener('submit', run2); // Listen for submission of sear
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for click of a suggested show
 modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
+modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
 logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
