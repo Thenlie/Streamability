@@ -74,10 +74,11 @@ let loadQueue = function(){
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
         queueEl.classList.add('is-flex', 'is-align-items-center')
-        // var posterDiv = document.createElement('div');
-        // posterDiv.classList.add('image is-150x200');
+
         var quePoster = document.createElement('img');
-        
+        quePoster.style.width = "100px";
+        quePoster.style.marginRight = "30px";
+        quePoster.style.marginTop = "30px";
         var queText = document.createElement('div');
         var queTitle = document.createElement('p');
         queTitle.classList.add('is-size-3', 'has-text-left');
@@ -93,10 +94,14 @@ let loadQueue = function(){
         queueEl.appendChild(quePoster);
         queueEl.appendChild(queText);
         documentFragment.append(queueEl);
+        
 
         let newClone = documentFragment.cloneNode(true);
+        var cloneContainer = document.createElement('div');
+        cloneContainer.classList.add('is-size-3')
+        cloneContainer.appendChild(newClone);
         queueContainerEl.appendChild(documentFragment);
-        queueContainer2El.appendChild(newClone);
+        queueContainer2El.appendChild(cloneContainer);
     }
 };
 
