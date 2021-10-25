@@ -9,6 +9,7 @@ let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 let modalCloseEl = document.querySelector('#modal-close')
 let selectedTitleEl = document.querySelector('#selected-title');
+let selectedYearEL = document.querySelector('#selected-year');
 let selectedScoreEl = document.querySelector('#selected-score');
 let selectedPosterEl = document.querySelector('#selected-poster');
 let selectedPlotEl = document.querySelector('#selected-plot');
@@ -17,6 +18,8 @@ let selectedQueueEl = document.querySelector('#selected-queue');
 let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
+let selectedIdEL = document.querySelector('#selected-id')
+let queButtonEl = document.querySelector("#queue-button");
 
 let input = '';
 let showID = '';
@@ -27,21 +30,41 @@ function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
-}
+};
 
 let run = function(event) {
     event.preventDefault();
     input = (userInputEl.value);
     userInputEl.value = '';
     search(input);
-}
+};
 
 let run2 = function(event) {
     event.preventDefault();
     input = (userInputEl2.value);
     userInputEl2.value = '';
     search(input);
+};
+
+
+let queClicked = function(event){
+    event.preventDefault();
+    let movieInfo = event.target.parentNode.parentNode
+    movie_title = movieInfo.querySelector("#selected-title").innerText;
+    movie_year = movieInfo.querySelector("#selected-year").innerText;
+    movie_id = movieInfo.querySelector("#selected-id").innerText;
+    movie_poster_link = movieInfo.querySelector("#selected-poster").src;
+    localStorage.setItem(movie_id, [movie_title, movie_year, movie_poster_link])
+    loadQueue();
 }
+
+let loadQueue = function(){
+    for (const [key,value] of Object.entries(localStorage)) {
+        console.log(key,value)
+        var resultEl = document.createElement('div');
+    }
+    
+};
 
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
@@ -79,6 +102,7 @@ let search = function(input) {
                     var showTypeEl = document.createElement('p');
                     showTypeEl.classList.add("has-text-left", "p-1", "showType");
                     var showYear = document.createElement('p');
+                    showYear.classList.add("showYear")
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -97,7 +121,7 @@ let search = function(input) {
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
-                            continue;
+                            showYear.innerText = 'N/A ';
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
@@ -124,7 +148,7 @@ let search = function(input) {
                 console.log('That search was invalid!');
             }
         })
-}
+};
 
 //Function to close the modal when the X is clicked
 let closeModal = function() {
@@ -135,35 +159,37 @@ let closeModal = function() {
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
-
+    
     if (current.classList.contains('result')) {
         showID = current.querySelector('.titleID').textContent;
         showType = current.querySelector('.showType').textContent;
+        showYear = current.querySelector('.showYear').textContent;
         searchResultsModal.classList.remove('is-active');
         let currentTitle = current.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
+        watchProviders(showType, showID, showYear);
+        // suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
         console.log('Hit');
     } else if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
         showType = parent.querySelector('.showType').textContent;
+        showYear = parent.querySelector('.showYear').textContent;
         searchResultsModal.classList.remove('is-active');
         let currentTitle = parent.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
+        watchProviders(showType, showID, showYear);
+        // suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
     }
-}
+};
 
 let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
     let current = evt.target;
     if (current.id !== 'suggestion-container') { //Ensure a suggestion is clicked on
         search(current.textContent);
     }
-}
+};
 
 let suggestions = function(currentTitle, currentType) {
     removeAllChildNodes(suggestionContainerEl);
@@ -204,10 +230,13 @@ let suggestions = function(currentTitle, currentType) {
             suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
             suggestionContainerEl.appendChild(suggestionEl);
         })
-}
+};
+
+
+
 
 // Find the provider for searched title on MovieDB
-function watchProviders(showType, showID) {
+function watchProviders(showType, showID, showYear) {
     removeAllChildNodes(searchResults);
     // fetch info for selected title
     fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '?api_key=14b7c2e67f36427d72ce8c1df6482552')
@@ -240,6 +269,13 @@ function watchProviders(showType, showID) {
                             } else {
                                 selectedTitleEl.innerText = selectedTitleData.name;
                             }
+                            // showing the year
+                            selectedYearEL.innerText = showYear;
+
+                            selectedIdEL.innerText = showID;
+
+
+
 
                             // viewer rating
                             selectedScoreEl.innerText = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
@@ -284,8 +320,11 @@ function watchProviders(showType, showID) {
                 console.log('error');
             }
         })
-}
+};
 
+
+loadQueue();
+queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
