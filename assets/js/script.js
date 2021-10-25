@@ -30,6 +30,11 @@ function removeAllChildNodes(parent) {
     }
 }
 
+// Capitalize first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 let refresh = function() {
     location.reload();
 }
@@ -79,11 +84,12 @@ let search = function(input) {
                     var resultEl = document.createElement('div');
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
+                    var resultTitleEl = document.createElement('div');
                     var titleSpan = document.createElement('p');
-                    titleSpan.classList.add("is-size-4", "has-text-left", "p-1", "currentTitle");
-                    var showTypeEl = document.createElement('p');
-                    showTypeEl.classList.add("has-text-left", "p-1", "showType");
-                    var showYear = document.createElement('p');
+                    titleSpan.classList.add("is-size-4", "currentTitle");
+                    var showTypeEl = document.createElement('span');
+                    showTypeEl.classList.add("showType");
+                    var showYear = document.createElement('span');
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -98,7 +104,7 @@ let search = function(input) {
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
                         titleSpan.innerText = current.title;
-                        showTypeEl.innerText = current.media_type;
+                        showTypeEl.innerText = capitalizeFirstLetter(current.media_type) + ' – ';
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
@@ -107,8 +113,7 @@ let search = function(input) {
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
                         titleSpan.innerText = current.name;
-
-                        showTypeEl.innerText = current.media_type;
+                        showTypeEl.innerText = current.media_type.toUpperCase() + ' – ';
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
                             showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
@@ -118,9 +123,10 @@ let search = function(input) {
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
                     resultEl.appendChild(posterImg);
-                    resultEl.appendChild(titleSpan);
-                    resultEl.appendChild(showTypeEl);
-                    resultEl.appendChild(showYear);
+                    resultTitleEl.appendChild(titleSpan);
+                    resultTitleEl.appendChild(showTypeEl);
+                    resultTitleEl.appendChild(showYear);
+                    resultEl.appendChild(resultTitleEl);
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
                     searchResultsModal.classList.add('is-active');

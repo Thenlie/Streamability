@@ -207,10 +207,6 @@ img {
     padding: 1.25rem;
 }
 
-.scrollx {
-    overflow-x: auto;
-}
-
 .scrolly {
     overflow-y: auto;
 }
@@ -221,11 +217,28 @@ img {
 
 
 /* MODAL STYLES */
+.modal-content {
+    max-height: 75%;
+}
+
+/* .modal-content::-webkit-scrollbar {
+    display: none;
+} */
 
 .result:hover {
     background-color: rgb(211, 209, 209);
 }
 
+#modal-header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.modal-content,
+#modal-content-container {
+    border-radius: 20px;
+}
 
 /* END Class Styles */
 
@@ -247,7 +260,6 @@ img {
     margin: 1em;
     max-height: 100px;
 }
-
 
 /* SUGGESTION BOX STYLES */
 
@@ -278,12 +290,3 @@ img {
 
 
 /* END Scrollbar Styles */
-
-
-/* Temporary for page-divider */
-
-hr.rounded {
-    border-top: 10px solid hsl(0, 0%, 86%);
-    border-radius: 5px;
-    margin-top: 50px;
-}
