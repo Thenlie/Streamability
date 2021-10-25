@@ -107,8 +107,8 @@ let search = function(input) {
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
                         titleSpanEl.innerText = current.title;
-                        // showTypeEl.innerText = capitalizeFirstLetter(current.media_type) + ' – ';
-                        showTypeEl.innerText = current.media_type;
+                        showTypeEl.innerText = capitalizeFirstLetter(current.media_type);
+                        // showTypeEl.innerText = current.media_type;
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
@@ -117,8 +117,8 @@ let search = function(input) {
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
                         titleSpanEl.innerText = current.name;
-                        // showTypeEl.innerText = current.media_type.toUpperCase() + ' – ';
-                        showTypeEl.innerText = current.media_type;
+                        showTypeEl.innerText = current.media_type.toUpperCase();
+                        // showTypeEl.innerText = current.media_type;
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
                             showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
@@ -155,7 +155,7 @@ let selected = function(evt) {
 
     if (current.classList.contains('result')) {
         showID = current.querySelector('.titleID').textContent;
-        showType = current.querySelector('.showType').textContent;
+        showType = current.querySelector('.showType').textContent.toLowerCase();
         searchResultsModal.classList.remove('is-active');
         let currentTitle = current.querySelector('.currentTitle').textContent;
         watchProviders(showType, showID);
