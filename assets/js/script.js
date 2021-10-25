@@ -39,6 +39,7 @@ let run = function(event) {
     input = (userInputEl.value);
     userInputEl.value = '';
     search(input);
+    loadQueue()
 };
 
 let run2 = function(event) {
@@ -46,6 +47,7 @@ let run2 = function(event) {
     input = (userInputEl2.value);
     userInputEl2.value = '';
     search(input);
+    loadQueue();
 };
 
 let queClicked = function(event){
@@ -67,12 +69,13 @@ let queClicked = function(event){
 
 let loadQueue = function(){
     queueContainer2El.innerHTML = '';
-    // queueContainerEl.innerHTML = '';
+    queueContainerEl.innerHTML = '';
     for (const [key,value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
         queueEl.classList.add('is-flex', 'is-align-items-center')
-        
+        // var posterDiv = document.createElement('div');
+        // posterDiv.classList.add('image is-150x200');
         var quePoster = document.createElement('img');
         
         var queText = document.createElement('div');
@@ -80,20 +83,24 @@ let loadQueue = function(){
         queTitle.classList.add('is-size-3', 'has-text-left');
         var queYear = document.createElement('p');
         queYear.classList.add('is-size-3', 'has-text-left');
-        quePoster.src = valueSplit[2];
         queTitle.innerText = valueSplit[0];
         queYear.innerText = valueSplit[1];
+        quePoster.src = valueSplit[2];
 
+        var documentFragment = document.createDocumentFragment();
         queText.appendChild(queTitle);
-        queText.appendChild(queYear)
+        queText.appendChild(queYear);
         queueEl.appendChild(quePoster);
         queueEl.appendChild(queText);
-        // queueContainerEl.appendChild(queueEl);
-        queueContainer2El.appendChild(queueEl);
+        documentFragment.append(queueEl);
 
+        let newClone = documentFragment.cloneNode(true);
+        queueContainerEl.appendChild(documentFragment);
+        queueContainer2El.appendChild(newClone);
     }
-    
 };
+
+
 
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
@@ -177,6 +184,7 @@ let search = function(input) {
                 console.log('That search was invalid!');
             }
         })
+    
 };
 
 //Function to close the modal when the X is clicked
@@ -350,6 +358,7 @@ function watchProviders(showType, showID, showYear) {
             }
         })
 };
+
 
 
 loadQueue();
