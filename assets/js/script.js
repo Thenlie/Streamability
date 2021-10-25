@@ -21,10 +21,11 @@ let resultPageEl = document.querySelector('#result-page');
 let selectedIdEL = document.querySelector('#selected-id')
 let queButtonEl = document.querySelector("#queue-button");
 let queueContainerEl = document.querySelector('#search-queue');
-
+let queueContainer2El = document.querySelector('#search-queue2');
 let input = '';
 let showID = '';
 let showType = '';
+movie_info_list = [];
 
 // reset modal upon user entering new search
 function removeAllChildNodes(parent) {
@@ -47,7 +48,6 @@ let run2 = function(event) {
     search(input);
 };
 
-movie_info_list = [];
 let queClicked = function(event){
     event.preventDefault();
     let movieInfo = event.target.parentNode.parentNode
@@ -66,18 +66,30 @@ let queClicked = function(event){
 }
 
 let loadQueue = function(){
+    queueContainer2El.innerHTML = '';
+    // queueContainerEl.innerHTML = '';
     for (const [key,value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
-        console.log(valueSplit[0]);
-        
         var queueEl = document.createElement('div');
         queueEl.classList.add('is-flex', 'is-align-items-center')
-        var quePosterEl = document.createElement('img');
-        var queTextEl = document.createElement('div');
-        var queTitleEl = document.createElement('p');
-        queTitleEl.classList.add('is-size-3', 'has-text-left');
-        var queYearEl = document.createElement('p');
-        queYearEl.classList.add('is-size-3', 'has-text-left');
+        
+        var quePoster = document.createElement('img');
+        
+        var queText = document.createElement('div');
+        var queTitle = document.createElement('p');
+        queTitle.classList.add('is-size-3', 'has-text-left');
+        var queYear = document.createElement('p');
+        queYear.classList.add('is-size-3', 'has-text-left');
+        quePoster.src = valueSplit[2];
+        queTitle.innerText = valueSplit[0];
+        queYear.innerText = valueSplit[1];
+
+        queText.appendChild(queTitle);
+        queText.appendChild(queYear)
+        queueEl.appendChild(quePoster);
+        queueEl.appendChild(queText);
+        // queueContainerEl.appendChild(queueEl);
+        queueContainer2El.appendChild(queueEl);
 
     }
     
