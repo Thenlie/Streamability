@@ -17,7 +17,7 @@ let selectedQueueEl = document.querySelector('#selected-queue');
 let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
-
+let detailsEl = document.querySelector('#result-details');
 let input = '';
 let showID = '';
 let showType = '';
@@ -58,12 +58,19 @@ let search = function(input) {
                 console.log(data);
                 removeAllChildNodes(searchResults);
 
-                // ensure there are at least 10 shows
+                // ensure there is at least 1 show and no more than 10
                 let x = 0;
                 if (data.results.length > 10) {
                     x = 10;
-                } else {
+                    userInputEl.placeholder = "What're you lookin' for?";
+                    userInputEl2.placeholder = "What're you lookin' for?";
+                } else if (data.results.length > 0) {
                     x = data.results.length;
+                    userInputEl.placeholder = "What're you lookin' for?";
+                    userInputEl2.placeholder = "What're you lookin' for?";
+                } else {
+                    noResult();
+                    return;
                 }
 
                 // iterate over movie database search results and display 20 results in search modal
@@ -125,6 +132,11 @@ let search = function(input) {
             }
         })
 }
+
+noResult = function() {
+    userInputEl.placeholder = 'Sorry, there are no results for this search!';
+    userInputEl2.placeholder = 'Sorry, there are no results for this search!';
+};
 
 //Function to close the modal when the X is clicked
 let closeModal = function() {
