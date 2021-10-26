@@ -156,50 +156,40 @@ noResult = function() {
     userInputEl2.placeholder = 'Sorry, there are no results for this search!';
 };
 
-//Function to close the modal when the X is clicked
+//close the modal when the X is clicked
 let closeModal = function() {
     searchResultsModal.classList.remove('is-active');
 }
 
-//Function to run when a show option is clicked
+//reads which option is clicked on
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
     let grandparent = parent.parentNode;
-    console.log(current);
-    console.log(parent);
+
     if (current.classList.contains('result')) {
-        showID = current.querySelector('.titleID').textContent;
-        showType = current.querySelector('.showType').textContent.toLowerCase();
-        searchResultsModal.classList.remove('is-active');
-        let currentTitle = current.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
-        landingPageEl.classList.add('is-hidden');
-        resultPageEl.classList.remove('is-hidden');
-        console.log('Hit');
+        runSelected(current)
     } else if (parent.classList.contains('result')) {
-        showID = parent.querySelector('.titleID').textContent;
-        showType = parent.querySelector('.showType').textContent.toLowerCase();
-        searchResultsModal.classList.remove('is-active');
-        let currentTitle = parent.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
-        landingPageEl.classList.add('is-hidden');
-        resultPageEl.classList.remove('is-hidden');
+        runSelected(parent)
     } else if (grandparent.classList.contains('result')) {
-        showID = grandparent.querySelector('.titleID').textContent;
-        showType = grandparent.querySelector('.showType').textContent.toLowerCase();
-        searchResultsModal.classList.remove('is-active');
-        let currentTitle = grandparent.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
-        landingPageEl.classList.add('is-hidden');
-        resultPageEl.classList.remove('is-hidden');
+        runSelected(grandparent)
     }
 }
 
-let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
+//takes target from selected function and sends that data to the rest of the functions
+let runSelected = function(element) {
+    showID = element.querySelector('.titleID').textContent;
+    showType = element.querySelector('.showType').textContent.toLowerCase();
+    searchResultsModal.classList.remove('is-active');
+    let currentTitle = element.querySelector('.currentTitle').textContent;
+    watchProviders(showType, showID);
+    suggestions(currentTitle, showType);
+    landingPageEl.classList.add('is-hidden');
+    resultPageEl.classList.remove('is-hidden');
+}
+
+// Run when a suggestion is clicked on
+let suggestionSelect = function(evt) {
     let current = evt.target;
     if (current.id !== 'suggestion-container') { //Ensure a suggestion is clicked on
         search(current.textContent);
@@ -222,10 +212,7 @@ let suggestions = function(currentTitle, currentType) {
         })
         .then(function(data) {
             let current = data.Similar.Results;
-            console.log(data);
-            // Remove suggestions from last search
-
-            if (current.length) {
+            if (current.length) { //if there are suggestions, display them
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div');
                     suggestionEl.classList.add('p-2', 'box', 'button', 'is-rounded');
@@ -233,18 +220,20 @@ let suggestions = function(currentTitle, currentType) {
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
-                let suggestionEl = document.createElement('div');
-                suggestionEl.classList.add('p-2');
-                suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
-                suggestionContainerEl.appendChild(suggestionEl);
+                noSuggestion();
             }
         })
-        .catch(function(err) {
-            let suggestionEl = document.createElement('div');
-            suggestionEl.classList.add('p-2');
-            suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
-            suggestionContainerEl.appendChild(suggestionEl);
+        .catch(function() {
+            noSuggestion();
         })
+}
+
+//runs when there are no show suggestions
+let noSuggestion = function() {
+    let suggestionEl = document.createElement('div');
+    suggestionEl.classList.add('p-2');
+    suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+    suggestionContainerEl.appendChild(suggestionEl);
 }
 
 // Find the provider for searched title on MovieDB
