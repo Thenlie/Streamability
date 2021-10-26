@@ -176,6 +176,11 @@ button {
     font-family: 'Josefin Sans', sans-serif;
 }
 
+#queue-button:hover {
+    background-color: hsl(217, 71%, 53%);
+    color: white;
+}
+
 img {
     border-radius: 15px;
 }
@@ -244,9 +249,18 @@ img {
 
 
 /* BEGIN ID Styles */
+#form-submit:hover {
+    background-color: hsl(171, 100%, 35%);
+}
+
 #logo-text a {
     text-decoration: none;
     color: unset;
+}
+
+#queue-button:hover {
+    background-color: hsl(217, 71%, 53%);
+    color: white;
 }
 
 #search-queue,
