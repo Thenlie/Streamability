@@ -34,7 +34,7 @@ function removeAllChildNodes(parent) {
 // Capitalize first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+}
 
 let refresh = function() {
     location.reload();
@@ -152,7 +152,9 @@ let closeModal = function() {
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
-
+    let grandparent = parent.parentNode;
+    console.log(current);
+    console.log(parent);
     if (current.classList.contains('result')) {
         showID = current.querySelector('.titleID').textContent;
         showType = current.querySelector('.showType').textContent.toLowerCase();
@@ -165,9 +167,18 @@ let selected = function(evt) {
         console.log('Hit');
     } else if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
-        showType = parent.querySelector('.showType').textContent;
+        showType = parent.querySelector('.showType').textContent.toLowerCase();
         searchResultsModal.classList.remove('is-active');
         let currentTitle = parent.querySelector('.currentTitle').textContent;
+        watchProviders(showType, showID);
+        suggestions(currentTitle, showType);
+        landingPageEl.classList.add('is-hidden');
+        resultPageEl.classList.remove('is-hidden');
+    } else if (grandparent.classList.contains('result')) {
+        showID = grandparent.querySelector('.titleID').textContent;
+        showType = grandparent.querySelector('.showType').textContent.toLowerCase();
+        searchResultsModal.classList.remove('is-active');
+        let currentTitle = grandparent.querySelector('.currentTitle').textContent;
         watchProviders(showType, showID);
         suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
