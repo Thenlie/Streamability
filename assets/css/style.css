@@ -244,6 +244,10 @@ img {
 
 
 /* BEGIN ID Styles */
+#logo-text a {
+    text-decoration: none;
+    color: unset;
+}
 
 #search-queue,
 #suggestions {
