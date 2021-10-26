@@ -171,9 +171,20 @@ select {
 
 
 /* BEGIN HTML Element Styles */
+a {
+    color: hsl(0, 0%, 21%);
+}
+
+a:hover {
+    color: hsl(171, 100%, 41%);
+}
 
 button {
     font-family: 'Josefin Sans', sans-serif;
+}
+
+.button {
+    border: 0px;
 }
 
 #queue-button:hover {
@@ -184,7 +195,6 @@ button {
 img {
     border-radius: 15px;
 }
-
 
 /* END HTML Element Styles */
 
@@ -220,7 +230,6 @@ img {
     color: #4a4a4a;
 }
 
-
 /* MODAL STYLES */
 .modal-content {
     max-height: 75%;
@@ -255,7 +264,6 @@ img {
 
 #logo-text a {
     text-decoration: none;
-    color: unset;
 }
 
 #queue-button:hover {
