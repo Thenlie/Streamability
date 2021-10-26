@@ -215,7 +215,7 @@ let suggestions = function(currentTitle, currentType) {
             if (current.length) {
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div');
-                    suggestionEl.classList.add('p-2', 'box');
+                    suggestionEl.classList.add('p-2', 'box', 'button', 'is-rounded');
                     suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
