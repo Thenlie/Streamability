@@ -241,6 +241,7 @@ img {
 
 .result:hover {
     background-color: rgb(211, 209, 209);
+    cursor: pointer;
 }
 
 #modal-header {
