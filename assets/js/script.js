@@ -43,16 +43,10 @@ let refresh = function() {
 
 let run = function(event) {
     event.preventDefault();
-    input = (userInputEl.value);
+    current = (event.target[0].value);
     userInputEl.value = '';
-    search(input);
-}
-
-let run2 = function(event) {
-    event.preventDefault();
-    input = (userInputEl2.value);
     userInputEl2.value = '';
-    search(input);
+    search(current);
 }
 
 let search = function(input) {
@@ -317,7 +311,7 @@ function watchProviders(showType, showID) {
 }
 
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
+searchFormEl2.addEventListener('submit', run); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
 suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for click of a suggested show
 modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
