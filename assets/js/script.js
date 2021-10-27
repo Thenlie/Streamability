@@ -22,6 +22,8 @@ let selectedIdEL = document.querySelector('#selected-id')
 let queButtonEl = document.querySelector("#queue-button");
 let queueContainerEl = document.querySelector('#search-queue');
 let queueContainer2El = document.querySelector('#search-queue2');
+let deleteAllButtonEl = document.querySelector('#delete-all-queue');
+let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 let input = '';
 let showID = '';
 let showType = '';
@@ -49,6 +51,7 @@ let run2 = function(event) {
     search(input);
     loadQueue();
 };
+
 
 let queClicked = function(event){
     event.preventDefault();
@@ -105,6 +108,12 @@ let loadQueue = function(){
     }
 };
 
+
+let deleteAll = function(){
+    console.log("clear");
+    localStorage.clear();
+    loadQueue();
+}
 
 
 let search = function(input) {
@@ -367,6 +376,8 @@ function watchProviders(showType, showID, showYear) {
 
 
 loadQueue();
+deleteAllButtonEl.addEventListener('click', deleteAll);
+deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
