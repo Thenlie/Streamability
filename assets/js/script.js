@@ -156,6 +156,11 @@ let search = function(input) {
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
+                    
+                    // disallowes displaying results for titles with a media_type of 'person'
+                    if (current.media_type === "person") {
+                        continue;
+                    }
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
