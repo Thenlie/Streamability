@@ -78,8 +78,7 @@ let loadQueue = function(){
     for (const [key,value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
-        queueEl.classList.add('queueBox','is-flex','is-align-items-center')
-        queueEl.innerHTML = '<a href = ></a>';
+        queueEl.classList.add('is-flex','is-align-items-center')
         var quePoster = document.createElement('img');
         quePoster.style.width = "100px";
         quePoster.style.marginRight = "30px";
@@ -88,31 +87,39 @@ let loadQueue = function(){
         quePoster.style.marginLeft = "10px";
         var queText = document.createElement('div');
         var queTitle = document.createElement('p');
-        queTitle.classList.add('queueBox','is-size-4', 'has-text-left');
+        queTitle.classList.add('is-size-4', 'has-text-left');
         var queYear = document.createElement('p');
-        queYear.classList.add('queueBox','is-size-4', 'has-text-left');
+        queYear.classList.add('is-size-4', 'has-text-left');
         queTitle.innerText = valueSplit[0];
         queYear.innerText = valueSplit[1];
         quePoster.src = valueSplit[2];
         var titleIDhid = document.createElement('span');
         titleIDhid.classList.add("is-hidden", "titleID");
         titleIDhid.innerText = key;
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = "Delete";
+        deleteButton.classList.add('delete-btn','button','is-rounded');
+        deleteButton.addEventListener('click', deleteID);
+        
 
         var documentFragment = document.createDocumentFragment();
         queText.appendChild(queTitle);
         queText.appendChild(queYear);
+        queText.appendChild(titleIDhid);
         queueEl.appendChild(quePoster);
         queueEl.appendChild(queText);
-        queueEl.appendChild(titleIDhid);
+        queueEl.appendChild(deleteButton);
         documentFragment.append(queueEl);
         
 
         let newClone = documentFragment.cloneNode(true);
         var cloneContainer = document.createElement('div');
-        cloneContainer.classList.add('is-size-3')
+        cloneContainer.classList.add('is-size-3');
         cloneContainer.appendChild(newClone);
+        
         queueContainerEl.appendChild(documentFragment);
         queueContainer2El.appendChild(cloneContainer);
+        queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
     }
 };
 
@@ -376,11 +383,24 @@ function watchProviders(showType, showID, showYear) {
 };
 
 
-document.addEventListener('click', function(event){
-    if (event.target.classList.contains('queueBox')) 
-    console.log(event.target.parentNode);
-    return;
-});
+// document.addEventListener('click', function(event){
+//     // if (event.target.classList.contains('queueBox')) 
+//     let queueInfo = event.target.parentNode
+//     let queueid = queueInfo.querySelector('.titleID').innerText;
+//     console.log(queueid);
+//     // search("spiderman");
+    
+    
+//     return;
+// });
+let deleteID = function(event){
+    let queueInfo = event.target.parentNode
+    let queueid = queueInfo.querySelector('.titleID').innerText;
+    localStorage.removeItem(queueid);
+    loadQueue();
+};
+
+
 
 
 
