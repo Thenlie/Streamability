@@ -49,13 +49,6 @@ function capitalizeFirstLetter(string) {
 let refresh = function() {
     location.reload();
 }
-let run = function(event) {
-    event.preventDefault();
-    input = (userInputEl.value);
-    userInputEl.value = '';
-    search(input);
-    loadQueue()
-};
 
 let run = function(event) {
     event.preventDefault();
