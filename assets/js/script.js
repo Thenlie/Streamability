@@ -168,6 +168,11 @@ let search = function(input) {
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
 
+                    // disallow people from displaying
+                    if (current.media_type === 'person') {
+                        continue;
+                    }
+
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
