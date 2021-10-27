@@ -287,3 +287,10 @@ hr.rounded {
     border-radius: 5px;
     margin-top: 50px;
 }
+
+
+.queueBox:hover {
+    background-color: white;
+    border-radius: 20px;
+    opacity: 100%;
+}

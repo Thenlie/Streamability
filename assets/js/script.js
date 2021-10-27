@@ -9,6 +9,7 @@ let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 let modalCloseEl = document.querySelector('#modal-close')
 let selectedTitleEl = document.querySelector('#selected-title');
+let selectedYearEL = document.querySelector('#selected-year');
 let selectedScoreEl = document.querySelector('#selected-score');
 let selectedPosterEl = document.querySelector('#selected-poster');
 let selectedPlotEl = document.querySelector('#selected-plot');
@@ -17,31 +18,117 @@ let selectedQueueEl = document.querySelector('#selected-queue');
 let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
+let selectedIdEL = document.querySelector('#selected-id')
+let queButtonEl = document.querySelector("#queue-button");
+let queueContainerEl = document.querySelector('#search-queue');
+let queueContainer2El = document.querySelector('#search-queue2');
+let deleteAllButtonEl = document.querySelector('#delete-all-queue');
+let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
+
 
 let input = '';
 let showID = '';
 let showType = '';
+movie_info_list = [];
 
 // reset modal upon user entering new search
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
-}
+};
 
 let run = function(event) {
     event.preventDefault();
     input = (userInputEl.value);
     userInputEl.value = '';
     search(input);
-}
+    loadQueue()
+};
 
 let run2 = function(event) {
     event.preventDefault();
     input = (userInputEl2.value);
     userInputEl2.value = '';
     search(input);
+    loadQueue();
+};
+
+
+let queClicked = function(event){
+    event.preventDefault();
+    let movieInfo = event.target.parentNode.parentNode
+    movie_title = movieInfo.querySelector("#selected-title").innerText;
+    movie_year = movieInfo.querySelector("#selected-year").innerText;
+    movie_id = movieInfo.querySelector("#selected-id").innerText;
+    movie_poster_link = movieInfo.querySelector("#selected-poster").src;
+    for (let index = 0; index < 3; index++) {
+        let movie_info = [movie_title,movie_year,movie_poster_link]
+        items = movie_info[index]
+        movie_info_list.push(items)
+    }
+    localStorage.setItem(movie_id, movie_info_list);
+    movie_info_list = [];
+    loadQueue();
 }
+
+let loadQueue = function(){
+    queueContainer2El.innerHTML = '';
+    queueContainerEl.innerHTML = '';
+    for (const [key,value] of Object.entries(localStorage)) {
+        var valueSplit = value.split(',');
+        var queueEl = document.createElement('div');
+        queueEl.classList.add('is-flex','is-align-items-center')
+        var quePoster = document.createElement('img');
+        quePoster.style.width = "100px";
+        quePoster.style.marginRight = "30px";
+        quePoster.style.marginTop = "30px";
+        quePoster.style.marginBottom = "30px";
+        quePoster.style.marginLeft = "10px";
+        var queText = document.createElement('div');
+        var queTitle = document.createElement('p');
+        queTitle.classList.add('is-size-4', 'has-text-left');
+        var queYear = document.createElement('p');
+        queYear.classList.add('is-size-4', 'has-text-left');
+        queTitle.innerText = valueSplit[0];
+        queYear.innerText = valueSplit[1];
+        quePoster.src = valueSplit[2];
+        var titleIDhid = document.createElement('span');
+        titleIDhid.classList.add("is-hidden", "titleID");
+        titleIDhid.innerText = key;
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = "Delete";
+        deleteButton.classList.add('delete-btn','button','is-rounded');
+        deleteButton.addEventListener('click', deleteID);
+        
+
+        var documentFragment = document.createDocumentFragment();
+        queText.appendChild(queTitle);
+        queText.appendChild(queYear);
+        queText.appendChild(titleIDhid);
+        queueEl.appendChild(quePoster);
+        queueEl.appendChild(queText);
+        queueEl.appendChild(deleteButton);
+        documentFragment.append(queueEl);
+        
+
+        let newClone = documentFragment.cloneNode(true);
+        var cloneContainer = document.createElement('div');
+        cloneContainer.classList.add('is-size-3');
+        cloneContainer.appendChild(newClone);
+        
+        queueContainerEl.appendChild(documentFragment);
+        queueContainer2El.appendChild(cloneContainer);
+        queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
+    }
+};
+
+
+let deleteAll = function(){
+    localStorage.clear();
+    loadQueue();
+}
+
 
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
@@ -79,6 +166,7 @@ let search = function(input) {
                     var showTypeEl = document.createElement('p');
                     showTypeEl.classList.add("has-text-left", "p-1", "showType");
                     var showYear = document.createElement('p');
+                    showYear.classList.add("showYear")
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -97,7 +185,7 @@ let search = function(input) {
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
-                            continue;
+                            showYear.innerText = 'N/A ';
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
@@ -124,7 +212,8 @@ let search = function(input) {
                 console.log('That search was invalid!');
             }
         })
-}
+    
+};
 
 //Function to close the modal when the X is clicked
 let closeModal = function() {
@@ -135,35 +224,37 @@ let closeModal = function() {
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
-
+    
     if (current.classList.contains('result')) {
         showID = current.querySelector('.titleID').textContent;
         showType = current.querySelector('.showType').textContent;
+        showYear = current.querySelector('.showYear').textContent;
         searchResultsModal.classList.remove('is-active');
         let currentTitle = current.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
+        watchProviders(showType, showID, showYear);
+        // suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
         console.log('Hit');
     } else if (parent.classList.contains('result')) {
         showID = parent.querySelector('.titleID').textContent;
         showType = parent.querySelector('.showType').textContent;
+        showYear = parent.querySelector('.showYear').textContent;
         searchResultsModal.classList.remove('is-active');
         let currentTitle = parent.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID);
-        suggestions(currentTitle, showType);
+        watchProviders(showType, showID, showYear);
+        // suggestions(currentTitle, showType);
         landingPageEl.classList.add('is-hidden');
         resultPageEl.classList.remove('is-hidden');
     }
-}
+};
 
 let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
     let current = evt.target;
     if (current.id !== 'suggestion-container') { //Ensure a suggestion is clicked on
         search(current.textContent);
     }
-}
+};
 
 let suggestions = function(currentTitle, currentType) {
     removeAllChildNodes(suggestionContainerEl);
@@ -204,10 +295,13 @@ let suggestions = function(currentTitle, currentType) {
             suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
             suggestionContainerEl.appendChild(suggestionEl);
         })
-}
+};
+
+
+
 
 // Find the provider for searched title on MovieDB
-function watchProviders(showType, showID) {
+function watchProviders(showType, showID, showYear) {
     removeAllChildNodes(searchResults);
     // fetch info for selected title
     fetch('https://api.themoviedb.org/3/' + showType + '/' + showID + '?api_key=14b7c2e67f36427d72ce8c1df6482552')
@@ -240,7 +334,9 @@ function watchProviders(showType, showID) {
                             } else {
                                 selectedTitleEl.innerText = selectedTitleData.name;
                             }
-
+                            // showing the year
+                            selectedYearEL.innerText = showYear;
+                            selectedIdEL.innerText = showID;
                             // viewer rating
                             selectedScoreEl.innerText = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
 
@@ -284,8 +380,34 @@ function watchProviders(showType, showID) {
                 console.log('error');
             }
         })
-}
+};
 
+
+// document.addEventListener('click', function(event){
+//     // if (event.target.classList.contains('queueBox')) 
+//     let queueInfo = event.target.parentNode
+//     let queueid = queueInfo.querySelector('.titleID').innerText;
+//     console.log(queueid);
+//     // search("spiderman");
+    
+    
+//     return;
+// });
+let deleteID = function(event){
+    let queueInfo = event.target.parentNode
+    let queueid = queueInfo.querySelector('.titleID').innerText;
+    localStorage.removeItem(queueid);
+    loadQueue();
+};
+
+
+
+
+
+loadQueue();
+deleteAllButtonEl.addEventListener('click', deleteAll);
+deleteAllButtonEl2.addEventListener('click', deleteAll);
+queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
