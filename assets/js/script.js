@@ -24,6 +24,8 @@ let queueContainerEl = document.querySelector('#search-queue');
 let queueContainer2El = document.querySelector('#search-queue2');
 let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
+
+
 let input = '';
 let showID = '';
 let showType = '';
@@ -76,27 +78,32 @@ let loadQueue = function(){
     for (const [key,value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
-        queueEl.classList.add('queueBox','is-flex', 'is-align-items-center')
-
+        queueEl.classList.add('queueBox','is-flex','is-align-items-center')
+        queueEl.innerHTML = '<a href = ></a>';
         var quePoster = document.createElement('img');
         quePoster.style.width = "100px";
         quePoster.style.marginRight = "30px";
         quePoster.style.marginTop = "30px";
         quePoster.style.marginBottom = "30px";
+        quePoster.style.marginLeft = "10px";
         var queText = document.createElement('div');
         var queTitle = document.createElement('p');
         queTitle.classList.add('queueBox','is-size-4', 'has-text-left');
         var queYear = document.createElement('p');
-        queYear.classList.add('queueBox', 'is-size-4', 'has-text-left');
+        queYear.classList.add('queueBox','is-size-4', 'has-text-left');
         queTitle.innerText = valueSplit[0];
         queYear.innerText = valueSplit[1];
         quePoster.src = valueSplit[2];
+        var titleIDhid = document.createElement('span');
+        titleIDhid.classList.add("is-hidden", "titleID");
+        titleIDhid.innerText = key;
 
         var documentFragment = document.createDocumentFragment();
         queText.appendChild(queTitle);
         queText.appendChild(queYear);
         queueEl.appendChild(quePoster);
         queueEl.appendChild(queText);
+        queueEl.appendChild(titleIDhid);
         documentFragment.append(queueEl);
         
 
@@ -370,11 +377,10 @@ function watchProviders(showType, showID, showYear) {
 
 
 document.addEventListener('click', function(event){
-    if (!event.target.classList.contains('queueBox')) 
-    console.log(event.target);
+    if (event.target.classList.contains('queueBox')) 
+    console.log(event.target.parentNode);
     return;
-    
-})
+});
 
 
 
