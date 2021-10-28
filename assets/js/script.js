@@ -8,6 +8,7 @@ let userInputEl2 = document.querySelector('#user-input2');
 let searchResultsModal = document.querySelector('#search-results-modal')
 let searchResults = document.querySelector('#search-results');
 let modalCloseEl = document.querySelector('#modal-close')
+let modalBackgroundEl = document.querySelector(".modal-background");
 let selectedTitleEl = document.querySelector('#selected-title');
 let selectedYearEL = document.querySelector('#selected-year');
 let selectedScoreEl = document.querySelector('#selected-score');
@@ -18,6 +19,8 @@ let selectedQueueEl = document.querySelector('#selected-queue');
 let landingPageEl = document.querySelector('#landing-page');
 let suggestionContainerEl = document.querySelector('#suggestion-container');
 let resultPageEl = document.querySelector('#result-page');
+let detailsEl = document.querySelector('#result-details');
+let logoEl = document.querySelector('#logo');
 let selectedIdEL = document.querySelector('#selected-id')
 let queButtonEl = document.querySelector("#queue-button");
 let queueContainerEl = document.querySelector('#search-queue');
@@ -38,24 +41,25 @@ function removeAllChildNodes(parent) {
     }
 };
 
+// Capitalize first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+let refresh = function() {
+    location.reload();
+}
+
 let run = function(event) {
     event.preventDefault();
-    input = (userInputEl.value);
+    current = (event.target[0].value);
     userInputEl.value = '';
-    search(input);
-    loadQueue()
-};
-
-let run2 = function(event) {
-    event.preventDefault();
-    input = (userInputEl2.value);
     userInputEl2.value = '';
-    search(input);
+    search(current);
     loadQueue();
 };
 
-
-let queClicked = function(event){
+let queClicked = function(event) {
     event.preventDefault();
     let movieInfo = event.target.parentNode.parentNode
     movie_title = movieInfo.querySelector("#selected-title").innerText;
@@ -63,7 +67,7 @@ let queClicked = function(event){
     movie_id = movieInfo.querySelector("#selected-id").innerText;
     movie_poster_link = movieInfo.querySelector("#selected-poster").src;
     for (let index = 0; index < 3; index++) {
-        let movie_info = [movie_title,movie_year,movie_poster_link]
+        let movie_info = [movie_title, movie_year, movie_poster_link]
         items = movie_info[index]
         movie_info_list.push(items)
     }
@@ -72,13 +76,13 @@ let queClicked = function(event){
     loadQueue();
 }
 
-let loadQueue = function(){
+let loadQueue = function() {
     queueContainer2El.innerHTML = '';
     queueContainerEl.innerHTML = '';
-    for (const [key,value] of Object.entries(localStorage)) {
+    for (const [key, value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
-        queueEl.classList.add('is-flex','is-align-items-center')
+        queueEl.classList.add('is-flex', 'is-align-items-center')
         var quePoster = document.createElement('img');
         quePoster.style.width = "100px";
         quePoster.style.marginRight = "30px";
@@ -98,9 +102,9 @@ let loadQueue = function(){
         titleIDhid.innerText = key;
         var deleteButton = document.createElement('button');
         deleteButton.innerHTML = "Delete";
-        deleteButton.classList.add('delete-btn','button','is-rounded');
+        deleteButton.classList.add('delete-btn', 'button', 'is-rounded');
         deleteButton.addEventListener('click', deleteID);
-        
+
 
         var documentFragment = document.createDocumentFragment();
         queText.appendChild(queTitle);
@@ -110,13 +114,13 @@ let loadQueue = function(){
         queueEl.appendChild(queText);
         queueEl.appendChild(deleteButton);
         documentFragment.append(queueEl);
-        
+
 
         let newClone = documentFragment.cloneNode(true);
         var cloneContainer = document.createElement('div');
         cloneContainer.classList.add('is-size-3');
         cloneContainer.appendChild(newClone);
-        
+
         queueContainerEl.appendChild(documentFragment);
         queueContainer2El.appendChild(cloneContainer);
         queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
@@ -124,7 +128,7 @@ let loadQueue = function(){
 };
 
 
-let deleteAll = function(){
+let deleteAll = function() {
     localStorage.clear();
     loadQueue();
 }
@@ -145,12 +149,19 @@ let search = function(input) {
                 console.log(data);
                 removeAllChildNodes(searchResults);
 
-                // ensure there are at least 10 shows
+                // ensure there is at least 1 show and no more than 10
                 let x = 0;
                 if (data.results.length > 10) {
                     x = 10;
-                } else {
+                    userInputEl.placeholder = "What're you lookin' for?";
+                    userInputEl2.placeholder = "What're you lookin' for?";
+                } else if (data.results.length > 0) {
                     x = data.results.length;
+                    userInputEl.placeholder = "What're you lookin' for?";
+                    userInputEl2.placeholder = "What're you lookin' for?";
+                } else {
+                    noResult();
+                    return;
                 }
 
                 // iterate over movie database search results and display 20 results in search modal
@@ -162,16 +173,24 @@ let search = function(input) {
                         continue;
                     }
 
+                    // disallow people from displaying
+                    if (current.media_type === 'person') {
+                        continue;
+                    }
+
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
                     var posterImg = document.createElement('img');
-                    var titleSpan = document.createElement('p');
-                    titleSpan.classList.add("is-size-4", "has-text-left", "p-1", "currentTitle");
-                    var showTypeEl = document.createElement('p');
-                    showTypeEl.classList.add("has-text-left", "p-1", "showType");
-                    var showYear = document.createElement('p');
-                    showYear.classList.add("showYear")
+                    var resultTitleEl = document.createElement('div');
+                    var titleSpanEl = document.createElement('p');
+                    titleSpanEl.classList.add("is-size-4", "currentTitle");
+                    var showTypeEl = document.createElement('span');
+                    showTypeEl.classList.add("showType");
+                    var spacerEl = document.createElement('span');
+                    spacerEl.innerText = (' – ');
+                    var showYear = document.createElement('span');
+                    showYear.classList.add('showYear')
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -185,8 +204,9 @@ let search = function(input) {
                     // if search result item is a 'MOVIE' type
                     if (current.title) {
                         // assign movie title, type, release year, and movie ID to variables
-                        titleSpan.innerText = current.title;
-                        showTypeEl.innerText = current.media_type;
+                        titleSpanEl.innerText = current.title;
+                        showTypeEl.innerText = capitalizeFirstLetter(current.media_type);
+                        // showTypeEl.innerText = current.media_type;
                         if (current.release_date) { //Check if there is a release date
                             showYear.innerText = current.release_date.substring(0, 4);
                         } else {
@@ -194,9 +214,9 @@ let search = function(input) {
                         }
                         titleIDSpan.innerText = current.id;
                     } else { // search result item is 'TV' type
-                        titleSpan.innerText = current.name;
-
-                        showTypeEl.innerText = current.media_type;
+                        titleSpanEl.innerText = current.name;
+                        showTypeEl.innerText = current.media_type.toUpperCase();
+                        // showTypeEl.innerText = current.media_type;
                         titleIDSpan.innerText = current.id;
                         if (current.first_air_date) {
                             showYear.innerText = current.first_air_date.substring(0, 4); //sometimes set to none
@@ -206,9 +226,11 @@ let search = function(input) {
                     }
                     // append title, media type, release year, and ID variables to elements that were dynamically created above
                     resultEl.appendChild(posterImg);
-                    resultEl.appendChild(titleSpan);
-                    resultEl.appendChild(showTypeEl);
-                    resultEl.appendChild(showYear);
+                    resultTitleEl.appendChild(titleSpanEl);
+                    resultTitleEl.appendChild(showTypeEl);
+                    resultTitleEl.appendChild(spacerEl);
+                    resultTitleEl.appendChild(showYear);
+                    resultEl.appendChild(resultTitleEl);
                     resultEl.appendChild(titleIDSpan)
                     searchResults.appendChild(resultEl);
                     searchResultsModal.classList.add('is-active');
@@ -217,44 +239,49 @@ let search = function(input) {
                 console.log('That search was invalid!');
             }
         })
-    
+
 };
 
-//Function to close the modal when the X is clicked
+noResult = function() {
+    userInputEl.placeholder = 'Sorry, there are no results for this search!';
+    userInputEl2.placeholder = 'Sorry, there are no results for this search!';
+};
+
+//close the modal when the X is clicked
 let closeModal = function() {
     searchResultsModal.classList.remove('is-active');
 }
 
-//Function to run when a show option is clicked
+//reads which option is clicked on
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
-    
+    let grandparent = parent.parentNode;
+
     if (current.classList.contains('result')) {
-        showID = current.querySelector('.titleID').textContent;
-        showType = current.querySelector('.showType').textContent;
-        showYear = current.querySelector('.showYear').textContent;
-        searchResultsModal.classList.remove('is-active');
-        let currentTitle = current.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID, showYear);
-        // suggestions(currentTitle, showType);
-        landingPageEl.classList.add('is-hidden');
-        resultPageEl.classList.remove('is-hidden');
-        console.log('Hit');
+        runSelected(current);
     } else if (parent.classList.contains('result')) {
-        showID = parent.querySelector('.titleID').textContent;
-        showType = parent.querySelector('.showType').textContent;
-        showYear = parent.querySelector('.showYear').textContent;
-        searchResultsModal.classList.remove('is-active');
-        let currentTitle = parent.querySelector('.currentTitle').textContent;
-        watchProviders(showType, showID, showYear);
-        // suggestions(currentTitle, showType);
-        landingPageEl.classList.add('is-hidden');
-        resultPageEl.classList.remove('is-hidden');
+        runSelected(parent);
+    } else if (grandparent.classList.contains('result')) {
+        runSelected(grandparent);
     }
 };
 
-let suggestionSelect = function(evt) { // Run when a suggestion is clicked on
+//takes target from selected function and sends that data to the rest of the functions
+let runSelected = function(element) {
+    showID = element.querySelector('.titleID').textContent;
+    showType = element.querySelector('.showType').textContent.toLowerCase();
+    showYear = element.querySelector('.showYear').textContent;
+    searchResultsModal.classList.remove('is-active');
+    let currentTitle = element.querySelector('.currentTitle').textContent;
+    watchProviders(showType, showID, showYear);
+    suggestions(currentTitle, showType);
+    landingPageEl.classList.add('is-hidden');
+    resultPageEl.classList.remove('is-hidden');
+}
+
+// Run when a suggestion is clicked on
+let suggestionSelect = function(evt) {
     let current = evt.target;
     if (current.id !== 'suggestion-container') { //Ensure a suggestion is clicked on
         search(current.textContent);
@@ -277,33 +304,32 @@ let suggestions = function(currentTitle, currentType) {
         })
         .then(function(data) {
             let current = data.Similar.Results;
-            console.log(data);
-            // Remove suggestions from last search
-
-            if (current.length) {
+            if (current.length) { //if there are suggestions, display them
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div');
-                    suggestionEl.classList.add('p-2', 'box');
+                    suggestionEl.classList.add('p-2', 'box', 'button', 'is-rounded');
                     suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
-                let suggestionEl = document.createElement('div');
-                suggestionEl.classList.add('p-2');
-                suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
-                suggestionContainerEl.appendChild(suggestionEl);
+                noSuggestion();
             }
         })
-        .catch(function(err) {
-            let suggestionEl = document.createElement('div');
-            suggestionEl.classList.add('p-2');
-            suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
-            suggestionContainerEl.appendChild(suggestionEl);
+        .catch(function() {
+            noSuggestion();
         })
 };
 
 
 
+
+//runs when there are no show suggestions
+let noSuggestion = function() {
+    let suggestionEl = document.createElement('div');
+    suggestionEl.classList.add('p-2');
+    suggestionEl.innerText = 'Sorry there are no suggestions for this title!';
+    suggestionContainerEl.appendChild(suggestionEl);
+}
 
 // Find the provider for searched title on MovieDB
 function watchProviders(showType, showID, showYear) {
@@ -387,34 +413,21 @@ function watchProviders(showType, showID, showYear) {
         })
 };
 
-
-// document.addEventListener('click', function(event){
-//     // if (event.target.classList.contains('queueBox')) 
-//     let queueInfo = event.target.parentNode
-//     let queueid = queueInfo.querySelector('.titleID').innerText;
-//     console.log(queueid);
-//     // search("spiderman");
-    
-    
-//     return;
-// });
-let deleteID = function(event){
+let deleteID = function(event) {
     let queueInfo = event.target.parentNode
     let queueid = queueInfo.querySelector('.titleID').innerText;
     localStorage.removeItem(queueid);
     loadQueue();
 };
 
-
-
-
-
 loadQueue();
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchFormEl2.addEventListener('submit', run2); // Listen for submission of search form 2
+searchFormEl2.addEventListener('submit', run); // Listen for submission of search form 2
 searchResults.addEventListener('click', selected); // Listen for click of show option
-suggestionContainerEl.addEventListener('click', suggestionSelect) // Listen for click of a suggested show
-modalCloseEl.addEventListener('click', closeModal) // Listen for click of modal close button
+suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for click of a suggested show
+modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
+modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
+logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
