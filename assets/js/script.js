@@ -168,11 +168,6 @@ let search = function(input) {
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
                     
-                    // disallowes displaying results for titles with a media_type of 'person'
-                    if (current.media_type === "person") {
-                        continue;
-                    }
-
                     // disallow people from displaying
                     if (current.media_type === 'person') {
                         continue;
