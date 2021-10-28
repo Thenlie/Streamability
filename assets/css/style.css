@@ -186,6 +186,15 @@ a:hover {
 
 button {
     font-family: 'Josefin Sans', sans-serif;
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
+button:hover {
+    background-color: rgb(211, 209, 209);
 }
 
 .button {
@@ -343,6 +352,10 @@ img {
     max-height: 60rem;
 }
 
+#selected-providers div {
+    min-width: fit-content;
+}
+
 #streamability-title {
     position: relative;
     top: 46%;
@@ -351,10 +364,8 @@ img {
 /* SUGGESTION BOX STYLES */
 
 #suggestion-container .box:hover {
-    background-color: #4a4a4a;
-    color: white;
+    background-color: rgb(211, 209, 209);;
 }
-
 
 /* END ID Styles */
 
@@ -399,6 +410,10 @@ img {
 
 /* BEGIN Media Query for Mobile */
 @media screen and (max-width: 769px) {
+    img {
+        border-radius: 10px;
+    }
+    
     #logo-row div {
         padding: 0;
     }
@@ -417,5 +432,7 @@ img {
     #modal-content-container {
         margin: 2rem;
     }
+
+    
 }
 /* END Media Query for Desktop */
