@@ -265,6 +265,7 @@ img {
 .modal-content,
 #modal-content-container {
     border-radius: 20px;
+    overflow: unset!important;
 }
 
 /* END Class Styles */
@@ -295,9 +296,14 @@ img {
     margin: 1em;
 }
 
+
 #search-results img {
     margin: 1em;
     max-height: 100px;
+}
+
+#search-results.message-body {
+    max-height: 60rem;
 }
 
 #streamability-title {
