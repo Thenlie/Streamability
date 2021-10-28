@@ -173,6 +173,11 @@ select {
 /* BEGIN HTML Element Styles */
 a {
     color: hsl(0, 0%, 21%);
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 
 a:hover {
@@ -185,6 +190,26 @@ button {
 
 .button {
     border: 0px;
+}
+
+/* Thanks to Tim MacDonald for figuring this out! https://codepen.io/timacdonald/pen/EQmQbL */
+.button.is-multiline {
+    min-height: 2.25em;
+    white-space: unset;
+    height: auto;
+    flex-direction: column;
+}
+
+.button.is-multiline.p-2 {
+    padding: 1rem!important;
+}
+
+#queue-button {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 
 #queue-button:hover {
@@ -203,6 +228,14 @@ img {
 
 .box {
     border-radius: 20px;
+}
+
+.box.button {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 
 .float {
@@ -239,26 +272,43 @@ img {
     display: none;
 } */
 
+.result {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
 .result:hover {
     background-color: rgb(211, 209, 209);
     cursor: pointer;
 }
 
-#modal-header {
-    position: -webkit-sticky; /* Safari */
+/* #modal-header {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
-}
+} */
 
 .modal-content,
 #modal-content-container {
     border-radius: 20px;
+    overflow: unset!important;
 }
 
 /* END Class Styles */
 
 
 /* BEGIN ID Styles */
+#form-submit {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
 #form-submit:hover {
     background-color: hsl(171, 100%, 35%);
 }
@@ -283,9 +333,19 @@ img {
     margin: 1em;
 }
 
+
 #search-results img {
     margin: 1em;
     max-height: 100px;
+}
+
+#search-results.message-body {
+    max-height: 60rem;
+}
+
+#streamability-title {
+    position: relative;
+    top: 46%;
 }
 
 /* SUGGESTION BOX STYLES */
@@ -315,25 +375,47 @@ img {
     background: hsl(348, 100%, 47%)
 }
 
-
-<<<<<<< HEAD
-/* END Scrollbar Styles */
-=======
 /* END Scrollbar Styles */
 
-
-/* Temporary for page-divider */
-
-hr.rounded {
-    border-top: 10px solid hsl(0, 0%, 86%);
-    border-radius: 5px;
-    margin-top: 50px;
+/* BEGIN Media Query for Desktop */
+@media screen and (max-width: 1024px) {
+    body {
+        margin: 2rem;
+    }
+    #header-logo {
+        max-width: 150px;
+        min-width: 150px;
+    }
 }
+/* END Media Query for Desktop */
 
-
-.queueBox:hover {
-    background-color: white;
-    border-radius: 20px;
-    opacity: 100%;
+/* BEGIN Media Query for Tablet */
+@media screen and (max-width: 1024px) {
+    #streamability-title {
+        top: 33%;
+    }
 }
->>>>>>> main
+/* END Media Query for Tablet */
+
+/* BEGIN Media Query for Mobile */
+@media screen and (max-width: 769px) {
+    #logo-row div {
+        padding: 0;
+    }
+
+    #header-logo {
+        max-width: 200px;
+        min-width: 200px;
+    }
+
+    #streamability-title {
+        width: 100vw;
+        text-align: center;
+        top: -25%;
+    }
+
+    #modal-content-container {
+        margin: 2rem;
+    }
+}
+/* END Media Query for Desktop */

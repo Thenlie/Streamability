@@ -302,7 +302,7 @@ let suggestions = function(currentTitle, currentType) {
             if (current.length) { //if there are suggestions, display them
                 for (let i = 0; i < current.length; i++) {
                     let suggestionEl = document.createElement('div');
-                    suggestionEl.classList.add('p-2', 'box', 'button', 'is-rounded');
+                    suggestionEl.classList.add('p-2', 'box', 'button', 'is-rounded', 'is-multiline');
                     suggestionEl.innerText = current[i].Name;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
