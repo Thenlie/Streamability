@@ -187,6 +187,14 @@ button {
     border: 0px;
 }
 
+/* Thanks to Tim MacDonald for figuring this out! https://codepen.io/timacdonald/pen/EQmQbL */
+.button.is-multiline {
+    min-height: 2.25em;
+    white-space: unset;
+    height: auto;
+    flex-direction: column;
+}
+
 #queue-button:hover {
     background-color: hsl(217, 71%, 53%);
     color: white;
@@ -315,25 +323,12 @@ img {
     background: hsl(348, 100%, 47%)
 }
 
-
-<<<<<<< HEAD
-/* END Scrollbar Styles */
-=======
 /* END Scrollbar Styles */
 
-
-/* Temporary for page-divider */
-
-hr.rounded {
-    border-top: 10px solid hsl(0, 0%, 86%);
-    border-radius: 5px;
-    margin-top: 50px;
+/* BEGIN Media Query for Desktop */
+@media screen and (max-width: 1024px) {
+    body {
+        margin: 4rem;
+    }
 }
-
-
-.queueBox:hover {
-    background-color: white;
-    border-radius: 20px;
-    opacity: 100%;
-}
->>>>>>> main
+/* END Media Query for Desktop and Higher */
