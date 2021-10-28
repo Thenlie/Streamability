@@ -173,11 +173,11 @@ select {
 /* BEGIN HTML Element Styles */
 a {
     color: hsl(0, 0%, 21%);
-    -webkit-transition: all .25s ease-out;
-    -moz-transition: all .25s ease-out;
-    -ms-transition: all .25s ease-out;
-    -o-transition: all .25s ease-out;
-    transition: all .25s ease-out;
+    -webkit-transition: color .25s ease-out;
+    -moz-transition: color .25s ease-out;
+    -ms-transition: color .25s ease-out;
+    -o-transition: color .25s ease-out;
+    transition: color .25s ease-out;
 }
 
 a:hover {
@@ -294,12 +294,6 @@ img {
     cursor: pointer;
 }
 
-/* #modal-header {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-} */
-
 .modal-content,
 #modal-content-container {
     border-radius: 20px;
@@ -322,8 +316,15 @@ img {
     background-color: hsl(171, 100%, 35%);
 }
 
-#logo-text a {
+#logo-image-2 {
+    min-width: 89.98px;
+    max-width: 89.98px;
+}
+
+#logo-text {
     text-decoration: none;
+    position: relative;
+    top: 41%;
 }
 
 #queue-button:hover {
@@ -337,6 +338,10 @@ img {
     overflow-y: auto;
 }
 
+#search-queue2 {
+    max-height: 27em;
+    overflow-y: auto;
+}
 #search-queue img,
 #suggestions img {
     margin: 1em;
@@ -389,7 +394,19 @@ img {
 /* END Scrollbar Styles */
 
 /* BEGIN Media Query for Desktop */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1215px) {
+    #logo-text {
+        top: 31%
+    }
+    #logo-image-2 {
+        min-width: 61.5px;
+        max-width: 61.5px;
+    }
+    
+}
+
+/* BEGIN Media Query for Tablet */
+@media screen and (max-width: 1023px) {
     body {
         margin: 2rem;
     }
@@ -397,11 +414,6 @@ img {
         max-width: 150px;
         min-width: 150px;
     }
-}
-/* END Media Query for Desktop */
-
-/* BEGIN Media Query for Tablet */
-@media screen and (max-width: 1024px) {
     #streamability-title {
         top: 33%;
     }
@@ -414,6 +426,25 @@ img {
         border-radius: 10px;
     }
     
+    #logo {
+        justify-content: center!important;
+    }
+
+    #logo .pl-3 {
+        width: 100vw;
+    }
+    
+    #logo .pl-3 a {
+        font-size: 3rem!important;
+        position: relative;
+        top: -25%;
+    }
+
+    #logo-image-2 {
+        min-width: 200px;
+        max-width: 200px;
+    }
+
     #logo-row div {
         padding: 0;
     }
@@ -432,7 +463,5 @@ img {
     #modal-content-container {
         margin: 2rem;
     }
-
-    
 }
 /* END Media Query for Desktop */

@@ -67,15 +67,14 @@
         <!-- Nav Section -->
         <nav class="columns is-vcentered mt-5" id="navigation">
             <!-- Logo and Title -->
-            <div class="columns is-vcentered mt-0 mb-0 p-0 column is-3" id="logo">
-                <div class="column is-3 image">
-                    <img class="is-rounded" src="./assets/images/Logo.png">
+            <div class="mt-0 mb-0 ml-4 p-0 column is-4 is-flex is-flex-wrap-wrap is-justify-content-start" id="logo">
+                <div class="image has-text-right">
+                    <img class="is-rounded" src="./assets/images/Logo.png" id="logo-image-2">
                 </div>
-                <div class="column is-9" id="logo-text">
-                    <a href="javascript:window.location.reload(true)" class="is-size-4">streamability</a>
+                <div class="pl-3 is-flex is-justify-content-center">
+                    <a href="javascript:window.location.reload(true)" class="is-size-4" id="logo-text">streamability</a>
                 </div>
             </div>
-            <div class="column is-2"></div>
             <!-- NOTE: Search bar here is just used for proof of concept; we should just restyle the existing one to live here after searching -->
             <form class="column field has-addons" id="search-form2">
                 <div class="control is-expanded">
@@ -110,7 +109,7 @@
             </div>
         </section>
         <!-- Suggestions and Queue, Non-Landing Section -->
-        <section class="is-centered p-5" id="suggestions-and-queue">
+        <section class="is-centered p-5 mb-6" id="suggestions-and-queue">
             <div class="columns is-centered has-text-centered">
                 <!-- Suggestions -->
                 <div class="column is-4" id="suggestion">
@@ -124,7 +123,7 @@
                 <div class="column is-6">
                     <div class="message is-primary">
                         <p class="message-header is-size-4">Your Queue<button class="button is-rounded" id="delete-all-queue2">Clear Queue</button></p>
-                        <div class="message-body scrolly" id="search-queue2">
+                        <div class="message-body" id="search-queue2">
                             <!-- These divs are all individual movies/shows -->
                             <div class="is-flex is-align-items-center">
                                 <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
