@@ -42,10 +42,11 @@
             </div>
         </form>
         <!-- Watch Queue -->
-        <section id="watch-queue">
-            <h2 class="title is-size-1 has-text-centered mt-6">Your Queue</h2>
+        <section class="py-6" id="watch-queue">
             <div class="message is-primary">
-                <p class="is-flex is-justify-content-flex-end message-header is-size-4"><button class="button is-rounded" id="delete-all-queue">Delete Queue</button></p>
+                <p class="is-flex message-header is-size-4">Your Queue
+                    <button class="button is-rounded" id="delete-all-queue">Delete Queue</button>
+                </p>
                 <div class="message-body scrolly" id="search-queue">
                     <!-- These divs are all individual movies/shows -->
                     <div class="is-flex is-align-items-center">
@@ -111,14 +112,15 @@
         <!-- Suggestions and Queue, Non-Landing Section -->
         <section class="is-centered p-5" id="suggestions-and-queue">
             <div class="columns is-centered has-text-centered">
+                <!-- Suggestions -->
                 <div class="column is-4" id="suggestion">
                     <div class="message is-link">
                         <p class="message-header is-size-4 ">You might also like...</p>
-                        <!-- Suggestions -->
                         <div class="message-body scrolly" id="suggestion-container"></div>
                     </div>
                 </div>
                 <div class="column is-1"></div>
+                <!-- Watch Queue -->
                 <div class="column is-6">
                     <div class="message is-primary">
                         <p class="message-header is-size-4">Your Queue<button class="button is-rounded" id="delete-all-queue2">Delete All Queue</button></p>

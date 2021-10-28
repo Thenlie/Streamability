@@ -185,6 +185,7 @@ let search = function(input) {
                     var spacerEl = document.createElement('span');
                     spacerEl.innerText = (' – ');
                     var showYear = document.createElement('span');
+                    showYear.classList.add('showYear')
                     var titleIDSpan = document.createElement('span');
                     titleIDSpan.classList.add("is-hidden", "titleID");
 
@@ -253,11 +254,11 @@ let selected = function(evt) {
     let grandparent = parent.parentNode;
 
     if (current.classList.contains('result')) {
-        runSelected(current)
+        runSelected(current);
     } else if (parent.classList.contains('result')) {
-        runSelected(parent)
+        runSelected(parent);
     } else if (grandparent.classList.contains('result')) {
-        runSelected(grandparent)
+        runSelected(grandparent);
     }
 };
 
@@ -265,9 +266,10 @@ let selected = function(evt) {
 let runSelected = function(element) {
     showID = element.querySelector('.titleID').textContent;
     showType = element.querySelector('.showType').textContent.toLowerCase();
+    showYear = element.querySelector('.showYear').textContent;
     searchResultsModal.classList.remove('is-active');
     let currentTitle = element.querySelector('.currentTitle').textContent;
-    watchProviders(showType, showID);
+    watchProviders(showType, showID, showYear);
     suggestions(currentTitle, showType);
     landingPageEl.classList.add('is-hidden');
     resultPageEl.classList.remove('is-hidden');
