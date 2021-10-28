@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <!-- Landing Page  CREATED BY BEN-->
+    <!-- Landing Page-->
     <div class="container is-max-desktop" id="landing-page">
         <!-- Header/Title Row -->
         <div class="columns is-centered is-vcentered mt-5" id="logo-row">
@@ -42,10 +42,11 @@
             </div>
         </form>
         <!-- Watch Queue -->
-        <section id="watch-queue">
-            <h2 class="title is-size-1 has-text-centered mt-6">Your Queue</h2>
+        <section class="py-6" id="watch-queue">
             <div class="message is-primary">
-                <p class="is-flex is-justify-content-flex-end message-header is-size-4"><button class="button is-rounded" id="delete-all-queue">Delete All Queue</button></p>
+                <p class="is-flex message-header is-size-4">Your Queue
+                    <button class="button is-rounded" id="delete-all-queue">Delete Queue</button>
+                </p>
                 <div class="message-body scrolly" id="search-queue">
                     <!-- These divs are all individual movies/shows -->
                     <div class="is-flex is-align-items-center">
@@ -55,7 +56,7 @@
                             <p class="is-size-5 has-text-left">Film – 1969</p>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
@@ -66,11 +67,13 @@
         <!-- Nav Section -->
         <nav class="columns is-vcentered mt-5" id="navigation">
             <!-- Logo and Title -->
-            <div class="column image is-1">
-                <img class="is-rounded" src="./assets/images/Logo.png">
-            </div>
-            <div class="column is-2">
-                <h1 class="is-size-4">streamability</h1>
+            <div class="columns is-vcentered mt-0 mb-0 p-0 column is-3" id="logo">
+                <div class="column is-3 image">
+                    <img class="is-rounded" src="./assets/images/Logo.png">
+                </div>
+                <div class="column is-9" id="logo-text">
+                    <a href="javascript:window.location.reload(true)" class="is-size-4">streamability</a>
+                </div>
             </div>
             <div class="column is-2"></div>
             <!-- NOTE: Search bar here is just used for proof of concept; we should just restyle the existing one to live here after searching -->
@@ -102,21 +105,22 @@
                     <div class="box">
                         <div class="columns is-multiline" id="selected-providers"></div>
                     </div>
-                    <button class=" button is-large is-fullwidth is-rounded is-link is-light" id="queue-button">Add to Watch Queue</button>
+                    <button class="button is-large is-fullwidth is-rounded is-link is-light" id="queue-button">Add to Watch Queue</button>
                 </div>
             </div>
         </section>
         <!-- Suggestions and Queue, Non-Landing Section -->
         <section class="is-centered p-5" id="suggestions-and-queue">
             <div class="columns is-centered has-text-centered">
+                <!-- Suggestions -->
                 <div class="column is-4" id="suggestion">
                     <div class="message is-link">
                         <p class="message-header is-size-4 ">You might also like...</p>
-                        <!-- Suggestions -->
                         <div class="message-body scrolly" id="suggestion-container"></div>
                     </div>
                 </div>
                 <div class="column is-1"></div>
+                <!-- Watch Queue -->
                 <div class="column is-6">
                     <div class="message is-primary">
                         <p class="message-header is-size-4">Your Queue<button class="button is-rounded" id="delete-all-queue2">Delete All Queue</button></p>
@@ -129,7 +133,7 @@
                                     <p class="is-size-5 has-text-left">Film – 1969</p>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -142,11 +146,10 @@
         <!-- To toggle this modal, simply add/remove the class "is-active" to the ABOVE section tag -->
         <div class="modal-background"></div>
         <div class="modal-content">
-            <div class="message is-warning">
-                <p class="message-header is-size-5">Search Results</p>
-                <div class="message-body " id="search-results"></div>
+            <div class="message is-warning" id="modal-content-container">
+                <p class="message-header is-size-5" id="modal-header">Search Results</p>
+                <div class="message-body scrolly" id="search-results"></div>
             </div>
-
         </div>
         <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
         <!-- If we even want to keep this button (in top right corner), make sure to have it toggle the "is-active" class on the modal section too -->

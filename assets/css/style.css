@@ -171,15 +171,30 @@ select {
 
 
 /* BEGIN HTML Element Styles */
+a {
+    color: hsl(0, 0%, 21%);
+}
+
+a:hover {
+    color: hsl(171, 100%, 41%);
+}
 
 button {
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.button {
+    border: 0px;
+}
+
+#queue-button:hover {
+    background-color: hsl(217, 71%, 53%);
+    color: white;
+}
+
 img {
     border-radius: 15px;
 }
-
 
 /* END HTML Element Styles */
 
@@ -207,10 +222,6 @@ img {
     padding: 1.25rem;
 }
 
-.scrollx {
-    overflow-x: auto;
-}
-
 .scrolly {
     overflow-y: auto;
 }
@@ -219,18 +230,47 @@ img {
     color: #4a4a4a;
 }
 
-
 /* MODAL STYLES */
+.modal-content {
+    max-height: 75%;
+}
+
+/* .modal-content::-webkit-scrollbar {
+    display: none;
+} */
 
 .result:hover {
     background-color: rgb(211, 209, 209);
+    cursor: pointer;
 }
 
+#modal-header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+.modal-content,
+#modal-content-container {
+    border-radius: 20px;
+}
 
 /* END Class Styles */
 
 
 /* BEGIN ID Styles */
+#form-submit:hover {
+    background-color: hsl(171, 100%, 35%);
+}
+
+#logo-text a {
+    text-decoration: none;
+}
+
+#queue-button:hover {
+    background-color: hsl(217, 71%, 53%);
+    color: white;
+}
 
 #search-queue,
 #suggestions {
@@ -247,7 +287,6 @@ img {
     margin: 1em;
     max-height: 100px;
 }
-
 
 /* SUGGESTION BOX STYLES */
 
@@ -277,6 +316,9 @@ img {
 }
 
 
+<<<<<<< HEAD
+/* END Scrollbar Styles */
+=======
 /* END Scrollbar Styles */
 
 
@@ -294,3 +336,4 @@ hr.rounded {
     border-radius: 20px;
     opacity: 100%;
 }
+>>>>>>> main
