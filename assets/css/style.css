@@ -173,6 +173,11 @@ select {
 /* BEGIN HTML Element Styles */
 a {
     color: hsl(0, 0%, 21%);
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 
 a:hover {
@@ -199,6 +204,14 @@ button {
     padding: 1rem!important;
 }
 
+#queue-button {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
 #queue-button:hover {
     background-color: hsl(217, 71%, 53%);
     color: white;
@@ -215,6 +228,14 @@ img {
 
 .box {
     border-radius: 20px;
+}
+
+.box.button {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
 }
 
 .float {
@@ -251,6 +272,14 @@ img {
     display: none;
 } */
 
+.result {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
 .result:hover {
     background-color: rgb(211, 209, 209);
     cursor: pointer;
@@ -272,6 +301,14 @@ img {
 
 
 /* BEGIN ID Styles */
+#form-submit {
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -ms-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
 #form-submit:hover {
     background-color: hsl(171, 100%, 35%);
 }
