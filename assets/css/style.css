@@ -277,10 +277,6 @@ img {
     max-height: 75%;
 }
 
-/* .modal-content::-webkit-scrollbar {
-    display: none;
-} */
-
 .result {
     -webkit-transition: all .25s ease-out;
     -moz-transition: all .25s ease-out;
@@ -296,9 +292,129 @@ img {
 
 .modal-content,
 #modal-content-container {
-    border-radius: 20px;
+    border-radius: 35px;
     overflow: unset!important;
 }
+
+/* BEGIN Color Scheme Styles */
+/* Tyler's Colors */
+a:hover {
+    color: rgba(63, 13, 18, 1)!important;
+}
+
+.button.is-primary {
+    background-color: rgba(167, 29, 49, 1);
+}
+
+.button.is-link.is-light {
+    background-color: rgba(167, 29, 49, 1);
+    color: #ffffff;
+}
+
+.delete-btn,
+#delete-all-queue {
+    color: rgba(63, 13, 18, 1);
+}
+
+#form-submit:hover {
+    background-color: rgb(131, 26, 37)!important;
+}
+
+#header-logo,
+#logo-image-2 {
+    filter: invert(5%) sepia(83%) saturate(2300%) hue-rotate(336deg) brightness(111%) contrast(98%);
+}
+
+.input {
+    color: rgba(63, 13, 18, 1);
+}
+
+.is-primary.input {
+    border-color: rgba(167, 29, 49, 1);
+}
+
+.is-primary.input:active {
+    box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
+}
+
+.is-primary.input:focus {
+    box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
+}
+
+.message.is-link .message-header,
+.message.is-primary .message-header {
+    background-color: rgba(63, 13, 18, 1);
+}
+
+.message.is-link .message-body,
+.message.is-primary .message-body {
+    background-color: rgba(241, 240, 204, 1);
+    color: rgba(167, 29, 49, 1);
+}
+
+.message.is-link .message-body .button {
+    color: rgba(63, 13, 18, 1);
+}
+
+
+.message.is-warning .message-header {
+    background-color: rgba(167, 29, 49, 1);
+    color: rgba(63, 13, 18, 1);
+}
+
+.message.is-warning .message-body {
+    background-color: rgba(241, 240, 204, 1);
+}
+
+.message.is-warning .message-body .result {
+    background-color: rgba(255, 255, 235, 1);
+    color: rgba(167, 29, 49, 1);
+}
+
+
+#queue-button:hover {
+    background-color: rgb(131, 26, 37)!important;
+}
+
+#result-details div{
+    background-color: rgba(241, 240, 204, 1);
+    color: rgba(167, 29, 49, 1);
+}
+
+#result-details #selected-title {
+    color: rgba(63, 13, 18, 1);
+}
+
+#result-details #selected-score {
+    color: rgba(167, 29, 49, 1);
+}
+
+#result-details #selected-plot {
+    background-color: rgba(255, 255, 235, 1);
+    color: rgba(167, 29, 49, 1);
+}
+
+#result-details #providers-box,
+#result-details #providers-box div {
+    background-color: rgba(141, 119, 95, 1);
+}
+
+#streamability-title,
+#logo-text {
+    color: rgba(167, 29, 49, 1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(141, 119, 95, 1)!important;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(141, 119, 95, .8)!important;
+    color: rgba(63, 13, 18, 1);
+}
+
+/* END Color Scheme Styles */
 
 /* END Class Styles */
 
@@ -324,7 +440,7 @@ img {
 #logo-text {
     text-decoration: none;
     position: relative;
-    top: 41%;
+    top: 46%;
 }
 
 #queue-button:hover {
@@ -336,17 +452,24 @@ img {
 #suggestions {
     max-height: 40em;
     overflow-y: auto;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 #search-queue2 {
     max-height: 27em;
     overflow-y: auto;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 #search-queue img,
 #suggestions img {
     margin: 1em;
 }
 
+#search-results {
+    border-radius: 20px;
+}
 
 #search-results img {
     margin: 1em;
@@ -363,7 +486,7 @@ img {
 
 #streamability-title {
     position: relative;
-    top: 46%;
+    top: 49%;
 }
 
 /* SUGGESTION BOX STYLES */
@@ -388,7 +511,7 @@ img {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: hsl(348, 100%, 47%)
+    background: hsl(348, 100%, 47%);
 }
 
 /* END Scrollbar Styles */
@@ -396,7 +519,7 @@ img {
 /* BEGIN Media Query for Desktop */
 @media screen and (max-width: 1215px) {
     #logo-text {
-        top: 31%
+        top: 35%
     }
     #logo-image-2 {
         min-width: 61.5px;
@@ -415,7 +538,7 @@ img {
         min-width: 150px;
     }
     #streamability-title {
-        top: 33%;
+        top: 36%;
     }
 }
 /* END Media Query for Tablet */
