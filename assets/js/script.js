@@ -22,6 +22,7 @@ let resultPageEl = document.querySelector('#result-page');
 let detailsEl = document.querySelector('#result-details');
 let logoEl = document.querySelector('#logo');
 let selectedIdEL = document.querySelector('#selected-id')
+let selectedTypeEl = document.querySelector('#selected-type')
 let queButtonEl = document.querySelector("#queue-button");
 let queueContainerEl = document.querySelector('#search-queue');
 let queueContainer2El = document.querySelector('#search-queue2');
@@ -62,12 +63,14 @@ let run = function(event) {
 let queClicked = function(event) {
     event.preventDefault();
     let movieInfo = event.target.parentNode.parentNode
+    console.log(movieInfo);
     movie_title = movieInfo.querySelector("#selected-title").innerText;
     movie_year = movieInfo.querySelector("#selected-year").innerText;
     movie_id = movieInfo.querySelector("#selected-id").innerText;
     movie_poster_link = movieInfo.querySelector("#selected-poster").src;
-    for (let index = 0; index < 3; index++) {
-        let movie_info = [movie_title, movie_year, movie_poster_link]
+    movie_type = movieInfo.querySelector('#selected-type').innerText;
+    for (let index = 0; index < 4; index++) {
+        let movie_info = [movie_title, movie_year, movie_poster_link, movie_type]
         items = movie_info[index]
         movie_info_list.push(items)
     }
@@ -82,21 +85,24 @@ let loadQueue = function() {
     for (const [key, value] of Object.entries(localStorage)) {
         var valueSplit = value.split(',');
         var queueEl = document.createElement('div');
-        queueEl.classList.add('is-flex', 'is-align-items-center')
+        queueEl.classList.add('queueBox','is-flex', 'is-align-items-center')
         var quePoster = document.createElement('img');
         quePoster.style.width = "100px";
         quePoster.style.marginRight = "30px";
         quePoster.style.marginTop = "30px";
         quePoster.style.marginBottom = "30px";
         quePoster.style.marginLeft = "10px";
+        quePoster.src = valueSplit[2];
         var queText = document.createElement('div');
         var queTitle = document.createElement('p');
-        queTitle.classList.add('is-size-4', 'has-text-left');
-        var queYear = document.createElement('p');
-        queYear.classList.add('is-size-4', 'has-text-left');
+        queTitle.classList.add('currentTitle','is-size-4', 'has-text-left');
         queTitle.innerText = valueSplit[0];
+        var queYear = document.createElement('p');
+        queYear.classList.add('showYear','is-size-4', 'has-text-left');
         queYear.innerText = valueSplit[1];
-        quePoster.src = valueSplit[2];
+        var queType = document.createElement('p');
+        queType.classList.add('is-hidden', 'showType');
+        queType.innerText = valueSplit[3]
         var titleIDhid = document.createElement('span');
         titleIDhid.classList.add("is-hidden", "titleID");
         titleIDhid.innerText = key;
@@ -109,6 +115,7 @@ let loadQueue = function() {
         var documentFragment = document.createDocumentFragment();
         queText.appendChild(queTitle);
         queText.appendChild(queYear);
+        queText.appendChild(queType);
         queText.appendChild(titleIDhid);
         queueEl.appendChild(quePoster);
         queueEl.appendChild(queText);
@@ -124,6 +131,22 @@ let loadQueue = function() {
         queueContainerEl.appendChild(documentFragment);
         queueContainer2El.appendChild(cloneContainer);
         queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
+    }
+};
+
+
+let selectedQueue = function(event){
+    let current = event.target;
+    let parent = current.parentNode;
+    let grandparent = parent.parentNode;
+    if (current.classList.contains('delete-btn')) {
+        loadQueue();
+    } else if (current.classList.contains('queueBox')) {
+        runSelected(current);
+    } else if (parent.classList.contains('queueBox')) {
+        runSelected(parent);
+    } else if (grandparent.classList.contains('queueBox')) {
+        runSelected(grandparent);
     }
 };
 
@@ -250,9 +273,9 @@ let closeModal = function() {
 //reads which option is clicked on
 let selected = function(evt) {
     let current = evt.target;
+    console.log(current);
     let parent = current.parentNode;
     let grandparent = parent.parentNode;
-
     if (current.classList.contains('result')) {
         runSelected(current);
     } else if (parent.classList.contains('result')) {
@@ -363,6 +386,7 @@ function watchProviders(showType, showID, showYear) {
                             // showing the year
                             selectedYearEL.innerText = showYear;
                             selectedIdEL.innerText = showID;
+                            selectedTypeEl.innerText = showType;
                             // viewer rating
                             selectedScoreEl.innerText = "Viewer Rating: " + selectedTitleData.vote_average + "/10";
 
@@ -418,6 +442,7 @@ let deleteID = function(event) {
 loadQueue();
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
+queueContainerEl.addEventListener('click', selectedQueue);
 queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run); // Listen for submission of search form 2
