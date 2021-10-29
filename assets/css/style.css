@@ -171,6 +171,7 @@ select {
 
 
 /* BEGIN HTML Element Styles */
+
 a {
     color: hsl(0, 0%, 21%);
 }
@@ -195,6 +196,7 @@ button {
 img {
     border-radius: 15px;
 }
+
 
 /* END HTML Element Styles */
 
@@ -230,10 +232,13 @@ img {
     color: #4a4a4a;
 }
 
+
 /* MODAL STYLES */
+
 .modal-content {
     max-height: 75%;
 }
+
 
 /* .modal-content::-webkit-scrollbar {
     display: none;
@@ -245,7 +250,8 @@ img {
 }
 
 #modal-header {
-    position: -webkit-sticky; /* Safari */
+    position: -webkit-sticky;
+    /* Safari */
     position: sticky;
     top: 0;
 }
@@ -255,10 +261,17 @@ img {
     border-radius: 20px;
 }
 
+.no-user-input::placeholder {
+    color: red;
+    opacity: 0.5;
+}
+
+
 /* END Class Styles */
 
 
 /* BEGIN ID Styles */
+
 #form-submit:hover {
     background-color: hsl(171, 100%, 35%);
 }
@@ -288,6 +301,7 @@ img {
     max-height: 100px;
 }
 
+
 /* SUGGESTION BOX STYLES */
 
 #suggestion-container .box:hover {
@@ -316,9 +330,6 @@ img {
 }
 
 
-<<<<<<< HEAD
-/* END Scrollbar Styles */
-=======
 /* END Scrollbar Styles */
 
 
@@ -330,10 +341,8 @@ hr.rounded {
     margin-top: 50px;
 }
 
-
 .queueBox:hover {
     background-color: white;
     border-radius: 20px;
     opacity: 100%;
 }
->>>>>>> main

@@ -52,6 +52,8 @@ let refresh = function() {
 
 let run = function(event) {
     event.preventDefault();
+    userInputEl.classList.remove('no-user-input');
+    userInputEl2.classList.remove('no-user-input');
     current = (event.target[0].value);
     userInputEl.value = '';
     userInputEl2.value = '';
@@ -141,12 +143,11 @@ let search = function(input) {
             if (res.ok) {
                 return res.json();
             } else {
-                console.log('Error');
+                noResult();
             }
         })
         .then(function(data) {
             try {
-                console.log(data);
                 removeAllChildNodes(searchResults);
 
                 // ensure there is at least 1 show and no more than 10
@@ -167,7 +168,7 @@ let search = function(input) {
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
-                    
+
                     // disallow people from displaying
                     if (current.media_type === 'person') {
                         continue;
@@ -231,13 +232,15 @@ let search = function(input) {
                     searchResultsModal.classList.add('is-active');
                 }
             } catch {
-                console.log('That search was invalid!');
+                noResult();
             }
         })
 
 };
 
 noResult = function() {
+    userInputEl.classList.add('no-user-input');
+    userInputEl2.classList.add('no-user-input');
     userInputEl.placeholder = 'Sorry, there are no results for this search!';
     userInputEl2.placeholder = 'Sorry, there are no results for this search!';
 };
