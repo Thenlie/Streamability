@@ -102,7 +102,7 @@ let loadQueue = function() {
         titleIDhid.innerText = key;
         var deleteButton = document.createElement('button');
         deleteButton.innerHTML = "Delete";
-        deleteButton.classList.add('delete-btn', 'button', 'is-rounded');
+        deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
         deleteButton.addEventListener('click', deleteID);
 
 
