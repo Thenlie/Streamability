@@ -138,7 +138,7 @@ let deleteAll = function() {
 
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
-    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input)
+    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input.toLowerCase())
         .then(function(res) {
             if (res.ok) {
                 return res.json();

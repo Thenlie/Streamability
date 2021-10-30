@@ -331,18 +331,3 @@ img {
 
 
 /* END Scrollbar Styles */
-
-
-/* Temporary for page-divider */
-
-hr.rounded {
-    border-top: 10px solid hsl(0, 0%, 86%);
-    border-radius: 5px;
-    margin-top: 50px;
-}
-
-.queueBox:hover {
-    background-color: white;
-    border-radius: 20px;
-    opacity: 100%;
-}
