@@ -120,13 +120,7 @@
                         <div class="message-body" id="search-queue2">
                             <!-- These divs are all individual movies/shows -->
                             <div class="is-flex is-align-items-center">
-                                <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                                <div>
-                                    <!-- <p class="is-size-3 has-text-left">Movie Title</p>
-                                    <p class="is-size-5 has-text-left">Film – 1969</p> -->
-                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -136,18 +130,22 @@
 
     <!-- Search Results Modal -->
     <section class="modal" id="search-results-modal">
+        <!-- Grey background that closes modal when clicked on -->
         <div class="modal-background"></div>
+        <!-- Modal content -->
         <div class="modal-content">
             <div class="message is-warning" id="modal-content-container">
                 <p class="message-header is-size-5" id="modal-header">Search Results</p>
                 <div class="message-body scrolly" id="search-results"></div>
             </div>
         </div>
+        <!-- Modal close button in upper-right -->
         <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
     </section>
 
     <!-- Footer -->
     <footer>
+        <!-- Dropdown button to select theme -->
         <div class="dropdown is-up is-hoverable" id="themeDropdown">
             <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" id="dropdown-button">
@@ -157,6 +155,7 @@
                     </span>
                 </button>
             </div>
+            <!-- Dropdown contents -->
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
                 <div class="dropdown-content">
                     <button class="button dropdown-item" id="tyler-theme">Tyler</button>

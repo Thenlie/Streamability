@@ -1,6 +1,7 @@
 // Movie DB API Key = 14b7c2e67f36427d72ce8c1df6482552
 // Taste Dive API Key = 425677-LeithenC-NQBB975N
 
+// Select elements so we can work with them
 let searchFormEl = document.querySelector('#search-form');
 let userInputEl = document.querySelector('#user-input');
 let searchFormEl2 = document.querySelector('#search-form2');
@@ -27,19 +28,18 @@ let queueContainerEl = document.querySelector('#search-queue');
 let queueContainer2El = document.querySelector('#search-queue2');
 let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
-
-// Theme Button Elements
+// Theme button elements
 let resetThemeEl = document.querySelector('#reset-theme');
 let tylerThemeEl = document.querySelector('#tyler-theme');
 
-
+// Initial variable declarations
 let input = '';
 let showID = '';
 let showType = '';
 let theme = 'none';
 movie_info_list = [];
 
-// reset modal upon user entering new search
+// Reset modal upon user entering new search
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -81,12 +81,13 @@ let queClicked = function(event) {
     loadQueue();
 }
 
+// Function to populate the queue from local storage
 let loadQueue = function() {
     queueContainer2El.innerHTML = '';
     queueContainerEl.innerHTML = '';
     for (const [key, value] of Object.entries(localStorage)) {
         if (key === 'theme') {
-            return;
+            // Ignore the stored theme key/value pair
         } else {
             var valueSplit = value.split(',');
             var queueEl = document.createElement('div');
@@ -113,7 +114,6 @@ let loadQueue = function() {
             deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
             deleteButton.addEventListener('click', deleteID);
     
-    
             var documentFragment = document.createDocumentFragment();
             queText.appendChild(queTitle);
             queText.appendChild(queYear);
@@ -122,7 +122,6 @@ let loadQueue = function() {
             queueEl.appendChild(queText);
             queueEl.appendChild(deleteButton);
             documentFragment.append(queueEl);
-    
     
             let newClone = documentFragment.cloneNode(true);
             var cloneContainer = document.createElement('div');
@@ -136,13 +135,17 @@ let loadQueue = function() {
     }
 };
 
-
+// Function to clear local storage and empty queue
 let deleteAll = function() {
+    // Temporarily store theme key/value pair so it doesn't get deleted along with the queue items
+    let tempTheme = localStorage.getItem('theme');
     localStorage.clear();
+    // Set the stored theme back into local storage
+    localStorage.setItem('theme', tempTheme);
     loadQueue();
 }
 
-
+// Function to search for a movie/show using user's input
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
     fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input)
@@ -246,17 +249,18 @@ let search = function(input) {
 
 };
 
+// Use the placeholder to let users know their search returned no results
 noResult = function() {
     userInputEl.placeholder = 'Sorry, there are no results for this search!';
     userInputEl2.placeholder = 'Sorry, there are no results for this search!';
 };
 
-//close the modal when the X is clicked
+//Close the modal when the X is clicked
 let closeModal = function() {
     searchResultsModal.classList.remove('is-active');
 }
 
-//reads which option is clicked on
+//Reads which option is clicked on
 let selected = function(evt) {
     let current = evt.target;
     let parent = current.parentNode;
@@ -272,7 +276,7 @@ let selected = function(evt) {
     themeAdder(theme);
 };
 
-//takes target from selected function and sends that data to the rest of the functions
+//Takes target from selected function and sends that data to the rest of the functions
 let runSelected = function(element) {
     showID = element.querySelector('.titleID').textContent;
     showType = element.querySelector('.showType').textContent.toLowerCase();
@@ -293,6 +297,7 @@ let suggestionSelect = function(evt) {
     }
 };
 
+// Function to load suggestions
 let suggestions = function(currentTitle, currentType) {
     removeAllChildNodes(suggestionContainerEl);
     // Check if show or movie was searched for
@@ -325,7 +330,7 @@ let suggestions = function(currentTitle, currentType) {
         })
 };
 
-//runs when there are no show suggestions
+//Runs when there are no show suggestions
 let noSuggestion = function() {
     let suggestionEl = document.createElement('div');
     suggestionEl.classList.add('p-2');
@@ -422,6 +427,7 @@ let deleteID = function(event) {
     loadQueue();
 };
 
+// Function to add the each theme's name as a class to the corresponding elements
 function themeAdder(themeName) {
     document.querySelector('a').classList.add(themeName);
     document.querySelector('#form-submit').classList.add(themeName);
@@ -429,6 +435,7 @@ function themeAdder(themeName) {
     document.querySelector('#queue-button').classList.add(themeName);
     document.querySelector('#delete-all-queue').classList.add(themeName);
     document.querySelector('#delete-all-queue2').classList.add(themeName);
+    // Add theme class to each delete button
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
         for (let i = 0; i < deleteButtonEls.length; i++) {
             deleteButtonEls[i].classList.add(themeName);  
@@ -446,6 +453,7 @@ function themeAdder(themeName) {
     document.querySelector('#modal-header').classList.add(themeName);
     document.querySelector('#search-results').classList.add(themeName);
     document.querySelector('#result-details').classList.add(themeName);
+    // Add theme class to each div in the result details container
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
         resultDetailsDivs[i].classList.add(themeName);  
@@ -455,9 +463,12 @@ function themeAdder(themeName) {
     document.querySelector('#selected-plot').classList.add(themeName);
     document.querySelector('#streamability-title').classList.add(themeName);
     document.querySelector('#logo-text').classList.add(themeName);
+    document.body.classList.add(themeName);
+    // Save the theme to local storage so it's persistent
     localStorage.setItem('theme', themeName);
 }
 
+// Function to remove/reset theme
 function themeRemover() {
     document.querySelector('a').classList.remove('tyler');
     document.querySelector('#form-submit').classList.remove('tyler');
@@ -491,9 +502,12 @@ function themeRemover() {
     document.querySelector('#selected-plot').classList.remove('tyler');
     document.querySelector('#streamability-title').classList.remove('tyler');
     document.querySelector('#logo-text').classList.remove('tyler');
+    document.body.classList.remove('tyler');
+    // "Reset" the theme in local storage
     localStorage.setItem('theme', 'none');
 }
 
+// Function to load the theme from local storage
 function getTheme() {
    let newTheme = localStorage.getItem('theme');
    if (newTheme != null) {
@@ -503,9 +517,15 @@ function getTheme() {
    }
 }
 
+// Functions to run on page-load
+// Get the theme from local storage
 getTheme();
+// Apply the theme
 themeAdder(theme);
+// Populate the queue
 loadQueue();
+
+// Event Listeners
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
