@@ -85,50 +85,54 @@ let loadQueue = function() {
     queueContainer2El.innerHTML = '';
     queueContainerEl.innerHTML = '';
     for (const [key, value] of Object.entries(localStorage)) {
-        var valueSplit = value.split(',');
-        var queueEl = document.createElement('div');
-        queueEl.classList.add('is-flex', 'is-align-items-center')
-        var quePoster = document.createElement('img');
-        quePoster.style.width = "100px";
-        quePoster.style.marginRight = "30px";
-        quePoster.style.marginTop = "30px";
-        quePoster.style.marginBottom = "30px";
-        quePoster.style.marginLeft = "10px";
-        var queText = document.createElement('div');
-        var queTitle = document.createElement('p');
-        queTitle.classList.add('is-size-4', 'has-text-left');
-        var queYear = document.createElement('p');
-        queYear.classList.add('is-size-4', 'has-text-left');
-        queTitle.innerText = valueSplit[0];
-        queYear.innerText = valueSplit[1];
-        quePoster.src = valueSplit[2];
-        var titleIDhid = document.createElement('span');
-        titleIDhid.classList.add("is-hidden", "titleID");
-        titleIDhid.innerText = key;
-        var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = "Delete";
-        deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
-        deleteButton.addEventListener('click', deleteID);
-
-
-        var documentFragment = document.createDocumentFragment();
-        queText.appendChild(queTitle);
-        queText.appendChild(queYear);
-        queText.appendChild(titleIDhid);
-        queueEl.appendChild(quePoster);
-        queueEl.appendChild(queText);
-        queueEl.appendChild(deleteButton);
-        documentFragment.append(queueEl);
-
-
-        let newClone = documentFragment.cloneNode(true);
-        var cloneContainer = document.createElement('div');
-        cloneContainer.classList.add('is-size-3');
-        cloneContainer.appendChild(newClone);
-
-        queueContainerEl.appendChild(documentFragment);
-        queueContainer2El.appendChild(cloneContainer);
-        queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
+        if (key === 'theme') {
+            return;
+        } else {
+            var valueSplit = value.split(',');
+            var queueEl = document.createElement('div');
+            queueEl.classList.add('is-flex', 'is-align-items-center')
+            var quePoster = document.createElement('img');
+            quePoster.style.width = "100px";
+            quePoster.style.marginRight = "30px";
+            quePoster.style.marginTop = "30px";
+            quePoster.style.marginBottom = "30px";
+            quePoster.style.marginLeft = "10px";
+            var queText = document.createElement('div');
+            var queTitle = document.createElement('p');
+            queTitle.classList.add('is-size-4', 'has-text-left');
+            var queYear = document.createElement('p');
+            queYear.classList.add('is-size-4', 'has-text-left');
+            queTitle.innerText = valueSplit[0];
+            queYear.innerText = valueSplit[1];
+            quePoster.src = valueSplit[2];
+            var titleIDhid = document.createElement('span');
+            titleIDhid.classList.add("is-hidden", "titleID");
+            titleIDhid.innerText = key;
+            var deleteButton = document.createElement('button');
+            deleteButton.innerHTML = "Delete";
+            deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
+            deleteButton.addEventListener('click', deleteID);
+    
+    
+            var documentFragment = document.createDocumentFragment();
+            queText.appendChild(queTitle);
+            queText.appendChild(queYear);
+            queText.appendChild(titleIDhid);
+            queueEl.appendChild(quePoster);
+            queueEl.appendChild(queText);
+            queueEl.appendChild(deleteButton);
+            documentFragment.append(queueEl);
+    
+    
+            let newClone = documentFragment.cloneNode(true);
+            var cloneContainer = document.createElement('div');
+            cloneContainer.classList.add('is-size-3');
+            cloneContainer.appendChild(newClone);
+    
+            queueContainerEl.appendChild(documentFragment);
+            queueContainer2El.appendChild(cloneContainer);
+            queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
+        }
     }
 };
 
@@ -265,6 +269,7 @@ let selected = function(evt) {
     } else if (grandparent.classList.contains('result')) {
         runSelected(grandparent);
     }
+    themeAdder(theme);
 };
 
 //takes target from selected function and sends that data to the rest of the functions
@@ -417,9 +422,7 @@ let deleteID = function(event) {
     loadQueue();
 };
 
-function themeAdder(event) {
-    let themeName = event.target.textContent.toLowerCase();
-    console.log(themeName);
+function themeAdder(themeName) {
     document.querySelector('a').classList.add(themeName);
     document.querySelector('#form-submit').classList.add(themeName);
     document.querySelector('#search-form2').querySelector('#form-submit').classList.add(themeName);
@@ -452,12 +455,43 @@ function themeAdder(event) {
     document.querySelector('#selected-plot').classList.add(themeName);
     document.querySelector('#streamability-title').classList.add(themeName);
     document.querySelector('#logo-text').classList.add(themeName);
-    
     localStorage.setItem('theme', themeName);
 }
 
 function themeRemover() {
-    console.log("Take me back!");
+    document.querySelector('a').classList.remove('tyler');
+    document.querySelector('#form-submit').classList.remove('tyler');
+    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler');
+    document.querySelector('#queue-button').classList.remove('tyler');
+    document.querySelector('#delete-all-queue').classList.remove('tyler');
+    document.querySelector('#delete-all-queue2').classList.remove('tyler');
+    var deleteButtonEls = document.getElementsByClassName('delete-btn');
+        for (let i = 0; i < deleteButtonEls.length; i++) {
+            deleteButtonEls[i].classList.remove('tyler');  
+        };
+    document.querySelector('#header-logo').classList.remove('tyler');
+    document.querySelector('#logo-image-2').classList.remove('tyler');
+    document.querySelector('#user-input').classList.remove('tyler');
+    document.querySelector('#user-input2').classList.remove('tyler');
+    document.querySelector('#queue-header-1').classList.remove('tyler');
+    document.querySelector('#queue-header-2').classList.remove('tyler');
+    document.querySelector('#search-queue').classList.remove('tyler');
+    document.querySelector('#search-queue2').classList.remove('tyler');
+    document.querySelector('#suggestions-header').classList.remove('tyler');
+    document.querySelector('#suggestion-container').classList.remove('tyler');
+    document.querySelector('#modal-header').classList.remove('tyler');
+    document.querySelector('#search-results').classList.remove('tyler');
+    document.querySelector('#result-details').classList.remove('tyler');
+    var resultDetailsDivs = document.getElementsByTagName('div');
+    for (let i = 0; i < resultDetailsDivs.length; i++) {
+        resultDetailsDivs[i].classList.remove('tyler');  
+    };
+    document.querySelector('#selected-title').classList.remove('tyler');
+    document.querySelector('#selected-score').classList.remove('tyler');
+    document.querySelector('#selected-plot').classList.remove('tyler');
+    document.querySelector('#streamability-title').classList.remove('tyler');
+    document.querySelector('#logo-text').classList.remove('tyler');
+    localStorage.setItem('theme', 'none');
 }
 
 function getTheme() {
@@ -470,6 +504,7 @@ function getTheme() {
 }
 
 getTheme();
+themeAdder(theme);
 loadQueue();
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
@@ -484,4 +519,7 @@ logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
 
 // Theme Listeners
 resetThemeEl.addEventListener('click', themeRemover);
-tylerThemeEl.addEventListener('click', themeAdder);
+tylerThemeEl.addEventListener('click', function(event) {
+    let themeName = event.target.textContent.toLowerCase();
+    themeAdder(themeName);
+});
