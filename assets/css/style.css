@@ -243,17 +243,17 @@ img {
 
 
 /* BEGIN Scrollbar Styles */
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
     height: 10px;
     width: 10px;
 }
 
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background: hsl(348, 100%, 61%);
     border-radius: 20px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
     background: hsl(348, 100%, 47%);
 }
 /* END Scrollbar Styles */
@@ -376,6 +376,15 @@ img {
         box-shadow: 0 0 0 0.125em rgba(157, 45, 173, .25);
     }
 
+    .solo-jazz::-webkit-scrollbar-thumb {
+        background: rgba(157, 45, 173, 1)!important;
+        border-radius: 20px;
+    }
+
+    .solo-jazz::-webkit-scrollbar-thumb:hover {
+        background: rgba(157, 45, 173, .8)!important;
+    }
+    
 /* Tyler's Colors */
     a.tyler:hover {
         color: rgba(63, 13, 18, 1)!important;
@@ -488,14 +497,13 @@ img {
         box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
     }
 
-    body.tyler::-webkit-scrollbar-thumb {
+    .tyler::-webkit-scrollbar-thumb {
         background: rgba(141, 119, 95, 1)!important;
         border-radius: 20px;
     }
 
-    body.tyler::-webkit-scrollbar-thumb.tyler {
+    .tyler::-webkit-scrollbar-thumb:hover {
         background: rgba(141, 119, 95, .8)!important;
-        color: rgba(63, 13, 18, 1);
     }
 /* END Color Scheme Styles */
 
