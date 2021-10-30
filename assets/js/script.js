@@ -30,6 +30,7 @@ let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 // Theme button elements
 let resetThemeEl = document.querySelector('#reset-theme');
+let soloJazzThemeEl = document.querySelector('#solo-jazz-theme');
 let tylerThemeEl = document.querySelector('#tyler-theme');
 
 // Initial variable declarations
@@ -470,39 +471,39 @@ function themeAdder(themeName) {
 
 // Function to remove/reset theme
 function themeRemover() {
-    document.querySelector('a').classList.remove('tyler');
-    document.querySelector('#form-submit').classList.remove('tyler');
-    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler');
-    document.querySelector('#queue-button').classList.remove('tyler');
-    document.querySelector('#delete-all-queue').classList.remove('tyler');
-    document.querySelector('#delete-all-queue2').classList.remove('tyler');
+    document.querySelector('a').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#queue-button').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#delete-all-queue').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#delete-all-queue2').classList.remove('tyler', 'solo-jazz');
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
         for (let i = 0; i < deleteButtonEls.length; i++) {
-            deleteButtonEls[i].classList.remove('tyler');  
+            deleteButtonEls[i].classList.remove('tyler', 'solo-jazz');  
         };
-    document.querySelector('#header-logo').classList.remove('tyler');
-    document.querySelector('#logo-image-2').classList.remove('tyler');
-    document.querySelector('#user-input').classList.remove('tyler');
-    document.querySelector('#user-input2').classList.remove('tyler');
-    document.querySelector('#queue-header-1').classList.remove('tyler');
-    document.querySelector('#queue-header-2').classList.remove('tyler');
-    document.querySelector('#search-queue').classList.remove('tyler');
-    document.querySelector('#search-queue2').classList.remove('tyler');
-    document.querySelector('#suggestions-header').classList.remove('tyler');
-    document.querySelector('#suggestion-container').classList.remove('tyler');
-    document.querySelector('#modal-header').classList.remove('tyler');
-    document.querySelector('#search-results').classList.remove('tyler');
-    document.querySelector('#result-details').classList.remove('tyler');
+    document.querySelector('#header-logo').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#logo-image-2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#user-input').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#user-input2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#queue-header-1').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#queue-header-2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#search-queue').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#search-queue2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#suggestions-header').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#suggestion-container').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#modal-header').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#search-results').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#result-details').classList.remove('tyler', 'solo-jazz');
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
-        resultDetailsDivs[i].classList.remove('tyler');  
+        resultDetailsDivs[i].classList.remove('tyler', 'solo-jazz');  
     };
-    document.querySelector('#selected-title').classList.remove('tyler');
-    document.querySelector('#selected-score').classList.remove('tyler');
-    document.querySelector('#selected-plot').classList.remove('tyler');
-    document.querySelector('#streamability-title').classList.remove('tyler');
-    document.querySelector('#logo-text').classList.remove('tyler');
-    document.body.classList.remove('tyler');
+    document.querySelector('#selected-title').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#selected-score').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#selected-plot').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#streamability-title').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#logo-text').classList.remove('tyler', 'solo-jazz');
+    document.body.classList.remove('tyler', 'solo-jazz');
     // "Reset" the theme in local storage
     localStorage.setItem('theme', 'none');
 }
@@ -539,7 +540,13 @@ logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
 
 // Theme Listeners
 resetThemeEl.addEventListener('click', themeRemover);
+soloJazzThemeEl.addEventListener('click', function(event) {
+    themeRemover();
+    let themeName = event.target.textContent.toLowerCase();
+    themeAdder(themeName);
+});
 tylerThemeEl.addEventListener('click', function(event) {
+    themeRemover()
     let themeName = event.target.textContent.toLowerCase();
     themeAdder(themeName);
 });

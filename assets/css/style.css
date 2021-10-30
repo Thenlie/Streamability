@@ -214,7 +214,8 @@ img {
 }
 
 #search-results {
-    border-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 #search-results img {
@@ -259,6 +260,122 @@ img {
 
 
 /* BEGIN Color Scheme Styles */
+/* Solo-Jazz Colors */
+    a.solo-jazz:hover {
+        color: rgba(59, 38, 133, 1)!important;
+    }
+
+    body.solo-jazz {
+        background-image: url(../images/solo-jazz.png);
+    }
+
+    .delete-btn.solo-jazz,
+    #delete-all-queue.solo-jazz,
+    #delete-all-queue2.solo-jazz {
+        color: rgba(59, 38, 133, 1);
+    }
+
+    #form-submit.solo-jazz {
+        background-color: rgba(157, 45, 173, 1);
+    }
+
+    #form-submit.solo-jazz:hover {
+        background-color: rgb(59, 38, 133)!important;
+    }
+
+    #header-logo.solo-jazz,
+    #logo-image-2.solo-jazz {
+        filter: invert(17%) sepia(87%) saturate(1634%) hue-rotate(238deg) brightness(87%) contrast(102%);
+    }
+
+    #modal-header.solo-jazz {
+        background-color: rgba(157, 45, 173, 1);
+        color: rgba(59, 38, 133, 1);
+    }
+
+    #queue-button.solo-jazz {
+        background-color: rgba(157, 45, 173, 1);
+        color: #ffffff;
+    }
+
+    #queue-button:hover.solo-jazz {
+        background-color: rgb(59, 38, 133)!important;
+    }
+
+    #queue-header-1.solo-jazz,
+    #queue-header-2.solo-jazz {
+        background-color: rgba(59, 38, 133, 1);
+    }
+
+    #result-details div.solo-jazz{
+        background-color: rgba(0, 194, 194, 1);
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #result-details #selected-title.solo-jazz {
+        color: rgba(59, 38, 133, 1);
+    }
+
+    #result-details #selected-score.solo-jazz {
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #result-details #selected-plot.solo-jazz {
+        background-color: rgba(255, 255, 255, 1);
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #result-details #providers-box.solo-jazz,
+    #result-details #providers-box div.solo-jazz {
+        background-color: rgba(157, 45, 173, 1);
+    }
+
+    #search-queue.solo-jazz,
+    #search-queue2.solo-jazz {
+        background-color: rgba(0, 194, 194, 1);
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #search-results.solo-jazz {
+        background-color: rgba(0, 194, 194, 1);
+    }
+
+    #search-results .result.solo-jazz {
+        background-color: rgba(255, 255, 255, 1);
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #streamability-title.solo-jazz,
+    #logo-text.solo-jazz {
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #suggestions-header.solo-jazz {
+        background-color: rgba(59, 38, 133, 1);
+    }
+
+    #suggestion-container.solo-jazz {
+        background-color: rgba(0, 194, 194, 1);
+        color: rgba(157, 45, 173, 1);
+    }
+
+    #suggestion-container.solo-jazz .button {
+        color: rgba(59, 38, 133, 1);
+    }
+
+    #user-input.solo-jazz,
+    #user-input2.solo-jazz {
+        color: rgba(59, 38, 133, 1);
+        border-color: rgba(157, 45, 173, 1);
+    }
+
+    #user-input.solo-jazz:active,
+    #user-input2.solo-jazz:active,
+    #user-input.solo-jazz:focus,
+    #user-input2.solo-jazz:focus {
+        box-shadow: 0 0 0 0.125em rgba(157, 45, 173, .25);
+    }
+
 /* Tyler's Colors */
     a.tyler:hover {
         color: rgba(63, 13, 18, 1)!important;
@@ -283,55 +400,9 @@ img {
         filter: invert(5%) sepia(83%) saturate(2300%) hue-rotate(336deg) brightness(111%) contrast(98%);
     }
 
-    #user-input.tyler,
-    #user-input2.tyler {
-        color: rgba(63, 13, 18, 1);
-        border-color: rgba(167, 29, 49, 1);
-    }
-
-    #user-input.tyler:active,
-    #user-input2.tyler:active,
-    #user-input.tyler:focus,
-    #user-input2.tyler:focus {
-        box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
-    }
-
-    #queue-header-1.tyler,
-    #queue-header-2.tyler {
-        background-color: rgba(63, 13, 18, 1);
-    }
-
-    #suggestions-header.tyler {
-        background-color: rgba(63, 13, 18, 1);
-    }
-
-    #suggestion-container.tyler {
-        background-color: rgba(241, 240, 204, 1);
-        color: rgba(167, 29, 49, 1);
-    }
-
-    #search-queue.tyler,
-    #search-queue2.tyler {
-        background-color: rgba(241, 240, 204, 1);
-        color: rgba(167, 29, 49, 1);
-    }
-
-    #suggestion-container.tyler .button {
-        color: rgba(63, 13, 18, 1);
-    }
-
     #modal-header.tyler {
         background-color: rgba(167, 29, 49, 1);
         color: rgba(63, 13, 18, 1);
-    }
-
-    #search-results.tyler {
-        background-color: rgba(241, 240, 204, 1);
-    }
-
-    #search-results .result.tyler {
-        background-color: rgba(255, 255, 235, 1);
-        color: rgba(167, 29, 49, 1);
     }
 
     #queue-button.tyler {
@@ -341,6 +412,11 @@ img {
 
     #queue-button:hover.tyler {
         background-color: rgb(131, 26, 37)!important;
+    }
+
+    #queue-header-1.tyler,
+    #queue-header-2.tyler {
+        background-color: rgba(63, 13, 18, 1);
     }
 
     #result-details div.tyler{
@@ -366,9 +442,50 @@ img {
         background-color: rgba(141, 119, 95, 1);
     }
 
+    #search-queue.tyler,
+    #search-queue2.tyler {
+        background-color: rgba(241, 240, 204, 1);
+        color: rgba(167, 29, 49, 1);
+    }
+
+    #search-results.tyler {
+        background-color: rgba(241, 240, 204, 1);
+    }
+
+    #search-results .result.tyler {
+        background-color: rgba(255, 255, 235, 1);
+        color: rgba(167, 29, 49, 1);
+    }
+
     #streamability-title.tyler,
     #logo-text.tyler {
         color: rgba(167, 29, 49, 1);
+    }
+    
+    #suggestions-header.tyler {
+        background-color: rgba(63, 13, 18, 1);
+    }
+
+    #suggestion-container.tyler {
+        background-color: rgba(241, 240, 204, 1);
+        color: rgba(167, 29, 49, 1);
+    }
+
+    #suggestion-container.tyler .button {
+        color: rgba(63, 13, 18, 1);
+    }
+
+    #user-input.tyler,
+    #user-input2.tyler {
+        color: rgba(63, 13, 18, 1);
+        border-color: rgba(167, 29, 49, 1);
+    }
+
+    #user-input.tyler:active,
+    #user-input2.tyler:active,
+    #user-input.tyler:focus,
+    #user-input2.tyler:focus {
+        box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
     }
 
     body.tyler::-webkit-scrollbar-thumb {
