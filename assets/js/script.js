@@ -433,6 +433,7 @@ let deleteID = function(event) {
         localStorage.removeItem(queueid);
         loadQueue();
     }
+    console.log(event.target)
 };
 
 // Function to add the each theme's name as a class to the corresponding elements
