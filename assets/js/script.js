@@ -58,8 +58,6 @@ let refresh = function() {
 
 let run = function(event) {
     event.preventDefault();
-    userInputEl.classList.remove('no-user-input');
-    userInputEl2.classList.remove('no-user-input');
     current = (event.target[0].value);
     userInputEl.value = '';
     userInputEl2.value = '';
@@ -151,16 +149,17 @@ let deleteAll = function() {
 // Function to search for a movie/show using user's input
 let search = function(input) {
     // Find the movie and log the ID from MovieDB
-    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input.toLowerCase())
+    fetch('https://api.themoviedb.org/3/search/multi?api_key=14b7c2e67f36427d72ce8c1df6482552&query=' + input)
         .then(function(res) {
             if (res.ok) {
                 return res.json();
             } else {
-                noResult();
+                console.log('Error');
             }
         })
         .then(function(data) {
             try {
+                console.log(data);
                 removeAllChildNodes(searchResults);
 
                 // ensure there is at least 1 show and no more than 10
@@ -181,7 +180,7 @@ let search = function(input) {
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
-
+                    
                     // disallow people from displaying
                     if (current.media_type === 'person') {
                         continue;
@@ -189,6 +188,7 @@ let search = function(input) {
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
+                    getTheme();
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result", theme);
                     var posterImg = document.createElement('img');
                     var resultTitleEl = document.createElement('div');
@@ -245,7 +245,7 @@ let search = function(input) {
                     searchResultsModal.classList.add('is-active');
                 }
             } catch {
-                noResult();
+                console.log('That search was invalid!');
             }
         })
 
@@ -253,8 +253,6 @@ let search = function(input) {
 
 // Use the placeholder to let users know their search returned no results
 noResult = function() {
-    userInputEl.classList.add('no-user-input');
-    userInputEl2.classList.add('no-user-input');
     userInputEl.placeholder = 'Sorry, there are no results for this search!';
     userInputEl2.placeholder = 'Sorry, there are no results for this search!';
 };
