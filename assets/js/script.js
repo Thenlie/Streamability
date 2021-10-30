@@ -189,6 +189,7 @@ let search = function(input) {
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
+                    getTheme();
                     resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result", theme);
                     var posterImg = document.createElement('img');
                     var resultTitleEl = document.createElement('div');
