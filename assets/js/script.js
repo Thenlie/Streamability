@@ -438,9 +438,21 @@ function themeAdder(event) {
     document.querySelector('#queue-header-2').classList.add(themeName);
     document.querySelector('#search-queue').classList.add(themeName);
     document.querySelector('#search-queue2').classList.add(themeName);
+    document.querySelector('#suggestions-header').classList.add(themeName);
     document.querySelector('#suggestion-container').classList.add(themeName);
     document.querySelector('#modal-header').classList.add(themeName);
     document.querySelector('#search-results').classList.add(themeName);
+    document.querySelector('#result-details').classList.add(themeName);
+    var resultDetailsDivs = document.getElementsByTagName('div');
+    for (let i = 0; i < resultDetailsDivs.length; i++) {
+        resultDetailsDivs[i].classList.add(themeName);  
+    };
+    document.querySelector('#selected-title').classList.add(themeName);
+    document.querySelector('#selected-score').classList.add(themeName);
+    document.querySelector('#selected-plot').classList.add(themeName);
+    document.querySelector('#streamability-title').classList.add(themeName);
+    document.querySelector('#logo-text').classList.add(themeName);
+    
     localStorage.setItem('theme', themeName);
 }
 
@@ -457,8 +469,8 @@ function getTheme() {
    }
 }
 
-loadQueue();
 getTheme();
+loadQueue();
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
