@@ -180,7 +180,7 @@ let search = function(input) {
                 // iterate over movie database search results and display 20 results in search modal
                 for (let i = 0; i < x; i++) {
                     var current = data.results[i]
-
+                    
                     // disallow people from displaying
                     if (current.media_type === 'person') {
                         continue;
