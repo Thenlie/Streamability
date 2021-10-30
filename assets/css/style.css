@@ -498,6 +498,7 @@ body.solo-jazz {
 #result-details #providers-box.solo-jazz,
 #result-details #providers-box div.solo-jazz {
     background-color: rgba(157, 45, 173, 1);
+    color: white;
 }
 
 #search-queue.solo-jazz,
