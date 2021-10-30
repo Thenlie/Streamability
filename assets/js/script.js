@@ -63,7 +63,6 @@ let run = function(event) {
 let queClicked = function(event) {
     event.preventDefault();
     let movieInfo = event.target.parentNode.parentNode
-    console.log(movieInfo);
     movie_title = movieInfo.querySelector("#selected-title").innerText;
     movie_year = movieInfo.querySelector("#selected-year").innerText;
     movie_id = movieInfo.querySelector("#selected-id").innerText;
@@ -130,7 +129,6 @@ let loadQueue = function() {
 
         queueContainerEl.appendChild(documentFragment);
         queueContainer2El.appendChild(cloneContainer);
-        queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
     }
 };
 
@@ -140,6 +138,7 @@ let selectedQueue = function(event){
     let parent = current.parentNode;
     let grandparent = parent.parentNode;
     if (current.classList.contains('delete-btn')) {
+
         loadQueue();
     } else if (current.classList.contains('queueBox')) {
         runSelected(current);
@@ -273,7 +272,6 @@ let closeModal = function() {
 //reads which option is clicked on
 let selected = function(evt) {
     let current = evt.target;
-    console.log(current);
     let parent = current.parentNode;
     let grandparent = parent.parentNode;
     if (current.classList.contains('result')) {
@@ -433,16 +431,22 @@ function watchProviders(showType, showID, showYear) {
 };
 
 let deleteID = function(event) {
-    let queueInfo = event.target.parentNode
-    let queueid = queueInfo.querySelector('.titleID').innerText;
-    localStorage.removeItem(queueid);
-    loadQueue();
+    event.stopPropagation();
+    if (event.target.tagName === 'BUTTON'){
+        let queueInfo = event.target.parentNode
+        let queueid = queueInfo.querySelector('.titleID').innerText;
+        localStorage.removeItem(queueid);
+        loadQueue();
+    }
 };
 
 loadQueue();
+queueContainerEl.addEventListener('click', deleteID);
+queueContainer2El.addEventListener('click', deleteID);
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queueContainerEl.addEventListener('click', selectedQueue);
+queueContainer2El.addEventListener('click', selectedQueue);
 queButtonEl.addEventListener('click', queClicked);
 searchFormEl.addEventListener('submit', run); // Listen for submission of search form
 searchFormEl2.addEventListener('submit', run); // Listen for submission of search form 2
