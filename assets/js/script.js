@@ -116,7 +116,6 @@ let loadQueue = function() {
             var deleteButton = document.createElement('button');
             deleteButton.innerHTML = "Delete";
             deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
-            deleteButton.addEventListener('click', deleteID);
 
             var documentFragment = document.createDocumentFragment();
             queText.appendChild(queTitle);
@@ -427,10 +426,13 @@ function watchProviders(showType, showID, showYear) {
 };
 
 let deleteID = function(event) {
-    let queueInfo = event.target.parentNode
-    let queueid = queueInfo.querySelector('.titleID').innerText;
-    localStorage.removeItem(queueid);
-    loadQueue();
+    event.stopPropagation();
+    if (event.target.tagName == 'BUTTON') {
+        let queueInfo = event.target.parentNode
+        let queueid = queueInfo.querySelector('.titleID').innerText;
+        localStorage.removeItem(queueid);
+        loadQueue();
+    }
 };
 
 // Function to add the each theme's name as a class to the corresponding elements
@@ -532,6 +534,8 @@ themeAdder(theme);
 loadQueue();
 
 // Event Listeners
+queueContainerEl.addEventListener('click', deleteID);
+queueContainer2El.addEventListener('click', deleteID);
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
