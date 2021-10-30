@@ -32,6 +32,7 @@ let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 let resetThemeEl = document.querySelector('#reset-theme');
 let soloJazzThemeEl = document.querySelector('#solo-jazz-theme');
 let tylerThemeEl = document.querySelector('#tyler-theme');
+let darkThemeEl = document.querySelector('#darkmode-theme');
 
 // Initial variable declarations
 let input = '';
@@ -116,7 +117,7 @@ let loadQueue = function() {
             deleteButton.innerHTML = "Delete";
             deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
             deleteButton.addEventListener('click', deleteID);
-    
+
             var documentFragment = document.createDocumentFragment();
             queText.appendChild(queTitle);
             queText.appendChild(queYear);
@@ -125,12 +126,12 @@ let loadQueue = function() {
             queueEl.appendChild(queText);
             queueEl.appendChild(deleteButton);
             documentFragment.append(queueEl);
-    
+
             let newClone = documentFragment.cloneNode(true);
             var cloneContainer = document.createElement('div');
             cloneContainer.classList.add('is-size-3');
             cloneContainer.appendChild(newClone);
-    
+
             queueContainerEl.appendChild(documentFragment);
             queueContainer2El.appendChild(cloneContainer);
             queueContainer2El.querySelector('.delete-btn').addEventListener('click', deleteID);
@@ -442,9 +443,9 @@ function themeAdder(themeName) {
     document.querySelector('#delete-all-queue2').classList.add(themeName);
     // Add theme class to each delete button
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
-        for (let i = 0; i < deleteButtonEls.length; i++) {
-            deleteButtonEls[i].classList.add(themeName);  
-        };
+    for (let i = 0; i < deleteButtonEls.length; i++) {
+        deleteButtonEls[i].classList.add(themeName);
+    };
     document.querySelector('#header-logo').classList.add(themeName);
     document.querySelector('#logo-image-2').classList.add(themeName);
     document.querySelector('#user-input').classList.add(themeName);
@@ -461,7 +462,7 @@ function themeAdder(themeName) {
     // Add theme class to each div in the result details container
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
-        resultDetailsDivs[i].classList.add(themeName);  
+        resultDetailsDivs[i].classList.add(themeName);
     };
     document.querySelector('#selected-title').classList.add(themeName);
     document.querySelector('#selected-score').classList.add(themeName);
@@ -475,51 +476,51 @@ function themeAdder(themeName) {
 
 // Function to remove/reset theme
 function themeRemover() {
-    document.querySelector('a').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-button').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#delete-all-queue').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#delete-all-queue2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('a').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#form-submit').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-button').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#delete-all-queue').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#delete-all-queue2').classList.remove('tyler', 'solo-jazz', 'darkmode');
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
-        for (let i = 0; i < deleteButtonEls.length; i++) {
-            deleteButtonEls[i].classList.remove('tyler', 'solo-jazz');  
-        };
-    document.querySelector('#header-logo').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#logo-image-2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#user-input').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#user-input2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-header-1').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-header-2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-queue').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-queue2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#suggestions-header').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#suggestion-container').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#modal-header').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-results').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#result-details').classList.remove('tyler', 'solo-jazz');
+    for (let i = 0; i < deleteButtonEls.length; i++) {
+        deleteButtonEls[i].classList.remove('tyler', 'solo-jazz', 'darkmode');
+    };
+    document.querySelector('#header-logo').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#logo-image-2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#user-input').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#user-input2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-header-1').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-header-2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-queue').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-queue2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#suggestions-header').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#suggestion-container').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#modal-header').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-results').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#result-details').classList.remove('tyler', 'solo-jazz', 'darkmode');
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
-        resultDetailsDivs[i].classList.remove('tyler', 'solo-jazz');  
+        resultDetailsDivs[i].classList.remove('tyler', 'solo-jazz', 'darkmode');
     };
-    document.querySelector('#selected-title').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#selected-score').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#selected-plot').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#streamability-title').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#logo-text').classList.remove('tyler', 'solo-jazz');
-    document.body.classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#selected-title').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#selected-score').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#selected-plot').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#streamability-title').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#logo-text').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.body.classList.remove('tyler', 'solo-jazz', 'darkmode');
     // "Reset" the theme in local storage
     localStorage.setItem('theme', 'none');
 }
 
 // Function to load the theme from local storage
 function getTheme() {
-   let newTheme = localStorage.getItem('theme');
-   if (newTheme != null) {
-       theme = newTheme;
-   } else {
-       return;
-   }
+    let newTheme = localStorage.getItem('theme');
+    if (newTheme != null) {
+        theme = newTheme;
+    } else {
+        return;
+    }
 }
 
 // Functions to run on page-load
@@ -550,6 +551,11 @@ soloJazzThemeEl.addEventListener('click', function(event) {
     themeAdder(themeName);
 });
 tylerThemeEl.addEventListener('click', function(event) {
+    themeRemover()
+    let themeName = event.target.textContent.toLowerCase();
+    themeAdder(themeName);
+});
+darkThemeEl.addEventListener('click', function(event) {
     themeRemover()
     let themeName = event.target.textContent.toLowerCase();
     themeAdder(themeName);
