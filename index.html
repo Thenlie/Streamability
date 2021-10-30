@@ -44,17 +44,12 @@
         <!-- Watch Queue -->
         <section class="py-6" id="watch-queue">
             <div class="message is-primary">
-                <p class="is-flex message-header is-size-4">Your Queue
+                <p class="is-flex message-header is-size-4" id="queue-header-1">Your Queue
                     <button class="button is-rounded is-multiline" id="delete-all-queue">Clear Queue</button>
                 </p>
                 <div class="message-body scrolly" id="search-queue">
                     <!-- These divs are all individual movies/shows -->
                     <div class="is-flex is-align-items-center">
-                        <img src="https://via.placeholder.com/150x200.png?text=Movie+Poster">
-                        <div>
-                            <p class="is-size-3 has-text-left">Movie Title</p>
-                            <p class="is-size-5 has-text-left">Film – 1969</p>
-                        </div>
                     </div>
 
                 </div>
@@ -112,7 +107,7 @@
             <div class="columns is-centered has-text-centered">
                 <!-- Suggestions -->
                 <div class="column is-4" id="suggestion">
-                    <div class="message is-link">
+                    <div class="message is-link" id="suggestions-header">
                         <p class="message-header is-size-4 ">You might also like...</p>
                         <div class="message-body scrolly" id="suggestion-container"></div>
                     </div>
@@ -121,7 +116,7 @@
                 <!-- Watch Queue -->
                 <div class="column is-6">
                     <div class="message is-primary">
-                        <p class="message-header is-size-4">Your Queue<button class="button is-rounded" id="delete-all-queue2">Clear Queue</button></p>
+                        <p class="message-header is-size-4" id="queue-header-2">Your Queue<button class="button is-rounded" id="delete-all-queue2">Clear Queue</button></p>
                         <div class="message-body" id="search-queue2">
                             <!-- These divs are all individual movies/shows -->
                             <div class="is-flex is-align-items-center">
@@ -150,6 +145,26 @@
         </div>
         <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="dropdown is-up is-hoverable" id="themeDropdown">
+            <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" id="dropdown-button">
+                    <span>Select a theme</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-angle-up" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                    <button class="button dropdown-item" id="tyler-theme">Tyler</button>
+                    <button class="button dropdown-item" id="reset-theme">Reset</button>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src='./assets/js/script.js'></script>

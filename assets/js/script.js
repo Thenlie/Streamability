@@ -28,10 +28,15 @@ let queueContainer2El = document.querySelector('#search-queue2');
 let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 
+// Theme Button Elements
+let resetThemeEl = document.querySelector('#reset-theme');
+let tylerThemeEl = document.querySelector('#tyler-theme');
+
 
 let input = '';
 let showID = '';
 let showType = '';
+let theme = 'none';
 movie_info_list = [];
 
 // reset modal upon user entering new search
@@ -175,7 +180,7 @@ let search = function(input) {
 
                     // create elements for results to reside in
                     var resultEl = document.createElement('div');
-                    resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result");
+                    resultEl.classList.add("is-flex", "is-align-items-center", "box", "p-0", "result", theme);
                     var posterImg = document.createElement('img');
                     var resultTitleEl = document.createElement('div');
                     var titleSpanEl = document.createElement('p');
@@ -315,9 +320,6 @@ let suggestions = function(currentTitle, currentType) {
         })
 };
 
-
-
-
 //runs when there are no show suggestions
 let noSuggestion = function() {
     let suggestionEl = document.createElement('div');
@@ -415,7 +417,48 @@ let deleteID = function(event) {
     loadQueue();
 };
 
+function themeAdder(event) {
+    let themeName = event.target.textContent.toLowerCase();
+    console.log(themeName);
+    document.querySelector('a').classList.add(themeName);
+    document.querySelector('#form-submit').classList.add(themeName);
+    document.querySelector('#search-form2').querySelector('#form-submit').classList.add(themeName);
+    document.querySelector('#queue-button').classList.add(themeName);
+    document.querySelector('#delete-all-queue').classList.add(themeName);
+    document.querySelector('#delete-all-queue2').classList.add(themeName);
+    var deleteButtonEls = document.getElementsByClassName('delete-btn');
+        for (let i = 0; i < deleteButtonEls.length; i++) {
+            deleteButtonEls[i].classList.add(themeName);  
+        };
+    document.querySelector('#header-logo').classList.add(themeName);
+    document.querySelector('#logo-image-2').classList.add(themeName);
+    document.querySelector('#user-input').classList.add(themeName);
+    document.querySelector('#user-input2').classList.add(themeName);
+    document.querySelector('#queue-header-1').classList.add(themeName);
+    document.querySelector('#queue-header-2').classList.add(themeName);
+    document.querySelector('#search-queue').classList.add(themeName);
+    document.querySelector('#search-queue2').classList.add(themeName);
+    document.querySelector('#suggestion-container').classList.add(themeName);
+    document.querySelector('#modal-header').classList.add(themeName);
+    document.querySelector('#search-results').classList.add(themeName);
+    localStorage.setItem('theme', themeName);
+}
+
+function themeRemover() {
+    console.log("Take me back!");
+}
+
+function getTheme() {
+   let newTheme = localStorage.getItem('theme');
+   if (newTheme != null) {
+       theme = newTheme;
+   } else {
+       return;
+   }
+}
+
 loadQueue();
+getTheme();
 deleteAllButtonEl.addEventListener('click', deleteAll);
 deleteAllButtonEl2.addEventListener('click', deleteAll);
 queButtonEl.addEventListener('click', queClicked);
@@ -426,3 +469,7 @@ suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for
 modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
 modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
 logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
+
+// Theme Listeners
+resetThemeEl.addEventListener('click', themeRemover);
+tylerThemeEl.addEventListener('click', themeAdder);

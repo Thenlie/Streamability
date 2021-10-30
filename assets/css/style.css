@@ -298,121 +298,117 @@ img {
 
 /* BEGIN Color Scheme Styles */
 /* Tyler's Colors */
-a:hover {
-    color: rgba(63, 13, 18, 1)!important;
-}
+    a.tyler:hover {
+        color: rgba(63, 13, 18, 1)!important;
+    }
 
-.button.is-primary {
-    background-color: rgba(167, 29, 49, 1);
-}
+    .delete-btn.tyler,
+    #delete-all-queue.tyler,
+    #delete-all-queue2.tyler {
+        color: rgba(63, 13, 18, 1);
+    }
 
-.button.is-link.is-light {
-    background-color: rgba(167, 29, 49, 1);
-    color: #ffffff;
-}
+    #form-submit.tyler {
+        background-color: rgba(167, 29, 49, 1);
+    }
 
-.delete-btn,
-#delete-all-queue {
-    color: rgba(63, 13, 18, 1);
-}
+    #form-submit.tyler:hover {
+        background-color: rgb(131, 26, 37)!important;
+    }
 
-#form-submit:hover {
-    background-color: rgb(131, 26, 37)!important;
-}
+    #header-logo.tyler,
+    #logo-image-2.tyler {
+        filter: invert(5%) sepia(83%) saturate(2300%) hue-rotate(336deg) brightness(111%) contrast(98%);
+    }
 
-#header-logo,
-#logo-image-2 {
-    filter: invert(5%) sepia(83%) saturate(2300%) hue-rotate(336deg) brightness(111%) contrast(98%);
-}
+    #user-input.tyler,
+    #user-input2.tyler {
+        color: rgba(63, 13, 18, 1);
+        border-color: rgba(167, 29, 49, 1);
+    }
 
-.input {
-    color: rgba(63, 13, 18, 1);
-}
+    #user-input.tyler:active,
+    #user-input2.tyler:active,
+    #user-input.tyler:focus,
+    #user-input2.tyler:focus {
+        box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
+    }
 
-.is-primary.input {
-    border-color: rgba(167, 29, 49, 1);
-}
+    #queue-header-1.tyler,
+    #queue-header-2.tyler {
+        background-color: rgba(63, 13, 18, 1);
+    }
 
-.is-primary.input:active {
-    box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
-}
+    #search-queue.tyler,
+    #search-queue2.tyler {
+        background-color: rgba(241, 240, 204, 1);
+        color: rgba(167, 29, 49, 1);
+    }
 
-.is-primary.input:focus {
-    box-shadow: 0 0 0 0.125em rgba(167, 29, 49, .25);
-}
+    #suggestion-container.tyler .button {
+        color: rgba(63, 13, 18, 1);
+    }
 
-.message.is-link .message-header,
-.message.is-primary .message-header {
-    background-color: rgba(63, 13, 18, 1);
-}
+    #modal-header.tyler {
+        background-color: rgba(167, 29, 49, 1);
+        color: rgba(63, 13, 18, 1);
+    }
 
-.message.is-link .message-body,
-.message.is-primary .message-body {
-    background-color: rgba(241, 240, 204, 1);
-    color: rgba(167, 29, 49, 1);
-}
+    #search-results.tyler {
+        background-color: rgba(241, 240, 204, 1);
+    }
 
-.message.is-link .message-body .button {
-    color: rgba(63, 13, 18, 1);
-}
+    #search-results .result.tyler {
+        background-color: rgba(255, 255, 235, 1);
+        color: rgba(167, 29, 49, 1);
+    }
 
+    #queue-button.tyler {
+        background-color: rgba(167, 29, 49, 1);
+        color: #ffffff;
+    }
 
-.message.is-warning .message-header {
-    background-color: rgba(167, 29, 49, 1);
-    color: rgba(63, 13, 18, 1);
-}
+    #queue-button:hover.tyler {
+        background-color: rgb(131, 26, 37)!important;
+    }
 
-.message.is-warning .message-body {
-    background-color: rgba(241, 240, 204, 1);
-}
+    #result-details div.tyler{
+        background-color: rgba(241, 240, 204, 1);
+        color: rgba(167, 29, 49, 1);
+    }
 
-.message.is-warning .message-body .result {
-    background-color: rgba(255, 255, 235, 1);
-    color: rgba(167, 29, 49, 1);
-}
+    #result-details #selected-title.tyler {
+        color: rgba(63, 13, 18, 1);
+    }
 
+    #result-details #selected-score.tyler {
+        color: rgba(167, 29, 49, 1);
+    }
 
-#queue-button:hover {
-    background-color: rgb(131, 26, 37)!important;
-}
+    #result-details #selected-plot.tyler {
+        background-color: rgba(255, 255, 235, 1);
+        color: rgba(167, 29, 49, 1);
+    }
 
-#result-details div{
-    background-color: rgba(241, 240, 204, 1);
-    color: rgba(167, 29, 49, 1);
-}
+    #result-details #providers-box.tyler,
+    #result-details #providers-box div.tyler {
+        background-color: rgba(141, 119, 95, 1);
+    }
 
-#result-details #selected-title {
-    color: rgba(63, 13, 18, 1);
-}
+    #streamability-title.tyler,
+    #logo-text.tyler {
+        color: rgba(167, 29, 49, 1);
+    }
 
-#result-details #selected-score {
-    color: rgba(167, 29, 49, 1);
-}
+    ::-webkit-scrollbar-thumb.tyler {
+        background: rgba(141, 119, 95, 1)!important;
+        border-radius: 20px;
+    }
 
-#result-details #selected-plot {
-    background-color: rgba(255, 255, 235, 1);
-    color: rgba(167, 29, 49, 1);
-}
-
-#result-details #providers-box,
-#result-details #providers-box div {
-    background-color: rgba(141, 119, 95, 1);
-}
-
-#streamability-title,
-#logo-text {
-    color: rgba(167, 29, 49, 1);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(141, 119, 95, 1)!important;
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(141, 119, 95, .8)!important;
-    color: rgba(63, 13, 18, 1);
-}
+    ::-webkit-scrollbar-thumb.tyler:hover {
+        background: rgba(141, 119, 95, .8)!important;
+        color: rgba(63, 13, 18, 1);
+    }
 
 /* END Color Scheme Styles */
 
@@ -430,6 +426,11 @@ a:hover {
 
 #form-submit:hover {
     background-color: hsl(171, 100%, 35%);
+}
+
+#header-logo,
+#logo-image-2 {
+    filter: invert(62%) sepia(90%) saturate(1391%) hue-rotate(122deg) brightness(92%) contrast(101%);
 }
 
 #logo-image-2 {
