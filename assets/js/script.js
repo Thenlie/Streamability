@@ -33,6 +33,7 @@ let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 let resetThemeEl = document.querySelector('#reset-theme');
 let soloJazzThemeEl = document.querySelector('#solo-jazz-theme');
 let tylerThemeEl = document.querySelector('#tyler-theme');
+let darkThemeEl = document.querySelector('#darkmode-theme');
 
 // Initial variable declarations
 let input = '';
@@ -90,64 +91,63 @@ let queClicked = function(event) {
 let loadQueue = function() {
     queueContainer2El.innerHTML = '';
     queueContainerEl.innerHTML = '';
-  //loop through localstorage objects
+    //loop through localstorage objects
     for (const [key, value] of Object.entries(localStorage)) {
-      if (key === 'theme') {
-      } else {
-        var valueSplit = value.split(',');
-        var queueEl = document.createElement('div');
-        queueEl.classList.add('queueBox','is-flex', 'is-align-items-center')
-        var quePoster = document.createElement('img');
-        quePoster.style.width = "100px";
-        quePoster.style.marginRight = "30px";
-        quePoster.style.marginTop = "30px";
-        quePoster.style.marginBottom = "30px";
-        quePoster.style.marginLeft = "10px";
-        quePoster.src = valueSplit[2];
-        //create watch queue elements
-        var queText = document.createElement('div');
-        var queTitle = document.createElement('p');
-        queTitle.classList.add('currentTitle','is-size-4', 'has-text-left');
-        queTitle.innerText = valueSplit[0];
-        var queYear = document.createElement('p');
-        queYear.classList.add('showYear','is-size-4', 'has-text-left');
-        queYear.innerText = valueSplit[1];
-        var queType = document.createElement('p');
-        queType.classList.add('is-hidden', 'showType');
-        queType.innerText = valueSplit[3]
-        var titleIDhid = document.createElement('span');
-        titleIDhid.classList.add("is-hidden", "titleID");
-        titleIDhid.innerText = key;
-        var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = "Delete";
-        deleteButton.classList.add('delete-btn', 'button', 'is-rounded');
-        deleteButton.addEventListener('click', deleteID);
+        if (key === 'theme') {} else {
+            var valueSplit = value.split(',');
+            var queueEl = document.createElement('div');
+            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center')
+            var quePoster = document.createElement('img');
+            quePoster.style.width = "100px";
+            quePoster.style.marginRight = "30px";
+            quePoster.style.marginTop = "30px";
+            quePoster.style.marginBottom = "30px";
+            quePoster.style.marginLeft = "10px";
+            quePoster.src = valueSplit[2];
+            //create watch queue elements
+            var queText = document.createElement('div');
+            var queTitle = document.createElement('p');
+            queTitle.classList.add('currentTitle', 'is-size-4', 'has-text-left');
+            queTitle.innerText = valueSplit[0];
+            var queYear = document.createElement('p');
+            queYear.classList.add('showYear', 'is-size-4', 'has-text-left');
+            queYear.innerText = valueSplit[1];
+            var queType = document.createElement('p');
+            queType.classList.add('is-hidden', 'showType');
+            queType.innerText = valueSplit[3]
+            var titleIDhid = document.createElement('span');
+            titleIDhid.classList.add("is-hidden", "titleID");
+            titleIDhid.innerText = key;
+            var deleteButton = document.createElement('button');
+            deleteButton.innerHTML = "Delete";
+            deleteButton.classList.add('delete-btn', 'button', 'is-rounded', 'ml-auto');
+            deleteButton.addEventListener('click', deleteID);
 
-        //add elements to the queue
-        var documentFragment = document.createDocumentFragment();
-        queText.appendChild(queTitle);
-        queText.appendChild(queYear);
-        queText.appendChild(queType);
-        queText.appendChild(titleIDhid);
-        queueEl.appendChild(quePoster);
-        queueEl.appendChild(queText);
-        queueEl.appendChild(deleteButton);
-        documentFragment.append(queueEl);
+            //add elements to the queue
+            var documentFragment = document.createDocumentFragment();
+            queText.appendChild(queTitle);
+            queText.appendChild(queYear);
+            queText.appendChild(queType);
+            queText.appendChild(titleIDhid);
+            queueEl.appendChild(quePoster);
+            queueEl.appendChild(queText);
+            queueEl.appendChild(deleteButton);
+            documentFragment.append(queueEl);
 
 
-        let newClone = documentFragment.cloneNode(true);
-        var cloneContainer = document.createElement('div');
-        cloneContainer.classList.add('is-size-3');
-        cloneContainer.appendChild(newClone);
+            let newClone = documentFragment.cloneNode(true);
+            var cloneContainer = document.createElement('div');
+            cloneContainer.classList.add('is-size-3');
+            cloneContainer.appendChild(newClone);
 
-        queueContainerEl.appendChild(documentFragment);
-        queueContainer2El.appendChild(cloneContainer);
-      }
+            queueContainerEl.appendChild(documentFragment);
+            queueContainer2El.appendChild(cloneContainer);
+        }
     }
 };
 
 //when queue is clicked search for that title
-let selectedQueue = function(event){
+let selectedQueue = function(event) {
     let current = event.target;
     let parent = current.parentNode;
     let grandparent = parent.parentNode;
@@ -452,13 +452,16 @@ function watchProviders(showType, showID, showYear) {
 
 let deleteID = function(event) {
     event.stopPropagation();
-    if (event.target.tagName === 'BUTTON'){
-        let queueInfo = event.target.parentNode
-        let queueid = queueInfo.querySelector('.titleID').innerText;
-        localStorage.removeItem(queueid);
-        loadQueue();
-    }
-};
+    if (event.target.tagName == 'BUTTON') {
+        if (event.target.tagName === 'BUTTON') {
+            let queueInfo = event.target.parentNode
+            let queueid = queueInfo.querySelector('.titleID').innerText;
+            localStorage.removeItem(queueid);
+            loadQueue();
+        }
+        console.log(event.target)
+    };
+}
 
 // Function to add the each theme's name as a class to the corresponding elements
 function themeAdder(themeName) {
@@ -470,9 +473,9 @@ function themeAdder(themeName) {
     document.querySelector('#delete-all-queue2').classList.add(themeName);
     // Add theme class to each delete button
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
-        for (let i = 0; i < deleteButtonEls.length; i++) {
-            deleteButtonEls[i].classList.add(themeName);  
-        };
+    for (let i = 0; i < deleteButtonEls.length; i++) {
+        deleteButtonEls[i].classList.add(themeName);
+    };
     document.querySelector('#header-logo').classList.add(themeName);
     document.querySelector('#logo-image-2').classList.add(themeName);
     document.querySelector('#user-input').classList.add(themeName);
@@ -489,7 +492,7 @@ function themeAdder(themeName) {
     // Add theme class to each div in the result details container
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
-        resultDetailsDivs[i].classList.add(themeName);  
+        resultDetailsDivs[i].classList.add(themeName);
     };
     document.querySelector('#selected-title').classList.add(themeName);
     document.querySelector('#selected-score').classList.add(themeName);
@@ -501,53 +504,54 @@ function themeAdder(themeName) {
     localStorage.setItem('theme', themeName);
 }
 
+
 // Function to remove/reset theme
 function themeRemover() {
-    document.querySelector('a').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-button').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#delete-all-queue').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#delete-all-queue2').classList.remove('tyler', 'solo-jazz');
+    document.querySelector('a').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#form-submit').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-form2').querySelector('#form-submit').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-button').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#delete-all-queue').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#delete-all-queue2').classList.remove('tyler', 'solo-jazz', 'darkmode');
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
-        for (let i = 0; i < deleteButtonEls.length; i++) {
-            deleteButtonEls[i].classList.remove('tyler', 'solo-jazz');  
-        };
-    document.querySelector('#header-logo').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#logo-image-2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#user-input').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#user-input2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-header-1').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#queue-header-2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-queue').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-queue2').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#suggestions-header').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#suggestion-container').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#modal-header').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#search-results').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#result-details').classList.remove('tyler', 'solo-jazz');
+    for (let i = 0; i < deleteButtonEls.length; i++) {
+        deleteButtonEls[i].classList.remove('tyler', 'solo-jazz', 'darkmode');
+    };
+    document.querySelector('#header-logo').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#logo-image-2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#user-input').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#user-input2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-header-1').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#queue-header-2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-queue').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-queue2').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#suggestions-header').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#suggestion-container').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#modal-header').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#search-results').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#result-details').classList.remove('tyler', 'solo-jazz', 'darkmode');
     var resultDetailsDivs = document.getElementsByTagName('div');
     for (let i = 0; i < resultDetailsDivs.length; i++) {
-        resultDetailsDivs[i].classList.remove('tyler', 'solo-jazz');  
+        resultDetailsDivs[i].classList.remove('tyler', 'solo-jazz', 'darkmode');
     };
-    document.querySelector('#selected-title').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#selected-score').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#selected-plot').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#streamability-title').classList.remove('tyler', 'solo-jazz');
-    document.querySelector('#logo-text').classList.remove('tyler', 'solo-jazz');
-    document.body.classList.remove('tyler', 'solo-jazz');
+    document.querySelector('#selected-title').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#selected-score').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#selected-plot').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#streamability-title').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.querySelector('#logo-text').classList.remove('tyler', 'solo-jazz', 'darkmode');
+    document.body.classList.remove('tyler', 'solo-jazz', 'darkmode');
     // "Reset" the theme in local storage
     localStorage.setItem('theme', 'none');
 }
 
 // Function to load the theme from local storage
 function getTheme() {
-   let newTheme = localStorage.getItem('theme');
-   if (newTheme != null) {
-       theme = newTheme;
-   } else {
-       return;
-   }
+    let newTheme = localStorage.getItem('theme');
+    if (newTheme != null) {
+        theme = newTheme;
+    } else {
+        return;
+    }
 }
 
 // Functions to run on page-load
@@ -582,6 +586,11 @@ soloJazzThemeEl.addEventListener('click', function(event) {
     themeAdder(themeName);
 });
 tylerThemeEl.addEventListener('click', function(event) {
+    themeRemover()
+    let themeName = event.target.textContent.toLowerCase();
+    themeAdder(themeName);
+});
+darkThemeEl.addEventListener('click', function(event) {
     themeRemover()
     let themeName = event.target.textContent.toLowerCase();
     themeAdder(themeName);
