@@ -30,10 +30,7 @@ let queueContainer2El = document.querySelector('#search-queue2');
 let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 // Theme button elements
-let resetThemeEl = document.querySelector('#reset-theme');
-let soloJazzThemeEl = document.querySelector('#solo-jazz-theme');
-let tylerThemeEl = document.querySelector('#tyler-theme');
-let darkThemeEl = document.querySelector('#darkmode-theme');
+let themeSelectEl = document.querySelector('#dropdown-content');
 
 // Initial variable declarations
 let input = '';
@@ -96,7 +93,7 @@ let loadQueue = function() {
         if (key === 'theme') {} else {
             var valueSplit = value.split(',');
             var queueEl = document.createElement('div');
-            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center')
+            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center', 'box', 'box-radius', 'py-0', 'my-3')
             var quePoster = document.createElement('img');
             quePoster.style.width = "100px";
             quePoster.style.marginRight = "30px";
@@ -144,6 +141,7 @@ let loadQueue = function() {
             queueContainer2El.appendChild(cloneContainer);
         }
     }
+    getTheme();
 };
 
 //when queue is clicked search for that title
@@ -421,7 +419,6 @@ function watchProviders(showType, showID, showYear) {
                             // watch providers
                             var providerData = data.results.US.flatrate;
                             removeAllChildNodes(selectedProvidersEl);
-                            console.log(providerData);
                             for (let i = 0; i < providerData.length; i++) {
                                 if (providerData.length >= 1) {
                                     var providerLogo = document.createElement('img');
@@ -434,7 +431,6 @@ function watchProviders(showType, showID, showYear) {
                                 }
                             }
                         } catch {
-                            console.log('This show is not available to stream');
                             removeAllChildNodes(selectedProvidersEl);
                             var noProvidersP = document.createElement('p');
                             noProvidersP.innerText = "Sorry, there are no watch providers for this title.";
@@ -465,12 +461,18 @@ let deleteID = function(event) {
 
 // Function to add the each theme's name as a class to the corresponding elements
 function themeAdder(themeName) {
+    //debugger;
     document.querySelector('a').classList.add(themeName);
     document.querySelector('#form-submit').classList.add(themeName);
     document.querySelector('#search-form2').querySelector('#form-submit').classList.add(themeName);
     document.querySelector('#queue-button').classList.add(themeName);
     document.querySelector('#delete-all-queue').classList.add(themeName);
     document.querySelector('#delete-all-queue2').classList.add(themeName);
+    // Add theme each queue box
+    let queueDiv = document.getElementsByClassName('queueBox');
+    for (let i = 0; i < queueDiv.length; i++) {
+        queueDiv[i].classList.add(themeName);
+    };
     // Add theme class to each delete button
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
     for (let i = 0; i < deleteButtonEls.length; i++) {
@@ -552,13 +554,20 @@ function getTheme() {
     } else {
         return;
     }
+    themeAdder(theme);
+}
+
+let themeClickHandler = function(event) {
+    themeRemover();
+    let themeName = event.target.id;
+    if (themeName === 'default' || themeName === 'dropdown-content') {
+        themeRemover();
+    } else {
+        themeAdder(themeName);
+    };
 }
 
 // Functions to run on page-load
-// Get the theme from local storage
-getTheme();
-// Apply the theme
-themeAdder(theme);
 // Populate the queue
 loadQueue();
 
@@ -577,21 +586,4 @@ suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for
 modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
 modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
 logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
-
-// Theme Listeners
-resetThemeEl.addEventListener('click', themeRemover);
-soloJazzThemeEl.addEventListener('click', function(event) {
-    themeRemover();
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
-tylerThemeEl.addEventListener('click', function(event) {
-    themeRemover()
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
-darkThemeEl.addEventListener('click', function(event) {
-    themeRemover()
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
+themeSelectEl.addEventListener('click', themeClickHandler); //Listens for a theme to be clicked

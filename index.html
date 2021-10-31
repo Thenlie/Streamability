@@ -86,7 +86,8 @@
             <div class="columns is-centered m-5 box">
                 <div class="column is-4 has-text-centered">
                     <p class="title" id="selected-title"></p>
-                    <p id="selected-year"></p>
+                    <p class="is-inline">Released:</p>
+                    <p class="is-inline" id="selected-year"></p>
                     <p id="selected-id" class="is-hidden"></p>
                     <p id="selected-type" class="is-hidden"></p>
                     <p class="subtitle" id="selected-score"></p>
@@ -160,11 +161,11 @@
             </div>
             <!-- Dropdown contents -->
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <button class="button dropdown-item" id="solo-jazz-theme">Solo-Jazz</button>
-                    <button class="button dropdown-item" id="tyler-theme">Tyler</button>
-                    <button class="button dropdown-item" id="darkmode-theme">Darkmode</button>
-                    <button class="button dropdown-item" id="reset-theme">Reset</button>
+                <div class="dropdown-content" id="dropdown-content">
+                    <button class="button dropdown-item" id="solo-jazz">Jazz</button>
+                    <button class="button dropdown-item" id="tyler">Wine & Cheese</button>
+                    <button class="button dropdown-item" id="darkmode">Darkmode</button>
+                    <button class="button dropdown-item" id="default">Default</button>
                 </div>
             </div>
         </div>

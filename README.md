@@ -13,7 +13,7 @@ are similar to the searched title, and a watch queue. Streamability is your one-
 * Bulma
 
 ## Deployed at:
-thenlie.github.io/streamability/
+[thenlie.github.io/streamability/](thenlie.github.io/streamability/)
 
 ## IMPORTANT - PLEASE READ:
 This app was created during a coding bootcamp course by students. As such, the application is an assigned project to showcase front end development skills. This project was made with no prior knowledge of back end technologies, and extra steps will need to be taken in order for this application to function properly. Please follow the below instructions before using the app.
@@ -30,4 +30,8 @@ You may now exit out of the https://cors-anywhere.herokuapp.com/corsdemo tab.
 # 3:
 The app should now fully function. Keep in mind that failing to follow the steps above will prevent the app from giving you title suggestions for similar titles.
 Additionally, the steps followed above only give you temporary access to the similar title suggestion; this access tends to last for 1-2 days.
-Therefore, it may be neccessary to re-perofrm the above steps if you notice the application is not populating similar title suggestions.
+Therefore, it may be necessary to re-perform the above steps if you notice the application is not populating similar title suggestions.
+
+## Screenshot of the Application
+
+![Screenshot of Streamability](https://github.com/Thenlie/streamability/blob/main/assets/images/screenshot.png)

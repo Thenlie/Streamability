@@ -249,7 +249,12 @@ img {
 }
 
 .message {
-    border-radius: 20px;
+    border-radius: 30px;
+}
+
+.message-body {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .message-header {
@@ -277,6 +282,16 @@ img {
 
 #dropdown-button:hover {
     background-color: #ffffff;
+}
+
+.delete-btn {
+    background-color: #00d1b2;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: hsl(171, 100%, 35%);
+    color: white;
 }
 
 #form-submit {
@@ -352,6 +367,10 @@ img {
 #queue-button:hover {
     background-color: hsl(217, 71%, 53%);
     color: white;
+}
+
+.queueBox:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #search-queue,
@@ -439,10 +458,18 @@ body.solo-jazz {
     background-image: url(../images/solo-jazz.png);
 }
 
-.delete-btn.solo-jazz,
 #delete-all-queue.solo-jazz,
 #delete-all-queue2.solo-jazz {
     color: rgba(59, 38, 133, 1);
+}
+
+.delete-btn.solo-jazz {
+    background-color: rgba(157, 45, 173, 1);
+    color: rgba(241, 240, 204, 1);
+}
+
+.delete-btn.solo-jazz:hover {
+    background-color: rgba(59, 38, 133, 1);
 }
 
 #form-submit.solo-jazz {
@@ -470,6 +497,10 @@ body.solo-jazz {
 
 #queue-button:hover.solo-jazz {
     background-color: rgb(59, 38, 133)!important;
+}
+
+.queueBox.solo-jazz:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #queue-header-1.solo-jazz,
@@ -567,10 +598,26 @@ body.tyler {
     background-image: none;
 }
 
-.delete-btn.tyler,
 #delete-all-queue.tyler,
 #delete-all-queue2.tyler {
+    background-color: rgba(167, 29, 49, 1);
+    color: rgba(241, 240, 204, 1);
+}
+
+#delete-all-queue.tyler:hover,
+#delete-all-queue2.tyler:hover {
+    background-color: rgba(241, 240, 204, 1);
+    color: rgba(167, 29, 49, 1);
+}
+
+.delete-btn.tyler {
+    background-color: rgba(241, 240, 204, 1);
     color: rgba(63, 13, 18, 1);
+}
+
+.delete-btn.tyler:hover {
+    background-color: rgba(63, 13, 18, 1);
+    color: rgba(241, 240, 204, 1);
 }
 
 #form-submit.tyler {
@@ -598,6 +645,14 @@ body.tyler {
 
 #queue-button:hover.tyler {
     background-color: rgb(131, 26, 37)!important;
+}
+
+.queueBox.tyler {
+    background-color: rgba(255, 255, 235, 1);
+}
+
+.queueBox.tyler:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #queue-header-1.tyler,
@@ -687,7 +742,7 @@ body.tyler {
 /* Darkmode Colors */
 
 a.darkmode:hover {
-    color: rgba(0, 0, 0, 1)!important;
+    color: rgba(255, 255, 255, 1)!important;
 }
 
 body.darkmode {
@@ -695,7 +750,6 @@ body.darkmode {
     background-color: rgb(54, 54, 54, 1);
 }
 
-.delete-btn.darkmode,
 #delete-all-queue.darkmode,
 #delete-all-queue2.darkmode {
     background-color: rgba(60, 60, 60, 1);
@@ -725,6 +779,15 @@ body.darkmode {
 #modal-header.darkmode {
     background-color: rgba(39, 39, 39, 1);
     color: rgba(255, 255, 255, 1);
+}
+
+.queueBox.darkmode {
+    background-color: rgba(70, 70, 70, 1);
+    color: white;
+}
+
+.queueBox.darkmode:hover {
+    background-color: rgba(60, 60, 60, 1);
 }
 
 #queue-button.darkmode {
@@ -770,8 +833,9 @@ body.darkmode {
     color: rgba(255, 255, 255, 1);
 }
 
+.delete-btn.darkmode,
 #search-queue.darkmode button {
-    background-color: rgba(60, 60, 60, 1);
+    background-color: rgba(45, 45, 45, 1);
     color: #ffffff;
 }
 
@@ -840,7 +904,7 @@ body.darkmode {
 }
 
 .darkmode::-webkit-scrollbar-thumb:hover {
-    background: rgba(30, 30, 30, .7)!important;
+    background: rgba(20, 20, 20, .9)!important;
 }
 
 
