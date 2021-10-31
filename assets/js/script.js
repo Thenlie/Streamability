@@ -554,6 +554,12 @@ function getTheme() {
     }
 }
 
+let themeClickHandler = function() {
+    themeRemover()
+    let themeName = event.target.textContent.toLowerCase();
+    themeAdder(themeName);
+}
+
 // Functions to run on page-load
 // Get the theme from local storage
 getTheme();
@@ -580,18 +586,6 @@ logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
 
 // Theme Listeners
 resetThemeEl.addEventListener('click', themeRemover);
-soloJazzThemeEl.addEventListener('click', function(event) {
-    themeRemover();
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
-tylerThemeEl.addEventListener('click', function(event) {
-    themeRemover()
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
-darkThemeEl.addEventListener('click', function(event) {
-    themeRemover()
-    let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
-});
+soloJazzThemeEl.addEventListener('click', themeClickHandler);
+tylerThemeEl.addEventListener('click', themeClickHandler);
+darkThemeEl.addEventListener('click', themeClickHandler);
