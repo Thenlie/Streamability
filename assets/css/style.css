@@ -279,6 +279,16 @@ img {
     background-color: #ffffff;
 }
 
+.delete-btn {
+    background-color: #00d1b2;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: hsl(171, 100%, 35%);
+    color: white;
+}
+
 #form-submit {
     -webkit-transition: all .25s ease-out;
     -moz-transition: all .25s ease-out;
@@ -352,6 +362,10 @@ img {
 #queue-button:hover {
     background-color: hsl(217, 71%, 53%);
     color: white;
+}
+
+.queueBox:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #search-queue,
@@ -478,6 +492,10 @@ body.solo-jazz {
 
 #queue-button:hover.solo-jazz {
     background-color: rgb(59, 38, 133)!important;
+}
+
+.queueBox.solo-jazz:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #queue-header-1.solo-jazz,
@@ -624,6 +642,14 @@ body.tyler {
     background-color: rgb(131, 26, 37)!important;
 }
 
+.queueBox.tyler {
+    background-color: rgba(255, 255, 235, 1);
+}
+
+.queueBox.tyler:hover {
+    background-color: rgb(220, 220, 220);
+}
+
 #queue-header-1.tyler,
 #queue-header-2.tyler {
     background-color: rgba(63, 13, 18, 1);
@@ -711,7 +737,7 @@ body.tyler {
 /* Darkmode Colors */
 
 a.darkmode:hover {
-    color: rgba(0, 0, 0, 1)!important;
+    color: rgba(255, 255, 255, 1)!important;
 }
 
 body.darkmode {

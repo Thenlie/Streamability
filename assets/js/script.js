@@ -400,7 +400,7 @@ function watchProviders(showType, showID, showYear) {
                                 selectedTitleEl.innerText = selectedTitleData.name;
                             }
                             // showing the year
-                            selectedYearEL.innerText = "Released: " + showYear;
+                            selectedYearEL.innerText = showYear;
                             selectedIdEL.innerText = showID;
                             selectedTypeEl.innerText = showType;
                             // viewer rating
@@ -562,7 +562,7 @@ function getTheme() {
 let themeClickHandler = function(event) {
     themeRemover();
     let themeName = event.target.textContent.toLowerCase();
-    if (themeName === 'reset') {
+    if (themeName === 'default') {
         themeRemover();
     } else {
         themeAdder(themeName);
