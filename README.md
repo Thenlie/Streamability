@@ -13,7 +13,7 @@ are similar to the searched title, and a watch queue. Streamability is your one-
 * Bulma
 
 ## Deployed at:
-[thenlie.github.io/streamability/](thenlie.github.io/streamability/)
+[thenlie.github.io/streamability/](https://thenlie.github.io/Streamability/)
 
 ## IMPORTANT - PLEASE READ:
 This app was created during a coding bootcamp course by students. As such, the application is an assigned project to showcase front end development skills. This project was made with no prior knowledge of back end technologies, and extra steps will need to be taken in order for this application to function properly. Please follow the below instructions before using the app.
