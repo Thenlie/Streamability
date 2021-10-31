@@ -419,7 +419,6 @@ function watchProviders(showType, showID, showYear) {
                             // watch providers
                             var providerData = data.results.US.flatrate;
                             removeAllChildNodes(selectedProvidersEl);
-                            console.log(providerData);
                             for (let i = 0; i < providerData.length; i++) {
                                 if (providerData.length >= 1) {
                                     var providerLogo = document.createElement('img');
@@ -432,7 +431,6 @@ function watchProviders(showType, showID, showYear) {
                                 }
                             }
                         } catch {
-                            console.log('This show is not available to stream');
                             removeAllChildNodes(selectedProvidersEl);
                             var noProvidersP = document.createElement('p');
                             noProvidersP.innerText = "Sorry, there are no watch providers for this title.";
@@ -561,7 +559,6 @@ function getTheme() {
 
 let themeClickHandler = function(event) {
     themeRemover();
-    console.log(event.target.id)
     let themeName = event.target.id;
     if (themeName === 'default' || themeName === 'dropdown-content') {
         themeRemover();

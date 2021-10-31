@@ -249,7 +249,12 @@ img {
 }
 
 .message {
-    border-radius: 20px;
+    border-radius: 30px;
+}
+
+.message-body {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .message-header {
