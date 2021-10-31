@@ -402,7 +402,7 @@ function watchProviders(showType, showID, showYear) {
                                 selectedTitleEl.innerText = selectedTitleData.name;
                             }
                             // showing the year
-                            selectedYearEL.innerText = showYear;
+                            selectedYearEL.innerText = "Released: " + showYear;
                             selectedIdEL.innerText = showID;
                             selectedTypeEl.innerText = showType;
                             // viewer rating
