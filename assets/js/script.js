@@ -30,10 +30,7 @@ let queueContainer2El = document.querySelector('#search-queue2');
 let deleteAllButtonEl = document.querySelector('#delete-all-queue');
 let deleteAllButtonEl2 = document.querySelector('#delete-all-queue2');
 // Theme button elements
-let resetThemeEl = document.querySelector('#reset-theme');
-let soloJazzThemeEl = document.querySelector('#solo-jazz-theme');
-let tylerThemeEl = document.querySelector('#tyler-theme');
-let darkThemeEl = document.querySelector('#darkmode-theme');
+let themeSelectEl = document.querySelector('#dropdown-content');
 
 // Initial variable declarations
 let input = '';
@@ -554,8 +551,8 @@ function getTheme() {
     }
 }
 
-let themeClickHandler = function() {
-    themeRemover()
+let themeClickHandler = function(event) {
+    themeRemover();
     let themeName = event.target.textContent.toLowerCase();
     themeAdder(themeName);
 }
@@ -585,7 +582,4 @@ modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on 
 logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
 
 // Theme Listeners
-resetThemeEl.addEventListener('click', themeRemover);
-soloJazzThemeEl.addEventListener('click', themeClickHandler);
-tylerThemeEl.addEventListener('click', themeClickHandler);
-darkThemeEl.addEventListener('click', themeClickHandler);
+themeSelectEl.addEventListener('click', themeClickHandler);
