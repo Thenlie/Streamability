@@ -93,7 +93,7 @@ let loadQueue = function() {
         if (key === 'theme') {} else {
             var valueSplit = value.split(',');
             var queueEl = document.createElement('div');
-            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center')
+            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center', 'box', 'box-radius', 'py-0', 'my-3')
             var quePoster = document.createElement('img');
             quePoster.style.width = "100px";
             quePoster.style.marginRight = "30px";
@@ -141,6 +141,7 @@ let loadQueue = function() {
             queueContainer2El.appendChild(cloneContainer);
         }
     }
+    getTheme();
 };
 
 //when queue is clicked search for that title
@@ -462,12 +463,18 @@ let deleteID = function(event) {
 
 // Function to add the each theme's name as a class to the corresponding elements
 function themeAdder(themeName) {
+    //debugger;
     document.querySelector('a').classList.add(themeName);
     document.querySelector('#form-submit').classList.add(themeName);
     document.querySelector('#search-form2').querySelector('#form-submit').classList.add(themeName);
     document.querySelector('#queue-button').classList.add(themeName);
     document.querySelector('#delete-all-queue').classList.add(themeName);
     document.querySelector('#delete-all-queue2').classList.add(themeName);
+    // Add theme each queue box
+    let queueDiv = document.getElementsByClassName('queueBox');
+    for (let i = 0; i < queueDiv.length; i++) {
+        queueDiv[i].classList.add(themeName);
+    };
     // Add theme class to each delete button
     var deleteButtonEls = document.getElementsByClassName('delete-btn');
     for (let i = 0; i < deleteButtonEls.length; i++) {
@@ -549,19 +556,20 @@ function getTheme() {
     } else {
         return;
     }
+    themeAdder(theme);
 }
 
 let themeClickHandler = function(event) {
     themeRemover();
     let themeName = event.target.textContent.toLowerCase();
-    themeAdder(themeName);
+    if (themeName === 'reset') {
+        themeRemover();
+    } else {
+        themeAdder(themeName);
+    };
 }
 
 // Functions to run on page-load
-// Get the theme from local storage
-getTheme();
-// Apply the theme
-themeAdder(theme);
 // Populate the queue
 loadQueue();
 
@@ -580,6 +588,4 @@ suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for
 modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
 modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
 logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
-
-// Theme Listeners
-themeSelectEl.addEventListener('click', themeClickHandler);
+themeSelectEl.addEventListener('click', themeClickHandler); //Listens for a theme to be clicked
