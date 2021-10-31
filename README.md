@@ -62,6 +62,7 @@ This application was created by students. Its intention is to showcase front-end
 
 Before searching for a title, follow this link in a new tab in your browser: <https://cors-anywhere.herokuapp.com/>
 Once opened, you will see the following:
+
 ![CORS-Anywhere/Heroku](./assets/images/heroku.PNG)
 
 ## Step 2
