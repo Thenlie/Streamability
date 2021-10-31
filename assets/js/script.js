@@ -561,8 +561,9 @@ function getTheme() {
 
 let themeClickHandler = function(event) {
     themeRemover();
-    let themeName = event.target.textContent.toLowerCase();
-    if (themeName === 'default') {
+    console.log(event.target.id)
+    let themeName = event.target.id;
+    if (themeName === 'default' || themeName === 'dropdown-content') {
         themeRemover();
     } else {
         themeAdder(themeName);
