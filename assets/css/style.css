@@ -114,14 +114,6 @@ q:after {
     content: none
 }
 
-a {
-    margin: 0;
-    padding: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent
-}
-
 ins {
     background-color: #ff9;
     color: #000;
@@ -181,10 +173,6 @@ a {
     transition: color .25s ease-out;
 }
 
-a:hover {
-    color: hsl(171, 100%, 41%);
-}
-
 button {
     font-family: 'Josefin Sans', sans-serif;
     -webkit-transition: all .25s ease-out;
@@ -199,7 +187,7 @@ button:hover {
 }
 
 footer {
-    position: sticky;
+    position: relative;
     position: -webkit-sticky;
     bottom: 0;
 }
@@ -280,10 +268,6 @@ img {
 
 /* BEGIN ID Styles */
 
-#dropdown-button:hover {
-    background-color: #ffffff;
-}
-
 .delete-btn {
     background-color: #00d1b2;
     color: white;
@@ -320,8 +304,16 @@ img {
     text-decoration: none;
     position: relative;
     top: 46%;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent
 }
 
+#logo-text:hover {
+    color: hsl(171, 100%, 41%);
+}
 
 /* BEGIN Modal Styles */
 
