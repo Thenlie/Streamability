@@ -95,4 +95,4 @@ One additional note: The access granted above will only give you temporary acces
 
 ## Contribution
 
-Code by Leithen Crider, Kevin Fan, Benjamin Holt, and Tyler Norman
+Code by [Leithen Crider](https://github.com/Thenlie), [Kevin Fan](https://github.com/Yu-ChengFan), Benjamin Holt, and [Tyler Norman](https://github.com/t-norm).
