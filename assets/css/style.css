@@ -188,7 +188,6 @@ button:hover {
 
 footer {
     position: relative;
-    position: -webkit-sticky;
     bottom: 0;
 }
 
