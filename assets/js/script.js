@@ -335,7 +335,7 @@ let suggestions = function(currentTitle, currentType) {
     }
 
     // Taste Dive API Request
-    fetch('https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=' + currentTitle + '&type=' + currentType + '&limit=5&info=1&k=425677-LeithenC-C01G9X9L')
+    fetch('https://cors-anywhere.herokuapp.com/https://tastedive.com/api/similar?q=' + currentTitle + '&type=' + currentType + '&limit=5&info=1&k=426530-Streamab-9YQIEKUQ')
         .then(function(res) {
             return (res.json());
         })
