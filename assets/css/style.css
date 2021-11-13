@@ -187,8 +187,15 @@ button:hover {
 }
 
 footer {
-    position: relative;
-    bottom: 0;
+    height:50px;
+    width: 100%; 
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    position: fixed;
+    bottom: 0pt;
+    left: 0pt;
 }
 
 img {
@@ -915,6 +922,7 @@ body.darkmode {
 
 /* Media Query for Desktop */
 
+
 @media screen and (max-width: 1215px) {
     #logo-text {
         top: 35%
@@ -922,6 +930,12 @@ body.darkmode {
     #logo-image-2 {
         min-width: 61.5px;
         max-width: 61.5px;
+    }
+    #search-queue2 .queueBox {
+        justify-content: center;
+    }
+    #search-queue2 button {
+        margin: 10px auto;
     }
 }
 
@@ -978,7 +992,21 @@ body.darkmode {
     #modal-content-container {
         margin: 2rem;
     }
-}
 
+    .queueBox {
+        padding: 0 100px;
+        justify-content: center;
+    }
+
+    .queueBox div p {
+        text-align: center!important;
+    }
+
+    .delete-btn {
+        margin: 10px auto!important;
+        display: block;
+        flex-basis: 100%;
+    }
+}
 
 /* END Media Queries */
