@@ -93,8 +93,9 @@ let loadQueue = function() {
         if (key === 'theme') {} else {
             var valueSplit = value.split(',');
             var queueEl = document.createElement('div');
-            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center', 'box', 'box-radius', 'py-0', 'my-3')
+            queueEl.classList.add('queueBox', 'is-flex', 'is-align-items-center', 'box', 'box-radius', 'py-0', 'my-3', 'is-flex-wrap-wrap')
             var quePoster = document.createElement('img');
+            quePoster.style.minWidth = "100px";
             quePoster.style.width = "100px";
             quePoster.style.marginRight = "30px";
             quePoster.style.marginTop = "30px";
@@ -104,10 +105,10 @@ let loadQueue = function() {
             //create watch queue elements
             var queText = document.createElement('div');
             var queTitle = document.createElement('p');
-            queTitle.classList.add('currentTitle', 'is-size-4', 'has-text-left');
+            queTitle.classList.add('currentTitle', 'is-size-3', 'has-text-left');
             queTitle.innerText = valueSplit[0];
             var queYear = document.createElement('p');
-            queYear.classList.add('showYear', 'is-size-4', 'has-text-left');
+            queYear.classList.add('showYear', 'is-size-5', 'has-text-left');
             queYear.innerText = valueSplit[1];
             var queType = document.createElement('p');
             queType.classList.add('is-hidden', 'showType');
@@ -455,7 +456,6 @@ let deleteID = function(event) {
             localStorage.removeItem(queueid);
             loadQueue();
         }
-        console.log(event.target)
     };
 }
 
