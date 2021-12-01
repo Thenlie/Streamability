@@ -1,5 +1,7 @@
 const express = require('express');
+const cors_proxy = require('cors-anywhere');
 const path = require('path');
+const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -11,6 +13,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
-app.listen(PORT, () => {
+cors_proxy.createServer({
+    originWhitelist: [],
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+})
+app.listen(PORT, HOST, () => {
     console.log(`Server running on port ${PORT}`);
 });
