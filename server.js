@@ -17,7 +17,6 @@ cors_proxy.createServer({
     originWhitelist: [],
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
-})
-app.listen(PORT, HOST, () => {
+}).listen(PORT, HOST, () => {
     console.log(`Server running on port ${PORT}`);
 });
