@@ -6,9 +6,8 @@ const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// "https://streamability.herokuapp.com/"
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: 'https://streamability.herokuapp.com/', credentials: true }));
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 app.use(express.static('public'));
