@@ -13,8 +13,7 @@ are similar to the searched title, and a watch queue. Streamability is your one-
 * Bulma
 
 ## Deployed at:
-[thenlie.github.io/streamability/](https://thenlie.github.io/Streamability/)
-and 
+
 [thttps://streamability.herokuapp.com/](https://streamability.herokuapp.com/)
 
 ## Screenshot of the Application
