@@ -34,4 +34,4 @@ Therefore, it may be necessary to re-perform the above steps if you notice the a
 
 ## Screenshot of the Application
 
-![Screenshot of Streamability](https://github.com/Thenlie/streamability/blob/main/assets/images/screenshot.png)
+![Screenshot of Streamability](https://github.com/Thenlie/Streamability/blob/main/public/assets/images/screenshot.png)
