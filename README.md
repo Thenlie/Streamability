@@ -14,7 +14,7 @@ are similar to the searched title, and a watch queue. Streamability is your one-
 
 ## Deployed at:
 
-[thttps://streamability.herokuapp.com/](https://streamability.herokuapp.com/)
+[https://streamability.herokuapp.com/](https://streamability.herokuapp.com/)
 
 ## Screenshot of the Application
 
