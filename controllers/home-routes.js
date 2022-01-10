@@ -3,15 +3,15 @@ const sequelize = require('../config/connection');
 const { User } = require('../models');
 
 router.get('/', (req, res) => {
-    res.render('home', { loggedIn: req.session.loggedIn })
+    res.render('home', {})
 })
 
 router.get('/signup', (req, res) => {
-    res.render('signup', { loggedIn: req.session.loggedIn });
+    res.render('signup', {});
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', { loggedIn: req.session.loggedIn });
+    res.render('login', {});
 });
 
 module.exports = router;
