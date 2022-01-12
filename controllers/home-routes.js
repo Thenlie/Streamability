@@ -19,10 +19,9 @@ router.get('/info/:type/:title/:id', async (req, res) => {
     const watchProviders = await watchRes.json();
     const suggestions = await suggestionRes.json();
     console.log(info);
-    console.log(watchProviders);
+    const providers = watchProviders.results.US.flatrate;
     console.log(suggestions);
-    res.render('info', { info, watchProviders, suggestions })
-    // res.render('info');
+    res.render('info', { info, providers, suggestions })
 })
 
 router.get('/signup', (req, res) => {
