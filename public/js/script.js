@@ -55,13 +55,18 @@ let refresh = function() {
 
 let run = function(event) {
     event.preventDefault();
-    userInputEl.classList.remove('no-user-input');
-    userInputEl2.classList.remove('no-user-input');
+    try {userInputEl.classList.remove('no-user-input')} 
+    catch { console.log('oh well')}
+    try {userInputEl2.classList.remove('no-user-input')} 
+    catch { console.log('oh well')}
     current = (event.target[0].value);
-    userInputEl.value = '';
-    userInputEl2.value = '';
+    try { userInputEl.value = ''}
+    catch { console.log('oh well')}
+    try { userInputEl2.value = ''}
+    catch { console.log('oh well')}
+    console.log(current)
     search(current);
-    loadQueue();
+    // loadQueue();
 };
 
 let queClicked = function(event) {
@@ -181,19 +186,23 @@ let search = function(input) {
             }
         })
         .then(function(data) {
-            try {
+            // try {
                 removeAllChildNodes(searchResults);
 
                 // ensure there is at least 1 show and no more than 10
                 let x = 0;
                 if (data.results.length > 10) {
                     x = 10;
-                    userInputEl.placeholder = "What're you lookin' for?";
-                    userInputEl2.placeholder = "What're you lookin' for?";
+                    try {userInputEl.placeholder = "What're you lookin' for?"}
+                    catch{ console.log('oh well')}
+                    try {userInputEl2.placeholder = "What're you lookin' for?"}
+                    catch{ console.log('oh well')}
                 } else if (data.results.length > 0) {
                     x = data.results.length;
-                    userInputEl.placeholder = "What're you lookin' for?";
-                    userInputEl2.placeholder = "What're you lookin' for?";
+                    try {userInputEl.placeholder = "What're you lookin' for?"}
+                    catch{ console.log('oh well')}
+                    try {userInputEl2.placeholder = "What're you lookin' for?"}
+                    catch{ console.log('oh well')}
                 } else {
                     noResult();
                     return;
@@ -266,11 +275,10 @@ let search = function(input) {
                     searchResults.appendChild(resultEl);
                     searchResultsModal.classList.add('is-active');
                 }
-            } catch {
-                noResult();
-            }
+            // } catch {
+            //     noResult();
+            // }
         })
-
 };
 
 // Use the placeholder to let users know their search returned no results
@@ -307,12 +315,13 @@ let runSelected = function(element) {
     showType = element.querySelector('.showType').textContent.toLowerCase();
     showYear = element.querySelector('.showYear').textContent;
     searchResultsModal.classList.remove('is-active');
-    let currentTitle = element.querySelector('.currentTitle').textContent;
-    watchProviders(showType, showID, showYear);
-    suggestions(currentTitle, showType);
-    landingPageEl.classList.add('is-hidden');
-    resultPageEl.classList.remove('is-hidden');
-    // document.location.assign('/info')
+    let showTitle = element.querySelector('.currentTitle').textContent;
+    // watchProviders(showType, showID, showYear);
+    // suggestions(currentTitle, showType);
+    // landingPageEl.classList.add('is-hidden');
+    // resultPageEl.classList.remove('is-hidden');
+    // document.location.assign(`/info/${showID}`);
+    document.location.assign(`/info/${showType}/${showTitle}/${showID}`);
 }
 
 // Run when a suggestion is clicked on
@@ -459,20 +468,34 @@ let deleteID = function(event) {
 
 // Functions to run on page-load
 // Populate the queue
-loadQueue();
+// loadQueue();
 
 // Event Listeners
-queueContainerEl.addEventListener('click', deleteID);
-queueContainer2El.addEventListener('click', deleteID);
-deleteAllButtonEl.addEventListener('click', deleteAll);
-deleteAllButtonEl2.addEventListener('click', deleteAll);
-queueContainerEl.addEventListener('click', selectedQueue);
-queueContainer2El.addEventListener('click', selectedQueue);
-queButtonEl.addEventListener('click', queClicked);
-searchFormEl.addEventListener('submit', run); // Listen for submission of search form
-searchFormEl2.addEventListener('submit', run); // Listen for submission of search form 2
-searchResults.addEventListener('click', selected); // Listen for click of show option
-suggestionContainerEl.addEventListener('click', suggestionSelect); // Listen for click of a suggested show
-modalCloseEl.addEventListener('click', closeModal); // Listen for click of modal close button
-modalBackgroundEl.addEventListener('click', closeModal); // Listen for click on modal background
-logoEl.addEventListener('click', refresh); //Refresh page when logo is clicked
+try { queueContainerEl.addEventListener('click', deleteID)} 
+catch { console.log('oh well')}
+try { queueContainer2El.addEventListener('click', deleteID)} 
+catch { console.log('oh well')}
+try { deleteAllButtonEl.addEventListener('click', deleteAll)} 
+catch { console.log('oh well')}
+try { deleteAllButtonEl2.addEventListener('click', deleteAll)} 
+catch { console.log('oh well')}
+try { queueContainerEl.addEventListener('click', selectedQueue)} 
+catch { console.log('oh well')}
+try { queueContainer2El.addEventListener('click', selectedQueue)} 
+catch { console.log('oh well')}
+try { queButtonEl.addEventListener('click', queClicked)} 
+catch { console.log('oh well')}
+try { searchFormEl.addEventListener('submit', run)} 
+catch { console.log('oh well')} // Listen for submission of search form
+try { searchFormEl2.addEventListener('submit', run)} 
+catch { console.log('oh well')} // Listen for submission of search form 2
+try { searchResults.addEventListener('click', selected)} 
+catch { console.log('oh well')} // Listen for click of show option
+try { suggestionContainerEl.addEventListener('click', suggestionSelect)} 
+catch { console.log('oh well')} // Listen for click of a suggested show
+try { modalCloseEl.addEventListener('click', closeModal)} 
+catch { console.log('oh well')} // Listen for click of modal close button
+try { modalBackgroundEl.addEventListener('click', closeModal)} 
+catch { console.log('oh well')} // Listen for click on modal background
+try { logoEl.addEventListener('click', refresh)} 
+catch { console.log('oh well')} //Refresh page when logo is clicked
