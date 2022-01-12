@@ -18,7 +18,7 @@ router.get('/info/:type/:title/:id', async (req, res) => {
     const suggestions = await suggestionRes.json();
     const queue = await queueRes.json();
     const providers = watchProviders.results.US.flatrate;
-    console.log(queue);
+    console.log(providers);
     res.render('info', { info, providers, suggestions, queue })
 })
 
