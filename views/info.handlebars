@@ -72,6 +72,21 @@
             </div>
         </div>
     </section>
+    <!-- Search Results Modal -->
+    <section class="modal" id="search-results-modal">
+        <!-- Grey background that closes modal when clicked on -->
+        <div class="modal-background"></div>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="message is-warning" id="modal-content-container">
+                <p class="message-header is-size-5" id="modal-header">Search Results</p>
+                <div class="message-body scrolly" id="search-results"></div>
+            </div>
+        </div>
+        <!-- Modal close button in upper-right -->
+        <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
+    </section>
 </div>
 
 {{> footer}}
+<script src='/js/script.js'></script>
