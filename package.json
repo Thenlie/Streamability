@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Thenlie/Streamability#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bulma": "^0.9.3",
     "connect-session-sequelize": "^7.1.2",
     "cors": "^2.8.5",
     "cors-anywhere": "^0.4.4",
