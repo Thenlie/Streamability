@@ -4,7 +4,7 @@ const { Queue } = require('../../models');
 router.get('/:user_id', async (req, res) => {
     try {
         const response = await Queue.findAll({
-            where: { user_id: req.session.user_id }
+            where: { user_id: req.params.user_id }
         });
         if (!response) {
             res.status(204).json({ message: 'No shows found!' });
@@ -24,6 +24,7 @@ router.post('/', async (req, res) => {
         });
         res.json(response);
     } catch (err) {
+        console.log(err)
         res.status(500).json(err);
     }   
 });

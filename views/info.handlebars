@@ -15,7 +15,7 @@
             <button class="button m-1 is-rounded" id="logout-btn">Logout</button>
             <button class="button m-1 is-rounded" id="dashboard-btn"><a href="/dashboard">Dashboard</a></button>
         {{else}}
-            <button class="button m-1 is-rounded" id="signup-btn"><a href="/login">Sign Up</a></button>
+            <button class="button m-1 is-rounded" id="signup-btn"><a href="/signup">Sign Up</a></button>
             <button class="button m-1 is-rounded" id="login-btn"><a href="/login">Login</a></button>
         {{/if}}
         <form class="column field has-addons" id="search-form">
@@ -77,6 +77,9 @@
                     <div class="message-body" id="search-queue">
                         <!-- These divs are all individual movies/shows -->
                         <div class="is-flex is-align-items-center">
+                            {{#each queue}}
+                                {{> queue-card}}
+                            {{/each}}
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,8 @@ router.get('/info/:type/:title/:id', async (req, res) => {
     const suggestions = await suggestionRes.json();
     const queue = await queueRes.json();
     const providers = watchProviders.results.US.flatrate;
+    console.log(queue)
+    console.log(req.session.user_id)
     res.render('info', { info, providers, suggestions, queue, loggedIn: req.session.loggedIn })
 })
 
