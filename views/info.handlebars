@@ -11,9 +11,9 @@
                 <a href="/" class="is-size-4" id="logo-text">streamability</a>
             </div>
         </div>
-        <form class="column field has-addons" id="search-form2">
+        <form class="column field has-addons" id="search-form">
             <div class="control is-expanded">
-                <input class="input is-primary is-rounded" id="user-input2" type="text" placeholder="What're you lookin' for?">
+                <input class="input is-primary is-rounded" id="user-input" type="text" placeholder="What're you lookin' for?">
             </div>
             <div class="control">
                 <button class="button is-primary is-rounded" id="form-submit" type="submit">Search</button>
@@ -66,8 +66,8 @@
             <!-- Watch Queue -->
             <div class="column is-6">
                 <div class="message is-primary">
-                    <p class="message-header is-size-4" id="queue-header-2">Your Queue<button class="button is-rounded" id="delete-all-queue2">Clear Queue</button></p>
-                    <div class="message-body" id="search-queue2">
+                    <p class="message-header is-size-4" id="queue-header">Your Queue<button class="button is-rounded" id="delete-all-queue">Clear Queue</button></p>
+                    <div class="message-body" id="search-queue">
                         <!-- These divs are all individual movies/shows -->
                         <div class="is-flex is-align-items-center">
                         </div>
@@ -93,4 +93,6 @@
 </div>
 
 {{> footer}}
-<script src='/js/script.js'></script>
+
+<script src="/js/info.js"></script>
+<script src="/js/search.js"></script>
