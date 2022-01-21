@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 router.get('/', (req, res) => {
     // modal fetch
     // load queue
-    res.render('home', {})
+    res.render('home', { loggedIn: req.session.loggedIn })
 })
 
 router.get('/info/:type/:title/:id', async (req, res) => {
@@ -18,7 +18,7 @@ router.get('/info/:type/:title/:id', async (req, res) => {
     const suggestions = await suggestionRes.json();
     const queue = await queueRes.json();
     const providers = watchProviders.results.US.flatrate;
-    res.render('info', { info, providers, suggestions, queue })
+    res.render('info', { info, providers, suggestions, queue, loggedIn: req.session.loggedIn })
 })
 
 router.get('/signup', (req, res) => {

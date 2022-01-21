@@ -4,7 +4,7 @@ const { Queue } = require('../../models');
 router.get('/:user_id', async (req, res) => {
     try {
         const response = await Queue.findAll({
-            where: { user_id: req.params.user_id }
+            where: { user_id: req.session.user_id }
         });
         if (!response) {
             res.status(204).json({ message: 'No shows found!' });
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
             show_id: req.body.showId,
             show_title: req.body.showTitle,
             show_img: req.body.showImg,
-            user_id: req.body.user_id
+            user_id: req.session.user_id
         });
         res.json(response);
     } catch (err) {
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const response = await Queue.destroy({
-            where: { id: req.params.id}
+            where: { id: req.params.id, user_id: req.session.user_id }
         });
         res.json(response);
     } catch (err) {
