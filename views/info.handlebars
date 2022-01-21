@@ -55,7 +55,11 @@
             <div class="column is-4" id="suggestion">
                 <div class="message is-link">
                     <p class="message-header is-size-4" id="suggestions-header">You might also like...</p>
-                    <div class="message-body scrolly" id="suggestion-container"></div>
+                    <div class="message-body scrolly" id="suggestion-container">
+                        {{#each suggestions.Similar.Results}}
+                            {{> suggestion-card}}
+                        {{/each}}
+                    </div>
                 </div>
             </div>
             <div class="column is-1"></div>
