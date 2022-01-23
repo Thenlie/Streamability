@@ -140,6 +140,7 @@ body {
         }
         .section-static {
             z-index: 94;
+            background-color: #00d1b2;
             width: 100px;
             height: 100px;
             position: absolute;
@@ -154,10 +155,12 @@ body {
             &.top {
                 transform: rotate(-45deg);
                 border-bottom-right-radius: 400px;
+                transform-origin: 0% 2%;
             }
             &.bottom {
                 transform: rotate(45deg);
                 border-bottom-right-radius: 400px;
+                transform-origin: 2% 0%;
             }
         }
         &.close {
