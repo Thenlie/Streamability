@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server.js",
         "watch": "nodemon server.js",
-        "compile": "sass radial-menu.scss public/css/radial-menu.css"
+        "compile": "sass radial-menu.scss public/css/radial-menu.css",
+        "devtest": "npm run compile && npm start"
     },
     "repository": {
         "type": "git",

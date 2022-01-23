@@ -1,4 +1,4 @@
-$m: #21264b;
+$m: #00d1b2;
 $iconmargin: 35px;
 //Took about 100 more lines than I expected
 body {
@@ -9,12 +9,10 @@ body {
         position: fixed;
         top: 0px;
         left: 0px;
-        background-color: #ffffff;
         width: 98px;
         height: 98px;
         transition: all 1s cubic-bezier(0.5, -0.75, 0.05, 1);
         border-bottom-right-radius: 100%;
-        //overflow:hidden;
         .menu {
             z-index: 100;
             background-color: #ffffff;
@@ -128,7 +126,7 @@ body {
                         width: 150px;
                         height: 150px;
                         border-radius: 100%;
-                        background-color: #ee1b59;
+                        background-color: #ff3860;
                         top: 100%;
                         left: 0%;
                         transform: translate(-50%, -50%);
