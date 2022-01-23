@@ -26,6 +26,8 @@
             crossorigin='anonymous'
             referrerpolicy='no-referrer'
         />
+        {{! Radial Menu CSS }}
+        <link rel='stylesheet' href='/css/radial-menu.css' />
         <!-- Bulma CSS -->
         <link rel='stylesheet' href='/css/bulma.css' />
         <!-- Project CSS -->
@@ -33,7 +35,29 @@
     </head>
 
     <body>
+        <div class='base' id='menu'>
+            <div class='menu'>
+                <div class='icon'>
+                    <div class='bar'></div>
+                </div>
+            </div>
+            <div class='icons'>
+                <i class='fa fa-user' aria-hidden='true'></i>
+                <i class='fa fa-calendar-o' aria-hidden='true'></i>
+                <i class='fa fa-tachometer' aria-hidden='true'></i>
+            </div>
+            <div class='section'>
+                <div class='cover1'>
+                    <div class='cover2'>
+                        <a class='content' href='#calender'></a>
+                    </div>
+                </div>
+            </div>
+            <a class='section-static top' href='#profile'></a>
+            <a class='section-static bottom' href='#dashboard'></a>
+        </div>
         {{{body}}}
+        <script src='/js/main.js'></script>
     </body>
 
 </html>
