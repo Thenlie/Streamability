@@ -8,7 +8,7 @@ Streamability is a collaborative application whose purpose is threefold:
 
 1. Provide users with information about any given film/TV show and indicate where these can be streamed;
 2. Suggest titles similar to the searched-for film/show; and
-3. Create a queue of films and shows to watch across *all* streaming providers, rather than creating individual queues per provider.
+3. Create a queue of films and shows to watch across _all_ streaming providers, rather than creating individual queues per provider.
 
 In creating this application, we used the following user story and acceptance criteria:
 
@@ -78,12 +78,12 @@ One additional note: The access granted above will only give you temporary acces
 
 ## Built With
 
-* HTML
-* CSS
-* JavaScript
-* Bulma
-* The Movie Database
-* Taste Dive
+-   HTML
+-   CSS
+-   JavaScript
+-   Bulma
+-   The Movie Database
+-   Taste Dive
 
 ## Website
 
