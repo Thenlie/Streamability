@@ -371,15 +371,6 @@ let suggestionSelect = function (evt) {
 // Function to load suggestions
 let suggestions = function (showID, showType) {
     removeAllChildNodes(suggestionContainerEl);
-    console.log(showID);
-    console.log(showType);
-    console.log(
-        'https://api.themoviedb.org/3/' +
-            showType +
-            '/' +
-            showID +
-            '/recommendations?api_key=14b7c2e67f36427d72ce8c1df6482552'
-    );
     fetch(
         'https://api.themoviedb.org/3/' +
             showType +
@@ -391,7 +382,6 @@ let suggestions = function (showID, showType) {
             return res.json();
         })
         .then(function (data) {
-            console.log(data.results);
             let current = data.results;
             // If there are suggestions, show them
             if (current.length) {
@@ -540,8 +530,8 @@ let deleteID = function (event) {
     if (event.target.tagName == 'BUTTON') {
         if (event.target.tagName === 'BUTTON') {
             let queueInfo = event.target.parentNode;
-            let queueid = queueInfo.querySelector('.titleID').innerText;
-            localStorage.removeItem(queueid);
+            let queueID = queueInfo.querySelector('.titleID').innerText;
+            localStorage.removeItem(queueID);
             loadQueue();
         }
     }
