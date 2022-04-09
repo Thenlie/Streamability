@@ -354,7 +354,7 @@ let runSelected = function (element) {
     searchResultsModal.classList.remove('is-active');
     let currentTitle = element.querySelector('.currentTitle').textContent;
     watchProviders(showType, showID, showYear);
-    suggestions(currentTitle, showType);
+    suggestions(showID, showType);
     landingPageEl.classList.add('is-hidden');
     resultPageEl.classList.remove('is-hidden');
 };
@@ -369,31 +369,33 @@ let suggestionSelect = function (evt) {
 };
 
 // Function to load suggestions
-let suggestions = function (currentTitle, currentType) {
+let suggestions = function (showID, showType) {
     removeAllChildNodes(suggestionContainerEl);
-    // Check if show or movie was searched for
-    if (currentType === 'movie') {
-        currentType = 'movies';
-    } else {
-        currentType = 'shows';
-    }
-
-    // Taste Dive API Request
+    console.log(showID);
+    console.log(showType);
+    console.log(
+        'https://api.themoviedb.org/3/' +
+            showType +
+            '/' +
+            showID +
+            '/recommendations?api_key=14b7c2e67f36427d72ce8c1df6482552'
+    );
     fetch(
-        'https://hidden-retreat-58836.herokuapp.com/https://tastedive.com/api/similar?q=' +
-            currentTitle +
-            '&type=' +
-            currentType +
-            '&limit=5&info=1&k=425677-LeithenC-C01G9X9L'
+        'https://api.themoviedb.org/3/' +
+            showType +
+            '/' +
+            showID +
+            '/recommendations?api_key=14b7c2e67f36427d72ce8c1df6482552'
     )
         .then(function (res) {
             return res.json();
         })
         .then(function (data) {
-            let current = data.Similar.Results;
+            console.log(data.results);
+            let current = data.results;
+            // If there are suggestions, show them
             if (current.length) {
-                //if there are suggestions, display them
-                for (let i = 0; i < current.length; i++) {
+                for (let i = 0; i < 10; i++) {
                     let suggestionEl = document.createElement('div');
                     suggestionEl.classList.add(
                         'p-2',
@@ -402,7 +404,7 @@ let suggestions = function (currentTitle, currentType) {
                         'is-rounded',
                         'is-multiline'
                     );
-                    suggestionEl.innerText = current[i].Name;
+                    suggestionEl.innerText = current[i].title;
                     suggestionContainerEl.appendChild(suggestionEl);
                 }
             } else {
