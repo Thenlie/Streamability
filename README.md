@@ -54,28 +54,6 @@ WHEN I resize the page or view the site on various screens and devices
 THEN I am presented with a responsive layout that adapts to my viewport
 ```
 
-# IMPORTANT - PLEASE READ
-
-This application was created by students. Its intention is to showcase front-end development skills, as back-end skills are part of future course modules. As such, extra steps will need to be taken in order for this application to function properly. Please follow the below instructions before using the app:
-
-## Step 1
-
-Before searching for a title, follow this link in a new tab in your browser: <https://cors-anywhere.herokuapp.com/>
-Once opened, you will see the following:
-
-![CORS-Anywhere/Heroku](./assets/images/heroku.PNG)
-
-## Step 2
-
-Click the button on the page that says "Request temporary access to the demo server." Once you do, the page will show a bold text message that says "You currently have access to the demo server."
-You may now exit out of the <https://cors-anywhere.herokuapp.com/corsdemo> tab.
-
-## Step 3
-
-The application is now fully operational. Keep in mind that failing to follow the above steps will prevent the app from giving you title suggestions for similar titles.
-
-One additional note: The access granted above will only give you temporary access; this access tends to last for 1-2 days. If you find that the similar-title functionality has stopped functioning, simple re-perform the above steps to be granted access once again.
-
 ## Built With
 
 -   HTML
@@ -83,15 +61,14 @@ One additional note: The access granted above will only give you temporary acces
 -   JavaScript
 -   Bulma
 -   The Movie Database
--   Taste Dive
 
 ## Website
 
-<https://thorulfr.github.io/Streamability/>
+<https://streamability.herokuapp.com/>
 
 ## Screenshot
 
-![Screenshot](./assets/images/readme-screenshot.png)
+![Screenshot](public/assets/images/readme-screenshot.png)
 
 ## Contribution
 

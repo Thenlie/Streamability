@@ -1,5 +1,4 @@
 // Movie DB API Key = 14b7c2e67f36427d72ce8c1df6482552
-// Taste Dive API Key = 425677-LeithenC-NQBB975N
 
 // Select elements so we can work with them
 let searchFormEl = document.querySelector('#search-form');
