@@ -1,178 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Streamability</title>
+        <!-- Favicon -->
+        <link
+            rel="shortcut icon"
+            type="image/jpg"
+            href="./assets/images/favicon.png"
+        />
+        <!-- Bulma -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+            integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <!-- Project CSS -->
+        <link rel="stylesheet" href="./assets/css/style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamability</title>
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/jpg" href="./assets/images/favicon.png" />
-    <!-- Bulma -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <!-- Project CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-<body>
-    <!-- Landing Page-->
-    <div class="container is-max-desktop" id="landing-page">
-        <!-- Header/Title Row -->
-        <div class="is-flex is-flex-wrap-wrap is-justify-content-center is-vcentered mt-5" id="logo-row">
-            <div class="column image is-one-quarter" id="header-logo">
-                <img class="is-rounded" src="./assets/images/Logo Vector.svg">
-
-            </div>
-            <div class="column is-one-third">
-                <h1 class="is-size-1" id="streamability-title">streamability</h1>
-            </div>
-        </div>
-        <!-- Search Form -->
-        <form class="field has-addons" id="search-form">
-            <div class="control is-expanded">
-                <input class="input is-primary is-medium is-rounded" id="user-input" type="text" placeholder="What're you lookin' for?">
-            </div>
-            <div class="control">
-                <button class="button is-primary is-medium is-rounded" id="form-submit" type="submit">Search</button>
-            </div>
-        </form>
-        <!-- Watch Queue -->
-        <section class="py-6" id="watch-queue">
-            <div class="message is-primary">
-                <p class="is-flex message-header is-size-4" id="queue-header-1">Your Queue
-                    <button class="button is-rounded is-multiline" id="delete-all-queue">Clear Queue</button>
-                </p>
-                <div class="message-body scrolly" id="search-queue">
-                    <!-- These divs are all individual movies/shows -->
-                    <div class="is-flex is-align-items-center">
-                    </div>
-
+    <body>
+        <!-- Landing Page-->
+        <div class="container is-max-desktop" id="landing-page">
+            <!-- Header/Title Row -->
+            <div
+                class="is-flex is-flex-wrap-wrap is-justify-content-center is-vcentered mt-5"
+                id="logo-row"
+            >
+                <div class="column image is-one-quarter" id="header-logo">
+                    <img
+                        class="is-rounded"
+                        src="./assets/images/Logo Vector.svg"
+                    />
+                </div>
+                <div class="column is-one-third">
+                    <h1 class="is-size-1" id="streamability-title">
+                        streamability
+                    </h1>
                 </div>
             </div>
-        </section>
-    </div>
-
-    <!-- Search Results Page -->
-    <div class="container is-hidden" id="result-page">
-        <!-- Nav Section -->
-        <nav class="columns is-vcentered mt-5" id="navigation">
-            <!-- Logo and Title -->
-            <div class="mt-0 mb-0 p-0 column is-4 is-flex is-flex-wrap-wrap is-justify-content-start" id="logo">
-                <div class="image has-text-right">
-                    <img class="is-rounded" src="./assets/images/Logo Vector.svg" id="logo-image-2">
-                </div>
-                <div class="pl-3 is-flex is-justify-content-center">
-                    <a href="javascript:window.location.reload(true)" class="is-size-4" id="logo-text">streamability</a>
-                </div>
-            </div>
-            <form class="column field has-addons" id="search-form2">
+            <!-- Search Form -->
+            <form class="field has-addons" id="search-form">
                 <div class="control is-expanded">
-                    <input class="input is-primary is-rounded" id="user-input2" type="text" placeholder="What're you lookin' for?">
+                    <input
+                        class="input is-primary is-medium is-rounded"
+                        id="user-input"
+                        type="text"
+                        placeholder="What're you lookin' for?"
+                    />
                 </div>
                 <div class="control">
-                    <button class="button is-primary is-rounded" id="form-submit" type="submit">Search</button>
+                    <button
+                        class="button is-primary is-medium is-rounded"
+                        id="form-submit"
+                        type="submit"
+                    >
+                        Search
+                    </button>
                 </div>
             </form>
-        </nav>
-        <!-- Search Result Details Section -->
-        <section id="result-details">
-            <div class="columns is-centered m-5 box">
-                <div class="column is-4 has-text-centered">
-                    <p class="title" id="selected-title"></p>
-                    <p class="is-inline">Released:</p>
-                    <p class="is-inline" id="selected-year"></p>
-                    <p id="selected-id" class="is-hidden"></p>
-                    <p id="selected-type" class="is-hidden"></p>
-                    <p class="subtitle" id="selected-score"></p>
-                    <figure class="image is-3by4">
-                        <img src="https://via.placeholder.com/900x1200.png?text=Movie+Poster" id="selected-poster">
-                    </figure>
-                </div>
-                <div class="column has-text-justified is-vcentered m-5 is-flex is-flex-direction-column is-justify-content-space-around">
-                    <!-- Plot summary -->
-                    <p class="is-size-5 box" id="selected-plot"></p>
-                    <!-- Streaming service icons -->
-                    <div class="box" id="providers-box">
-                        <div class="columns is-multiline is-flex is-flex-wrap-wrap is-justify-content-space-around" id="selected-providers"></div>
-                    </div>
-                    <button class="button is-large is-fullwidth is-rounded is-link is-light is-multiline" id="queue-button">Add to Watch Queue</button>
-                </div>
-            </div>
-        </section>
-        <!-- Suggestions and Queue, Non-Landing Section -->
-        <section class="is-centered p-5 mb-6" id="suggestions-and-queue">
-            <div class="columns is-centered has-text-centered">
-                <!-- Suggestions -->
-                <div class="column is-4" id="suggestion">
-                    <div class="message is-link">
-                        <p class="message-header is-size-4" id="suggestions-header">You might also like...</p>
-                        <div class="message-body scrolly" id="suggestion-container"></div>
+            <!-- Watch Queue -->
+            <section class="py-6" id="watch-queue">
+                <div class="message is-primary">
+                    <p
+                        class="is-flex message-header is-size-4"
+                        id="queue-header-1"
+                    >
+                        Your Queue
+                        <button
+                            class="button is-rounded is-multiline"
+                            id="delete-all-queue"
+                        >
+                            Clear Queue
+                        </button>
+                    </p>
+                    <div class="message-body scrolly" id="search-queue">
+                        <!-- These divs are all individual movies/shows -->
+                        <div class="is-flex is-align-items-center"></div>
                     </div>
                 </div>
-                <div class="column is-1"></div>
-                <!-- Watch Queue -->
-                <div class="column is-6">
-                    <div class="message is-primary">
-                        <p class="message-header is-size-4" id="queue-header-2">Your Queue<button class="button is-rounded" id="delete-all-queue2">Clear Queue</button></p>
-                        <div class="message-body" id="search-queue2">
-                            <!-- These divs are all individual movies/shows -->
-                            <div class="is-flex is-align-items-center">
+            </section>
+        </div>
+
+        <!-- Search Results Page -->
+        <div class="container is-hidden" id="result-page">
+            <!-- Nav Section -->
+            <nav class="columns is-vcentered mt-5" id="navigation">
+                <!-- Logo and Title -->
+                <div
+                    class="mt-0 mb-0 p-0 column is-4 is-flex is-flex-wrap-wrap is-justify-content-start"
+                    id="logo"
+                >
+                    <div class="image has-text-right">
+                        <img
+                            class="is-rounded"
+                            src="./assets/images/Logo Vector.svg"
+                            id="logo-image-2"
+                        />
+                    </div>
+                    <div class="pl-3 is-flex is-justify-content-center">
+                        <a
+                            href="javascript:window.location.reload(true)"
+                            class="is-size-4"
+                            id="logo-text"
+                            >streamability</a
+                        >
+                    </div>
+                </div>
+                <form class="column field has-addons" id="search-form2">
+                    <div class="control is-expanded">
+                        <input
+                            class="input is-primary is-rounded"
+                            id="user-input2"
+                            type="text"
+                            placeholder="What're you lookin' for?"
+                        />
+                    </div>
+                    <div class="control">
+                        <button
+                            class="button is-primary is-rounded"
+                            id="form-submit"
+                            type="submit"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </nav>
+            <!-- Search Result Details Section -->
+            <section id="result-details">
+                <div class="columns is-centered m-5 box">
+                    <div class="column is-4 has-text-centered">
+                        <p class="title" id="selected-title"></p>
+                        <p class="is-inline">Released:</p>
+                        <p class="is-inline" id="selected-year"></p>
+                        <p id="selected-id" class="is-hidden"></p>
+                        <p id="selected-type" class="is-hidden"></p>
+                        <p class="subtitle" id="selected-score"></p>
+                        <figure class="image is-3by4">
+                            <img
+                                src="https://via.placeholder.com/900x1200.png?text=Movie+Poster"
+                                id="selected-poster"
+                            />
+                        </figure>
+                    </div>
+                    <div
+                        class="column has-text-justified is-vcentered m-5 is-flex is-flex-direction-column is-justify-content-space-around"
+                    >
+                        <!-- Plot summary -->
+                        <p class="is-size-5 box" id="selected-plot"></p>
+                        <!-- Streaming service icons -->
+                        <div class="box" id="providers-box">
+                            <div
+                                class="columns is-multiline is-flex is-flex-wrap-wrap is-justify-content-space-around"
+                                id="selected-providers"
+                            ></div>
+                        </div>
+                        <button
+                            class="button is-large is-fullwidth is-rounded is-link is-light is-multiline"
+                            id="queue-button"
+                        >
+                            Add to Watch Queue
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!-- Suggestions and Queue, Non-Landing Section -->
+            <section class="is-centered p-5 mb-6" id="suggestions-and-queue">
+                <div class="columns is-centered has-text-centered">
+                    <!-- Suggestions -->
+                    <div class="column is-4" id="suggestion">
+                        <div class="message is-link">
+                            <p
+                                class="message-header is-size-4"
+                                id="suggestions-header"
+                            >
+                                You might also like...
+                            </p>
+                            <div
+                                class="message-body scrolly"
+                                id="suggestion-container"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <!-- Watch Queue -->
+                    <div class="column is-6" id="results-queue">
+                        <div class="message is-primary">
+                            <p
+                                class="message-header is-size-4"
+                                id="queue-header-2"
+                            >
+                                Your Queue<button
+                                    class="button is-rounded"
+                                    id="delete-all-queue2"
+                                >
+                                    Clear Queue
+                                </button>
+                            </p>
+                            <div class="message-body" id="search-queue2">
+                                <!-- These divs are all individual movies/shows -->
+                                <div
+                                    class="is-flex is-align-items-center"
+                                ></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Search Results Modal -->
-    <section class="modal" id="search-results-modal">
-        <!-- Grey background that closes modal when clicked on -->
-        <div class="modal-background"></div>
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="message is-warning" id="modal-content-container">
-                <p class="message-header is-size-5" id="modal-header">Search Results</p>
-                <div class="message-body scrolly" id="search-results"></div>
-            </div>
+            </section>
         </div>
-        <!-- Modal close button in upper-right -->
-        <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
-    </section>
 
-    <!-- Footer -->
-    <footer class="is-flex is-justify-content-space-between">
-        <!-- Dropdown button to select theme -->
-        <div class="dropdown is-up is-hoverable" id="themeDropdown">
-            <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" id="dropdown-button">
-                    <span>Select a theme</span>
-                    <span class="icon is-small">
-                        <i class="fas fa-angle-up" aria-hidden="true"></i>
-                    </span>
-                </button>
-            </div>
-            <!-- Dropdown contents -->
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content" id="dropdown-content">
-                    <button class="button dropdown-item" id="solo-jazz">Jazz</button>
-                    <button class="button dropdown-item" id="tyler">Wine & Cheese</button>
-                    <button class="button dropdown-item" id="darkmode">Darkmode</button>
-                    <button class="button dropdown-item" id="default">Default</button>
+        <!-- Search Results Modal -->
+        <section class="modal" id="search-results-modal">
+            <!-- Grey background that closes modal when clicked on -->
+            <div class="modal-background"></div>
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="message is-warning" id="modal-content-container">
+                    <p class="message-header is-size-5" id="modal-header">
+                        Search Results
+                    </p>
+                    <div class="message-body scrolly" id="search-results"></div>
                 </div>
             </div>
-        </div>
-    </footer>
+            <!-- Modal close button in upper-right -->
+            <button
+                class="modal-close is-large"
+                id="modal-close"
+                aria-label="close"
+            ></button>
+        </section>
 
-    <!-- Scripts -->
-    <script src='./assets/js/script.js'></script>
-</body>
+        <!-- Footer -->
+        <footer class="is-flex is-justify-content-space-between">
+            <!-- Dropdown button to select theme -->
+            <div class="dropdown is-up is-hoverable" id="themeDropdown">
+                <div class="dropdown-trigger">
+                    <button
+                        class="button"
+                        aria-haspopup="true"
+                        aria-controls="dropdown-menu"
+                        id="dropdown-button"
+                    >
+                        <span>Select a theme</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-up" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <!-- Dropdown contents -->
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content" id="dropdown-content">
+                        <button class="button dropdown-item" id="solo-jazz">
+                            Jazz
+                        </button>
+                        <button class="button dropdown-item" id="tyler">
+                            Wine & Cheese
+                        </button>
+                        <button class="button dropdown-item" id="darkmode">
+                            Darkmode
+                        </button>
+                        <button class="button dropdown-item" id="default">
+                            Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
+        <!-- Scripts -->
+        <script src="./assets/js/script.js"></script>
+    </body>
 </html>

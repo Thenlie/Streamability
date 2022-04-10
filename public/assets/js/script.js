@@ -119,6 +119,7 @@ let loadQueue = function () {
             quePoster.src = valueSplit[2];
             //create watch queue elements
             var queText = document.createElement('div');
+            queText.classList.add('queue-title');
             var queTitle = document.createElement('p');
             queTitle.classList.add(
                 'currentTitle',
@@ -539,7 +540,6 @@ let deleteID = function (event) {
 
 // Function to add the each theme's name as a class to the corresponding elements
 function themeAdder(themeName) {
-    //debugger;
     document.querySelector('a').classList.add(themeName);
     document.querySelector('#form-submit').classList.add(themeName);
     document

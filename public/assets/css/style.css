@@ -373,6 +373,10 @@ img {
     color: white;
 }
 
+.queue-title p {
+    max-width: 300px;
+}
+
 #search-queue,
 #suggestions {
     max-height: 47em;
@@ -799,6 +803,10 @@ body.darkmode {
 
 #queue-button:hover.darkmode {
     background-color: rgb(0, 0, 0, 1) !important;
+}
+
+#results-queue .button {
+    font-size: 0.75rem;
 }
 
 #queue-header-1.darkmode,
