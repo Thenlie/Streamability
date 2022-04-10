@@ -59,6 +59,7 @@ THEN I am presented with a responsive layout that adapts to my viewport
 -   HTML
 -   CSS
 -   JavaScript
+-   Express
 -   Bulma
 -   The Movie Database
 
