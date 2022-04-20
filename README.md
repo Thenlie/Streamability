@@ -69,8 +69,6 @@ THEN I am presented with a responsive layout that adapts to my viewport
 
 ## Screenshot
 
-![Screenshot](public/assets/images/readme-screenshot.png)
+![Landing Page](public/assets/images/readme-screenshot.png)
 
-## Contribution
-
-Code by [Leithen Crider](https://github.com/Thenlie), [Kevin Fan](https://github.com/Yu-ChengFan), Benjamin Holt, and [Tyler Norman](https://github.com/t-norm).
+![Main Page](public/assets/images/readme-screenshot-2.png)
