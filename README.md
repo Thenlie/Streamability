@@ -1,6 +1,6 @@
 # Streamability
 
-Made by [Leithen Crider](https://github.com/Thenlie), [Kevin Fan](https://github.com/Yu-ChengFan), Benjamin Holt, and [Tyler Norman](https://github.com/t-norm).
+Made by [Leithen Crider](https://github.com/Thenlie), [Kevin Fan](https://github.com/Yu-ChengFan), [Benjamin Holt](https://github.com/Thorulfr), and [Tyler Norman](https://github.com/t-norm).
 
 ## Description
 
