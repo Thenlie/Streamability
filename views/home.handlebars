@@ -1,0 +1,56 @@
+<!-- Landing Page-->
+<div class="container is-max-desktop" id="landing-page">
+    <!-- Header/Title Row -->
+    <div class="is-flex is-flex-wrap-wrap is-justify-content-center is-vcentered mt-5" id="logo-row">
+        <div class="column image is-one-quarter" id="header-logo">
+            <img class="is-rounded" src="/images/Logo Vector.svg">
+
+        </div>
+        <div class="column is-one-third">
+            <h1 class="is-size-1" id="streamability-title">streamability</h1>
+        </div>
+    </div>
+    <!-- Search Form -->
+    <form class="field has-addons" id="search-form">
+        <div class="control is-expanded">
+            <input class="input is-primary is-medium is-rounded" id="user-input" type="text" placeholder="What're you lookin' for?">
+        </div>
+        <div class="control">
+            <button class="button is-primary is-medium is-rounded" id="form-submit" type="submit">Search</button>
+        </div>
+    </form>
+    <!-- Watch Queue -->
+    <section class="py-6" id="watch-queue">
+        <div class="message is-primary">
+            <p class="is-flex message-header is-size-4" id="queue-header">Your Queue
+                <button class="button is-rounded is-multiline" id="delete-all-queue">Clear Queue</button>
+            </p>
+            <div class="message-body scrolly" id="search-queue">
+                <!-- These divs are all individual movies/shows -->
+                <div class="is-flex is-align-items-center">
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Search Results Modal -->
+    <section class="modal" id="search-results-modal">
+        <!-- Grey background that closes modal when clicked on -->
+        <div class="modal-background"></div>
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="message is-warning" id="modal-content-container">
+                <p class="message-header is-size-5" id="modal-header">Search Results</p>
+                <div class="message-body scrolly" id="search-results"></div>
+            </div>
+        </div>
+        <!-- Modal close button in upper-right -->
+        <button class="modal-close is-large" id="modal-close" aria-label="close"></button>
+    </section>
+</div>
+
+{{> footer}}
+
+<!-- Scripts -->
+
+<script src="/js/search.js"></script>

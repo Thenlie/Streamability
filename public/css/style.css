@@ -1,7 +1,6 @@
 /*
 *  html5resetcss
 */
-
 html,
 body,
 div,
@@ -509,8 +508,7 @@ body.solo-jazz {
     background-color: rgb(165, 243, 243);
 }
 
-#queue-header-1.solo-jazz,
-#queue-header-2.solo-jazz {
+#queue-header.solo-jazz {
     background-color: rgba(59, 38, 133, 1);
 }
 
@@ -661,8 +659,7 @@ body.tyler {
     background-color: rgb(199, 199, 167);
 }
 
-#queue-header-1.tyler,
-#queue-header-2.tyler {
+#queue-header.tyler {
     background-color: rgba(63, 13, 18, 1);
 }
 
@@ -803,14 +800,16 @@ body.darkmode {
 
 #queue-button:hover.darkmode {
     background-color: rgb(0, 0, 0, 1) !important;
+<<<<<<< HEAD:public/assets/css/style.css
 }
 
 #results-queue .button {
     font-size: 0.75rem;
+=======
+>>>>>>> feature/handlebars:public/css/style.css
 }
 
-#queue-header-1.darkmode,
-#queue-header-2.darkmode {
+#queue-header.darkmode {
     background-color: rgb(39, 39, 39);
 }
 
