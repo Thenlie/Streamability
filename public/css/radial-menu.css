@@ -70,19 +70,19 @@ body .base .icons > * {
   transition: 0.3s cubic-bezier(0.5, -0.25, 0.05, 1);
 }
 body .base .icons .fa-user {
-  top: 35px;
-  left: 0px;
-  transition-delay: 0.2s;
-}
-body .base .icons .fa-calendar-o {
   top: 0px;
   left: 0px;
   color: #fff;
   transition-delay: 0.1s;
 }
-body .base .icons .fa-tachometer {
+body .base .icons .fa-right-from-bracket {
   top: 0px;
   left: 35px;
+}
+body .base .icons .fa-right-to-bracket {
+  top: 35px;
+  left: 0px;
+  transition-delay: 0.2s;
 }
 body .base .section {
   z-index: 96;
@@ -193,19 +193,19 @@ body .base.close .icons > * {
   pointer-events: none;
 }
 body .base.close .icons .fa-user {
-  top: 35px;
-  left: 200px;
-}
-body .base.close .icons .fa-calendar-o {
   top: 141px;
   left: 141px;
   color: #fff;
   transition-delay: 0.65s;
 }
-body .base.close .icons .fa-tachometer {
+body .base.close .icons .fa-right-from-bracket {
   top: 200px;
   left: 35px;
   transition-delay: 0.8s;
+}
+body .base.close .icons .fa-right-to-bracket {
+  top: 35px;
+  left: 200px;
 }
 body .base.close .section .cover1 {
   transform-origin: 100% 100%;

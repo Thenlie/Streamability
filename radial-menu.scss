@@ -76,19 +76,19 @@ body {
                 transition: 0.3s cubic-bezier(0.5, -0.25, 0.05, 1);
             }
             .fa-user {
-                top: $iconmargin;
-                left: 0px;
-                transition-delay: 0.2s;
-            }
-            .fa-calendar-o {
                 top: 0px;
                 left: 0px;
                 color: #fff;
                 transition-delay: 0.1s;
             }
-            .fa-tachometer {
+            .fa-right-from-bracket {
                 top: 0px;
                 left: $iconmargin;
+            }
+            .fa-right-to-bracket {
+                top: $iconmargin;
+                left: 0px;
+                transition-delay: 0.2s;
             }
         }
         .section {
@@ -209,19 +209,19 @@ body {
                     pointer-events: none;
                 }
                 .fa-user {
-                    top: $iconmargin;
-                    left: 200px;
-                }
-                .fa-calendar-o {
                     top: 141px;
                     left: 141px;
                     color: #fff;
                     transition-delay: 0.65s;
                 }
-                .fa-tachometer {
+                .fa-right-from-bracket {
                     top: 200px;
                     left: $iconmargin;
                     transition-delay: 0.8s;
+                }
+                .fa-right-to-bracket {
+                    top: $iconmargin;
+                    left: 200px;
                 }
             }
             .section {
