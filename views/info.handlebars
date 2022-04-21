@@ -63,7 +63,7 @@
                 <div class="message is-link">
                     <p class="message-header is-size-4" id="suggestions-header">You might also like...</p>
                     <div class="message-body scrolly" id="suggestion-container">
-                        {{#each suggestions.Similar.Results}}
+                        {{#each suggestions}}
                             {{> suggestion-card}}
                         {{/each}}
                     </div>
