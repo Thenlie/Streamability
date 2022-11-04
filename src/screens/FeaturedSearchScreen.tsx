@@ -1,4 +1,4 @@
-import '../components/SearchInput'
+import '../components/SearchInput';
 import SearchInput from '../components/SearchInput';
 
 /**
@@ -7,7 +7,7 @@ import SearchInput from '../components/SearchInput';
  * 
  * @returns tsx of the 'not logged in' search screen, the landing page of the app
  */
-function FeaturedSearch() {
+export default function FeaturedSearchScreen() {
     return (
         <>
             <h1>Featured Search Page</h1>
@@ -15,5 +15,3 @@ function FeaturedSearch() {
         </>
     )
 }
-
-export default FeaturedSearch;
