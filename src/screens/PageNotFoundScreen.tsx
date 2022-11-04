@@ -4,7 +4,7 @@ import { useRouteError } from 'react-router-dom';
 /**
  * @returns tsx of 404 page
  */
-function PageNotFound() {
+export default function PageNotFoundScreen() {
     /**
      * This hook returns anything thrown during an 
      * action, loader, or rendering
@@ -15,7 +15,6 @@ function PageNotFound() {
     /**
      * @TODO Implement better error handling
      * @TODO Handle thrown responses with 'isRouteErrorResponse'
-     * 
      * https://reactrouter.com/en/main/route/error-element#throwing-responses
      */
     return (
@@ -25,5 +24,3 @@ function PageNotFound() {
         </div>
     )
 }
-
-export default PageNotFound;

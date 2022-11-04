@@ -1,26 +1,36 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
-import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
-import PageNotFound from './screens/PageNotFound'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import AppWrapper from './AppWrapper';
+import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { FeaturedSearchScreen ,SearchResultsScreen, PageNotFoundScreen } from './screens';
 
 /**
  * Create the 'root route' and serve the entire app to it
+ * All screens will be child routes of the root
  */
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
-        errorElement: <PageNotFound />,
+        element: <AppWrapper />,
+        errorElement: <PageNotFoundScreen />,
+        children: [
+            {
+                path: '',
+                element: <FeaturedSearchScreen />
+            },
+            {
+                path: 'search/:query',
+                element: <SearchResultsScreen />
+            } 
+        ]
     }
 ])
 
 /**
- * This code was added with the Vite boiler plate
- * 
- * @TODO Read documentation on this code, understand it and see if it can be improved/refactored
- * @TODO Update this comment with what this code does, or what the refactored code does
+ * Create a new React root which can be used to render React elements in the browser's DOM.
+ * We are using React Router so the router provider is served, 
+ * which in turn serves the entire app
  */
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
