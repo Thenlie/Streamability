@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "watch": "tsc --watch",
     "preview": "vite preview",
     "lint": "npx eslint . --color --ext .ts,.tsx",
     "lint-fix": "npx eslint . --ext .ts,.tsx --fix"

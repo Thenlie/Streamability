@@ -1,13 +1,33 @@
+import { useLoaderData } from 'react-router-dom';
+import { ShowCard, ShowCarousel } from '../components'
+
 /**
- * This is currently just a minimal sample file to get the directory structure of the project set up
- * The contents of this page and its components should be updated, along with this comment :)
+ * This loader is mostly built straight from the react-router docs
+ * https://reactrouter.com/en/main/components/form#get-submissions
  * 
- * @returns tsx of the search results page
+ * @param request - HTTP GET request from the SearchInput component
+ * @returns the users query as a string
+ */
+export async function loader({request}: {request: Request} ) {
+	// get the query parameters from the URL
+    console.log(typeof(request), request)
+	const url = new URL(request.url);
+	const query = url.searchParams.get('q');
+	return query as string;
+}
+
+/**
+ * @returns tsx of search results page after user input
  */
 export default function SearchResultsScreen() {
+	const query: string = useLoaderData() as string;
+
 	return (
 		<>
 			<h1>Search Results Page</h1>
+			<p>Query: {query}</p>
+			<ShowCard />
+            <ShowCarousel />
 		</>
 	);
 }

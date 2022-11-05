@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
 
+/**
+ * @returns tsx of the signup form
+ */
 export default function SignupScreen() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

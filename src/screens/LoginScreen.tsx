@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
 
+ /**
+ * @returns tsx of the login form
+ */ 
 export default function LoginScreen() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
