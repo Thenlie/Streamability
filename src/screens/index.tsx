@@ -6,9 +6,11 @@
 import FeaturedSearchScreen from './FeaturedSearchScreen';
 import SearchResultsScreen from './SearchResultsScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
+import Login from './Login';
 
 export {
 	FeaturedSearchScreen,
 	SearchResultsScreen,
 	PageNotFoundScreen,
+	Login,
 };
