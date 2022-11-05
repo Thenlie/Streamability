@@ -48,8 +48,9 @@ git checkout -b <issue-#>-<issue-type>-<branch-name>
 > 
 > The branch name is whatever the developer thinks fits best but should be descriptive, lowercase, and hyphen separated. 
 
-3. Add you changes to the branch and create a new commit. The commit should contain a descriptive message of the changes or additions you have made
+3. Add your changes to the branch and create a new commit. The commit should contain a descriptive message of the changes or additions you have made. It is also a good idea to run an es-lint check first.
 ```
+npm run lint
 git add -A
 git commit -m "<descriptive message>"
 ```

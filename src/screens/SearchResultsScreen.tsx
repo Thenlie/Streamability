@@ -5,9 +5,9 @@
  * @returns tsx of the search results page
  */
 export default function SearchResultsScreen() {
-    return (
-        <>
-            <h1>Search Results Page</h1>
-        </>
-    )
+	return (
+		<>
+			<h1>Search Results Page</h1>
+		</>
+	);
 }

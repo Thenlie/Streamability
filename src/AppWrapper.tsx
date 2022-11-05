@@ -8,12 +8,12 @@ import './App.css';
  * @returns Streamability!
  */
 export default function AppWrapper() {
-  return (
-    <div className="App">
-        <h1>Streamability</h1>
-        <div>
-            <Outlet />    
-        </div>    
-    </div>
-  )
+	return (
+		<div className="App">
+			<h1>Streamability</h1>
+			<div>
+				<Outlet />
+			</div>    
+		</div>
+	);
 }
