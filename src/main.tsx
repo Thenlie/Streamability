@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import AppWrapper from './AppWrapper';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { FeaturedSearchScreen ,SearchResultsScreen, PageNotFoundScreen } from './screens';
+import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, Login } from './screens';
 
 /**
  * Create the 'root route' and serve the entire app to it
@@ -22,7 +22,11 @@ const router = createBrowserRouter([
 			{
 				path: 'search/:query',
 				element: <SearchResultsScreen />
-			} 
+			},
+			{
+				path: 'login',
+				element: <Login />
+			}
 		]
 	}
 ]);
