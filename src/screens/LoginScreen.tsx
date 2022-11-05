@@ -5,7 +5,7 @@ export default function LoginScreen() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
 
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: any) => {
         e.preventDefault()
 
         try {

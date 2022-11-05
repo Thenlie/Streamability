@@ -7,10 +7,12 @@ import FeaturedSearchScreen from './FeaturedSearchScreen';
 import SearchResultsScreen from './SearchResultsScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
 import LoginScreen from './LoginScreen';
+import Dashboard from './Dashboard';
 
 export {
 	FeaturedSearchScreen,
 	SearchResultsScreen,
 	PageNotFoundScreen,
 	LoginScreen,
+	Dashboard,
 };
