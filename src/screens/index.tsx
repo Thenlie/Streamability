@@ -8,7 +8,7 @@ import SearchResultsScreen from './SearchResultsScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
 
 export {
-    FeaturedSearchScreen,
-    SearchResultsScreen,
-    PageNotFoundScreen,
-}
+	FeaturedSearchScreen,
+	SearchResultsScreen,
+	PageNotFoundScreen,
+};

@@ -8,10 +8,10 @@ import SearchInput from '../components/SearchInput';
  * @returns tsx of the 'not logged in' search screen, the landing page of the app
  */
 export default function FeaturedSearchScreen() {
-    return (
-        <>
-            <h1>Featured Search Page</h1>
-            <SearchInput />
-        </>
-    )
+	return (
+		<>
+			<h1>Featured Search Page</h1>
+			<SearchInput />
+		</>
+	);
 }

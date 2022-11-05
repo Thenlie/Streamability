@@ -10,22 +10,22 @@ import { FeaturedSearchScreen ,SearchResultsScreen, PageNotFoundScreen } from '.
  * All screens will be child routes of the root
  */
 const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <AppWrapper />,
-        errorElement: <PageNotFoundScreen />,
-        children: [
-            {
-                path: '',
-                element: <FeaturedSearchScreen />
-            },
-            {
-                path: 'search/:query',
-                element: <SearchResultsScreen />
-            } 
-        ]
-    }
-])
+	{
+		path: '/',
+		element: <AppWrapper />,
+		errorElement: <PageNotFoundScreen />,
+		children: [
+			{
+				path: '',
+				element: <FeaturedSearchScreen />
+			},
+			{
+				path: 'search/:query',
+				element: <SearchResultsScreen />
+			} 
+		]
+	}
+]);
 
 /**
  * Create a new React root which can be used to render React elements in the browser's DOM.
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
  * which in turn serves the entire app
  */
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-)
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
+);
