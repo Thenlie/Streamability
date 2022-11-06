@@ -1,28 +1,31 @@
 import { useState } from 'react'
 import { supabase } from '../helpers/supabaseClient'
 
-export default function LoginScreen() {
+export default function SignupScreen() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    async function signInWithEmail(e: any) {
+    const signUp = async (e: any) => {
         e.preventDefault();
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
         })
+
+
+        console.log(email, password)
     }
 
     return (
         <div className="row flex-center flex">
             <div className="col-6 form-widget" aria-live="polite">
                 <h1 className="header">Supabase + React</h1>
-                <p className="description">Login</p>
+                <p className="description">Sign in via magic link with your email below</p>
                 {loading ? (
-                    'Sending magic link...'
+                    'Loading...'
                 ) : (
-                    <form onSubmit={signInWithEmail}>
+                    <form onSubmit={signUp}>
                         <label htmlFor="email">Email</label>
                         <input
                             id="email"
