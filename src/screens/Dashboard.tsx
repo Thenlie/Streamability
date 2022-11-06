@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import { supabase } from '../helpers/supabaseClient'
 
-const Dashboard = ({ session }: any) => {
+const Dashboard = () => {
+    const [session, setSession] = useOutletContext();
     const [loading, setLoading] = useState(true)
     const [username, setUsername] = useState(null)
     const [website, setWebsite] = useState(null)
     const [avatar_url, setAvatarUrl] = useState(null)
+
+    console.log(session)
 
     useEffect(() => {
         getProfile()
@@ -18,7 +22,7 @@ const Dashboard = ({ session }: any) => {
 
             let { data, error, status } = await supabase
                 .from('profiles')
-                .select(`username, website, avatar_url`)
+                .select(`username`)
                 .eq('id', user.id)
                 .single()
 

@@ -4,20 +4,17 @@ import { supabase } from '../helpers/supabaseClient'
 export default function LoginScreen() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    const handleLogin = async (e: any) => {
-        e.preventDefault()
+    const signUp = async (e: any) => {
+        e.preventDefault();
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        })
 
-        try {
-            setLoading(true)
-            const { error } = await supabase.auth.signInWithOtp({ email })
-            if (error) throw error
-            alert('Check your email for the login link!')
-        } catch (error) {
-            alert(error.error_description || error.message)
-        } finally {
-            setLoading(false)
-        }
+
+        console.log(email, password)
     }
 
     return (
@@ -28,7 +25,7 @@ export default function LoginScreen() {
                 {loading ? (
                     'Sending magic link...'
                 ) : (
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={signUp}>
                         <label htmlFor="email">Email</label>
                         <input
                             id="email"
@@ -37,6 +34,14 @@ export default function LoginScreen() {
                             placeholder="Your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <input
+                            id=""
+                            className="inputField"
+                            type="password"
+                            placeholder="Your pasword"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <button className="button block" aria-live="polite">
                             Send magic link
