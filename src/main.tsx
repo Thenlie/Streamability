@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import AppWrapper from './AppWrapper';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, LoginScreen, Dashboard } from './screens';
+import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, LoginScreen, SignupScreen, Dashboard } from './screens';
 
 /**
  * Create the 'root route' and serve the entire app to it
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
 			{
 				path: 'login',
 				element: <LoginScreen />
+			},
+			{
+				path: 'signup',
+				element: <SignupScreen />
 			},
 			{
 				path: 'dashboard',

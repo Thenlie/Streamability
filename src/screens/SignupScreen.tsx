@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../helpers/supabaseClient'
 
-export default function LoginScreen() {
+export default function SignupScreen() {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
