@@ -6,26 +6,23 @@ export default function LoginScreen() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const signUp = async (e: any) => {
+    async function signInWithEmail(e: any) {
         e.preventDefault();
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password,
         })
-
-
-        console.log(email, password)
     }
 
     return (
         <div className="row flex-center flex">
             <div className="col-6 form-widget" aria-live="polite">
                 <h1 className="header">Supabase + React</h1>
-                <p className="description">Sign in via magic link with your email below</p>
+                <p className="description">Login</p>
                 {loading ? (
                     'Sending magic link...'
                 ) : (
-                    <form onSubmit={signUp}>
+                    <form onSubmit={signInWithEmail}>
                         <label htmlFor="email">Email</label>
                         <input
                             id="email"
@@ -44,7 +41,7 @@ export default function LoginScreen() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <button className="button block" aria-live="polite">
-                            Send magic link
+                            Submit
                         </button>
                     </form>
                 )}
