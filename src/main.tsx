@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from './helpers/supabaseClient'
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AppWrapper from './AppWrapper';
 import './index.css';

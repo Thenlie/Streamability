@@ -1,10 +1,8 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
 import './App.css';
 
-import { useState, useEffect } from 'react'
-import { supabase } from './helpers/supabaseClient'
-import Login from './screens/LoginScreen'
-import Dashboard from './screens/Dashboard'
+import { useState, useEffect } from 'react';
+import { supabase } from './helpers/supabaseClient';
 
 /**
  * The main app function, wrapping all other screens and components
@@ -37,13 +35,13 @@ export default function AppWrapper() {
 	const [session, setSession] = useState<Session | null>(null);
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session as Session)
-		})
+			setSession(session as Session);
+		});
 
 		supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session as Session)
-		})
-	}, [])
+			setSession(session as Session);
+		});
+	}, []);
 
 	console.log(session);
 	return (
