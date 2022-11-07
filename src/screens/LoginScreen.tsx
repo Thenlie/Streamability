@@ -1,51 +1,45 @@
-import { useState } from 'react'
-import { supabase } from '../helpers/supabaseClient'
+import React, { useState } from 'react';
+import { SUPABASE } from '../helpers/supabaseClient';
 
 export default function LoginScreen() {
-    const [loading, setLoading] = useState(false)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-    async function signInWithEmail(e: any) {
-        e.preventDefault();
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        })
-    }
+	async function signInWithEmail(e: React.SyntheticEvent) {
+		e.preventDefault();
+		const { data, error } = await SUPABASE.auth.signInWithPassword({
+			email: email,
+			password: password,
+		});
+		//TODO Error Handling with error param
+	}
 
-    return (
-        <div className="row flex-center flex">
-            <div className="col-6 form-widget" aria-live="polite">
-                <h1 className="header">Supabase + React</h1>
-                <p className="description">Login</p>
-                {loading ? (
-                    'Sending magic link...'
-                ) : (
-                    <form onSubmit={signInWithEmail}>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            className="inputField"
-                            type="email"
-                            placeholder="Your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                            id=""
-                            className="inputField"
-                            type="password"
-                            placeholder="Your pasword"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button className="button block" aria-live="polite">
-                            Submit
-                        </button>
-                    </form>
-                )}
-            </div>
-        </div>
-    )
+	return (
+		<div>
+			<div aria-live="polite">
+				<h1>Supabase + React</h1>
+				<p>Login</p>
+				<form onSubmit={signInWithEmail}>
+					<label htmlFor="email">Email</label>
+					<input
+						id="email"
+						type="email"
+						placeholder="Your email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+					<input
+						id=""
+						type="password"
+						placeholder="Your password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+					<button aria-live="polite">
+						Submit
+					</button>
+				</form>
+			</div>
+		</div>
+	);
 }

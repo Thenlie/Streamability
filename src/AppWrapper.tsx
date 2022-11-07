@@ -1,17 +1,7 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { SUPABASE } from './helpers/supabaseClient';
 import './App.css';
-
-import { useState, useEffect } from 'react'
-import { supabase } from './helpers/supabaseClient'
-import Login from './screens/LoginScreen'
-import Dashboard from './screens/Dashboard'
-
-/**
- * The main app function, wrapping all other screens and components
- * This wraps the entire front end application and will be shown on every screen
- * 
- * @returns Streamability!
- */
 
 interface User {
 	id: string,
@@ -31,19 +21,23 @@ interface Session {
 }
 
 type ContextType = { session: Session | null }
+/**
+ * The main app function, wrapping all other screens and components
+ * This wraps the entire front end application and will be shown on every screen
+ * 
+ * @returns Streamability!
+ */
 export default function AppWrapper() {
-
-
 	const [session, setSession] = useState<Session | null>(null);
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session as Session)
-		})
+		SUPABASE.auth.getSession().then(({ data: { session } }) => {
+			setSession(session as Session);
+		});
 
-		supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session as Session)
-		})
-	}, [])
+		SUPABASE.auth.onAuthStateChange((_event, session) => {
+			setSession(session as Session);
+		});
+	}, []);
 
 	console.log(session);
 	return (
@@ -55,8 +49,6 @@ export default function AppWrapper() {
 		</div>
 	);
 }
-
-
 
 export function useSession() {
 	return useOutletContext<ContextType>();
