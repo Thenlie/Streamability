@@ -12,8 +12,6 @@ export default function SignupScreen() {
             email: email,
             password: password,
         })
-
-
         console.log(email, password)
     }
 
