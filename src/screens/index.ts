@@ -9,6 +9,7 @@ import PageNotFoundScreen from './PageNotFoundScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
 import DashboardScreen from './DashboardScreen';
+import ShowDetailsScreen from './ShowDetailsScreen';
 
 export {
 	FeaturedSearchScreen,
@@ -17,4 +18,5 @@ export {
 	LoginScreen,
 	SignupScreen,
 	DashboardScreen,
+	ShowDetailsScreen,
 };
