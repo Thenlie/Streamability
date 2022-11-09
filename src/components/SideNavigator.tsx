@@ -8,7 +8,7 @@
 export default function SideNavigator() {
 	return (
 		<>
-            <h2>Side Nav</h2>
+			<h2>Side Nav</h2>
 		</>
 	);
 }

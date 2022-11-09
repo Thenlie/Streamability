@@ -11,7 +11,7 @@ function SearchInput() {
 	return (
 		<>
 			<Form method="get" action="/search">
-				<label htmlFor="q" defaultValue={"search movies or tv shows"}></label>
+				<label htmlFor="q" defaultValue={'search movies or tv shows'}></label>
 				<input name="q" type="text"></input>
 				<button type="submit">Search</button>
 			</Form>

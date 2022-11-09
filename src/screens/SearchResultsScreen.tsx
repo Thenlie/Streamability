@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { ShowCard, ShowCarousel } from '../components'
+import { ShowCard, ShowCarousel } from '../components';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -10,7 +10,6 @@ import { ShowCard, ShowCarousel } from '../components'
  */
 export async function loader({request}: {request: Request} ) {
 	// get the query parameters from the URL
-    console.log(typeof(request), request)
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q');
 	return query as string;
@@ -27,7 +26,7 @@ export default function SearchResultsScreen() {
 			<h1>Search Results Page</h1>
 			<p>Query: {query}</p>
 			<ShowCard />
-            <ShowCarousel />
+			<ShowCarousel />
 		</>
 	);
 }

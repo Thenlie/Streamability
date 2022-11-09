@@ -8,8 +8,8 @@ import SearchInput from './SearchInput';
 import SideNavigator from './SideNavigator';
 
 export {
-    ShowCard,
-    ShowCarousel,
-    SearchInput,
-    SideNavigator,
-}
+	ShowCard,
+	ShowCarousel,
+	SearchInput,
+	SideNavigator,
+};

@@ -7,7 +7,7 @@
 export default function ShowCarousel() {
 	return (
 		<>
-            <h2>Show Carousel</h2>
+			<h2>Show Carousel</h2>
 		</>
 	);
 }
