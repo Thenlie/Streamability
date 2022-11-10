@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import { ShowCard, ShowCarousel } from '../components';
+import { useUserContext } from '../hooks';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -20,11 +21,13 @@ export async function loader({request}: {request: Request} ) {
  */
 export default function SearchResultsScreen() {
 	const query: string = useLoaderData() as string;
+	const { user } = useUserContext();
 
 	return (
 		<>
 			<h1>Search Results Page</h1>
 			<p>Query: {query}</p>
+			<p>{JSON.stringify(user)}</p>
 			<ShowCard />
 			<ShowCarousel />
 		</>

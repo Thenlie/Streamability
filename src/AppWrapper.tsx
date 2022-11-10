@@ -1,10 +1,9 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { SUPABASE } from './helpers/supabaseClient';
-import type { Session } from './types';
+import type { User, Session } from './types';
 import './App.css';
 
-type ContextType = { session: Session | null }
 /**
  * The main app function, wrapping all other screens and components
  * This wraps the entire front end application and will be shown on every screen
@@ -13,27 +12,29 @@ type ContextType = { session: Session | null }
  */
 export default function AppWrapper() {
 	const [session, setSession] = useState<Session | null>(null);
+	const [user, setUser] = useState<User | null>(null);
+
+	// TODO: Add error handling. Move this logic to util file
 	useEffect(() => {
 		SUPABASE.auth.getSession().then(({ data: { session } }) => {
 			setSession(session as Session);
+			setUser(session?.user as User);
 		});
 
 		SUPABASE.auth.onAuthStateChange((_event, session) => {
 			setSession(session as Session);
+			setUser(session?.user as User);
 		});
 	}, []);
 
-	console.log(session);
+	console.log(session, user);
+
 	return (
 		<div className="App">
 			<h1>Streamability</h1>
 			<div>
-				<Outlet context={{ session }} />
+				<Outlet context={{session, user, setUser}} />
 			</div>
 		</div>
 	);
-}
-
-export function useSession() {
-	return useOutletContext<ContextType>();
 }

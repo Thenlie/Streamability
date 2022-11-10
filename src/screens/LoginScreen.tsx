@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
+import { User } from '../types';
+import { useUserContext } from '../hooks';
 
 /**
  * @returns tsx of the login form
@@ -7,14 +9,31 @@ import { SUPABASE } from '../helpers/supabaseClient';
 export default function LoginScreen() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [invalidSignUp, setInvalidSignUp] = useState(false);
+	const { setUser } = useUserContext();
 
-	async function signInWithEmail(e: React.SyntheticEvent) {
-		e.preventDefault();
+	async function signInWithEmail(evt: React.SyntheticEvent) {
+		evt.preventDefault();
+
+		// Ensure both fields have input
+		if (!email || !password) {
+			setInvalidSignUp(true);
+			return;
+		}
+
+		// Perform Supabase login request
 		const { data, error } = await SUPABASE.auth.signInWithPassword({
 			email: email,
 			password: password,
 		});
-		//TODO Error Handling with error param
+        
+		if (error) {
+			setInvalidSignUp(true);
+			console.error(error);
+		} else {
+			setInvalidSignUp(false);
+			setUser(data.user as User);
+		}
 	}
 
 	return (
@@ -25,22 +44,25 @@ export default function LoginScreen() {
 				<form onSubmit={signInWithEmail}>
 					<label htmlFor="email">Email</label>
 					<input
-						id="email"
 						type="email"
-						placeholder="Your email"
+						placeholder="Email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
+					<label htmlFor="password">Password: </label>
 					<input
-						id=""
+						name="password"
 						type="password"
-						placeholder="Your password"
+						placeholder="Password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<button aria-live="polite">
+					<button>
 						Submit
 					</button>
+					{invalidSignUp && (
+						<p>An error has occurred!</p>
+					)}
 				</form>
 			</div>
 		</div>

@@ -1,11 +1,11 @@
 import { SUPABASE } from '../helpers/supabaseClient';
-import { useSession } from '../AppWrapper';
+import { useSessionContext } from '../hooks';
 
 /**
  * @returns tsx of a specific users dashboard
  */
 const DashboardScreen = () => {
-	const { session } = useSession();
+	const { session } = useSessionContext();
 	console.log(session);
 
 	return (
