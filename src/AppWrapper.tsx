@@ -1,24 +1,8 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './helpers/supabaseClient';
+import type { Session } from './types';
 import './App.css';
-
-interface User {
-	id: string,
-	created_at: string,
-	email: string,
-	role: string,
-	updated_at: string
-}
-
-interface Session {
-	access_token: string,
-	expires_at: number,
-	expires_in: number,
-	refresh_token: string,
-	token_type: string,
-	user: User;
-}
 
 type ContextType = { session: Session | null }
 /**
