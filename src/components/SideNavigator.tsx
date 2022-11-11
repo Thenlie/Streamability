@@ -3,9 +3,9 @@
  * one of the most heavily interacted with components
  * We will continue to add to it so be sure to leave good comments!
  * 
- * @returns tsx of the sidebar navigation
+ * @returns {JSX.Element}
  */
-export default function SideNavigator() {
+export default function SideNavigator(): JSX.Element {
 	return (
 		<>
 			<h2>Side Nav</h2>

@@ -1,15 +1,17 @@
 import { ErrorResponse } from '@remix-run/router';
 import { useRouteError } from 'react-router-dom';
+import ErrorMessage from '../components/ErrorMessage';
 
 /**
- * @returns tsx of 404 page
+ * @returns {JSX.Element} | 404 page
  */
-export default function PageNotFoundScreen() {
+export default function PageNotFoundScreen(): JSX.Element {
 	/**
      * This hook returns anything thrown during an 
      * action, loader, or rendering
      */
 	const error: ErrorResponse = useRouteError() as ErrorResponse;
+	// TODO: Remove in production env
 	console.error(error);
     
 	/**
@@ -20,7 +22,7 @@ export default function PageNotFoundScreen() {
 	return (
 		<div>
 			<h1>Page Not Found!</h1>
-			<p>{ error.statusText }</p>
+			<ErrorMessage message={error.statusText} />
 		</div>
 	);
 }

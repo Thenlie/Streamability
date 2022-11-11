@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import AppWrapper from './AppWrapper';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, LoginScreen, SignupScreen, DashboardScreen } from './screens';
+import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, LoginScreen, SignUpScreen, DashboardScreen } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
 
 /**
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'signup',
-				element: <SignupScreen />
+				element: <SignUpScreen />
 			},
 			{
 				path: 'dashboard',

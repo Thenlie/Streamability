@@ -3,9 +3,9 @@
  * Be sure changes made to this component are either conditionally applied
  * or intended to be on every single show card
  * 
- * @returns tsx of a single show card
+ * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard() {
+export default function ShowCard(): JSX.Element {
 	return (
 		<>
 			{/* TODO: remove temporary styles  */}

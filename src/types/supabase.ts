@@ -1,5 +1,5 @@
 export interface User {
-    app_metadata: any;
+    app_metadata: unknown;
     aud: string;
     confirmation_sent_at: string;
     confirmed_at?: string,
@@ -7,11 +7,11 @@ export interface User {
 	email: string;
     email_confirmed_at?: string,
 	id: string;
-    identities: any;
+    identities: unknown;
     phone: string;
 	role: string;
 	updated_at: string;
-    user_metadata: any;
+    user_metadata: unknown;
 }
 
 export interface Session {

@@ -4,20 +4,28 @@ import { User } from '../types';
 import { useUserContext } from '../hooks';
 
 /**
- * @returns tsx of the login form
+ * @returns {JSX.Element}
  */ 
-export default function LoginScreen() {
+export default function LoginScreen(): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [invalidSignUp, setInvalidSignUp] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const { setUser } = useUserContext();
 
-	async function signInWithEmail(evt: React.SyntheticEvent) {
+	/**
+     * Function to authenticate and perform Supabase login
+     * Once the user has logged in, 
+     * their user info and session is stored in the context
+     * 
+     * @param evt | DOM submit event
+     * @returns {Promise<void>} | Does not redirect user
+     */
+	async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
 		evt.preventDefault();
 
 		// Ensure both fields have input
 		if (!email || !password) {
-			setInvalidSignUp(true);
+			setErrorMessage('All fields must be filled out');
 			return;
 		}
 
@@ -28,12 +36,16 @@ export default function LoginScreen() {
 		});
         
 		if (error) {
-			setInvalidSignUp(true);
+			// We could try to get the AuthApiError type and use 'cause' instead
+			setErrorMessage(error.message);
+			// TODO: Remove in production env
 			console.error(error);
 		} else {
-			setInvalidSignUp(false);
+			setErrorMessage('');
 			setUser(data.user as User);
 		}
+
+		return;
 	}
 
 	return (
@@ -60,7 +72,7 @@ export default function LoginScreen() {
 					<button>
 						Submit
 					</button>
-					{invalidSignUp && (
+					{errorMessage.length > 0 && (
 						<p>An error has occurred!</p>
 					)}
 				</form>

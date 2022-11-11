@@ -5,9 +5,9 @@ import { Form } from 'react-router-dom';
  * this will redirect to /search?q=<input>
  * We can then pull the query from the URL
  * 
- * @returns tsx of the main search input component
+ * @returns {JSX.Element} | the main search input component
  */
-function SearchInput() {
+export default function SearchInput(): JSX.Element {
 	return (
 		<>
 			<Form method="get" action="/search">
@@ -18,5 +18,3 @@ function SearchInput() {
 		</>
 	);
 }
-
-export default SearchInput;
