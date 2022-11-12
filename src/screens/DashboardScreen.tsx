@@ -1,12 +1,13 @@
 import { SUPABASE } from '../helpers/supabaseClient';
-import { useSession } from '../AppWrapper';
+import { useSessionContext, useUserContext } from '../hooks';
 
 /**
- * @returns tsx of a specific users dashboard
+ * @returns {JSX.Element} | A single users profile page
  */
-const DashboardScreen = () => {
-	const { session } = useSession();
-	console.log(session);
+export default function DashboardScreen(): JSX.Element {
+	const { session } = useSessionContext();
+	const { user } = useUserContext();
+	console.log(session, user);
 
 	return (
 		<div aria-live="polite">
@@ -18,6 +19,4 @@ const DashboardScreen = () => {
 			</button>
 		</div>
 	);
-};
-
-export default DashboardScreen;
+}

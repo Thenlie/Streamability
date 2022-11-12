@@ -5,10 +5,10 @@ import { ShowCard, ShowCarousel } from '../components';
  * This loader is mostly built straight from the react-router docs
  * https://reactrouter.com/en/main/components/form#get-submissions
  * 
- * @param request - HTTP GET request from the SearchInput component
- * @returns the users query as a string
+ * @param request | HTTP GET request from the SearchInput component
+ * @returns {Promise<string>} | the users query
  */
-export async function loader({request}: {request: Request} ) {
+export async function loader({request}: {request: Request} ): Promise<string> {
 	// get the query parameters from the URL
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q');
