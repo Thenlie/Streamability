@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import ErrorMessage from '../components/ErrorMessage';
-import { SUPABASE } from '../helpers/supabaseClient';
-import { useUserContext } from '../hooks';
-import { User } from '../types';
+import ErrorMessage from '../ErrorMessage';
+import { SUPABASE } from '../../helpers/supabaseClient';
+import { useUserContext } from '../../hooks';
+import { User } from '../../types';
 
 /**
  * Screen to handle Supabase sign up
  * 
  * @returns {JSX.Element}
  */
-export default function SignUpScreen(): JSX.Element {
+export default function SignUpForm(): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');

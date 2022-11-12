@@ -6,17 +6,15 @@
 import FeaturedSearchScreen from './FeaturedSearchScreen';
 import SearchResultsScreen from './SearchResultsScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
-import LoginScreen from './LoginScreen';
-import SignUpScreen from './SignupScreen';
 import DashboardScreen from './DashboardScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
+import AuthScreen from './AuthScreen';
 
 export {
 	FeaturedSearchScreen,
 	SearchResultsScreen,
 	PageNotFoundScreen,
-	LoginScreen,
-	SignUpScreen,
 	DashboardScreen,
 	ShowDetailsScreen,
+	AuthScreen,
 };

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { SUPABASE } from '../helpers/supabaseClient';
-import { User } from '../types';
-import { useUserContext } from '../hooks';
+import { SUPABASE } from '../../helpers/supabaseClient';
+import { User } from '../../types';
+import { useUserContext } from '../../hooks';
 
 /**
  * @returns {JSX.Element}
  */ 
-export default function LoginScreen(): JSX.Element {
+export default function LoginForm(): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
