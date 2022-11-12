@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import AppWrapper from './AppWrapper';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, LoginScreen, SignUpScreen, DashboardScreen } from './screens';
+import { FeaturedSearchScreen, SearchResultsScreen, PageNotFoundScreen, DashboardScreen, AuthScreen } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
+import { LoginForm, SignUpForm } from './components';
 
 /**
  * Create the 'root route' and serve the entire app to it
@@ -21,12 +22,18 @@ const router = createBrowserRouter([
 				element: <FeaturedSearchScreen />
 			},
 			{
-				path: 'login',
-				element: <LoginScreen />
-			},
-			{
-				path: 'signup',
-				element: <SignUpScreen />
+				path: 'auth',
+				element: <AuthScreen />,
+				children: [
+					{
+						path: 'login',
+						element: <LoginForm />
+					},
+					{
+						path: 'signup',
+						element: <SignUpForm />
+					},
+				]
 			},
 			{
 				path: 'dashboard',
