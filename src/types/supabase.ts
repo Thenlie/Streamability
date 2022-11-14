@@ -24,7 +24,7 @@ export interface Session {
 }
 
 export interface Profile {
-    avatar_url: string;
+    avatar_url: string | null;
     email: string;
     id: string;
     updated_at: string;
