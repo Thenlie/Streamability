@@ -1,4 +1,4 @@
-import { useLoaderData, useLocation } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
 import { ShowCard, ShowCarousel } from '../components';
@@ -11,51 +11,44 @@ import { MovieData, MovieDetailsData } from '../types/tmdb';
  * @param request | HTTP GET request from the SearchInput component
  * @returns {Promise<string>} | the users query
  */
-export async function loader({ request }: { request: Request }) {
+export async function loader({ request }: { request: Request }): Promise<string> {
 	// get the query parameters from the URL
 	const url = new URL(request.url);
 	const query = url.searchParams.get('q');
 	return query as string;
 }
-
 /**
  * @returns tsx of search results page after user input
  */
 export default function SearchResultsScreen() {
 	const query: string = useLoaderData() as string;
-	const location = useLocation();
-	const [search, setSearch] = useState(location.search.slice(2));
-	const [data, setData] = useState<MovieData | null>(null);
-	const [details, setDetails] = useState<MovieDetailsData | null>(null);
-
+	const [movieData, setMovieData] = useState<MovieData | null>(null);
+	const [movieDetails, setMovieDetails] = useState<MovieDetailsData | null>(null);
 	useEffect(() => {
-		console.log('hit');
 		const handler = async () => {
-			const movies = await getMoviesByName(search);
-			setData(movies);
-
+			const movies = await getMoviesByName(query);
+			setMovieData(movies);
 		};
 		handler();
 	}, []);
 
-	console.log(data);
+	console.log(movieData);
+
 	useEffect(() => {
 		const handler = async () => {
-			const movies = await getMovieDetails(data!.results[0].id);
-			setDetails(movies);
-
+			const movies = await getMovieDetails(movieData!.results[0].id);
+			setMovieDetails(movies);
 		};
-		handler();
-	}, [data]);
+		if (movieData) handler();
+	}, [movieData]);
 
-	console.log(details);
-
+	console.log(movieDetails);
 
 	return (
 		<>
 			<h1>Search Results Page</h1>
 			<p>Query: {query}</p>
-			<ShowCard details={details} />
+			<ShowCard details={movieDetails} />
 			<ShowCarousel />
 		</>
 	);

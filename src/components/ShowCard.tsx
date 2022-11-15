@@ -5,13 +5,13 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * Be sure changes made to this component are either conditionally applied
  * or intended to be on every single show card
  * 
+ * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
 export default function ShowCard(props: MovieCardProps) {
-	console.log(props);
-	const ratingHandler = (arr: any) => {
+	const ratingHandler = (arr: MovieDetailsData): JSX.Element => {
 		const newArr: any[] = [];
-		arr.filter((item: any) => {
+		arr.release_dates.results.filter((item: any) => {
 			if (item.iso_3166_1 === 'US') {
 				newArr.push(item);
 			}
@@ -40,7 +40,7 @@ export default function ShowCard(props: MovieCardProps) {
 						<p>{props.details.vote_average} stars</p>
 						<span>{props.details.vote_count} ratings</span>
 						<div>
-							{ratingHandler(props.details.release_dates.results)}
+							{ratingHandler(props.details)}
 						</div>
 					</div>
 				</div>

@@ -14,7 +14,7 @@ export interface MovieResultData {
     original_title: string;
     overview: string;
     popularity: number;
-    poster_pat: string;
+    poster_path: string;
     release_date: string;
     title: string;
     video: boolean;
@@ -22,35 +22,64 @@ export interface MovieResultData {
     vote_count: number;
 }
 
-export interface MovieDetailsData {
-    adult: boolean,
-    backdrop_path: string,
-    belongs_to_collection: any[],
-    budget: number,
-    genres: any[]
-    homepage: string,
-    id: number,
-    images: any[],
-    imdb_id: string,
-    original_title: string,
-    overview: string,
-    popularity: number,
-    poster_path: string,
-    production_companies: any[],
-    production_countries: any[],
-    release_date: string,
-    release_dates: ReleaseDates,
-    revenue: number,
-    runtime: 179,
-    spoken_languages: any[],
-    status: string,
-    tagline: string,
-    title: string,
-    video: number,
-    vote_average: number,
-    vote_count: number
+export interface MovieDetailsData extends MovieResultData {
+    belongs_to_collection: {
+        backdrop_path: string;
+        id: number;
+        name: string;
+        poster_path: string;
+    },
+    budget: number;
+    genres: [{
+        id: number;
+        name: string;
+    }]
+    homepage: string;
+    images: {
+        backdrops: MovieImage[];
+        logos: MovieImage[];
+        posters: MovieImage[];
+    },
+    imdb_id: string;
+    production_companies: [{
+        id: number;
+        logo_path: string;
+        name: string;
+        origin_country: string;
+    }],
+    production_countries: [{
+        iso_3166_1: string;
+        name: string;
+    }],
+    release_dates: {
+        results: [{
+            iso_3166_1: string;
+            release_dates: [{
+                certification: string;
+                iso_639_1: string;
+                note: string;
+                release_date: string;
+                type: number;
+            }]
+        }]
+    }
+    revenue: number;
+    runtime: number;
+    spoken_languages: [{
+        english_name: string;
+        iso_639_1: string;
+        name: string;
+    }],
+    status: string;
+    tagline: string;
 }
 
-export interface ReleaseDates {
-    results: any[]
+export interface MovieImage {
+    aspect_ratio: number;
+    file_path: string;
+    height: number;
+    iso_639_1: string;
+    vote_average: number;
+    vote_count: number;
+    width: number;
 }
