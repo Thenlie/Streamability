@@ -36,10 +36,12 @@ export default function SearchResultsScreen() {
 
 	useEffect(() => {
 		const handler = async () => {
-			const movies = await getMovieDetails(movieData!.results[0].id);
-			setMovieDetails(movies);
+			if (movieData) {
+				const movies = await getMovieDetails(movieData.results[0].id);
+				setMovieDetails(movies);
+			}
 		};
-		if (movieData) handler();
+		handler();
 	}, [movieData]);
 
 	console.log(movieDetails);
