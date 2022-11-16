@@ -11,6 +11,7 @@ import { User } from '../../types';
  */
 export default function SignUpForm(): JSX.Element {
 	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
@@ -27,8 +28,8 @@ export default function SignUpForm(): JSX.Element {
 	const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
 		evt.preventDefault();
         
-		// Ensure both fields have input
-		if (!email || !password || !confirmPassword) {
+		// Ensure all fields have input
+		if (!email || !password || !confirmPassword || !username) {
 			setErrorMessage('All fields must be filled out.');
 			return;
 		}
@@ -43,6 +44,11 @@ export default function SignUpForm(): JSX.Element {
 		const { data, error } = await SUPABASE.auth.signUp({
 			email: email,
 			password: password,
+			options: {
+				data: {
+					username: username,
+				}
+			}
 		});
 
 		if (error) {
@@ -53,6 +59,7 @@ export default function SignUpForm(): JSX.Element {
 			setErrorMessage('');
 			// User has not logged in yet but we still get some information back
 			// Check if 'confirmed_at' exists on user to see if they validated their email
+			// Create profile in DB for accessible information
 			setUser(data.user as User);
 		}
 
@@ -62,8 +69,7 @@ export default function SignUpForm(): JSX.Element {
 	return (
 		<div>
 			<div aria-live="polite">
-				<h1>Supabase + React</h1>
-				<p>Sign in via magic link with your email below</p>
+				<h2>Sign in via magic link with your email below</h2>
 				<form onSubmit={signUpHandler}>
 					<label htmlFor="email">Email: </label>
 					<input
@@ -71,6 +77,13 @@ export default function SignUpForm(): JSX.Element {
 						placeholder="Email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
+					/><br/>
+					<label htmlFor="username">Username: </label>
+					<input
+						type="text"
+						placeholder="Username"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
 					/><br/>
 					<label htmlFor="password">Password: </label>
 					<input

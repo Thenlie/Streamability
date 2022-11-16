@@ -15,7 +15,6 @@ export default function AppWrapper(): JSX.Element {
 	const [user, setUser] = useState<User | null>(null);
 
 	/**
-     * 
      * @TODO Add error handling. Move this logic to util file? 
      * @TODO Figure out how have onAuthStateChange listen always
      */
@@ -30,8 +29,6 @@ export default function AppWrapper(): JSX.Element {
 			setUser(session?.user as User);
 		});
 	}, []);
-
-	console.log(session, user);
 
 	return (
 		<div className="App">

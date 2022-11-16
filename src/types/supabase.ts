@@ -15,10 +15,18 @@ export interface User {
 }
 
 export interface Session {
-	access_token: string,
-	expires_at: number,
-	expires_in: number,
-	refresh_token: string,
-	token_type: string,
+	access_token: string;
+	expires_at: number;
+	expires_in: number;
+	refresh_token: string;
+	token_type: string;
 	user: User;
+}
+
+export interface Profile {
+    avatar_url: string | null;
+    email: string;
+    id: string;
+    updated_at: string;
+    username: string;
 }
