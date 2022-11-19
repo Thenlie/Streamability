@@ -11,8 +11,7 @@ export default function PageNotFoundScreen(): JSX.Element {
      * action, loader, or rendering
      */
 	const error: ErrorResponse = useRouteError() as ErrorResponse;
-	// TODO: Remove in production env
-	console.error(error);
+	if (import.meta.env.DEV) console.error(error);
     
 	/**
      * @TODO Implement better error handling

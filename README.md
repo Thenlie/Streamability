@@ -93,6 +93,14 @@ ES Lint will throw warnings for implicit use of the `any` type. This should be a
 
 TypeScript also has a standardized comment syntax that should be followed for primary components/functions.
 
+### Comments
+
+Comments should generally not be left in the code. If they do need to exist, please use an environment flag. 
+```
+import.meta.env.DEV
+```
+> NOTE: Switch out `DEV` with `PROD` if you need something to only work in production
+
 ## Questions?
 
 If you have any questions about the project, please open an issue with the label `tag: question`. One of the developers will try and get back to you within a few days!

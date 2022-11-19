@@ -32,8 +32,6 @@ export default function SearchResultsScreen() {
 		handler();
 	}, []);
 
-	console.log(movieData);
-
 	useEffect(() => {
 		const handler = async () => {
 			if (movieData) {
@@ -44,7 +42,7 @@ export default function SearchResultsScreen() {
 		handler();
 	}, [movieData]);
 
-	console.log(movieDetails);
+	if (import.meta.env.DEV) console.log(movieData, movieDetails);
 
 	return (
 		<>
