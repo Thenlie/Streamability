@@ -1,5 +1,7 @@
 import { MovieDetailsData } from '../types/tmdb';
+
 interface MovieCardProps { details: MovieDetailsData | null }
+
 /**
  * Show cards are rendered all over the application in different situations
  * Be sure changes made to this component are either conditionally applied
@@ -8,7 +10,7 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard(props: MovieCardProps) {
+export default function ShowCard(props: MovieCardProps): JSX.Element {
 	const ratingHandler = (arr: MovieDetailsData): JSX.Element => {
 		const newArr: any[] = [];
 		arr.release_dates.results.filter((item: any) => {
@@ -24,7 +26,7 @@ export default function ShowCard(props: MovieCardProps) {
 	return (
 		<>
 			{props.details && (
-				<div>
+				<div data-testid="show-card-component">
 					<div>
 						<img src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
 					</div>
@@ -36,7 +38,7 @@ export default function ShowCard(props: MovieCardProps) {
 						<p>{props.details.runtime}</p>
 					</div>
 					<div>
-						{/* TODO: Inlucde number of stars with styling, response returns rating out of 10  */}
+						{/* TODO: Include number of stars with styling, response returns rating out of 10  */}
 						<p>{props.details.vote_average} stars</p>
 						<span>{props.details.vote_count} ratings</span>
 						<div>

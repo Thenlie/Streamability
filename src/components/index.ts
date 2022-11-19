@@ -7,6 +7,7 @@ import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import SideNavigator from './SideNavigator';
 import { LoginForm, SignUpForm } from './auth';
+import ErrorMessage from './ErrorMessage';
 
 export {
 	ShowCard,
@@ -15,4 +16,5 @@ export {
 	SideNavigator,
 	LoginForm,
 	SignUpForm,
+	ErrorMessage,
 };

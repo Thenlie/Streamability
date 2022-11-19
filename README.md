@@ -102,8 +102,13 @@ import.meta.env.DEV
 > NOTE: Switch out `DEV` with `PROD` if you need something to only work in production
 
 ## Testing 🧪
-```
+
+This project features a Vitest testing suite. All tests will need to pass in order for PR's to main or develop to be unblocked. You can run these tests locally with the command below:
+```s
 npm test
+```
+To run the tests in watch mode, use this command:
+```s
 npm test -- -w
 ```
 

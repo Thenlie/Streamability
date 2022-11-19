@@ -5,6 +5,10 @@ import { loader as searchLoader } from '../screens/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
 
+/**
+ * Routes to be used in screen unit tests
+ * Currently simulating the entire app
+ */
 export const routes: RouteObject[] = [{
 	path: '/',
 	element: <AppWrapper />,

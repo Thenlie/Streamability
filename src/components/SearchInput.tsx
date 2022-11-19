@@ -1,4 +1,4 @@
-import { Form, Link } from 'react-router-dom';
+import { Form } from 'react-router-dom';
 
 /**
  * Currently using a react router form, 
@@ -12,10 +12,9 @@ export default function SearchInput(): JSX.Element {
 		<>
 			<Form method="get" action="/search">
 				<label htmlFor="q" defaultValue={'search movies or tv shows'}></label>
-				<input name="q" type="text" data-testid="featured_search_input"></input>
-				<button type="submit" data-testid="featured_search_button">Search</button>
+				<input name="q" type="text" data-testid="featured-search-input"></input>
+				<button type="submit" data-testid="featured-search-button">Search</button>
 			</Form>
-			<Link to='/search?q=Iron%20Man' data-testid="featured_search_link">Link</Link>
 		</>
 	);
 }

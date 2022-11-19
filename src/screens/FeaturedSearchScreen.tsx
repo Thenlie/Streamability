@@ -10,7 +10,7 @@ import SearchInput from '../components/SearchInput';
 export default function FeaturedSearchScreen(): JSX.Element {
 	return (
 		<>
-			<h1 data-testid="featured_search_heading">Featured Search Page</h1>
+			<h1 data-testid="featured-search-heading">Featured Search Page</h1>
 			<SearchInput />
 		</>
 	);

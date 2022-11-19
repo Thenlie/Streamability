@@ -17,13 +17,16 @@ export async function loader({ request }: { request: Request }): Promise<string>
 	const query = url.searchParams.get('q');
 	return query as string;
 }
+
 /**
- * @returns tsx of search results page after user input
+ * @returns {JSX.Element} results page after user input
  */
-export default function SearchResultsScreen() {
+export default function SearchResultsScreen(): JSX.Element {
 	const query: string = useLoaderData() as string;
 	const [movieData, setMovieData] = useState<MovieData | null>(null);
 	const [movieDetails, setMovieDetails] = useState<MovieDetailsData | null>(null);
+
+	/** @TODO Can we combine these useEffects into one and remove the data state? */
 	useEffect(() => {
 		const handler = async () => {
 			const movies = await getMoviesByName(query);
@@ -46,7 +49,7 @@ export default function SearchResultsScreen() {
 
 	return (
 		<>
-			<h1 data-testid="search_results_heading">Search Results Page</h1>
+			<h1 data-testid="search-results-heading">Search Results Page</h1>
 			<p>Query: {query}</p>
 			<ShowCard details={movieDetails} />
 			<ShowCarousel />

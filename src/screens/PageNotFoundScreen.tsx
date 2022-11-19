@@ -1,6 +1,6 @@
 import { ErrorResponse } from '@remix-run/router';
 import { useRouteError } from 'react-router-dom';
-import ErrorMessage from '../components/ErrorMessage';
+import { ErrorMessage } from '../components';
 
 /**
  * @returns {JSX.Element} | 404 page
