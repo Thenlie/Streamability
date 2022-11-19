@@ -13,12 +13,16 @@
     "lint-fix": "npx eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "@remix-run/web-fetch": "^4.3.2",
     "@supabase/supabase-js": "^2.0.5",
+    "@testing-library/jest-dom": "^5.16.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.7",
@@ -27,6 +31,7 @@
     "@vitejs/plugin-react": "^2.2.0",
     "eslint": "^8.26.0",
     "eslint-plugin-react": "^7.31.10",
+    "jsdom": "^20.0.2",
     "typescript": "^4.6.4",
     "vite": "^3.2.0",
     "vitest": "^0.25.2"

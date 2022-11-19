@@ -18,7 +18,7 @@ const router = createBrowserRouter([
 		errorElement: <PageNotFoundScreen />,
 		children: [
 			{
-				path: '',
+				path: '/',
 				element: <FeaturedSearchScreen />
 			},
 			{

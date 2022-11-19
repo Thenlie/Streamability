@@ -20,7 +20,7 @@ export default function PageNotFoundScreen(): JSX.Element {
      */
 	return (
 		<div>
-			<h1>Page Not Found!</h1>
+			<h1 data-testid="page-not-found-header">Page Not Found!</h1>
 			<ErrorMessage message={error.statusText} />
 		</div>
 	);

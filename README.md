@@ -101,6 +101,12 @@ import.meta.env.DEV
 ```
 > NOTE: Switch out `DEV` with `PROD` if you need something to only work in production
 
+## Testing 🧪
+```
+npm test
+npm test -- -w
+```
+
 ## Questions?
 
 If you have any questions about the project, please open an issue with the label `tag: question`. One of the developers will try and get back to you within a few days!

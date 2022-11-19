@@ -13,7 +13,7 @@ interface ErrorMessageProps {
 export default function ErrorMessage(props: ErrorMessageProps): JSX.Element {
 	return (
 		<div>
-			<p>Error! {props.message}</p>
+			<p data-testid="error-message-message">Error! {props.message}</p>
 		</div>
 	);
 }

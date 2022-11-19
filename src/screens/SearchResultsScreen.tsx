@@ -46,7 +46,7 @@ export default function SearchResultsScreen() {
 
 	return (
 		<>
-			<h1>Search Results Page</h1>
+			<h1 data-testid="search_results_heading">Search Results Page</h1>
 			<p>Query: {query}</p>
 			<ShowCard details={movieDetails} />
 			<ShowCarousel />
