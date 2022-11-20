@@ -23,35 +23,32 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 export default function SearchResultsScreen(): JSX.Element {
 	const query: string = useLoaderData() as string;
-	const [movieData, setMovieData] = useState<MovieData | null>(null);
-	const [movieDetails, setMovieDetails] = useState<MovieDetailsData | null>(null);
-
-	/** @TODO Can we combine these useEffects into one and remove the data state? */
+	const [movieDetails, setMovieDetails] = useState<MovieDetailsData[]>([]);
 	useEffect(() => {
 		const handler = async () => {
-			const movies = await getMoviesByName(query);
-			setMovieData(movies);
+			const movieData: MovieData = await getMoviesByName(query);
+			if (movieData) {
+				for (let i = 0; i < movieData.results.length; i++) {
+					const movies = await getMovieDetails(movieData.results[i].id);
+					setMovieDetails((prevArr) => [...prevArr, movies]);
+
+				}
+			}
 		};
 		handler();
 	}, []);
 
-	useEffect(() => {
-		const handler = async () => {
-			if (movieData) {
-				const movies = await getMovieDetails(movieData.results[0].id);
-				setMovieDetails(movies);
-			}
-		};
-		handler();
-	}, [movieData]);
-
-	if (import.meta.env.DEV) console.log(movieData, movieDetails);
+	if (import.meta.env.DEV) console.log(movieDetails);
 
 	return (
 		<>
 			<h1 data-testid="search-results-heading">Search Results Page</h1>
 			<p>Query: {query}</p>
-			<ShowCard details={movieDetails} />
+			{
+				movieDetails.map((item, i) => (
+					<ShowCard key={i} details={item} />
+				))
+			}
 			<ShowCarousel />
 		</>
 	);
