@@ -11,24 +11,22 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * @returns {JSX.Element} | Single show card
  */
 export default function ShowCard(props: MovieCardProps): JSX.Element {
-	const ratingHandler = (arr: MovieDetailsData): JSX.Element => {
-		const newArr: any[] = [];
-		arr.release_dates.results.filter((item: any) => {
-			if (item.iso_3166_1 === 'US') {
-				newArr.push(item);
+	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
+		for (let i = 0; i < arr.release_dates.results.length; i++) {
+			if (arr.release_dates.results[i].iso_3166_1 === 'US') {
+				return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
 			}
-		});
-		return (
-			<p>{newArr[0].release_dates[0].certification}</p>
-		);
+		}
+		return null;
 	};
 
 	return (
 		<>
 			{props.details && (
+				// TODO: Style card more closely to provided design once MUI is installed
 				<div data-testid="show-card-component">
 					<div>
-						<img src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
+						<img style={{ width: '250px', height: '375px' }} src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
 					</div>
 					<div>
 						<h2>{props.details.original_title}</h2>
@@ -41,9 +39,11 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 						{/* TODO: Include number of stars with styling, response returns rating out of 10  */}
 						<p>{props.details.vote_average} stars</p>
 						<span>{props.details.vote_count} ratings</span>
-						<div>
-							{ratingHandler(props.details)}
-						</div>
+						{ratingHandler && (
+							<div>
+								{ratingHandler(props.details)}
+							</div>
+						)}
 					</div>
 				</div>
 			)}
