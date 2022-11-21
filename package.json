@@ -10,7 +10,8 @@
     "watch": "tsc --watch",
     "preview": "vite preview",
     "lint": "npx eslint . --color --ext .ts,.tsx",
-    "lint-fix": "npx eslint . --ext .ts,.tsx --fix"
+    "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
+    "setup": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@remix-run/web-fetch": "^4.3.2",
