@@ -1,3 +1,5 @@
+import { useUserContext } from '../hooks';
+import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
 
 interface MovieCardProps { details: MovieDetailsData | null }
@@ -11,6 +13,8 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * @returns {JSX.Element} | Single show card
  */
 export default function ShowCard(props: MovieCardProps): JSX.Element {
+	const { user } = useUserContext();
+
 	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
 		for (let i = 0; i < arr.release_dates.results.length; i++) {
 			if (arr.release_dates.results[i].iso_3166_1 === 'US') {
@@ -18,6 +22,18 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 			}
 		}
 		return null;
+	};
+
+	const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
+		if (show_id) {
+			if (isPush && user) {
+				const data = await addToProfileWatchQueue(user.id, show_id);
+				console.log(data);
+			} else if (user) {
+				const data = await removeFromProfileWatchQueue(user.id, show_id);
+				console.log(data);
+			}
+		}
 	};
 
 	return (
@@ -45,6 +61,8 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 							</div>
 						)}
 					</div>
+					<button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
+					<button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
 				</div>
 			)}
 		</>

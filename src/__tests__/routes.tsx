@@ -1,9 +1,10 @@
 import AppWrapper from '../AppWrapper';
-import { LoginForm, SignUpForm } from '../components';
+import { LoginForm, ShowCard, SignUpForm } from '../components';
 import { AuthScreen, DashboardScreen, FeaturedSearchScreen, PageNotFoundScreen, SearchResultsScreen } from '../screens';
 import { loader as searchLoader } from '../screens/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
+import { sampleMovieDetailData } from './components/assets/movieData';
 
 /**
  * Routes to be used in screen unit tests
@@ -41,5 +42,20 @@ export const routes: RouteObject[] = [{
 			element: <SearchResultsScreen />,
 			loader: searchLoader
 		} 
+	]
+}];
+
+/**
+ * Route to test a single movie card
+ * This is needed so we have access to the userContext
+ */
+export const showCardRoutes: RouteObject[] = [{
+	path: '/',
+	element: <AppWrapper />,
+	children: [
+		{
+			path: '/',
+			element: <ShowCard details={sampleMovieDetailData} />
+		}
 	]
 }];

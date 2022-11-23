@@ -16,15 +16,13 @@ export const getProfileById = async (id: string): Promise<Profile | null> => {
 			.single();
 
 		if (error) {
-			// TODO: Remove in production env
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 			return null;
 		} else if (data) {
 			return data as Profile;
 		}
 	} catch (error) {
-		// TODO: Remove in production env
-		console.error(error);
+		if (import.meta.env.DEV) console.error(error);
 	}
 	return null;
 };
@@ -44,16 +42,14 @@ export const updateProfileUsername = async (id: string, username: string): Promi
 			.select();
         
 		if (error) {
-			// TODO: Remove in production env
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 			return null;
 		} else if (data.length === 1) {
 			return data[0] as Profile;
 		}
 
 	} catch (error) {
-		// TODO: Remove in production env
-		console.error(error);
+		if (import.meta.env.DEV) console.error(error);
 	}
 	return null;
 };
@@ -82,7 +78,61 @@ export const deleteProfileById = async (id: string): Promise<Profile | null> => 
 		}
 
 	} catch (error) {
-		console.error(error);
+		if (import.meta.env.DEV) console.error(error);
+	}
+	return null;
+};
+
+/**
+ * Add a new show to a logged in users watch queue
+ * 
+ * @param id | uuid of user being updated
+ * @param show_id | movieDB id of show being added
+ * @returns {Promise<Profile | null>}
+ */
+export const addToProfileWatchQueue = async (id: string, show_id: number): Promise<Profile | null> => {
+	try {
+		const { data, error } = await SUPABASE
+			.rpc('append_array', {
+				id,
+				show_id
+			});
+        
+		if (error) {
+			if (import.meta.env.DEV) console.error(error);
+		} else if (data.length === 1) {
+			return data[0];
+		}
+
+	} catch (error) {
+		if (import.meta.env.DEV) console.error(error);
+	}
+	return null;
+};
+
+/**
+ * Remove a single show from a users watch queue
+ * 
+ * @param id | uuid of user being updated
+ * @param show_id | movieDB id of show being removed
+ * @returns {Promise<Profile | null>}
+ */
+export const removeFromProfileWatchQueue = async (id: string, show_id: number): Promise<Profile | null> => {
+	try {
+		const { data, error } = await SUPABASE
+			.rpc('remove_array', {
+				id,
+				show_id
+			});
+        
+		if (error) {
+			if (import.meta.env.DEV) console.error(error);
+		} else if(data.length === 1) {
+			return data[0];
+		}
+
+	} catch (error) {
+		if (import.meta.env.DEV) console.error(error);
 	}
 	return null;
 };

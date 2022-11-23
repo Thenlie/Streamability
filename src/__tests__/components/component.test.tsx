@@ -2,8 +2,8 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
-import { SearchInput, ErrorMessage, ShowCard } from '../../components';
-import { sampleMovieDetailData } from './assets/movieData';
+import { SearchInput, ErrorMessage } from '../../components';
+import { showCardRoutes } from '../routes';
 
 describe('Component Test Suite', () => {
 	it('renders the error message component', async () => {
@@ -25,8 +25,11 @@ describe('Component Test Suite', () => {
 		expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
 	});
 	it('renders the show card component', async () => {
-		// render individual component, not within a router
-		render(<ShowCard details={sampleMovieDetailData} />);
+		// create a new data router for the test
+		const router = createMemoryRouter(showCardRoutes, {
+			initialEntries: ['/']
+		});
+		render(<RouterProvider router={router} />);
 
 		expect(screen.getByTestId('show-card-component')).toBeInTheDocument();
 	});
