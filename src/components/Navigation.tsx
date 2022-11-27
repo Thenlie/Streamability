@@ -1,6 +1,9 @@
 import { SUPABASE } from '../helpers/supabaseClient';
 import { Link } from 'react-router-dom';
 import { User, Session } from '../types';
+import { useState, useEffect } from 'react';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 interface NavProps { user: User | null, session: Session | null }
 
@@ -11,6 +14,28 @@ interface NavProps { user: User | null, session: Session | null }
  */
 
 export default function Navigation(props: NavProps): JSX.Element {
+
+	const [themeIcon, setThemeIcon] = useState(<DarkModeIcon />);
+	useEffect(() => {
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark');
+			setThemeIcon(<DarkModeIcon />);
+		} else {
+			document.documentElement.classList.remove('dark');
+			setThemeIcon(<LightModeIcon />);
+		}
+	}, []);
+
+	const themeSwitcher = () => {
+		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && document.documentElement.classList.contains('dark'))) {
+			localStorage.theme = 'light';
+			setThemeIcon(<LightModeIcon />);
+		} else {
+			localStorage.theme = 'dark';
+			setThemeIcon(<DarkModeIcon />);
+		}
+		document.documentElement.classList.toggle('dark');
+	};
 
 	console.log(props);
 	const logoutHandler = async () => {
@@ -32,6 +57,10 @@ export default function Navigation(props: NavProps): JSX.Element {
 					<Link to="/auth/login" style={{ padding: '0 5px' }}>Login</Link>
 				</>
 			)}
+			<button
+				onClick={themeSwitcher}>
+				{themeIcon}
+			</button>
 		</>
 	);
 }
