@@ -1,4 +1,5 @@
 import { fetch, Request, Response } from '@remix-run/web-fetch';
+import { vi } from 'vitest';
 
 if (!globalThis.fetch) {
 	// Built-in lib.dom.d.ts expects `fetch(Request | string, ...)` but the web
@@ -15,3 +16,19 @@ if (!globalThis.fetch) {
 }
 
 // https://github.com/remix-run/react-router/blob/main/packages/router/__tests__/setup.ts
+
+// Mock matchMedia method as its not implemented in vitest
+// https://github.com/vitest-dev/vitest/issues/821
+Object.defineProperty(window, 'matchMedia', {
+	writable: true,
+	value: vi.fn().mockImplementation(query => ({
+		matches: false,
+		media: query,
+		onchange: null,
+		addListener: vi.fn(), // deprecated
+		removeListener: vi.fn(), // deprecated
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn(),
+		dispatchEvent: vi.fn(),
+	})),
+});
