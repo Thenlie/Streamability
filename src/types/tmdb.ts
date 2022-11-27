@@ -1,3 +1,38 @@
+
+interface MovieImage {
+    aspect_ratio: number;
+    file_path: string;
+    height: number;
+    iso_639_1: string | null;
+    vote_average: number;
+    vote_count: number;
+    width: number;
+}
+
+interface MovieSpokenLanguages {
+    english_name: string;
+    iso_639_1: string;
+    name: string; 
+}
+
+interface MovieReleaseDateResults {
+    iso_3166_1: string;
+    release_dates: MovieReleaseDates[];
+}
+
+interface MovieReleaseDates {
+    certification: string;
+    iso_639_1: string | null;
+    note: string;
+    release_date: string;
+    type: number;
+}
+
+interface BasicData {
+    id: number;
+    name: string;
+}
+
 export interface MovieData {
     page: number;
     results: MovieResultData[];
@@ -8,7 +43,7 @@ export interface MovieData {
 export interface MovieResultData {
     adult: boolean;
     backdrop_path: string;
-    genre_ids: number[];
+    genre_ids?: number[];
     id: number;
     original_language: string;
     original_title: string;
@@ -30,10 +65,7 @@ export interface MovieDetailsData extends MovieResultData {
         poster_path: string;
     },
     budget: number;
-    genres: [{
-        id: number;
-        name: string;
-    }]
+    genres: BasicData[];
     homepage: string;
     images: {
         backdrops: MovieImage[];
@@ -52,34 +84,11 @@ export interface MovieDetailsData extends MovieResultData {
         name: string;
     }],
     release_dates: {
-        results: [{
-            iso_3166_1: string;
-            release_dates: [{
-                certification: string;
-                iso_639_1: string;
-                note: string;
-                release_date: string;
-                type: number;
-            }]
-        }]
+        results: MovieReleaseDateResults[];
     }
     revenue: number;
     runtime: number;
-    spoken_languages: [{
-        english_name: string;
-        iso_639_1: string;
-        name: string;
-    }],
+    spoken_languages: MovieSpokenLanguages[]; 
     status: string;
     tagline: string;
-}
-
-export interface MovieImage {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
 }

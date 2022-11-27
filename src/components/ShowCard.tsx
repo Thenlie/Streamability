@@ -1,5 +1,9 @@
+import { useUserContext } from '../hooks';
+import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
+
 interface MovieCardProps { details: MovieDetailsData | null }
+
 /**
  * Show cards are rendered all over the application in different situations
  * Be sure changes made to this component are either conditionally applied
@@ -8,25 +12,37 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard(props: MovieCardProps) {
-	const ratingHandler = (arr: MovieDetailsData): JSX.Element => {
-		const newArr: any[] = [];
-		arr.release_dates.results.filter((item: any) => {
-			if (item.iso_3166_1 === 'US') {
-				newArr.push(item);
+export default function ShowCard(props: MovieCardProps): JSX.Element {
+	const { user } = useUserContext();
+
+	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
+		for (let i = 0; i < arr.release_dates.results.length; i++) {
+			if (arr.release_dates.results[i].iso_3166_1 === 'US') {
+				return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
 			}
-		});
-		return (
-			<p>{newArr[0].release_dates[0].certification}</p>
-		);
+		}
+		return null;
+	};
+
+	const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
+		if (show_id) {
+			if (isPush && user) {
+				const data = await addToProfileWatchQueue(user.id, show_id);
+				console.log(data);
+			} else if (user) {
+				const data = await removeFromProfileWatchQueue(user.id, show_id);
+				console.log(data);
+			}
+		}
 	};
 
 	return (
 		<>
 			{props.details && (
-				<div>
+				// TODO: Style card more closely to provided design once MUI is installed
+				<div data-testid="show-card-component">
 					<div>
-						<img src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
+						<img style={{ width: '250px', height: '375px' }} src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
 					</div>
 					<div>
 						<h2>{props.details.original_title}</h2>
@@ -36,13 +52,17 @@ export default function ShowCard(props: MovieCardProps) {
 						<p>{props.details.runtime}</p>
 					</div>
 					<div>
-						{/* TODO: Inlucde number of stars with styling, response returns rating out of 10  */}
+						{/* TODO: Include number of stars with styling, response returns rating out of 10  */}
 						<p>{props.details.vote_average} stars</p>
 						<span>{props.details.vote_count} ratings</span>
-						<div>
-							{ratingHandler(props.details)}
-						</div>
+						{ratingHandler && (
+							<div>
+								{ratingHandler(props.details)}
+							</div>
+						)}
 					</div>
+					<button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
+					<button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
 				</div>
 			)}
 		</>

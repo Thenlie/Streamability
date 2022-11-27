@@ -12,8 +12,8 @@ export default function SearchInput(): JSX.Element {
 		<>
 			<Form method="get" action="/search">
 				<label htmlFor="q" defaultValue={'search movies or tv shows'}></label>
-				<input name="q" type="text"></input>
-				<button type="submit">Search</button>
+				<input name="q" type="text" data-testid="featured-search-input"></input>
+				<button type="submit" data-testid="featured-search-button">Search</button>
 			</Form>
 		</>
 	);

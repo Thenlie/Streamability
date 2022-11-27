@@ -1,0 +1,26 @@
+name: CI
+on: 
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+  
+jobs:
+  build:
+    name: Streamability CI
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install modules
+      run: npm ci
+    - name: Run ESLint
+      run: npx eslint . --ext .ts,.tsx
+    - name: Create .env
+      run: |
+        touch .env
+        echo VITE_SUPABASE_URL=${{ secrets.SUPABASE_URL }} >> .env
+        echo VITE_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_KEY }} >> .env
+        echo VITE_MOVIEDB_KEY=${{ secrets.MOVIEDB_KEY }} >> .env
+        cat .env
+    - name: Run unit tests
+      run: npm run test

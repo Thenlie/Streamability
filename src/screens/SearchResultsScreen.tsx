@@ -17,38 +17,38 @@ export async function loader({ request }: { request: Request }): Promise<string>
 	const query = url.searchParams.get('q');
 	return query as string;
 }
+
 /**
- * @returns tsx of search results page after user input
+ * @returns {JSX.Element} results page after user input
  */
-export default function SearchResultsScreen() {
+export default function SearchResultsScreen(): JSX.Element {
 	const query: string = useLoaderData() as string;
-	const [movieData, setMovieData] = useState<MovieData | null>(null);
-	const [movieDetails, setMovieDetails] = useState<MovieDetailsData | null>(null);
+	const [movieDetails, setMovieDetails] = useState<MovieDetailsData[]>([]);
 	useEffect(() => {
 		const handler = async () => {
-			const movies = await getMoviesByName(query);
-			setMovieData(movies);
+			const movieData: MovieData = await getMoviesByName(query);
+			if (movieData) {
+				for (let i = 0; i < movieData.results.length; i++) {
+					const movies = await getMovieDetails(movieData.results[i].id);
+					setMovieDetails((prevArr) => [...prevArr, movies]);
+
+				}
+			}
 		};
 		handler();
 	}, []);
 
-	useEffect(() => {
-		const handler = async () => {
-			if (movieData) {
-				const movies = await getMovieDetails(movieData.results[0].id);
-				setMovieDetails(movies);
-			}
-		};
-		handler();
-	}, [movieData]);
-
-	if (import.meta.env.DEV) console.log(movieData, movieDetails);
+	if (import.meta.env.DEV) console.log(movieDetails);
 
 	return (
 		<>
-			<h1>Search Results Page</h1>
+			<h1 data-testid="search-results-heading">Search Results Page</h1>
 			<p>Query: {query}</p>
-			<ShowCard details={movieDetails} />
+			{
+				movieDetails.map((item, i) => (
+					<ShowCard key={i} details={item} />
+				))
+			}
 			<ShowCarousel />
 		</>
 	);
