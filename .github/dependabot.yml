@@ -9,8 +9,20 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+    reviewers:
+      - "Thenlie"
+      - "maxh1231"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+    reviewers:
+      - "Thenlie"
+      - "maxh1231"
