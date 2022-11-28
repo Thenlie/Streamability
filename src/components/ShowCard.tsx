@@ -24,13 +24,22 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 		return null;
 	};
 
+	/**
+     * Handle card being added to or removed from
+     * a users watch queue
+     * 
+     * @param isPush | true if adding, false if removing
+     * @param show_id | movie db id being updated
+     */
 	const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
 		if (show_id) {
 			if (isPush && user) {
 				const data = await addToProfileWatchQueue(user.id, show_id);
+				// TODO: #141 Create a profile context and update it here
 				console.log(data);
 			} else if (user) {
 				const data = await removeFromProfileWatchQueue(user.id, show_id);
+				// TODO: #141 Create a profile context and update it here
 				console.log(data);
 			}
 		}
