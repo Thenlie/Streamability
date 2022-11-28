@@ -8,6 +8,6 @@
 echo "--- Building App ---"
 npm run build
 echo "--- Running ES-Lint ---"
-npm run lint-fix
+npm run lint
 echo "--- Running Unit Tests ---"
 npm run test

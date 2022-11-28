@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
 import { useSessionContext, useUserContext } from '../hooks';
-import { deleteProfileById, getProfileById, updateProfileUsername } from '../supabase/profiles';
+import { deleteProfileById, getProfileById, updateProfileUsername, getProfileWatchQueue } from '../supabase/profiles';
 import { Profile } from '../types/supabase';
 
 /**
@@ -18,6 +18,8 @@ export default function DashboardScreen(): JSX.Element {
 			if (user) {
 				const data = await getProfileById(user.id);
 				setProfile(data);
+				const queue = await getProfileWatchQueue(user.id);
+				if (import.meta.env.DEV) console.log(queue);
 			}
 		};
 		handler();

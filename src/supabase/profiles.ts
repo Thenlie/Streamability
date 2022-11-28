@@ -69,12 +69,37 @@ export const deleteProfileById = async (id: string): Promise<Profile | null> => 
 			.select();
 
 		if (error) {
-			// TODO: Remove in production env
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		} else if (data.length === 1) {
 			// TODO: #86 Delete user from Auth table in supabase
 			await SUPABASE.auth.signOut();
 			return data[0] as Profile;
+		}
+
+	} catch (error) {
+		if (import.meta.env.DEV) console.error(error);
+	}
+	return null;
+};
+
+/**
+ * Get a users watch queue. This method returns nothing
+ * else so it can be a bit lighter than the full profile query
+ * 
+ * @param id | uuid users profile being queried
+ * @returns {Promise<number[] | null>}
+ */
+export const getProfileWatchQueue = async (id: string): Promise<number[] | null> => {
+	try {
+		const { data, error } = await SUPABASE
+			.from('profiles')
+			.select('watch_queue')
+			.eq('id', id);
+        
+		if (error) {
+			if (import.meta.env.DEV) console.error(error);
+		} else {
+			return data[0].watch_queue;
 		}
 
 	} catch (error) {
@@ -96,12 +121,14 @@ export const addToProfileWatchQueue = async (id: string, show_id: number): Promi
 			.rpc('append_array', {
 				id,
 				show_id
-			});
+			})
+			.select()
+			.single();
         
 		if (error) {
 			if (import.meta.env.DEV) console.error(error);
-		} else if (data.length === 1) {
-			return data[0];
+		} else if (data) {
+			return data as Profile;
 		}
 
 	} catch (error) {
@@ -123,12 +150,14 @@ export const removeFromProfileWatchQueue = async (id: string, show_id: number): 
 			.rpc('remove_array', {
 				id,
 				show_id
-			});
+			})
+			.select()
+			.single();
         
 		if (error) {
 			if (import.meta.env.DEV) console.error(error);
-		} else if(data.length === 1) {
-			return data[0];
+		} else if(data) {
+			return data as Profile;
 		}
 
 	} catch (error) {
