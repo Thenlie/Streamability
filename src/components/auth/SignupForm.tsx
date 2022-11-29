@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
 import { SUPABASE } from '../../helpers/supabaseClient';
-import { useUserContext } from '../../hooks';
-import { User } from '../../types';
 
 /**
  * Screen to handle Supabase sign up
@@ -15,7 +13,6 @@ export default function SignUpForm(): JSX.Element {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
-	const { setUser } = useUserContext();
 
 	/**
      * Function to authenticate and perform Supabase sign up
@@ -41,7 +38,7 @@ export default function SignUpForm(): JSX.Element {
 		}
 
 		// Perform Supabase sign up POST request
-		const { data, error } = await SUPABASE.auth.signUp({
+		const { error } = await SUPABASE.auth.signUp({
 			email: email,
 			password: password,
 			options: {
@@ -53,14 +50,12 @@ export default function SignUpForm(): JSX.Element {
 
 		if (error) {
 			setErrorMessage(error.message);
-			// TODO: Remove in production env
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		} else {
 			setErrorMessage('');
+			// onAuthStateChange function will be triggered
 			// User has not logged in yet but we still get some information back
 			// Check if 'confirmed_at' exists on user to see if they validated their email
-			// Create profile in DB for accessible information
-			setUser(data.user as User);
 		}
 
 		return;

@@ -7,7 +7,25 @@
 
 echo "--- Building App ---"
 npm run build
+if [[ "$?" == 0 ]]; then
+    echo "\t\033[32mBuild Passed\033[0m"
+else
+    echo "\t\033[41mBuild Failed\033[0m"
+    exit 1
+fi
 echo "--- Running ES-Lint ---"
 npm run lint
+if [[ "$?" == 0 ]]; then
+    echo "\t\033[32mESLint Passed\033[0m"
+else
+    echo "\t\033[41mESLint Failed\033[0m"
+    exit 1
+fi
 echo "--- Running Unit Tests ---"
 npm run test
+if [[ "$?" == 0 ]]; then
+    echo "\t\033[32mUnit Tests Passed\033[0m"
+else
+    echo "\t\033[41mUnit Tests Failed\033[0m"
+    exit 1
+fi

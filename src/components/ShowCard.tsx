@@ -1,4 +1,4 @@
-import { useUserContext } from '../hooks';
+import { useProfileContext } from '../hooks';
 import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
 
@@ -13,7 +13,7 @@ interface MovieCardProps { details: MovieDetailsData | null }
  * @returns {JSX.Element} | Single show card
  */
 export default function ShowCard(props: MovieCardProps): JSX.Element {
-	const { user } = useUserContext();
+	const { profile, setProfile } = useProfileContext();
 
 	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
 		for (let i = 0; i < arr.release_dates.results.length; i++) {
@@ -33,14 +33,12 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
      */
 	const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
 		if (show_id) {
-			if (isPush && user) {
-				const data = await addToProfileWatchQueue(user.id, show_id);
-				// TODO: #141 Create a profile context and update it here
-				console.log(data);
-			} else if (user) {
-				const data = await removeFromProfileWatchQueue(user.id, show_id);
-				// TODO: #141 Create a profile context and update it here
-				console.log(data);
+			if (isPush && profile) {
+				const data = await addToProfileWatchQueue(profile.id, show_id);
+				setProfile(data);
+			} else if (profile) {
+				const data = await removeFromProfileWatchQueue(profile.id, show_id);
+				setProfile(data);
 			}
 		}
 	};

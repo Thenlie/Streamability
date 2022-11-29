@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { SUPABASE } from '../../helpers/supabaseClient';
-import { User } from '../../types';
-import { useUserContext } from '../../hooks';
 
 /**
  * @returns {JSX.Element}
@@ -10,7 +8,6 @@ export default function LoginForm(): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
-	const { setUser } = useUserContext();
 
 	/**
      * Function to authenticate and perform Supabase login
@@ -30,7 +27,7 @@ export default function LoginForm(): JSX.Element {
 		}
 
 		// Perform Supabase login request
-		const { data, error } = await SUPABASE.auth.signInWithPassword({
+		const { error } = await SUPABASE.auth.signInWithPassword({
 			email: email,
 			password: password,
 		});
@@ -38,11 +35,10 @@ export default function LoginForm(): JSX.Element {
 		if (error) {
 			// We could try to get the AuthApiError type and use 'cause' instead
 			setErrorMessage(error.message);
-			// TODO: Remove in production env
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		} else {
 			setErrorMessage('');
-			setUser(data.user as User);
+			// onAuthStateChange function will be triggered
 		}
 
 		return;
