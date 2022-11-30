@@ -1,40 +1,36 @@
 import { useEffect, useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
-import { useSessionContext, useUserContext } from '../hooks';
-import { deleteProfileById, getProfileById, updateProfileUsername, getProfileWatchQueue } from '../supabase/profiles';
-import { Profile } from '../types/supabase';
+import { useSessionContext, useProfileContext } from '../hooks';
+import { deleteProfileById, updateProfileUsername, getProfileWatchQueue } from '../supabase/profiles';
 
 /**
  * @returns {JSX.Element} | A single users profile page
  */
 export default function DashboardScreen(): JSX.Element {
 	const { session } = useSessionContext();
-	const { user } = useUserContext();
-	const [profile, setProfile] = useState<Profile | null>(null);
+	const { profile, setProfile } = useProfileContext();
 	const [username, setUsername] = useState('');
 
 	useEffect(() => {
 		const handler = async () => {
-			if (user) {
-				const data = await getProfileById(user.id);
-				setProfile(data);
-				const queue = await getProfileWatchQueue(user.id);
+			if (session) {
+				const queue = await getProfileWatchQueue(session.user.id);
 				if (import.meta.env.DEV) console.log(queue);
 			}
 		};
 		handler();
-	}, [user]);
+	}, [session]);
 
 	const changeUsername = async () => {
-		if (user) {
-			const data = await updateProfileUsername(user.id, username);
+		if (session) {
+			const data = await updateProfileUsername(session.user.id, username);
 			setProfile(data);
 		}
 	};
 
 	const deleteProfile = async () => {
-		if (user) {
-			await deleteProfileById(user.id);
+		if (session) {
+			await deleteProfileById(session.user.id);
 			setProfile(null);
 		}
 	};

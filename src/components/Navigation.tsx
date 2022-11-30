@@ -1,21 +1,21 @@
 import { SUPABASE } from '../helpers/supabaseClient';
 import { Link } from 'react-router-dom';
-import { User, Session } from '../types';
+import { Session } from '../types';
 import { useState, useEffect } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-interface NavProps { user: User | null, session: Session | null }
+interface NavProps { session: Session | null }
 
 /**
- * This component will be rendered in AppWapper.tsx - on every page.
+ * This component will be rendered in AppWrapper.tsx - on every page.
  * Navigation elements are placeholder for the time being for development purposes.
  * @returns {JSX.Element} | Navigation
  */
 
 export default function Navigation(props: NavProps): JSX.Element {
-
 	const [themeIcon, setThemeIcon] = useState(<DarkModeIcon />);
+
 	useEffect(() => {
 		if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
 			document.documentElement.classList.add('dark');
@@ -37,7 +37,6 @@ export default function Navigation(props: NavProps): JSX.Element {
 		document.documentElement.classList.toggle('dark');
 	};
 
-	console.log(props);
 	const logoutHandler = async () => {
 		// TODO: Error handling if any
 		await SUPABASE.auth.signOut();
@@ -46,10 +45,10 @@ export default function Navigation(props: NavProps): JSX.Element {
 	// TODO: Remove inline styling upon CSS framework integration
 		<>
 			<Link to="/" style={{ padding: '0 5px' }}>Home</Link>
-			{props.session && props.user ? (
+			{props.session ? (
 				<>
 					<Link to="/dashboard" style={{ padding: '0 5px' }}>Dashboard</Link>
-					<span onClick={logoutHandler} style={{ padding: '0 5px' }}>Logout</span>
+					<a onClick={logoutHandler} style={{ padding: '0 5px' }}>Logout</a>
 				</>
 			) : (
 				<>

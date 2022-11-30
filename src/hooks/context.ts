@@ -1,17 +1,17 @@
 import { useOutletContext } from 'react-router-dom';
-import type { User, Session } from '../types';
+import type { Profile, Session } from '../types';
 
-// Supabase info about the currently logged in user
-// Setter to update the user info
-type UserContextType = { 
-    user: User | null,
-    setUser: React.Dispatch<React.SetStateAction<User | null>>
+// Supabase info about the currently logged in Profile
+// Setter to update the profile info
+type ProfileContextType = { 
+    profile: Profile | null,
+    setProfile: React.Dispatch<React.SetStateAction<Profile | null>>
 }
 /**
- * @returns {UserContextType}
+ * @returns {ProfileContextType}
  */
-export function useUserContext(): UserContextType {
-	return useOutletContext<UserContextType>();
+export function useProfileContext(): ProfileContextType {
+	return useOutletContext<ProfileContextType>();
 }
 
 // Supabase info about the currently logged in user's session
