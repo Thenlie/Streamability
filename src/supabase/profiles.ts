@@ -55,13 +55,14 @@ export const updateProfileUsername = async (id: string, username: string): Promi
 };
 
 /**
- * Delete a logged in users profile
+ * Delete a logged in users profile and account
  * 
  * @param id | uuid of user being deleted
- * @returns {Promise<Profile | null>}
+ * @returns {Promise<void>}
  */
-export const deleteProfileById = async (id: string): Promise<Profile | null> => {
+export const deleteProfileById = async (id: string): Promise<void> => {
 	try {
+		// delete profile
 		const { data, error } = await SUPABASE
 			.from('profiles')
 			.delete()
@@ -71,15 +72,18 @@ export const deleteProfileById = async (id: string): Promise<Profile | null> => 
 		if (error) {
 			if (import.meta.env.DEV) console.error(error);
 		} else if (data.length === 1) {
-			// TODO: #86 Delete user from Auth table in supabase
-			await SUPABASE.auth.signOut();
-			return data[0] as Profile;
+			// delete user account
+			const { error } = await SUPABASE
+				.rpc('delete_user');
+
+			if (error) console.error(error);
+			return; 
 		}
 
 	} catch (error) {
 		if (import.meta.env.DEV) console.error(error);
 	}
-	return null;
+	return;
 };
 
 /**
