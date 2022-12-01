@@ -17,20 +17,20 @@ export default function AppWrapper(): JSX.Element {
 	const [profile, setProfile] = useState<Profile | null>(null);
 
 	/**
-     * When the session changed, this function will
-     * update the profile context accordingly
-     * 
-     * @param session | logged in user's details or null
-     */
+	 * When the session changed, this function will
+	 * update the profile context accordingly
+	 * 
+	 * @param session | logged in user's details or null
+	 */
 	const profileSetter = async (session: Session) => {
 		if (session) {
 			const data = await getProfileById(session.user.id);
 			setProfile(data);
 		}
 	};
-    
+
 	/**
-     * @TODO Move auth functions to util file?
+	 * @TODO Move auth functions to util file?
 	 */
 	useEffect(() => {
 		SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
@@ -76,7 +76,7 @@ export default function AppWrapper(): JSX.Element {
 			data.subscription.unsubscribe();
 		};
 	}, []);
-    
+
 	return (
 		<div className="App">
 			<Navigation session={session} />

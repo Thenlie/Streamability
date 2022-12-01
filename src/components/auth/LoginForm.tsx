@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import { SUPABASE } from '../../helpers/supabaseClient';
+import { useSessionContext } from '../../hooks';
+import { Navigate } from 'react-router-dom';
 
 /**
  * @returns {JSX.Element}
- */ 
+ */
 export default function LoginForm(): JSX.Element {
+	const { session } = useSessionContext();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
+	if (session) {
+		return <Navigate to={'/dashboard'} />;
+	}
+
 	/**
-     * Function to authenticate and perform Supabase login
-     * Once the user has logged in, 
-     * their user info and session is stored in the context
-     * 
-     * @param evt | DOM submit event
-     * @returns {Promise<void>} | Does not redirect user
-     */
+	 * Function to authenticate and perform Supabase login
+	 * Once the user has logged in, 
+	 * their user info and session is stored in the context
+	 * 
+	 * @param evt | DOM submit event
+	 * @returns {Promise<void>} | Does not redirect user
+	 */
 	async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
 		evt.preventDefault();
 
@@ -31,7 +38,7 @@ export default function LoginForm(): JSX.Element {
 			email: email,
 			password: password,
 		});
-        
+
 		if (error) {
 			// We could try to get the AuthApiError type and use 'cause' instead
 			setErrorMessage(error.message);
