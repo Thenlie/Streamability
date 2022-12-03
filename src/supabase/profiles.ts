@@ -77,6 +77,7 @@ export const deleteProfileById = async (id: string): Promise<void> => {
 				.rpc('delete_user');
 
 			if (error) console.error(error);
+			localStorage.clear();
 			return; 
 		}
 

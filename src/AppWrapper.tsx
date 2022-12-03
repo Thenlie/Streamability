@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './helpers/supabaseClient';
 import type { Session, Profile } from './types';
@@ -15,6 +15,7 @@ import { getProfileById } from './supabase/profiles';
 export default function AppWrapper(): JSX.Element {
 	const [session, setSession] = useState<Session | null>(null);
 	const [profile, setProfile] = useState<Profile | null>(null);
+	const navigate = useNavigate();
 
 	/**
 	 * When the session changed, this function will
@@ -30,7 +31,8 @@ export default function AppWrapper(): JSX.Element {
 	};
 
 	/**
-	 * @TODO Move auth functions to util file?
+	 * Get session on page load, then listen
+     * for any changes to the users status
 	 */
 	useEffect(() => {
 		SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
@@ -47,10 +49,12 @@ export default function AppWrapper(): JSX.Element {
 			case 'SIGNED_IN':
 				setSession(session as Session);
 				profileSetter(session as Session);
+				navigate('/dashboard');
 				break;
 			case 'SIGNED_OUT':
 				setSession(null);
 				setProfile(null);
+				navigate('/');
 				break;
 			case 'TOKEN_REFRESHED':
 				setSession(session as Session);
@@ -59,10 +63,8 @@ export default function AppWrapper(): JSX.Element {
 				setSession(session as Session);
 				profileSetter(session as Session);
 				break;
-			case 'USER_DELETED':
-				setSession(null);
-				setProfile(null);
-				break;
+				//  currently doesn't work
+				//	case 'USER_DELETED':
 			case 'PASSWORD_RECOVERY':
 				setSession(session as Session);
 				break;
@@ -82,7 +84,7 @@ export default function AppWrapper(): JSX.Element {
 			<Navigation session={session} />
 			<h1>Streamability</h1>
 			<div>
-				<Outlet context={{ session, profile, setProfile }} />
+				<Outlet context={{ session, setSession, profile, setProfile }} />
 			</div>
 		</div>
 	);
