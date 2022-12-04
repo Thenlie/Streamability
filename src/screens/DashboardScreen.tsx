@@ -2,15 +2,18 @@ import { useEffect, useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
 import { useSessionContext, useProfileContext } from '../hooks';
 import { deleteProfileById, updateProfileUsername, getProfileWatchQueue } from '../supabase/profiles';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 /**
+ * User must be logged in to access endpoint
+ * 
  * @returns {JSX.Element} | A single users profile page
  */
 export default function DashboardScreen(): JSX.Element {
-	const { session } = useSessionContext();
+	const { session, setSession } = useSessionContext();
 	const { profile, setProfile } = useProfileContext();
 	const [username, setUsername] = useState('');
+	const navigate = useNavigate();
 
 	if (!session) {
 		return <Navigate to={'/auth/login'} />;
@@ -33,10 +36,17 @@ export default function DashboardScreen(): JSX.Element {
 		}
 	};
 
+	/**
+     * Delete profile row and auth entry.
+     * We need to set the session to null here because
+     * the util does not have access to the hook
+     */
 	const deleteProfile = async () => {
 		if (session) {
 			await deleteProfileById(session.user.id);
 			setProfile(null);
+			setSession(null);
+			navigate('/');
 		}
 	};
 

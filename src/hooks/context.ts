@@ -15,7 +15,10 @@ export function useProfileContext(): ProfileContextType {
 }
 
 // Supabase info about the currently logged in user's session
-type SessionContextType = { session: Session | null }
+type SessionContextType = { 
+    session: Session | null
+    setSession: React.Dispatch<React.SetStateAction<Session | null>>
+}
 
 /**
  * @returns {SessionContextType}

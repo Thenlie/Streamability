@@ -48,7 +48,7 @@ export default function Navigation(props: NavProps): JSX.Element {
 			{props.session ? (
 				<>
 					<Link to="/dashboard" style={{ padding: '0 5px' }}>Dashboard</Link>
-					<a onClick={logoutHandler} style={{ padding: '0 5px' }}>Logout</a>
+					<a onClick={logoutHandler} style={{ padding: '0 5px' }} className={'cursor-pointer'}>Logout</a>
 				</>
 			) : (
 				<>
