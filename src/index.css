@@ -2,15 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* TODO: Create light mode theme. Reference #135 */
+    --color-background: 220 220 220;
+    --color-foreground: 255 255 255;
+    --color-text: 0 0 0;
+    --color-highlight: 151 71 255;
+  }
+  :root[class='dark'] {
+    --color-background: 36 36 36;
+    --color-foreground: 78 78 78;
+    --color-text: 255 255 255;
+    
+    color-scheme: dark;
+  }
+}
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -49,9 +62,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: rgb(var(--color-highlight));
+  color: #fff;
   cursor: pointer;
   transition: border-color 0.25s;
+}
+
+button[type='button'],
+button[type='submit'],
+button[type='reset'] {
+  background-color: rgb(var(--color-highlight));
 }
 
 button:hover {
@@ -61,19 +81,4 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
 }
