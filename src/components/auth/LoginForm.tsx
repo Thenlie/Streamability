@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import ErrorMessage from '../ErrorMessage';
 import { SUPABASE } from '../../helpers/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
+import { Button, InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 /**
  * @returns {JSX.Element}
@@ -9,7 +12,10 @@ import { Navigate } from 'react-router-dom';
 export default function LoginForm(): JSX.Element {
 	const { session } = useSessionContext();
 	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState(false);
 	const [password, setPassword] = useState('');
+	const [passwordError, setPasswordError] = useState(false);
+	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
 	if (session) {
@@ -30,6 +36,8 @@ export default function LoginForm(): JSX.Element {
 		// Ensure both fields have input
 		if (!email || !password) {
 			setErrorMessage('All fields must be filled out');
+			if (!email) setEmailError(true);
+			if (!password) setPasswordError(true);
 			return;
 		}
 
@@ -52,34 +60,58 @@ export default function LoginForm(): JSX.Element {
 	}
 
 	return (
-		<div>
-			<div aria-live="polite">
-				<h1>Supabase + React</h1>
-				<p>Login</p>
-				<form onSubmit={signInWithEmail}>
-					<label htmlFor="email">Email</label>
-					<input
-						type="email"
-						placeholder="Email"
+		<div aria-live="polite">
+			<h1>Login</h1>
+			<form onSubmit={signInWithEmail} className='flex flex-col'>
+				<FormControl sx={{m: .5}} variant='filled'>
+					<InputLabel htmlFor='email-input'>Email</InputLabel>
+					<FilledInput
+						id='email-input'
+						type='email'
+						name='email'
+						autoComplete='email'
 						value={email}
+						error={emailError}
 						onChange={(e) => setEmail(e.target.value)}
+						onFocus={() => setEmailError(false)}
 					/>
-					<label htmlFor="password">Password: </label>
-					<input
+				</FormControl>
+				<FormControl sx={{m: .5}} variant='filled'>
+					<InputLabel htmlFor='password-input'>Password</InputLabel>
+					<FilledInput
+						id='password-input'
 						name="password"
-						type="password"
-						placeholder="Password"
+						type={isPasswordVisible ? 'text' : 'password'}
+						autoComplete='new-password'
 						value={password}
+						error={passwordError}
 						onChange={(e) => setPassword(e.target.value)}
+						onFocus={() => setPasswordError(false)}
+						endAdornment={
+							<InputAdornment position='end'>
+								<IconButton
+									aria-label='toggle password visibility'
+									onClick={() => setIsPasswordVisible(prev => !prev)}
+									edge='end'
+								>
+									{isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+								</IconButton>
+							</InputAdornment>
+						}
 					/>
-					<button>
-						Submit
-					</button>
-					{errorMessage.length > 0 && (
-						<p>An error has occurred!</p>
-					)}
-				</form>
-			</div>
+				</FormControl>
+				<Button 
+					variant='contained'
+					size='large'
+					type='submit'
+					sx={{ margin: '10px'}}
+				>
+                    Submit
+				</Button>
+				{errorMessage.length > 0 && (
+					<ErrorMessage message={errorMessage} />
+				)}
+			</form>
 		</div>
 	);
 }
