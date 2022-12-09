@@ -80,6 +80,20 @@ export default function SignUpForm(): JSX.Element {
 			return;
 		}
 
+		// Ensure email is valid
+		if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
+			showError('Must provide valid email');
+			if (!email) setEmailError(true);
+			return;
+		}
+
+		// Ensure password is of sufficient length
+		if (password.length < 3) {
+			showError('Password must be at least 6 characters');
+			setPasswordError(true);
+			return;
+		}
+
 		// Ensure passwords match
 		if (password !== confirmPassword) {
 			setPasswordError(true);
@@ -100,6 +114,11 @@ export default function SignUpForm(): JSX.Element {
 		});
 
 		if (error) {
+			if (error.message == 'duplicate key value violates unique constraint "profiles_username_key"') {
+				showError('Username unavailable');
+				setUsernameError(true);
+				return;
+			}
 			showError(error.message);
 			if (import.meta.env.DEV) console.error(error);
 		}
@@ -111,16 +130,17 @@ export default function SignUpForm(): JSX.Element {
 	};
 
 	return (
-		<div aria-live="polite">
+		<div aria-live="polite" className='w-full'>
 			<h1>Signup</h1>
 			<form onSubmit={signUpHandler} className='flex flex-col'>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='email-input'>Email</InputLabel>
+					<InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>
 					<FilledInput
 						id='email-input'
 						type='email'
 						name='email'
 						autoComplete='email'
+						color='secondary'
 						value={email}
 						error={emailError}
 						onChange={(e) => setEmail(e.target.value)}
@@ -128,11 +148,12 @@ export default function SignUpForm(): JSX.Element {
 					/>
 				</FormControl>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='username-input'>Username</InputLabel>
+					<InputLabel htmlFor='username-input' color='secondary'>Username</InputLabel>
 					<FilledInput
 						id='username-input'
 						type='username'
 						name='username'
+						color='secondary'
 						value={username}
 						error={usernameError}
 						onChange={(e) => setUsername(e.target.value)}
@@ -140,12 +161,13 @@ export default function SignUpForm(): JSX.Element {
 					/>
 				</FormControl>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='password-input'>Password</InputLabel>
+					<InputLabel htmlFor='password-input' color='secondary'>Password</InputLabel>
 					<FilledInput
 						id='password-input'
 						name="password"
 						type={isPasswordVisible ? 'text' : 'password'}
 						autoComplete='new-password'
+						color='secondary'
 						value={password}
 						error={passwordError}
 						onChange={(e) => setPassword(e.target.value)}
@@ -156,6 +178,7 @@ export default function SignUpForm(): JSX.Element {
 									aria-label='toggle password visibility'
 									onClick={() => togglePasswordVisibility(false)}
 									edge='end'
+									sx={{backgroundColor: 'none'}}
 								>
 									{isPasswordVisible ? <VisibilityOff /> : <Visibility />}
 								</IconButton>
@@ -164,13 +187,14 @@ export default function SignUpForm(): JSX.Element {
 					/>
 				</FormControl>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='confirm-password-input'>Confirm Password</InputLabel>
+					<InputLabel htmlFor='confirm-password-input' color='secondary'>Confirm Password</InputLabel>
 					<FilledInput
 						id='confirm-password-input'
 						name="confirm-password"
 						type={isConfirmPasswordVisible ? 'text' : 'password'}
 						value={confirmPassword}
 						error={confirmPasswordError}
+						color='secondary'
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						onFocus={() => setConfirmPasswordError(false)}
 						endAdornment={

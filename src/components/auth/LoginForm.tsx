@@ -22,6 +22,14 @@ export default function LoginForm(): JSX.Element {
 		return <Navigate to={'/dashboard'} />;
 	}
 
+	// show error message for 3 seconds and then remove
+	const showError = (msg: string): void => {
+		setErrorMessage(msg);
+		setTimeout(() => {
+			setErrorMessage('');
+		}, 3000);
+	};
+
 	/**
 	 * Function to authenticate and perform Supabase login
 	 * Once the user has logged in, 
@@ -35,9 +43,16 @@ export default function LoginForm(): JSX.Element {
 
 		// Ensure both fields have input
 		if (!email || !password) {
-			setErrorMessage('All fields must be filled out');
+			showError('All fields must be filled out');
 			if (!email) setEmailError(true);
 			if (!password) setPasswordError(true);
+			return;
+		}
+
+		// Ensure email is valid
+		if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
+			showError('Must provide valid email');
+			if (!email) setEmailError(true);
 			return;
 		}
 
@@ -49,27 +64,26 @@ export default function LoginForm(): JSX.Element {
 
 		if (error) {
 			// We could try to get the AuthApiError type and use 'cause' instead
-			setErrorMessage(error.message);
+			showError(error.message);
 			if (import.meta.env.DEV) console.error(error);
-		} else {
-			setErrorMessage('');
-			// onAuthStateChange function will be triggered
 		}
 
+		// onAuthStateChange function will be triggered
 		return;
 	}
 
 	return (
-		<div aria-live="polite">
+		<div aria-live="polite" className='w-full'>
 			<h1>Login</h1>
 			<form onSubmit={signInWithEmail} className='flex flex-col'>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='email-input'>Email</InputLabel>
+					<InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>
 					<FilledInput
 						id='email-input'
 						type='email'
 						name='email'
 						autoComplete='email'
+						color='secondary'
 						value={email}
 						error={emailError}
 						onChange={(e) => setEmail(e.target.value)}
@@ -77,7 +91,7 @@ export default function LoginForm(): JSX.Element {
 					/>
 				</FormControl>
 				<FormControl sx={{m: .5}} variant='filled'>
-					<InputLabel htmlFor='password-input'>Password</InputLabel>
+					<InputLabel htmlFor='password-input' color='secondary'>Password</InputLabel>
 					<FilledInput
 						id='password-input'
 						name="password"
@@ -85,6 +99,7 @@ export default function LoginForm(): JSX.Element {
 						autoComplete='new-password'
 						value={password}
 						error={passwordError}
+						color='secondary'
 						onChange={(e) => setPassword(e.target.value)}
 						onFocus={() => setPasswordError(false)}
 						endAdornment={

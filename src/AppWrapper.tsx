@@ -82,9 +82,7 @@ export default function AppWrapper(): JSX.Element {
 	return (
 		<div className="App">
 			<Navigation session={session} />
-			<div>
-				<Outlet context={{ session, setSession, profile, setProfile }} />
-			</div>
+			<Outlet context={{ session, setSession, profile, setProfile }} />
 		</div>
 	);
 }

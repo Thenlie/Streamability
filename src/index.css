@@ -68,7 +68,6 @@ button {
   transition: border-color 0.25s;
 }
 
-button[type='button'],
 button[type='submit'],
 button[type='reset'] {
   background-color: rgb(var(--color-highlight));
