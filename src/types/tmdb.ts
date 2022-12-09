@@ -12,7 +12,7 @@ interface MovieImage {
 interface MovieSpokenLanguages {
     english_name: string;
     iso_639_1: string;
-    name: string; 
+    name: string;
 }
 
 interface MovieReleaseDateResults {
@@ -88,7 +88,81 @@ export interface MovieDetailsData extends MovieResultData {
     }
     revenue: number;
     runtime: number;
-    spoken_languages: MovieSpokenLanguages[]; 
+    spoken_languages: MovieSpokenLanguages[];
     status: string;
     tagline: string;
+}
+
+export interface MovieProviders {
+    id: number;
+    results: {
+        AR?: ProviderCountries[];
+        AT?: ProviderCountries[];
+        AU?: ProviderCountries[];
+        BE?: ProviderCountries[];
+        BR?: ProviderCountries[];
+        CA?: ProviderCountries[];
+        CH?: ProviderCountries[];
+        CL?: ProviderCountries[];
+        CO?: ProviderCountries[];
+        CZ?: ProviderCountries[];
+        DE?: ProviderCountries[];
+        DK?: ProviderCountries[];
+        EC?: ProviderCountries[];
+        EE?: ProviderCountries[];
+        ES?: ProviderCountries[];
+        FI?: ProviderCountries[];
+        FR?: ProviderCountries[];
+        GB?: ProviderCountries[];
+        GR?: ProviderCountries[];
+        HU?: ProviderCountries[];
+        ID?: ProviderCountries[];
+        IE?: ProviderCountries[];
+        IN?: ProviderCountries[];
+        IT?: ProviderCountries[];
+        JP?: ProviderCountries[];
+        KR?: ProviderCountries[];
+        LT?: ProviderCountries[];
+        LV?: ProviderCountries[];
+        MX?: ProviderCountries[];
+        MY?: ProviderCountries[];
+        NL?: ProviderCountries[];
+        NO?: ProviderCountries[];
+        NZ?: ProviderCountries[];
+        PE?: ProviderCountries[];
+        PH?: ProviderCountries[];
+        PL?: ProviderCountries[];
+        PT?: ProviderCountries[];
+        RO?: ProviderCountries[];
+        RU?: ProviderCountries[];
+        SE?: ProviderCountries[];
+        SG?: ProviderCountries[];
+        TH?: ProviderCountries[];
+        TR?: ProviderCountries[];
+        US: ProviderCountries;
+        VE?: ProviderCountries[];
+        ZA?: ProviderCountries[];
+    };
+}
+
+export interface ProviderCountries {
+    link: string;
+    flatrate: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }];
+    rent?: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }],
+    buy?: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }];
 }

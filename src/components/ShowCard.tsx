@@ -1,6 +1,7 @@
 import { useProfileContext } from '../hooks';
 import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
+import { Link } from 'react-router-dom';
 
 interface MovieCardProps { details: MovieDetailsData | null }
 
@@ -23,14 +24,13 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 		}
 		return null;
 	};
-
 	/**
-     * Handle card being added to or removed from
-     * a users watch queue
-     * 
-     * @param isPush | true if adding, false if removing
-     * @param show_id | movie db id being updated
-     */
+	 * Handle card being added to or removed from
+	 * a users watch queue
+	 * 
+	 * @param isPush | true if adding, false if removing
+	 * @param show_id | movie db id being updated
+	 */
 	const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
 		if (show_id) {
 			if (isPush && profile) {
@@ -68,6 +68,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 							</div>
 						)}
 					</div>
+					<Link to={`/details/${props.details.id}`} state={props} >Details</Link>
 					<button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
 					<button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
 				</div>

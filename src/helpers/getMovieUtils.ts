@@ -1,4 +1,4 @@
-import { MovieData, MovieDetailsData } from '../types/tmdb';
+import { MovieData, MovieDetailsData, MovieProviders } from '../types/tmdb';
 
 /**
  * This function is ran after the user enters a name of a movie.
@@ -18,4 +18,9 @@ const getMovieDetails = async (id: number): Promise<MovieDetailsData> => {
 	return response.json() as Promise<MovieDetailsData>;
 };
 
-export { getMoviesByName, getMovieDetails };
+const getMovieProviders = async (id: number): Promise<MovieProviders> => {
+	const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`);
+	return response.json() as Promise<MovieProviders>;
+};
+
+export { getMoviesByName, getMovieDetails, getMovieProviders };
