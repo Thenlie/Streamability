@@ -12,7 +12,6 @@ export default function AuthScreen(): JSX.Element {
 
 	return (
 		<>
-			<h1>Auth Screen</h1>
 			<Outlet context={{ session }} />
 		</>
 	);

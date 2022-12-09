@@ -82,10 +82,7 @@ export default function AppWrapper(): JSX.Element {
 	return (
 		<div className="App">
 			<Navigation session={session} />
-			<h1>Streamability</h1>
-			<div>
-				<Outlet context={{ session, setSession, profile, setProfile }} />
-			</div>
+			<Outlet context={{ session, setSession, profile, setProfile }} />
 		</div>
 	);
 }
