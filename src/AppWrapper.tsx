@@ -49,7 +49,6 @@ export default function AppWrapper(): JSX.Element {
 			case 'SIGNED_IN':
 				setSession(session as Session);
 				profileSetter(session as Session);
-				navigate('/dashboard');
 				break;
 			case 'SIGNED_OUT':
 				setSession(null);
