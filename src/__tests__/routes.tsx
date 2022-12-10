@@ -1,6 +1,6 @@
 import AppWrapper from '../AppWrapper';
 import { LoginForm, ShowCard, SignUpForm } from '../components';
-import { AuthScreen, DashboardScreen, FeaturedSearchScreen, PageNotFoundScreen, SearchResultsScreen } from '../screens';
+import { AuthScreen, DashboardScreen, FeaturedSearchScreen, PageNotFoundScreen, SearchResultsScreen, ShowDetailsScreen } from '../screens';
 import { loader as searchLoader } from '../screens/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
@@ -41,7 +41,11 @@ export const routes: RouteObject[] = [{
 			path: 'search',
 			element: <SearchResultsScreen />,
 			loader: searchLoader
-		} 
+		},
+		{
+			path: 'details/:id',
+			element: <ShowDetailsScreen />
+		}
 	]
 }];
 

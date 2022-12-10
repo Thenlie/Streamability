@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
 import { ShowCard, ShowCarousel } from '../components';
 import { MovieData, MovieDetailsData } from '../types/tmdb';
-
 /**
  * This loader is mostly built straight from the react-router docs
  * https://reactrouter.com/en/main/components/form#get-submissions
@@ -17,7 +16,6 @@ export async function loader({ request }: { request: Request }): Promise<string>
 	const query = url.searchParams.get('q');
 	return query as string;
 }
-
 /**
  * @returns {JSX.Element} results page after user input
  */
