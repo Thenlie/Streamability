@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getMovieProviders } from '../helpers/getMovieUtils';
 import { MovieProviders, MovieDetailsData } from '../types/tmdb';
-
 /**
  * Screen to show more details of a specific show
  * Rendered after user clicks on show card
@@ -11,18 +10,17 @@ import { MovieProviders, MovieDetailsData } from '../types/tmdb';
  */
 export default function ShowDetailsScreen(): JSX.Element {
 	const [providers, setProviders] = useState<MovieProviders>();
-	const location = useLocation();
-	console.log(location);
+	const details = useLocation().state.details;
 
 	useEffect(() => {
 		const handler = async () => {
-			const data = await getMovieProviders(location.state.details.id);
-			setProviders(data) as unknown as MovieProviders;
+			const data = await getMovieProviders(details.id);
+			setProviders(data);
 		};
 		handler();
 	}, []);
 
-	// TODO: Possibly create utility function 
+	// TODO: #158 Possibly create utility function 
 	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
 		for (let i = 0; i < arr.release_dates.results.length; i++) {
 			if (arr.release_dates.results[i].iso_3166_1 === 'US') {
@@ -34,33 +32,33 @@ export default function ShowDetailsScreen(): JSX.Element {
 
 	return (
 		<section>
-			{providers && (
-				<div className='flex'>
+			<div className='flex'>
+				<div>
+					<img style={{ width: '350px', height: '550px' }} src={`http://image.tmdb.org/t/p/w500${details.poster_path}`}></img>
+				</div>
+				<div>
 					<div>
-						<img style={{ width: '350px', height: '550px' }} src={`http://image.tmdb.org/t/p/w500${location.state.details.poster_path}`}></img>
+						<h2>{details.title}</h2>
+						{/* TODO: #160 Format date/time */}
+						<span>{details.release_date}</span>
+						<span> {details.runtime} minutes</span>
+						{ratingHandler(details)}
 					</div>
 					<div>
+						<p className='max-w-md'>{details.overview}</p>
+					</div>
+					{providers && (
 						<div>
-							<h2>{location.state.details.title}</h2>
-							{/* TODO: Format date/time */}
-							<span>{location.state.details.release_date}</span>
-							<span> {location.state.details.runtime} minutes</span>
-							{ratingHandler(location.state.details)}
-						</div>
-						<div>
-							<p className='max-w-md'>{location.state.details.overview}</p>
-						</div>
-						<div>
-							{/* TODO: Provide service logo instead of string with styling and positioning */}
+							{/* #161 TODO: Provide service logo instead of string with styling and positioning */}
 							{providers.results.US.flatrate.map((item, i) => (
 								<span key={i}>{item.provider_name} </span>
 							))}
 						</div>
-						{/* TODO: Include number of stars with styling, response returns rating out of 10  */}
-						<div>{location.state.details.vote_average} stars out of {location.state.details.vote_count}</div>
-					</div>
+					)}
+					{/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
+					<div>{details.vote_average} stars out of {details.vote_count}</div>
 				</div>
-			)}
+			</div>
 		</section>
 	);
 }
