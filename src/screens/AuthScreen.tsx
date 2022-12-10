@@ -8,11 +8,11 @@ import { useSessionContext } from '../hooks';
  * @returns {JSX.Element}
  */
 export default function AuthScreen(): JSX.Element {
-	const { session } = useSessionContext();
+    const { session } = useSessionContext();
 
-	return (
-		<>
-			<Outlet context={{ session }} />
-		</>
-	);
+    return (
+        <>
+            <Outlet context={{ session }} />
+        </>
+    );
 }

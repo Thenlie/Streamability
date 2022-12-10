@@ -11,7 +11,7 @@ type ProfileContextType = {
  * @returns {ProfileContextType}
  */
 export function useProfileContext(): ProfileContextType {
-	return useOutletContext<ProfileContextType>();
+    return useOutletContext<ProfileContextType>();
 }
 
 // Supabase info about the currently logged in user's session
@@ -24,5 +24,5 @@ type SessionContextType = {
  * @returns {SessionContextType}
  */
 export function useSessionContext(): SessionContextType {
-	return useOutletContext<SessionContextType>();
+    return useOutletContext<SessionContextType>();
 }

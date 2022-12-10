@@ -9,56 +9,56 @@ import { MovieProviders, MovieDetailsData } from '../types/tmdb';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
-	const [providers, setProviders] = useState<MovieProviders>();
-	const details = useLocation().state.details;
+    const [providers, setProviders] = useState<MovieProviders>();
+    const details = useLocation().state.details;
 
-	useEffect(() => {
-		const handler = async () => {
-			const data = await getMovieProviders(details.id);
-			setProviders(data);
-		};
-		handler();
-	}, []);
+    useEffect(() => {
+        const handler = async () => {
+            const data = await getMovieProviders(details.id);
+            setProviders(data);
+        };
+        handler();
+    }, []);
 
-	// TODO: #158 Possibly create utility function 
-	const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
-		for (let i = 0; i < arr.release_dates.results.length; i++) {
-			if (arr.release_dates.results[i].iso_3166_1 === 'US') {
-				return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
-			}
-		}
-		return null;
-	};
+    // TODO: #158 Possibly create utility function 
+    const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
+        for (let i = 0; i < arr.release_dates.results.length; i++) {
+            if (arr.release_dates.results[i].iso_3166_1 === 'US') {
+                return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
+            }
+        }
+        return null;
+    };
 
-	return (
-		<section>
-			<div className='flex'>
-				<div>
-					<img style={{ width: '350px', height: '550px' }} src={`http://image.tmdb.org/t/p/w500${details.poster_path}`}></img>
-				</div>
-				<div>
-					<div>
-						<h2>{details.title}</h2>
-						{/* TODO: #160 Format date/time */}
-						<span>{details.release_date}</span>
-						<span> {details.runtime} minutes</span>
-						{ratingHandler(details)}
-					</div>
-					<div>
-						<p className='max-w-md'>{details.overview}</p>
-					</div>
-					{providers && (
-						<div>
-							{/* #161 TODO: Provide service logo instead of string with styling and positioning */}
-							{providers.results.US.flatrate.map((item, i) => (
-								<span key={i}>{item.provider_name} </span>
-							))}
-						</div>
-					)}
-					{/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-					<div>{details.vote_average} stars out of {details.vote_count}</div>
-				</div>
-			</div>
-		</section>
-	);
+    return (
+        <section>
+            <div className='flex'>
+                <div>
+                    <img style={{ width: '350px', height: '550px' }} src={`http://image.tmdb.org/t/p/w500${details.poster_path}`}></img>
+                </div>
+                <div>
+                    <div>
+                        <h2>{details.title}</h2>
+                        {/* TODO: #160 Format date/time */}
+                        <span>{details.release_date}</span>
+                        <span> {details.runtime} minutes</span>
+                        {ratingHandler(details)}
+                    </div>
+                    <div>
+                        <p className='max-w-md'>{details.overview}</p>
+                    </div>
+                    {providers && (
+                        <div>
+                            {/* #161 TODO: Provide service logo instead of string with styling and positioning */}
+                            {providers.results.US.flatrate.map((item, i) => (
+                                <span key={i}>{item.provider_name} </span>
+                            ))}
+                        </div>
+                    )}
+                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
+                    <div>{details.vote_average} stars out of {details.vote_count}</div>
+                </div>
+            </div>
+        </section>
+    );
 }
