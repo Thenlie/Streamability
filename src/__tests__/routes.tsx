@@ -11,42 +11,42 @@ import { sampleMovieDetailData } from './components/assets/movieData';
  * Currently simulating the entire app
  */
 export const routes: RouteObject[] = [{
-	path: '/',
-	element: <AppWrapper />,
-	errorElement: <PageNotFoundScreen />,
-	children: [
-		{
-			path: '/',
-			element: <FeaturedSearchScreen />
-		},
-		{
-			path: 'auth',
-			element: <AuthScreen />,
-			children: [
-				{
-					path: 'login',
-					element: <LoginForm />
-				},
-				{
-					path: 'signup',
-					element: <SignUpForm />
-				},
-			]
-		},
-		{
-			path: 'dashboard',
-			element: <DashboardScreen />
-		},
-		{
-			path: 'search',
-			element: <SearchResultsScreen />,
-			loader: searchLoader
-		},
-		{
-			path: 'details/:id',
-			element: <ShowDetailsScreen />
-		}
-	]
+    path: '/',
+    element: <AppWrapper />,
+    errorElement: <PageNotFoundScreen />,
+    children: [
+        {
+            path: '/',
+            element: <FeaturedSearchScreen />
+        },
+        {
+            path: 'auth',
+            element: <AuthScreen />,
+            children: [
+                {
+                    path: 'login',
+                    element: <LoginForm />
+                },
+                {
+                    path: 'signup',
+                    element: <SignUpForm />
+                },
+            ]
+        },
+        {
+            path: 'dashboard',
+            element: <DashboardScreen />
+        },
+        {
+            path: 'search',
+            element: <SearchResultsScreen />,
+            loader: searchLoader
+        },
+        {
+            path: 'details/:id',
+            element: <ShowDetailsScreen />
+        }
+    ]
 }];
 
 /**
@@ -54,12 +54,12 @@ export const routes: RouteObject[] = [{
  * This is needed so we have access to the userContext
  */
 export const showCardRoutes: RouteObject[] = [{
-	path: '/',
-	element: <AppWrapper />,
-	children: [
-		{
-			path: '/',
-			element: <ShowCard details={sampleMovieDetailData} />
-		}
-	]
+    path: '/',
+    element: <AppWrapper />,
+    children: [
+        {
+            path: '/',
+            element: <ShowCard details={sampleMovieDetailData} />
+        }
+    ]
 }];

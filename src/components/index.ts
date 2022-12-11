@@ -10,11 +10,11 @@ import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
 
 export {
-	ShowCard,
-	ShowCarousel,
-	SearchInput,
-	SideNavigator,
-	LoginForm,
-	SignUpForm,
-	ErrorMessage,
+    ShowCard,
+    ShowCarousel,
+    SearchInput,
+    SideNavigator,
+    LoginForm,
+    SignUpForm,
+    ErrorMessage,
 };

@@ -11,10 +11,10 @@ import ShowDetailsScreen from './ShowDetailsScreen';
 import AuthScreen from './AuthScreen';
 
 export {
-	FeaturedSearchScreen,
-	SearchResultsScreen,
-	PageNotFoundScreen,
-	DashboardScreen,
-	ShowDetailsScreen,
-	AuthScreen,
+    FeaturedSearchScreen,
+    SearchResultsScreen,
+    PageNotFoundScreen,
+    DashboardScreen,
+    ShowDetailsScreen,
+    AuthScreen,
 };
