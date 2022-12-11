@@ -6,9 +6,9 @@
  * @returns {JSX.Element}
  */
 export default function SideNavigator(): JSX.Element {
-	return (
-		<>
-			<h2>Side Nav</h2>
-		</>
-	);
+    return (
+        <>
+            <h2>Side Nav</h2>
+        </>
+    );
 }

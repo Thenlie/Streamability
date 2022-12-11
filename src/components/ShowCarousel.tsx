@@ -5,9 +5,9 @@
  * @returns {JSX.Element} | Carousel of movie cards
  */
 export default function ShowCarousel(): JSX.Element {
-	return (
-		<>
-			<h2>Show Carousel</h2>
-		</>
-	);
+    return (
+        <>
+            <h2>Show Carousel</h2>
+        </>
+    );
 }

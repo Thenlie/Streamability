@@ -8,10 +8,10 @@ import SearchInput from '../components/SearchInput';
  * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
  */
 export default function FeaturedSearchScreen(): JSX.Element {
-	return (
-		<>
-			<h1 data-testid="featured-search-heading">Featured Search Page</h1>
-			<SearchInput />
-		</>
-	);
+    return (
+        <>
+            <h1 data-testid="featured-search-heading">Featured Search Page</h1>
+            <SearchInput />
+        </>
+    );
 }

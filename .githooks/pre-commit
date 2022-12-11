@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # An example hook script to verify what is about to be committed.
 # Called by "git commit" with no arguments.  The hook should
@@ -7,7 +7,25 @@
 
 echo "--- Building App ---"
 npm run build
+if [[ "$?" == 0 ]]; then
+    printf "\033[32m✅ Build Passed\033[0m\n"
+else
+    printf "\033[41m❌ Build Failed\033[0m\n"
+    exit 1
+fi
 echo "--- Running ES-Lint ---"
-npm run lint-fix
+npm run lint
+if [[ "$?" == 0 ]]; then
+    printf "\033[32m✅ ESLint Passed\033[0m\n"
+else
+    printf "\033[41m❌ ESLint Failed\033[0m\n"
+    exit 1
+fi
 echo "--- Running Unit Tests ---"
 npm run test
+if [[ "$?" == 0 ]]; then
+    printf "\033[32m✅ Unit Tests Passed\033[0m\n"
+else
+    printf "\033[41m❌ Unit Tests Failed\033[0m\n"
+    exit 1
+fi

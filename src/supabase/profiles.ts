@@ -8,23 +8,23 @@ import { Profile } from '../types/supabase';
  * @returns {Promise<Profile | null>} | User data
  */
 export const getProfileById = async (id: string): Promise<Profile | null> => {
-	try {
-		const { data, error } = await SUPABASE
-			.from('profiles')
-			.select()
-			.eq('id', id)
-			.single();
+    try {
+        const { data, error } = await SUPABASE
+            .from('profiles')
+            .select()
+            .eq('id', id)
+            .single();
 
-		if (error) {
-			if (import.meta.env.DEV) console.error(error);
-			return null;
-		} else if (data) {
-			return data as Profile;
-		}
-	} catch (error) {
-		if (import.meta.env.DEV) console.error(error);
-	}
-	return null;
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+            return null;
+        } else if (data) {
+            return data as Profile;
+        }
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
 };
 
 /**
@@ -34,53 +34,83 @@ export const getProfileById = async (id: string): Promise<Profile | null> => {
  * @returns {Promise<Profile | null>}
  */
 export const updateProfileUsername = async (id: string, username: string): Promise<Profile | null> => {
-	try {
-		const { data, error } = await SUPABASE
-			.from('profiles')
-			.update({ username: username })
-			.eq('id', id)
-			.select();
+    try {
+        const { data, error } = await SUPABASE
+            .from('profiles')
+            .update({ username: username })
+            .eq('id', id)
+            .select();
         
-		if (error) {
-			if (import.meta.env.DEV) console.error(error);
-			return null;
-		} else if (data.length === 1) {
-			return data[0] as Profile;
-		}
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+            return null;
+        } else if (data.length === 1) {
+            return data[0] as Profile;
+        }
 
-	} catch (error) {
-		if (import.meta.env.DEV) console.error(error);
-	}
-	return null;
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
 };
 
 /**
- * Delete a logged in users profile
+ * Delete a logged in users profile and account
  * 
  * @param id | uuid of user being deleted
- * @returns {Promise<Profile | null>}
+ * @returns {Promise<void>}
  */
-export const deleteProfileById = async (id: string): Promise<Profile | null> => {
-	try {
-		const { data, error } = await SUPABASE
-			.from('profiles')
-			.delete()
-			.eq('id', id)
-			.select();
+export const deleteProfileById = async (id: string): Promise<void> => {
+    try {
+        // delete profile
+        const { data, error } = await SUPABASE
+            .from('profiles')
+            .delete()
+            .eq('id', id)
+            .select();
 
-		if (error) {
-			// TODO: Remove in production env
-			console.error(error);
-		} else if (data.length === 1) {
-			// TODO: #86 Delete user from Auth table in supabase
-			await SUPABASE.auth.signOut();
-			return data[0] as Profile;
-		}
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if (data.length === 1) {
+            // delete user account
+            const { error } = await SUPABASE
+                .rpc('delete_user');
 
-	} catch (error) {
-		if (import.meta.env.DEV) console.error(error);
-	}
-	return null;
+            if (error) console.error(error);
+            localStorage.clear();
+            return; 
+        }
+
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return;
+};
+
+/**
+ * Get a users watch queue. This method returns nothing
+ * else so it can be a bit lighter than the full profile query
+ * 
+ * @param id | uuid users profile being queried
+ * @returns {Promise<number[] | null>}
+ */
+export const getProfileWatchQueue = async (id: string): Promise<number[] | null> => {
+    try {
+        const { data, error } = await SUPABASE
+            .from('profiles')
+            .select('watch_queue')
+            .eq('id', id);
+        
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else {
+            return data[0].watch_queue;
+        }
+
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
 };
 
 /**
@@ -91,23 +121,25 @@ export const deleteProfileById = async (id: string): Promise<Profile | null> => 
  * @returns {Promise<Profile | null>}
  */
 export const addToProfileWatchQueue = async (id: string, show_id: number): Promise<Profile | null> => {
-	try {
-		const { data, error } = await SUPABASE
-			.rpc('append_array', {
-				id,
-				show_id
-			});
+    try {
+        const { data, error } = await SUPABASE
+            .rpc('append_array', {
+                id,
+                show_id
+            })
+            .select()
+            .single();
         
-		if (error) {
-			if (import.meta.env.DEV) console.error(error);
-		} else if (data.length === 1) {
-			return data[0];
-		}
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if (data) {
+            return data as Profile;
+        }
 
-	} catch (error) {
-		if (import.meta.env.DEV) console.error(error);
-	}
-	return null;
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
 };
 
 /**
@@ -118,21 +150,23 @@ export const addToProfileWatchQueue = async (id: string, show_id: number): Promi
  * @returns {Promise<Profile | null>}
  */
 export const removeFromProfileWatchQueue = async (id: string, show_id: number): Promise<Profile | null> => {
-	try {
-		const { data, error } = await SUPABASE
-			.rpc('remove_array', {
-				id,
-				show_id
-			});
+    try {
+        const { data, error } = await SUPABASE
+            .rpc('remove_array', {
+                id,
+                show_id
+            })
+            .select()
+            .single();
         
-		if (error) {
-			if (import.meta.env.DEV) console.error(error);
-		} else if(data.length === 1) {
-			return data[0];
-		}
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if(data) {
+            return data as Profile;
+        }
 
-	} catch (error) {
-		if (import.meta.env.DEV) console.error(error);
-	}
-	return null;
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
 };

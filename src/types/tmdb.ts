@@ -12,7 +12,7 @@ interface MovieImage {
 interface MovieSpokenLanguages {
     english_name: string;
     iso_639_1: string;
-    name: string; 
+    name: string;
 }
 
 interface MovieReleaseDateResults {
@@ -88,7 +88,81 @@ export interface MovieDetailsData extends MovieResultData {
     }
     revenue: number;
     runtime: number;
-    spoken_languages: MovieSpokenLanguages[]; 
+    spoken_languages: MovieSpokenLanguages[];
     status: string;
     tagline: string;
+}
+
+export interface MovieProviders {
+    id: number;
+    results: {
+        AR?: ProviderDetails;
+        AT?: ProviderDetails;
+        AU?: ProviderDetails;
+        BE?: ProviderDetails;
+        BR?: ProviderDetails;
+        CA?: ProviderDetails;
+        CH?: ProviderDetails;
+        CL?: ProviderDetails;
+        CO?: ProviderDetails;
+        CZ?: ProviderDetails;
+        DE?: ProviderDetails;
+        DK?: ProviderDetails;
+        EC?: ProviderDetails;
+        EE?: ProviderDetails;
+        ES?: ProviderDetails;
+        FI?: ProviderDetails;
+        FR?: ProviderDetails;
+        GB?: ProviderDetails;
+        GR?: ProviderDetails;
+        HU?: ProviderDetails;
+        ID?: ProviderDetails;
+        IE?: ProviderDetails;
+        IN?: ProviderDetails;
+        IT?: ProviderDetails;
+        JP?: ProviderDetails;
+        KR?: ProviderDetails;
+        LT?: ProviderDetails;
+        LV?: ProviderDetails;
+        MX?: ProviderDetails;
+        MY?: ProviderDetails;
+        NL?: ProviderDetails;
+        NO?: ProviderDetails;
+        NZ?: ProviderDetails;
+        PE?: ProviderDetails;
+        PH?: ProviderDetails;
+        PL?: ProviderDetails;
+        PT?: ProviderDetails;
+        RO?: ProviderDetails;
+        RU?: ProviderDetails;
+        SE?: ProviderDetails;
+        SG?: ProviderDetails;
+        TH?: ProviderDetails;
+        TR?: ProviderDetails;
+        US: ProviderDetails;
+        VE?: ProviderDetails;
+        ZA?: ProviderDetails;
+    };
+}
+
+export interface ProviderDetails {
+    link: string;
+    flatrate: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }];
+    rent?: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }],
+    buy?: [{
+        display_priority: number;
+        logo_path: string;
+        provider_id: number;
+        provider_name: string;
+    }];
 }
