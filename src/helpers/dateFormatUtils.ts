@@ -1,0 +1,69 @@
+enum DateSize {
+    LONG,
+    MEDIUM,
+    SHORT
+}
+
+enum Months {
+    January,
+    February,
+    March,
+    April,
+    May,
+    June,
+    July,
+    August,
+    September,
+    October,
+    November,
+    December
+}
+
+/**
+ * Returns a suffix such as 'st', 'nd', 'rd', or 'th'
+ * for a given day of the month.
+ * 
+ * @param day | day of the month
+ * @returns {string} | suffix of the given day
+ */
+const getDaySuffix = (day: number): string => {
+    if (day === 1 || day === 21 || day === 31) {
+        return 'st';
+    } else if (day === 2 || day === 22) {
+        return 'nd';
+    } else if (day === 3 || day === 33) {
+        return 'rd';
+    } else {
+        return 'th';
+    }
+};
+
+/**
+ * Format date returned from movieDB API request
+ * 
+ * @param date | movieDB date 'yyyy-mm-dd'
+ * @param size | the size of the formatted string to be returned
+ * @returns {string} | formatted date
+ */
+const formatReleaseDate = (date: string, size: DateSize): string => {
+    const year = parseInt(date.slice(0, 4));
+    const month = parseInt(date.slice(5, 7)) - 1;
+    const shortMonth = new Date(date).toString().slice(4, 7);
+    const day = parseInt(date.slice(8, 10));
+
+    let formattedDate: string;
+    switch (size) {
+        case DateSize.LONG:
+            formattedDate = `${Months[month]} ${day + getDaySuffix(day)}, ${year}`;
+            break;
+        case DateSize.MEDIUM:
+            formattedDate = `${shortMonth} ${day + getDaySuffix(day)}, ${year}`;
+            break;
+        case DateSize.SHORT:
+            formattedDate = `${month}-${day}-${year}`;
+            break;
+    }
+    return formattedDate;
+};
+
+export { formatReleaseDate, DateSize };

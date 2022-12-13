@@ -46,30 +46,30 @@ export default function AppWrapper(): JSX.Element {
 
         const { data } = SUPABASE.auth.onAuthStateChange((_event, session) => {
             switch (_event) {
-            case 'SIGNED_IN':
-                setSession(session as Session);
-                profileSetter(session as Session);
-                break;
-            case 'SIGNED_OUT':
-                setSession(null);
-                setProfile(null);
-                navigate('/');
-                break;
-            case 'TOKEN_REFRESHED':
-                setSession(session as Session);
-                break;
-            case 'USER_UPDATED':
-                setSession(session as Session);
-                profileSetter(session as Session);
-                break;
+                case 'SIGNED_IN':
+                    setSession(session as Session);
+                    profileSetter(session as Session);
+                    break;
+                case 'SIGNED_OUT':
+                    setSession(null);
+                    setProfile(null);
+                    navigate('/');
+                    break;
+                case 'TOKEN_REFRESHED':
+                    setSession(session as Session);
+                    break;
+                case 'USER_UPDATED':
+                    setSession(session as Session);
+                    profileSetter(session as Session);
+                    break;
                 //  currently doesn't work
                 //	case 'USER_DELETED':
-            case 'PASSWORD_RECOVERY':
-                setSession(session as Session);
-                break;
-            case 'MFA_CHALLENGE_VERIFIED':
-                setSession(session as Session);
-                break;
+                case 'PASSWORD_RECOVERY':
+                    setSession(session as Session);
+                    break;
+                case 'MFA_CHALLENGE_VERIFIED':
+                    setSession(session as Session);
+                    break;
             }
         });
 

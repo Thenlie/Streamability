@@ -2,6 +2,7 @@ import { useProfileContext } from '../hooks';
 import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
 import { Link } from 'react-router-dom';
+import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 
 interface MovieCardProps { details: MovieDetailsData | null }
 
@@ -53,7 +54,9 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                         </div>
                         <div>
                             <h2>{props.details.original_title}</h2>
-                            <span>{props.details.release_date}</span>
+                            {props.details.release_date.length === 10 && 
+                                <span>{formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}</span>
+                            }
                         </div>
                         <div>
                             <p>{props.details.runtime}</p>
