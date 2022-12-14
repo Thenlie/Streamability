@@ -31,7 +31,7 @@ const getDaySuffix = (day: number): string => {
         return 'st';
     } else if (day === 2 || day === 22) {
         return 'nd';
-    } else if (day === 3 || day === 33) {
+    } else if (day === 3 || day === 23) {
         return 'rd';
     } else {
         return 'th';
@@ -47,14 +47,14 @@ const getDaySuffix = (day: number): string => {
  */
 const formatReleaseDate = (date: string, size: DateSize): string => {
     const year = parseInt(date.slice(0, 4));
-    const month = parseInt(date.slice(5, 7)) - 1;
-    const shortMonth = new Date(date).toString().slice(4, 7);
+    const month = parseInt(date.slice(5, 7));
+    const shortMonth = Months[month - 1].slice(0, 3);
     const day = parseInt(date.slice(8, 10));
 
     let formattedDate: string;
     switch (size) {
         case DateSize.LONG:
-            formattedDate = `${Months[month]} ${day + getDaySuffix(day)}, ${year}`;
+            formattedDate = `${Months[month - 1]} ${day + getDaySuffix(day)}, ${year}`;
             break;
         case DateSize.MEDIUM:
             formattedDate = `${shortMonth} ${day + getDaySuffix(day)}, ${year}`;
