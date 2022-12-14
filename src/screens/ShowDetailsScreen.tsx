@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getMovieProviders } from '../helpers/getMovieUtils';
 import { MovieProviders, MovieDetailsData } from '../types/tmdb';
+import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 /**
  * Screen to show more details of a specific show
  * Rendered after user clicks on show card
@@ -39,8 +40,9 @@ export default function ShowDetailsScreen(): JSX.Element {
                 <div>
                     <div>
                         <h2>{details.title}</h2>
-                        {/* TODO: #160 Format date/time */}
-                        <span>{details.release_date}</span>
+                        {details.release_date.length === 10 && 
+                            <span>{formatReleaseDate(details.release_date, DateSize.LONG)}</span>
+                        }
                         <span> {details.runtime} minutes</span>
                         {ratingHandler(details)}
                     </div>
