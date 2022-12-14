@@ -25,12 +25,12 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
         return null;
     };
     /**
-	 * Handle card being added to or removed from
-	 * a users watch queue
-	 * 
-	 * @param isPush | true if adding, false if removing
-	 * @param show_id | movie db id being updated
-	 */
+     * Handle card being added to or removed from
+     * a users watch queue
+     * 
+     * @param isPush | true if adding, false if removing
+     * @param show_id | movie db id being updated
+     */
     const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
         if (show_id) {
             if (isPush && profile) {
@@ -46,15 +46,15 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
     return (
         <>
             {props.details && (
-            // TODO: Style card more closely to provided design once MUI is installed
-                <Link to={`/details/${props.details.id}`} state={props} >
-                    <div data-testid="show-card-component">
+                // TODO: Style card more closely to provided design once MUI is installed
+                <div data-testid="show-card-component">
+                    <Link to={`/details/${props.details.id}`} state={props} >
                         <div>
                             <img style={{ width: '250px', height: '375px' }} src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
                         </div>
                         <div>
                             <h2>{props.details.original_title}</h2>
-                            {props.details.release_date.length === 10 && 
+                            {props.details.release_date.length === 10 &&
                                 <span>{formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}</span>
                             }
                         </div>
@@ -71,11 +71,12 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                                 </div>
                             )}
                         </div>
-                        <button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
-                        <button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
-                    </div>
-                </Link>
-            )}
+                    </Link>
+                    <button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
+                    <button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
+                </div>
+            )
+            }
         </>
     );
 }
