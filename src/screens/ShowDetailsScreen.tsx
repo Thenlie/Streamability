@@ -40,7 +40,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                 <div>
                     <div>
                         <h2>{details.title}</h2>
-                        {details.release_date.length === 10 && 
+                        {details.release_date.length === 10 &&
                             <span>{formatReleaseDate(details.release_date, DateSize.LONG)}</span>
                         }
                         <span> {details.runtime} minutes</span>
@@ -49,14 +49,16 @@ export default function ShowDetailsScreen(): JSX.Element {
                     <div>
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
-                    {providers && (
+                    {providers?.results.US !== undefined ?
                         <div>
                             {/* #161 TODO: Provide service logo instead of string with styling and positioning */}
-                            {providers.results.US.flatrate.map((item, i) => (
+                            {providers?.results.US.flatrate.map((item, i) => (
                                 <span key={i}>{item.provider_name} </span>
                             ))}
                         </div>
-                    )}
+                        :
+                        <p>Sorry, no information for this movie.</p>
+                    }
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <div>{details.vote_average} stars out of {details.vote_count}</div>
                 </div>
