@@ -57,7 +57,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                             ))}
                         </div>
                         :
-                        <p>Sorry, no information for this movie.</p>
+                        <p>Sorry, no providers available for this show.</p>
                     }
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <div>{details.vote_average} stars out of {details.vote_count}</div>
