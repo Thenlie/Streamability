@@ -24,6 +24,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
         }
         return null;
     };
+
     /**
      * Handle card being added to or removed from
      * a users watch queue
@@ -49,9 +50,12 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                 // TODO: Style card more closely to provided design once MUI is installed
                 <div data-testid="show-card-component">
                     <Link to={`/details/${props.details.id}`} state={props} >
-                        <div>
-                            <img style={{ width: '250px', height: '375px' }} src={`http://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
-                        </div>
+                        {/* TODO: #193 Add placeholder poster if null */}
+                        {props.details.poster_path !== null &&
+                            <div>
+                                <img style={{ width: '250px', height: '375px' }} src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
+                            </div>
+                        }
                         <div>
                             <h2>{props.details.original_title}</h2>
                             {props.details.release_date.length === 10 &&
