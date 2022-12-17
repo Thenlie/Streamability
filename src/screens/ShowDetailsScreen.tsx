@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { getMovieProviders } from '../helpers/getMovieUtils';
 import { MovieProviders, MovieDetailsData } from '../types/tmdb';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
+
 /**
  * Screen to show more details of a specific show
  * Rendered after user clicks on show card
@@ -35,7 +36,7 @@ export default function ShowDetailsScreen(): JSX.Element {
         <section>
             <div className='flex'>
                 <div>
-                    <img style={{ width: '350px', height: '550px' }} src={`http://image.tmdb.org/t/p/w500${details.poster_path}`}></img>
+                    <img style={{ width: '350px', height: '550px' }} src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}></img>
                 </div>
                 <div>
                     <div>

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { routes } from '../routes';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
@@ -49,6 +49,17 @@ describe('Screen Test Suite', async () => {
         });
         // render screens
         render(<RouterProvider router={router}/>);
+
+        // mock MovieDB API calls
+        vi.mock('../../helpers/getMovieUtils', () => {
+            const sampleMovieData = vi.importActual('./assets/searchData.json');
+            const sampleMovieDetailsData = vi.importActual('./assets/movieData.json');
+            return {
+                default: {},
+                getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
+                getMovieDetails: vi.fn().mockResolvedValue(sampleMovieDetailsData),
+            };
+        });
         
         // check landing page
         await waitFor(() => screen.getByTestId('featured-search-heading'));
