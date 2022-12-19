@@ -19,43 +19,14 @@ vi.mock('../../helpers/getMovieUtils', () => {
     };
 });
 
-describe('Screen Test Suite', async () => {
+describe('Movie Screen Test Suite', async () => {
     // set up variables to be used on each test
     let user: UserEvent;
     beforeEach(() => {
         user = userEvent.setup();
     });
     
-    it('renders featured search screen', async () => {
-        // create a new data router for the test
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/']
-        });
-        // render screens
-        render(<RouterProvider router={router}/>);
-
-        // check landing page
-        await waitFor(() => screen.getByTestId('featured-search-heading'));
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
-        // add search input
-        await user.type(screen.getByTestId('featured-search-input'), 'Iron Man');
-        expect(screen.getByTestId('featured-search-input')).toHaveValue('Iron Man');
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
-    });
-    it('renders page not found screen on invalid route', async () => {
-        // create a new data router for the test
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/asdf']
-        });
-        // render screens
-        render(<RouterProvider router={router}/>); 
-
-        // check that 404 page is displayed
-        expect(screen.getByTestId('page-not-found-header')).toBeInTheDocument();
-        // check that error message component is displayed
-        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
-    });
-    it('navigates to search results page when search button clicked', async () => {
+    it('navigates to search results page when search button clicked with input', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/']
@@ -63,14 +34,13 @@ describe('Screen Test Suite', async () => {
         // render screens
         render(<RouterProvider router={router}/>);
         
-        // check landing page
         await waitFor(() => screen.getByTestId('featured-search-heading'));
         expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
-        // add search input
+        // add search input 'Iron Man'
         await user.type(screen.getByTestId('featured-search-input'), 'Iron Man');
         expect(screen.getByTestId('featured-search-input')).toHaveValue('Iron Man');
         expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
-        // navigate to search results page
+        // click on search button to change screens
         await user.click(screen.getByTestId('featured-search-button'));
         await waitFor(() => screen.getByTestId('search-results-heading'));
         expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Search Results Page');
@@ -90,7 +60,7 @@ describe('Screen Test Suite', async () => {
 
         await waitFor(() => screen.getByTestId('search-results-heading'));
         expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Search Results Page');
-        // navigate to details screen
+        // click on show card to change screen
         await user.click(screen.getAllByTestId('show-details-link')[0]);
         await waitFor(() => screen.getByTestId('show-details-heading'));
         expect(screen.getByTestId('details-provider')).toBeInTheDocument();
