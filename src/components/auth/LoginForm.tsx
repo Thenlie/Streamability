@@ -74,7 +74,7 @@ export default function LoginForm(): JSX.Element {
 
     return (
         <div aria-live="polite" className='w-full'>
-            <h1>Login</h1>
+            <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col'>
                 <FormControl sx={{m: .5}} variant='filled'>
                     <InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>
