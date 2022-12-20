@@ -25,15 +25,15 @@ describe('Movie Screen Test Suite', async () => {
     beforeEach(() => {
         user = userEvent.setup();
     });
-    
+
     it('navigates to search results page when search button clicked with input', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/']
         });
         // render screens
-        render(<RouterProvider router={router}/>);
-        
+        render(<RouterProvider router={router} />);
+
         await waitFor(() => screen.getByTestId('featured-search-heading'));
         expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
         // add search input 'Iron Man'
@@ -56,15 +56,16 @@ describe('Movie Screen Test Suite', async () => {
             initialEntries: ['/search?q=iron+man']
         });
         // render screens
-        render(<RouterProvider router={router}/>);
+        render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('search-results-heading'));
         expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Search Results Page');
         // click on show card to change screen
         await user.click(screen.getAllByTestId('show-details-link')[0]);
         await waitFor(() => screen.getByTestId('show-details-heading'));
-        expect(screen.getByTestId('details-provider')).toBeInTheDocument();
-        expect(screen.getByTestId('details-provider')).toHaveTextContent('Disney Plus');
+        const image: HTMLImageElement = screen.getByAltText('Disney Plus logo');
+        expect(image).toBeInTheDocument();
+        expect(image.src).toBe('https://image.tmdb.org/t/p/w500/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg');
         expect(screen.getByTestId('details-release-date')).toBeInTheDocument();
         expect(screen.getByTestId('details-release-date')).toHaveTextContent('April 30th, 2008');
     });
