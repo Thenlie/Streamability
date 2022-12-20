@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
-import { getMovieDetails, getMovieProviders } from '../helpers/getMovieUtils';
-import { MovieProviders, MovieDetailsData } from '../types/tmdb';
+import { getMovieDetails } from '../helpers/getMovieUtils';
+import { MovieDetailsData } from '../types/tmdb';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
+import Providers from '../components/Providers';
 
 /**
  * Screen to show more details of a specific show
@@ -11,21 +12,15 @@ import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
-    const [providers, setProviders] = useState<MovieProviders>();
     const location: Location = useLocation();
     const [details, setDetails] = useState<MovieDetailsData>(location.state ? location.state.details : null);
 
     useEffect(() => {
         const handler = async () => {
-            let data;
             if (!details) {
                 const movieDetails = await getMovieDetails(parseInt(location.pathname.split('/')[2]));
                 setDetails(movieDetails);
-                data = await getMovieProviders(movieDetails.id);
-            } else {
-                data = await getMovieProviders(details.id);
             }
-            setProviders(data);
         };
         handler();
     }, []);
@@ -61,16 +56,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     <div>
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
-                    {providers?.results.US !== undefined ?
-                        <div>
-                            {/* #161 TODO: Provide service logo instead of string with styling and positioning */}
-                            {providers?.results.US.flatrate.map((item, i) => (
-                                <span data-testid='details-provider' key={i}>{item.provider_name} </span>
-                            ))}
-                        </div>
-                        :
-                        <p>Sorry, no providers available for this show.</p>
-                    }
+                    <Providers id={details.id} />
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <div>{details.vote_average} stars out of {details.vote_count}</div>
                 </div>

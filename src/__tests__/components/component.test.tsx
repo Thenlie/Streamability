@@ -20,7 +20,7 @@ describe('Component Test Suite', () => {
             element: <SearchInput />
         }]);
         render(<RouterProvider router={router} />);
-        
+
         expect(screen.getByTestId('featured-search-input')).toBeInTheDocument();
         expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
     });
