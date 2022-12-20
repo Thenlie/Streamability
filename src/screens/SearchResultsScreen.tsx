@@ -49,7 +49,7 @@ export default function SearchResultsScreen(): JSX.Element {
             <h1 data-testid="search-results-heading">Search Results Page</h1>
             <p>Query: {query}</p>
             {movieDetails.map((item, i) => (
-                <ShowCard key={i} details={item} />
+                item && <ShowCard key={i} details={item} />
             ))}
             <ShowCarousel />
         </>
