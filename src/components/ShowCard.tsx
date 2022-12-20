@@ -49,7 +49,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
             {props.details && (
                 // TODO: Style card more closely to provided design once MUI is installed
                 <div data-testid="show-card-component">
-                    <Link to={`/details/${props.details.id}`} state={props} >
+                    <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
                         {/* TODO: #193 Add placeholder poster if null */}
                         {props.details.poster_path !== null &&
                             <div>

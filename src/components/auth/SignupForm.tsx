@@ -131,7 +131,7 @@ export default function SignUpForm(): JSX.Element {
 
     return (
         <div aria-live="polite" className='w-full'>
-            <h1>Signup</h1>
+            <h1 data-testid='signup-heading'>Signup</h1>
             <form onSubmit={signUpHandler} className='flex flex-col'>
                 <FormControl sx={{m: .5}} variant='filled'>
                     <InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>

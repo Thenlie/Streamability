@@ -52,7 +52,7 @@ export default function Navigation(props: NavProps): JSX.Element {
                 </>
             ) : (
                 <>
-                    <Link to="/auth/signup" style={{ padding: '0 5px' }}>Signup</Link>
+                    <Link to="/auth/signup" style={{ padding: '0 5px' }}>Sign Up</Link>
                     <Link to="/auth/login" style={{ padding: '0 5px' }}>Login</Link>
                 </>
             )}

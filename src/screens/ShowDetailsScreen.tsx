@@ -40,9 +40,9 @@ export default function ShowDetailsScreen(): JSX.Element {
                 </div>
                 <div>
                     <div>
-                        <h2>{details.title}</h2>
+                        <h2 data-testid='show-details-heading'>{details.title}</h2>
                         {details.release_date.length === 10 &&
-                            <span>{formatReleaseDate(details.release_date, DateSize.LONG)}</span>
+                            <span data-testid='details-release-date'>{formatReleaseDate(details.release_date, DateSize.LONG)}</span>
                         }
                         <span> {details.runtime} minutes</span>
                         {ratingHandler(details)}
@@ -54,7 +54,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         <div>
                             {/* #161 TODO: Provide service logo instead of string with styling and positioning */}
                             {providers?.results.US.flatrate.map((item, i) => (
-                                <span key={i}>{item.provider_name} </span>
+                                <span data-testid='details-provider' key={i}>{item.provider_name} </span>
                             ))}
                         </div>
                         :
