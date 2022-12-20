@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getMovieProviders } from '../helpers/getMovieUtils';
+import { Location, useLocation } from 'react-router-dom';
+import { getMovieDetails, getMovieProviders } from '../helpers/getMovieUtils';
 import { MovieProviders, MovieDetailsData } from '../types/tmdb';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 
@@ -12,11 +12,19 @@ import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
  */
 export default function ShowDetailsScreen(): JSX.Element {
     const [providers, setProviders] = useState<MovieProviders>();
-    const details = useLocation().state.details;
+    const location: Location = useLocation();
+    const [details, setDetails] = useState<MovieDetailsData>(location.state ? location.state.details : null);
 
     useEffect(() => {
         const handler = async () => {
-            const data = await getMovieProviders(details.id);
+            let data;
+            if (!details) {
+                const movieDetails = await getMovieDetails(parseInt(location.pathname.split('/')[2]));
+                setDetails(movieDetails);
+                data = await getMovieProviders(movieDetails.id);
+            } else {
+                data = await getMovieProviders(details.id);
+            }
             setProviders(data);
         };
         handler();
@@ -31,6 +39,9 @@ export default function ShowDetailsScreen(): JSX.Element {
         }
         return null;
     };
+
+    // TODO: #199 Create skeleton loader
+    if (!details) return <p>Loading</p>;
 
     return (
         <section>
