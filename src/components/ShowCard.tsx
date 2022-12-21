@@ -8,6 +8,8 @@ import { MovieDetailsData } from '../types/tmdb';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';
+import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 interface MovieCardProps {
     details: MovieDetailsData;
@@ -24,13 +26,17 @@ interface MovieCardProps {
 export default function ShowCard(props: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
-    const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
+
+    const ratingHandler = (arr: MovieDetailsData): string => {
         for (let i = 0; i < arr.release_dates.results.length; i++) {
-            if (arr.release_dates.results[i].iso_3166_1 === 'US') {
-                return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
+            if (
+                arr.release_dates.results[i].iso_3166_1 === 'US' &&
+                arr.release_dates.results[i].release_dates[0].certification
+            ) {
+                return arr.release_dates.results[i].release_dates[0].certification;
             }
         }
-        return null;
+        return 'No rating available';
     };
 
     /**
@@ -69,46 +75,59 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
     };
 
     return (
-        // TODO: #197 Style card more closely to provided design once MUI is installed
-        <div data-testid='show-card-component'>
+        <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
             <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
                 {/* TODO: #193 Add placeholder poster if null */}
-                {props.details.poster_path !== null && (
-                    <div>
-                        <img
-                            style={{ width: '250px', height: '375px' }}
-                            src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
-                        ></img>
-                    </div>
+                {props.details.poster_path && (
+                    <CardMedia
+                        component='img'
+                        className='w-full cursor-pointer'
+                        sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
+                        image={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
+                        alt={`${props.details.original_title} poster`}
+                    />
                 )}
-                <div>
-                    <h2>{props.details.original_title}</h2>
-                    {props.details.release_date.length === 10 && (
-                        <span>
-                            {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
-                        </span>
-                    )}
-                </div>
-                <div>
-                    <p>{props.details.runtime}</p>
-                </div>
-                <div>
-                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                    <p>{props.details.vote_average} stars</p>
-                    <span>{props.details.vote_count} ratings</span>
-                    {ratingHandler && <div>{ratingHandler(props.details)}</div>}
-                </div>
             </Link>
-            {profile &&
-                (isInWatchQueue ? (
-                    <button onClick={() => queueHandler(false, props.details?.id)}>
-                        Remove from queue
-                    </button>
-                ) : (
-                    <button onClick={() => queueHandler(true, props.details?.id)}>
-                        Add to queue
-                    </button>
-                ))}
+            <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
+                <CardContent>
+                    <Typography variant='h5'>{props.details.original_title}</Typography>
+                    {props.details.release_date.length === 10 && (
+                        <Typography>
+                            {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
+                        </Typography>
+                    )}
+                    <Typography variant='body2'>{props.details.runtime} minutes</Typography>
+                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
+                    <Typography variant='body2'>{props.details.vote_average} stars</Typography>
+                    <Typography variant='body2'>{props.details.vote_count} ratings</Typography>
+                    <Typography variant='body2'>{ratingHandler(props.details)}</Typography>
+                </CardContent>
+                {profile && (
+                    <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
+                        {isInWatchQueue ? (
+                            <Button
+                                sx={{ m: 1 }}
+                                variant='outlined'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(true, props.details?.id)}
+                            >
+                                Add to queue
+                            </Button>
+                        ) : (
+                            <Button
+                                sx={{ m: 1 }}
+                                variant='outlined'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(false, props.details?.id)}
+                            >
+                                Remove from queue
+                            </Button>
+                        )}
+                    </CardActions>
+                )}
+            </Box>
         </div>
     );
 }
