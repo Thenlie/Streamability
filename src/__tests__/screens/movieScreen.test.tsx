@@ -15,7 +15,7 @@ vi.mock('../../helpers/getMovieUtils', () => {
         default: {},
         getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
         getMovieDetails: vi.fn().mockResolvedValue(sampleMovieDetailsData),
-        getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders)
+        getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
     };
 });
 
@@ -29,7 +29,7 @@ describe('Movie Screen Test Suite', async () => {
     it('navigates to search results page when search button clicked with input', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
-            initialEntries: ['/']
+            initialEntries: ['/'],
         });
         // render screens
         render(<RouterProvider router={router} />);
@@ -53,7 +53,7 @@ describe('Movie Screen Test Suite', async () => {
     it('navigates to show details screen when show card is clicked on', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
-            initialEntries: ['/search?q=iron+man']
+            initialEntries: ['/search?q=iron+man'],
         });
         // render screens
         render(<RouterProvider router={router} />);

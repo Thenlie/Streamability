@@ -9,7 +9,7 @@ import { getProfileById } from './supabase/profiles';
 /**
  * The main app function, wrapping all other screens and components
  * This wraps the entire front end application and will be shown on every screen
- * 
+ *
  * @returns {JSX.Element}
  */
 export default function AppWrapper(): JSX.Element {
@@ -18,11 +18,11 @@ export default function AppWrapper(): JSX.Element {
     const navigate = useNavigate();
 
     /**
-	 * When the session changed, this function will
-	 * update the profile context accordingly
-	 * 
-	 * @param session | logged in user's details or null
-	 */
+     * When the session changed, this function will
+     * update the profile context accordingly
+     *
+     * @param session | logged in user's details or null
+     */
     const profileSetter = async (session: Session) => {
         if (session) {
             const data = await getProfileById(session.user.id);
@@ -31,9 +31,9 @@ export default function AppWrapper(): JSX.Element {
     };
 
     /**
-	 * Get session on page load, then listen
+     * Get session on page load, then listen
      * for any changes to the users status
-	 */
+     */
     useEffect(() => {
         SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
             if (error) {
@@ -79,7 +79,7 @@ export default function AppWrapper(): JSX.Element {
     }, []);
 
     return (
-        <div className="App">
+        <div className='App'>
             <Navigation session={session} />
             <Outlet context={{ session, setSession, profile, setProfile }} />
         </div>

@@ -1,7 +1,7 @@
 enum DateSize {
     LONG,
     MEDIUM,
-    SHORT
+    SHORT,
 }
 
 enum Months {
@@ -16,13 +16,13 @@ enum Months {
     September,
     October,
     November,
-    December
+    December,
 }
 
 /**
  * Returns a suffix such as 'st', 'nd', 'rd', or 'th'
  * for a given day of the month.
- * 
+ *
  * @param day | day of the month
  * @returns {string} | suffix of the given day
  */
@@ -40,7 +40,7 @@ const getDaySuffix = (day: number): string => {
 
 /**
  * Format date returned from movieDB API request
- * 
+ *
  * @param date | movieDB date 'yyyy-mm-dd'
  * @param size | the size of the formatted string to be returned
  * @returns {string} | formatted date

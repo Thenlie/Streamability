@@ -12,14 +12,14 @@ describe('Auth Screen Test Suite', async () => {
     beforeEach(() => {
         user = userEvent.setup();
     });
-    
+
     it('navigates to login and sign up screen from homepage', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
-            initialEntries: ['/']
+            initialEntries: ['/'],
         });
         // render screens
-        render(<RouterProvider router={router}/>);
+        render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
         // navigate to login

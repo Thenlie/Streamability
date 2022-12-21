@@ -12,14 +12,14 @@ describe('Navigation Test Suite', async () => {
     beforeEach(() => {
         user = userEvent.setup();
     });
-    
+
     it('navigates to all buttons in nav', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
-            initialEntries: ['/']
+            initialEntries: ['/'],
         });
         // render screens
-        render(<RouterProvider router={router}/>);
+        render(<RouterProvider router={router} />);
 
         // check home page
         await waitFor(() => screen.getByTestId('featured-search-heading'));
@@ -37,10 +37,10 @@ describe('Navigation Test Suite', async () => {
     it('renders page not found screen on invalid route', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
-            initialEntries: ['/asdf']
+            initialEntries: ['/asdf'],
         });
         // render screens
-        render(<RouterProvider router={router}/>); 
+        render(<RouterProvider router={router} />);
 
         // check that 404 page is displayed
         expect(screen.getByTestId('page-not-found-header')).toBeInTheDocument();

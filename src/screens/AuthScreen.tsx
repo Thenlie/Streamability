@@ -4,7 +4,7 @@ import { useSessionContext } from '../hooks';
 /**
  * Wrapper for all authentication components
  * LoginForm, SignupForm
- * 
+ *
  * @returns {JSX.Element}
  */
 export default function AuthScreen(): JSX.Element {

@@ -4,13 +4,15 @@ import { MovieDetailsData } from '../types/tmdb';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 
-interface MovieCardProps { details: MovieDetailsData }
+interface MovieCardProps {
+    details: MovieDetailsData;
+}
 
 /**
  * Show cards are rendered all over the application in different situations
  * Be sure changes made to this component are either conditionally applied
  * or intended to be on every single show card
- * 
+ *
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
@@ -28,7 +30,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
     /**
      * Handle card being added to or removed from
      * a users watch queue
-     * 
+     *
      * @param isPush | true if adding, false if removing
      * @param show_id | movie db id being updated
      */
@@ -47,19 +49,28 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
     return (
         <>
             {/* TODO: Style card more closely to provided design once MUI is installed */}
-            <div data-testid="show-card-component">
-                <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
+            <div data-testid='show-card-component'>
+                <Link
+                    to={`/details/${props.details.id}`}
+                    state={props}
+                    data-testid='show-details-link'
+                >
                     {/* TODO: #193 Add placeholder poster if null */}
-                    {props.details.poster_path !== null &&
+                    {props.details.poster_path !== null && (
                         <div>
-                            <img style={{ width: '250px', height: '375px' }} src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}></img>
+                            <img
+                                style={{ width: '250px', height: '375px' }}
+                                src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
+                            ></img>
                         </div>
-                    }
+                    )}
                     <div>
                         <h2>{props.details.original_title}</h2>
-                        {props.details.release_date.length === 10 &&
-                            <span>{formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}</span>
-                        }
+                        {props.details.release_date.length === 10 && (
+                            <span>
+                                {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
+                            </span>
+                        )}
                     </div>
                     <div>
                         <p>{props.details.runtime}</p>
@@ -68,15 +79,13 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                         {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                         <p>{props.details.vote_average} stars</p>
                         <span>{props.details.vote_count} ratings</span>
-                        {ratingHandler && (
-                            <div>
-                                {ratingHandler(props.details)}
-                            </div>
-                        )}
+                        {ratingHandler && <div>{ratingHandler(props.details)}</div>}
                     </div>
                 </Link>
                 <button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
-                <button onClick={() => queueHandler(false, props.details?.id)}>Remove from queue</button>
+                <button onClick={() => queueHandler(false, props.details?.id)}>
+                    Remove from queue
+                </button>
             </div>
         </>
     );

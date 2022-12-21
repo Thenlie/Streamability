@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-interface NavProps { session: Session | null }
+interface NavProps {
+    session: Session | null;
+}
 
 /**
  * This component will be rendered in AppWrapper.tsx - on every page.
@@ -17,7 +19,11 @@ export default function Navigation(props: NavProps): JSX.Element {
     const [themeIcon, setThemeIcon] = useState(<DarkModeIcon />);
 
     useEffect(() => {
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
             document.documentElement.classList.add('dark');
             setThemeIcon(<DarkModeIcon />);
         } else {
@@ -27,7 +33,10 @@ export default function Navigation(props: NavProps): JSX.Element {
     }, []);
 
     const themeSwitcher = () => {
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && document.documentElement.classList.contains('dark'))) {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && document.documentElement.classList.contains('dark'))
+        ) {
             localStorage.theme = 'light';
             setThemeIcon(<LightModeIcon />);
         } else {
@@ -42,24 +51,35 @@ export default function Navigation(props: NavProps): JSX.Element {
         await SUPABASE.auth.signOut();
     };
     return (
-    // TODO: Remove inline styling upon CSS framework integration
+        // TODO: Remove inline styling upon CSS framework integration
         <>
-            <Link to="/" style={{ padding: '0 5px' }}>Home</Link>
+            <Link to='/' style={{ padding: '0 5px' }}>
+                Home
+            </Link>
             {props.session ? (
                 <>
-                    <Link to="/dashboard" style={{ padding: '0 5px' }}>Dashboard</Link>
-                    <a onClick={logoutHandler} style={{ padding: '0 5px' }} className={'cursor-pointer'}>Logout</a>
+                    <Link to='/dashboard' style={{ padding: '0 5px' }}>
+                        Dashboard
+                    </Link>
+                    <a
+                        onClick={logoutHandler}
+                        style={{ padding: '0 5px' }}
+                        className={'cursor-pointer'}
+                    >
+                        Logout
+                    </a>
                 </>
             ) : (
                 <>
-                    <Link to="/auth/signup" style={{ padding: '0 5px' }}>Sign Up</Link>
-                    <Link to="/auth/login" style={{ padding: '0 5px' }}>Login</Link>
+                    <Link to='/auth/signup' style={{ padding: '0 5px' }}>
+                        Sign Up
+                    </Link>
+                    <Link to='/auth/login' style={{ padding: '0 5px' }}>
+                        Login
+                    </Link>
                 </>
             )}
-            <button
-                onClick={themeSwitcher}>
-                {themeIcon}
-            </button>
+            <button onClick={themeSwitcher}>{themeIcon}</button>
         </>
     );
 }
