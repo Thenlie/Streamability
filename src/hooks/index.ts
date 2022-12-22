@@ -1,6 +1,3 @@
 import { useProfileContext, useSessionContext } from './context';
 
-export {
-    useProfileContext,
-    useSessionContext,
-};
+export { useProfileContext, useSessionContext };

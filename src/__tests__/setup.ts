@@ -21,7 +21,7 @@ if (!globalThis.fetch) {
 // https://github.com/vitest-dev/vitest/issues/821
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
-    value: vi.fn().mockImplementation(query => ({
+    value: vi.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,

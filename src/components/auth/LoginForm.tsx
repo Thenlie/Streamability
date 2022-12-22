@@ -3,7 +3,14 @@ import ErrorMessage from '../ErrorMessage';
 import { SUPABASE } from '../../helpers/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import { Button, InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import {
+    Button,
+    InputAdornment,
+    FilledInput,
+    InputLabel,
+    FormControl,
+    IconButton,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 /**
@@ -31,13 +38,13 @@ export default function LoginForm(): JSX.Element {
     };
 
     /**
-	 * Function to authenticate and perform Supabase login
-	 * Once the user has logged in, 
-	 * their user info and session is stored in the context
-	 * 
-	 * @param evt | DOM submit event
-	 * @returns {Promise<void>} | Does not redirect user
-	 */
+     * Function to authenticate and perform Supabase login
+     * Once the user has logged in,
+     * their user info and session is stored in the context
+     *
+     * @param evt | DOM submit event
+     * @returns {Promise<void>} | Does not redirect user
+     */
     async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
         evt.preventDefault();
 
@@ -73,11 +80,13 @@ export default function LoginForm(): JSX.Element {
     }
 
     return (
-        <div aria-live="polite" className='w-full'>
+        <div aria-live='polite' className='w-full'>
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col'>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='email-input' color='secondary'>
+                        Email
+                    </InputLabel>
                     <FilledInput
                         id='email-input'
                         type='email'
@@ -90,11 +99,13 @@ export default function LoginForm(): JSX.Element {
                         onFocus={() => setEmailError(false)}
                     />
                 </FormControl>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary'>Password</InputLabel>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='password-input' color='secondary'>
+                        Password
+                    </InputLabel>
                     <FilledInput
                         id='password-input'
-                        name="password"
+                        name='password'
                         type={isPasswordVisible ? 'text' : 'password'}
                         autoComplete='new-password'
                         value={password}
@@ -106,7 +117,7 @@ export default function LoginForm(): JSX.Element {
                             <InputAdornment position='end'>
                                 <IconButton
                                     aria-label='toggle password visibility'
-                                    onClick={() => setIsPasswordVisible(prev => !prev)}
+                                    onClick={() => setIsPasswordVisible((prev) => !prev)}
                                     edge='end'
                                 >
                                     {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
@@ -115,17 +126,10 @@ export default function LoginForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <Button 
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    sx={{ margin: '10px'}}
-                >
+                <Button variant='contained' size='large' type='submit' sx={{ margin: '10px' }}>
                     Submit
                 </Button>
-                {errorMessage.length > 0 && (
-                    <ErrorMessage message={errorMessage} />
-                )}
+                {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
             </form>
         </div>
     );

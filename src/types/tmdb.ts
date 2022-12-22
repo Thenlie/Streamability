@@ -1,4 +1,3 @@
-
 interface MovieImage {
     aspect_ratio: number;
     file_path: string;
@@ -63,7 +62,7 @@ export interface MovieDetailsData extends MovieResultData {
         id: number;
         name: string;
         poster_path: string;
-    },
+    };
     budget: number;
     genres: BasicData[];
     homepage: string;
@@ -71,21 +70,25 @@ export interface MovieDetailsData extends MovieResultData {
         backdrops: MovieImage[];
         logos: MovieImage[];
         posters: MovieImage[];
-    },
+    };
     imdb_id: string;
-    production_companies: [{
-        id: number;
-        logo_path: string;
-        name: string;
-        origin_country: string;
-    }],
-    production_countries: [{
-        iso_3166_1: string;
-        name: string;
-    }],
+    production_companies: [
+        {
+            id: number;
+            logo_path: string;
+            name: string;
+            origin_country: string;
+        }
+    ];
+    production_countries: [
+        {
+            iso_3166_1: string;
+            name: string;
+        }
+    ];
     release_dates: {
         results: MovieReleaseDateResults[];
-    }
+    };
     revenue: number;
     runtime: number;
     spoken_languages: MovieSpokenLanguages[];
@@ -147,22 +150,28 @@ export interface MovieProviders {
 
 export interface ProviderDetails {
     link: string;
-    flatrate: [{
-        display_priority: number;
-        logo_path: string;
-        provider_id: number;
-        provider_name: string;
-    }];
-    rent?: [{
-        display_priority: number;
-        logo_path: string;
-        provider_id: number;
-        provider_name: string;
-    }],
-    buy?: [{
-        display_priority: number;
-        logo_path: string;
-        provider_id: number;
-        provider_name: string;
-    }];
+    flatrate: [
+        {
+            display_priority: number;
+            logo_path: string;
+            provider_id: number;
+            provider_name: string;
+        }
+    ];
+    rent?: [
+        {
+            display_priority: number;
+            logo_path: string;
+            provider_id: number;
+            provider_name: string;
+        }
+    ];
+    buy?: [
+        {
+            display_priority: number;
+            logo_path: string;
+            provider_id: number;
+            provider_name: string;
+        }
+    ];
 }

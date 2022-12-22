@@ -13,9 +13,11 @@ else
     printf "\033[41m❌ Build Failed\033[0m\n"
     exit 1
 fi
+
 echo "--- Running ES-Lint ---"
-npm run lint
+npm run lint-fix
 if [[ "$?" == 0 ]]; then
+    git add -A
     printf "\033[32m✅ ESLint Passed\033[0m\n"
 else
     printf "\033[41m❌ ESLint Failed\033[0m\n"
