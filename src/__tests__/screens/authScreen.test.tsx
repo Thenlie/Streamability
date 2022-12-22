@@ -22,14 +22,22 @@ describe('Auth Screen Test Suite', async () => {
         render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
+        // open user menu
+        await user.click(screen.getByTestId('menu-button'));
+        // wait for the menu to be displayed
+        await waitFor(() => screen.getByTestId('menu-appbar'));
         // navigate to login
         await user.click(screen.getByText('Login'));
         await waitFor(() => screen.getByTestId('login-heading'));
         expect(screen.getByText('Password')).toBeInTheDocument();
         expect(screen.getByText('Email')).toBeInTheDocument();
         // go back to homepage
-        await user.click(screen.getByText('Home'));
+        await user.click(screen.getByText('Streamability'));
         await waitFor(() => screen.getByTestId('featured-search-heading'));
+        // open user menu
+        await user.click(screen.getByTestId('menu-button'));
+        // wait for the menu to be displayed
+        await waitFor(() => screen.getByTestId('menu-appbar'));
         // navigate to sign up
         await user.click(screen.getByText('Sign Up'));
         await waitFor(() => screen.getByTestId('signup-heading'));

@@ -1,3 +1,5 @@
+import { Search } from '@mui/icons-material';
+import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material';
 import { Form } from 'react-router-dom';
 
 /**
@@ -9,14 +11,30 @@ import { Form } from 'react-router-dom';
  */
 export default function SearchInput(): JSX.Element {
     return (
-        <>
-            <Form method='get' action='/search'>
-                <label htmlFor='q' defaultValue={'search movies or tv shows'}></label>
-                <input name='q' type='text' data-testid='featured-search-input'></input>
-                <button type='submit' data-testid='featured-search-button'>
+        // TODO: #162 Use MUI ThemeProvider
+        <Form method='get' action='/search'>
+            <FormControl variant='filled'>
+                <InputLabel htmlFor='q' color='secondary'>
                     Search
-                </button>
-            </Form>
-        </>
+                </InputLabel>
+                <Input
+                    type='text'
+                    name='q'
+                    color='secondary'
+                    className='!text-text'
+                    aria-label='search'
+                    inputProps={{
+                        'data-testid': 'featured-search-input',
+                    }}
+                    endAdornment={
+                        <InputAdornment aria-label='submit search' position='end'>
+                            <IconButton type='submit' data-testid='featured-search-button'>
+                                <Search />
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
+            </FormControl>
+        </Form>
     );
 }

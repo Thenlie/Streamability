@@ -35,20 +35,25 @@ describe('Movie Screen Test Suite', async () => {
         render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
-        // add search input 'Iron Man'
-        await user.type(screen.getByTestId('featured-search-input'), 'Iron Man');
-        expect(screen.getByTestId('featured-search-input')).toHaveValue('Iron Man');
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
+        // get all elements with the 'featured-search-button' testid
+        const searchButtons = screen.getAllByTestId('featured-search-button');
+        // check for the first button
+        expect(searchButtons[0]).toBeInTheDocument();
+        // get all elements with the 'featured-search-input' testid
+        const searchInputs = screen.getAllByTestId('featured-search-input');
+        // select the first input, add 'Iron Man'
+        await user.type(searchInputs[0], 'Iron Man');
+        expect(searchInputs[0]).toHaveValue('Iron Man');
+        expect(searchButtons[0]).toBeInTheDocument();
         // click on search button to change screens
-        await user.click(screen.getByTestId('featured-search-button'));
+        await user.click(searchButtons[0]);
         await waitFor(() => screen.getByTestId('search-results-heading'));
         expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Search Results Page');
         // check for show card
         expect(screen.getAllByRole('heading')[1]).toHaveTextContent('Iron Man');
         // check for queue buttons
-        expect(screen.getAllByRole('button')[1]).toHaveTextContent('Add to queue');
-        expect(screen.getAllByRole('button')[2]).toHaveTextContent('Remove from queue');
+        expect(screen.getAllByRole('button')[2]).toHaveTextContent('Add to queue');
+        expect(screen.getAllByRole('button')[3]).toHaveTextContent('Remove from queue');
     });
     it('navigates to show details screen when show card is clicked on', async () => {
         // create a new data router for the test
