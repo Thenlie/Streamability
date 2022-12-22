@@ -1,83 +1,34 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* TODO: Create light mode theme. Reference #135 */
-    --color-background: 220 220 220;
-    --color-foreground: 255 255 255;
-    --color-text: 0 0 0;
-    --color-highlight: 151 71 255;
+    /*
+    TODO: Create light mode theme. Reference #135
+    */
+    --color-background: 220 220 220; /* #dcdcdc */
+    --color-foreground: 255 255 255; /* white */
+    --color-primary: 184 184 184; /* #b8b8b8 */
+    --color-text: 0 0 0; /* black */
+    /* --color-text-light: ; */
+    /* --color-text-lighter: ; */
+    --color-highlight: 151 71 255; /* #9747ff */
+    --color-hlhover: 105 49 178; /* #6931b2 */
   }
   :root[class='dark'] {
-    --color-background: 36 36 36;
-    --color-foreground: 78 78 78;
-    --color-text: 255 255 255;
-    
-    color-scheme: dark;
+    --color-background: 36 36 36; /* #242424 */
+    --color-foreground: 78 78 78; /* #4e4e4e */
+    --color-primary: 63 63 63; /* #3f3f3f */
+    --color-text: 255 255 255; /* white */
+    /* --color-text-light: ; */
+    /* --color-text-lighter: ; */
   }
 }
 
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  font-synthesis: none;
-  color: rgb(var(--color-text));
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: rgb(var(--color-highlight));
-  color: #fff;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button[type='submit'],
-button[type='reset'] {
-  background-color: rgb(var(--color-highlight));
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+@layer components {
+  .btn {
+    @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
+  }
 }

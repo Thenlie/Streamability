@@ -23,13 +23,24 @@ describe('Navigation Test Suite', async () => {
 
         // check home page
         await waitFor(() => screen.getByTestId('featured-search-heading'));
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
+        // get all elements with the "featured-search-button" testid
+        const buttons = screen.getAllByTestId('featured-search-button');
+        // check for the first button
+        expect(buttons[0]).toBeInTheDocument();
+        // open user menu
+        await user.click(screen.getByTestId('menu-button'));
+        // wait for the menu to be displayed
+        await waitFor(() => screen.getByTestId('menu-appbar'));
         // check login
         await user.click(screen.getByText('Login'));
         await waitFor(() => screen.getByTestId('login-heading'));
         // go back to homepage
-        await user.click(screen.getByText('Home'));
+        await user.click(screen.getByText('Streamability'));
         await waitFor(() => screen.getByTestId('featured-search-heading'));
+        // open user menu
+        await user.click(screen.getByTestId('menu-button'));
+        // wait for the menu to be displayed
+        await waitFor(() => screen.getByTestId('menu-appbar'));
         // check sign up
         await user.click(screen.getByText('Sign Up'));
         await waitFor(() => screen.getByTestId('signup-heading'));

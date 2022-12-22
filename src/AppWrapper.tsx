@@ -2,7 +2,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './helpers/supabaseClient';
 import type { Session, Profile } from './types';
-import './App.css';
 import Navigation from './components/Navigation';
 import { getProfileById } from './supabase/profiles';
 
@@ -79,9 +78,11 @@ export default function AppWrapper(): JSX.Element {
     }, []);
 
     return (
-        <div className='App'>
+        <main className='flex min-h-screen flex-col place-items-center'>
             <Navigation session={session} />
-            <Outlet context={{ session, setSession, profile, setProfile }} />
-        </div>
+            <div className='flex flex-auto flex-col items-center justify-center text-center'>
+                <Outlet context={{ session, setSession, profile, setProfile }} />
+            </div>
+        </main>
     );
 }

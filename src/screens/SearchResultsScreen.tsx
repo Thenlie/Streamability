@@ -39,7 +39,7 @@ export default function SearchResultsScreen(): JSX.Element {
             setLoading(false);
         };
         handler();
-    }, []);
+    }, [query]);
 
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p data-testid='search-results-loader'>Loading...</p>;

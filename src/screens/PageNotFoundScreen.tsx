@@ -19,7 +19,7 @@ export default function PageNotFoundScreen(): JSX.Element {
      * https://reactrouter.com/en/main/route/error-element#throwing-responses
      */
     return (
-        <div>
+        <div className='flex min-h-screen flex-col place-items-center justify-center'>
             <h1 data-testid='page-not-found-header'>Page Not Found!</h1>
             <ErrorMessage message={error.statusText} />
         </div>
