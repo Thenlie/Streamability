@@ -26,6 +26,7 @@ export default function SearchInput(): JSX.Element {
                     inputProps={{
                         'data-testid': 'featured-search-input',
                     }}
+                    required
                     endAdornment={
                         <InputAdornment aria-label='submit search' position='end'>
                             <IconButton type='submit' data-testid='featured-search-button'>
