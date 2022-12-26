@@ -9,20 +9,30 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+      day: "saturday"
+      time: "10:00"
+      timezone: "America/Denver"
     target-branch: "develop"
     labels:
       - "dependencies"
     reviewers:
       - "Thenlie"
       - "maxh1231"
+    assignees:
+      - "dependabot"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "saturday"
+      time: "10:00"
+      timezone: "America/Denver"
     target-branch: "develop"
     labels:
       - "dependencies"
     reviewers:
       - "Thenlie"
       - "maxh1231"
+    assignees:
+      - "dependabot"
