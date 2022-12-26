@@ -11,6 +11,7 @@ interface ProviderProps {
  */
 export default function Providers(props: ProviderProps): JSX.Element {
     const [providers, setProviders] = useState<MovieProviders>();
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const handler = async () => {
@@ -18,13 +19,17 @@ export default function Providers(props: ProviderProps): JSX.Element {
                 const data = await getMovieProviders(props.id);
                 setProviders(data);
             }
+            setLoading(false);
         };
         handler();
     }, []);
 
+    // TODO: #210 Create loader component
+    if (loading) return <p>Loading</p>;
+
     return (
         <div className='flex justify-center'>
-            {providers?.results.US !== undefined ? (
+            {providers?.results?.US?.flatrate ? (
                 providers.results.US.flatrate.map((item, i) => (
                     <img
                         className='h-16 w-16'
