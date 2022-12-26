@@ -96,6 +96,20 @@ export interface MovieDetailsData extends MovieResultData {
     tagline: string;
 }
 
+interface ProviderInfo {
+    display_priority?: number;
+    logo_path?: string;
+    provider_id?: number;
+    provider_name?: string;
+}
+
+interface ProviderDetails {
+    link?: string;
+    flatrate?: ProviderInfo[];
+    rent?: ProviderInfo[];
+    buy?: ProviderInfo[];
+}
+
 export interface MovieProviders {
     id: number;
     results: {
@@ -142,36 +156,8 @@ export interface MovieProviders {
         SG?: ProviderDetails;
         TH?: ProviderDetails;
         TR?: ProviderDetails;
-        US: ProviderDetails;
+        US?: ProviderDetails;
         VE?: ProviderDetails;
         ZA?: ProviderDetails;
     };
-}
-
-export interface ProviderDetails {
-    link: string;
-    flatrate: [
-        {
-            display_priority: number;
-            logo_path: string;
-            provider_id: number;
-            provider_name: string;
-        }
-    ];
-    rent?: [
-        {
-            display_priority: number;
-            logo_path: string;
-            provider_id: number;
-            provider_name: string;
-        }
-    ];
-    buy?: [
-        {
-            display_priority: number;
-            logo_path: string;
-            provider_id: number;
-            provider_name: string;
-        }
-    ];
 }
