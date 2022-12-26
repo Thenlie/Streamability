@@ -14,7 +14,10 @@ import { MovieData, MovieDetailsData } from '../types/tmdb';
 export async function loader({ request }: { request: Request }): Promise<string> {
     // get the query parameters from the URL
     const url = new URL(request.url);
-    const query = url.searchParams.get('q');
+    const query = url.searchParams.get('q')?.trim();
+    if (!query) {
+        throw new Response('Bad Request', { status: 400 });
+    }
     return query as string;
 }
 
