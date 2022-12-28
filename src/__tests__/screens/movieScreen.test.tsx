@@ -51,9 +51,6 @@ describe('Movie Screen Test Suite', async () => {
         expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Search Results Page');
         // check for show card
         expect(screen.getAllByRole('heading')[1]).toHaveTextContent('Iron Man');
-        // check for queue buttons
-        expect(screen.getAllByRole('button')[2]).toHaveTextContent('Add to queue');
-        expect(screen.getAllByRole('button')[3]).toHaveTextContent('Remove from queue');
     });
     it('navigates to show details screen when show card is clicked on', async () => {
         // create a new data router for the test
