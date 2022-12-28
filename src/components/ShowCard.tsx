@@ -1,8 +1,13 @@
 import { useProfileContext } from '../hooks';
-import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
+import {
+    addToProfileWatchQueue,
+    getProfileWatchQueue,
+    removeFromProfileWatchQueue,
+} from '../supabase/profiles';
 import { MovieDetailsData } from '../types/tmdb';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
+import { useEffect, useState } from 'react';
 
 interface MovieCardProps {
     details: MovieDetailsData;
@@ -18,6 +23,7 @@ interface MovieCardProps {
  */
 export default function ShowCard(props: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
+    const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
     const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
         for (let i = 0; i < arr.release_dates.results.length; i++) {
             if (arr.release_dates.results[i].iso_3166_1 === 'US') {
@@ -26,6 +32,20 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
         }
         return null;
     };
+
+    /**
+     * On component render, get the current users watch queue from Supabase
+     * Check if it contains the current shows ID and set the boolean accordingly
+     */
+    useEffect(() => {
+        const handler = async () => {
+            const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
+            if (currentWatchQueue && currentWatchQueue.includes(props.details.id)) {
+                setIsInWatchQueue(true);
+            }
+        };
+        handler();
+    }, []);
 
     /**
      * Handle card being added to or removed from
@@ -39,54 +59,56 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
             if (isPush && profile) {
                 const data = await addToProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
+                setIsInWatchQueue(true);
             } else if (profile) {
                 const data = await removeFromProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
+                setIsInWatchQueue(false);
             }
         }
     };
 
     return (
-        <>
-            {/* TODO: Style card more closely to provided design once MUI is installed */}
-            <div data-testid='show-card-component'>
-                <Link
-                    to={`/details/${props.details.id}`}
-                    state={props}
-                    data-testid='show-details-link'
-                >
-                    {/* TODO: #193 Add placeholder poster if null */}
-                    {props.details.poster_path !== null && (
-                        <div>
-                            <img
-                                style={{ width: '250px', height: '375px' }}
-                                src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
-                            ></img>
-                        </div>
+        // TODO: #197 Style card more closely to provided design once MUI is installed
+        <div data-testid='show-card-component'>
+            <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
+                {/* TODO: #193 Add placeholder poster if null */}
+                {props.details.poster_path !== null && (
+                    <div>
+                        <img
+                            style={{ width: '250px', height: '375px' }}
+                            src={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
+                        ></img>
+                    </div>
+                )}
+                <div>
+                    <h2>{props.details.original_title}</h2>
+                    {props.details.release_date.length === 10 && (
+                        <span>
+                            {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
+                        </span>
                     )}
-                    <div>
-                        <h2>{props.details.original_title}</h2>
-                        {props.details.release_date.length === 10 && (
-                            <span>
-                                {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
-                            </span>
-                        )}
-                    </div>
-                    <div>
-                        <p>{props.details.runtime}</p>
-                    </div>
-                    <div>
-                        {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                        <p>{props.details.vote_average} stars</p>
-                        <span>{props.details.vote_count} ratings</span>
-                        {ratingHandler && <div>{ratingHandler(props.details)}</div>}
-                    </div>
-                </Link>
-                <button onClick={() => queueHandler(true, props.details?.id)}>Add to queue</button>
-                <button onClick={() => queueHandler(false, props.details?.id)}>
-                    Remove from queue
-                </button>
-            </div>
-        </>
+                </div>
+                <div>
+                    <p>{props.details.runtime}</p>
+                </div>
+                <div>
+                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
+                    <p>{props.details.vote_average} stars</p>
+                    <span>{props.details.vote_count} ratings</span>
+                    {ratingHandler && <div>{ratingHandler(props.details)}</div>}
+                </div>
+            </Link>
+            {profile &&
+                (isInWatchQueue ? (
+                    <button onClick={() => queueHandler(false, props.details?.id)}>
+                        Remove from queue
+                    </button>
+                ) : (
+                    <button onClick={() => queueHandler(true, props.details?.id)}>
+                        Add to queue
+                    </button>
+                ))}
+        </div>
     );
 }
