@@ -39,4 +39,17 @@ const getMovieProviders = async (id: number): Promise<MovieProviders> => {
     return response.json() as Promise<MovieProviders>;
 };
 
-export { getMoviesByName, getMovieDetails, getMovieProviders };
+/**
+ * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
+ * @returns @returns {Promise<MovieData>} | Trending Movies & TV Shows
+ */
+const getTrending = async (): Promise<MovieData> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/trending/movie/week?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
+        }`
+    );
+    return response.json() as Promise<MovieData>;
+};
+
+export { getMoviesByName, getMovieDetails, getMovieProviders, getTrending };
