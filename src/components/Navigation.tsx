@@ -18,6 +18,7 @@ import {
     DarkMode,
     ExpandLess,
     ExpandMore,
+    Explore,
     LightMode,
     Login,
     Logout,
@@ -205,6 +206,17 @@ export default function Navigation(props: NavProps): JSX.Element {
                                 </div>
                             )}
                             <Divider />
+                            <MenuItem
+                                className='!p-2'
+                                onClick={() => toggleUserMenu(null, false)}
+                                component={Link}
+                                to='/discover'
+                            >
+                                <ListItemIcon className='!text-text'>
+                                    <Explore className='mr-2' />
+                                    Discover
+                                </ListItemIcon>
+                            </MenuItem>
                             <MenuItem className='!p-2' onClick={themeSwitcher}>
                                 <ListItemIcon className='!text-text'>
                                     {themeIcon}
