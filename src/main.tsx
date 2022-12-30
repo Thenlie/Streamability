@@ -10,6 +10,7 @@ import {
     DashboardScreen,
     AuthScreen,
     ShowDetailsScreen,
+    DiscoverScreen,
 } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
 import { LoginForm, SignUpForm } from './components';
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
             {
                 path: 'details/:id',
                 element: <ShowDetailsScreen />,
+            },
+            {
+                path: 'discover',
+                element: <DiscoverScreen />,
             },
         ],
     },
