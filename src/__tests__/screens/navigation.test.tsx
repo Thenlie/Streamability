@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { routes } from '../routes';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import { goHome, openMenu } from '../helpers/navigation';
 
 describe('Navigation Test Suite', async () => {
     // set up variables to be used on each test
@@ -13,7 +14,7 @@ describe('Navigation Test Suite', async () => {
         user = userEvent.setup();
     });
 
-    it('navigates to all buttons in nav', async () => {
+    it('navigates to all buttons in nav when not logged in', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/'],
@@ -21,26 +22,13 @@ describe('Navigation Test Suite', async () => {
         // render screens
         render(<RouterProvider router={router} />);
 
-        // check home page
         await waitFor(() => screen.getByTestId('featured-search-heading'));
-        // get all elements with the "featured-search-button" testid
-        const buttons = screen.getAllByTestId('featured-search-button');
-        // check for the first button
-        expect(buttons[0]).toBeInTheDocument();
-        // open user menu
-        await user.click(screen.getByTestId('menu-button'));
-        // wait for the menu to be displayed
-        await waitFor(() => screen.getByTestId('menu-appbar'));
+        await openMenu(user);
         // check login
         await user.click(screen.getByText('Login'));
         await waitFor(() => screen.getByTestId('login-heading'));
-        // go back to homepage
-        await user.click(screen.getByText('Streamability'));
-        await waitFor(() => screen.getByTestId('featured-search-heading'));
-        // open user menu
-        await user.click(screen.getByTestId('menu-button'));
-        // wait for the menu to be displayed
-        await waitFor(() => screen.getByTestId('menu-appbar'));
+        await goHome(user);
+        await openMenu(user);
         // check sign up
         await user.click(screen.getByText('Sign Up'));
         await waitFor(() => screen.getByTestId('signup-heading'));

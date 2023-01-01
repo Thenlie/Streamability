@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { routes } from '../routes';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import { goHome, openMenu } from '../helpers/navigation';
 
 describe('Auth Screen Test Suite', async () => {
     // set up variables to be used on each test
@@ -22,25 +23,19 @@ describe('Auth Screen Test Suite', async () => {
         render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
-        // open user menu
-        await user.click(screen.getByTestId('menu-button'));
-        // wait for the menu to be displayed
-        await waitFor(() => screen.getByTestId('menu-appbar'));
+        await openMenu(user);
         // navigate to login
         await user.click(screen.getByText('Login'));
         await waitFor(() => screen.getByTestId('login-heading'));
+        expect(screen.getByTestId('login-form')).toBeInTheDocument();
         expect(screen.getByText('Password')).toBeInTheDocument();
         expect(screen.getByText('Email')).toBeInTheDocument();
-        // go back to homepage
-        await user.click(screen.getByText('Streamability'));
-        await waitFor(() => screen.getByTestId('featured-search-heading'));
-        // open user menu
-        await user.click(screen.getByTestId('menu-button'));
-        // wait for the menu to be displayed
-        await waitFor(() => screen.getByTestId('menu-appbar'));
+        await goHome(user);
+        await openMenu(user);
         // navigate to sign up
         await user.click(screen.getByText('Sign Up'));
         await waitFor(() => screen.getByTestId('signup-heading'));
+        expect(screen.getByTestId('signup-form')).toBeInTheDocument();
         expect(screen.getByText('Email')).toBeInTheDocument();
         expect(screen.getByText('Password')).toBeInTheDocument();
         expect(screen.getByText('Confirm Password')).toBeInTheDocument();

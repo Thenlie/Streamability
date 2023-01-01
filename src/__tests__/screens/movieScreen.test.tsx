@@ -26,7 +26,7 @@ describe('Movie Screen Test Suite', async () => {
         user = userEvent.setup();
     });
 
-    it('navigates to search results page when search button clicked with input', async () => {
+    it('renders search results page when search button clicked with input', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/'],
@@ -35,16 +35,13 @@ describe('Movie Screen Test Suite', async () => {
         render(<RouterProvider router={router} />);
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
-        // get all elements with the 'featured-search-button' testid
-        const searchButtons = screen.getAllByTestId('featured-search-button');
+        const searchButtons = screen.getAllByTestId('search-button');
         // check for the first button
         expect(searchButtons[0]).toBeInTheDocument();
-        // get all elements with the 'featured-search-input' testid
-        const searchInputs = screen.getAllByTestId('featured-search-input');
+        const searchInputs = screen.getAllByTestId('search-input');
         // select the first input, add 'Iron Man'
         await user.type(searchInputs[0], 'Iron Man');
         expect(searchInputs[0]).toHaveValue('Iron Man');
-        expect(searchButtons[0]).toBeInTheDocument();
         // click on search button to change screens
         await user.click(searchButtons[0]);
         await waitFor(() => screen.getByTestId('search-results-heading'));
@@ -52,7 +49,21 @@ describe('Movie Screen Test Suite', async () => {
         // check for show card
         expect(screen.getAllByRole('heading')[1]).toHaveTextContent('Iron Man');
     });
-    it('navigates to show details screen when show card is clicked on', async () => {
+    it('does not render search results when search button is clicked with no input', async () => {
+        // create a new data router for the test
+        const router = createMemoryRouter(routes, {
+            initialEntries: ['/'],
+        });
+        // render screens
+        render(<RouterProvider router={router} />);
+
+        await waitFor(() => screen.getByTestId('featured-search-heading'));
+        const searchButtons = screen.getAllByTestId('search-button');
+        expect(searchButtons[0]).toBeInTheDocument();
+        await user.click(searchButtons[0]);
+        expect(screen.getAllByRole('heading')[0]).toHaveTextContent('Featured Search Page');
+    });
+    it('renders show details screen when show card is clicked on', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/search?q=iron+man'],

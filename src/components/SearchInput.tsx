@@ -24,12 +24,12 @@ export default function SearchInput(): JSX.Element {
                     className='!text-text'
                     aria-label='search'
                     inputProps={{
-                        'data-testid': 'featured-search-input',
+                        'data-testid': 'search-input',
                     }}
                     required
                     endAdornment={
                         <InputAdornment aria-label='submit search' position='end'>
-                            <IconButton type='submit' data-testid='featured-search-button'>
+                            <IconButton type='submit' data-testid='search-button'>
                                 <Search />
                             </IconButton>
                         </InputAdornment>
