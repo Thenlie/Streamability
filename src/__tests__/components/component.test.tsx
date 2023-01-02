@@ -25,8 +25,8 @@ describe('Component Test Suite', () => {
         ]);
         render(<RouterProvider router={router} />);
 
-        expect(screen.getByTestId('featured-search-input')).toBeInTheDocument();
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
+        expect(screen.getByTestId('search-input')).toBeInTheDocument();
+        expect(screen.getByTestId('search-button')).toBeInTheDocument();
     });
     it('renders the show card component', async () => {
         // create a new data router for the test
