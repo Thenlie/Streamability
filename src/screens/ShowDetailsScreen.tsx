@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import { getMovieDetails } from '../helpers/getMovieUtils';
-import { MovieDetailsData } from '../types/tmdb';
+import { ShowData } from '../types/tmdb';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import Providers from '../components/Providers';
 
@@ -13,9 +13,11 @@ import Providers from '../components/Providers';
  */
 export default function ShowDetailsScreen(): JSX.Element {
     const location: Location = useLocation();
-    const [details, setDetails] = useState<MovieDetailsData>(
+    const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
+
+    console.log(location);
 
     useEffect(() => {
         const handler = async () => {
@@ -29,15 +31,7 @@ export default function ShowDetailsScreen(): JSX.Element {
         handler();
     }, []);
 
-    // TODO: #158 Possibly create utility function
-    const ratingHandler = (arr: MovieDetailsData): JSX.Element | null => {
-        for (let i = 0; i < arr.release_dates.results.length; i++) {
-            if (arr.release_dates.results[i].iso_3166_1 === 'US') {
-                return <p>{arr.release_dates.results[i].release_dates[0].certification}</p>;
-            }
-        }
-        return null;
-    };
+    console.log(details);
 
     // TODO: #199 Create skeleton loader
     if (!details) return <p>Loading</p>;
@@ -60,12 +54,21 @@ export default function ShowDetailsScreen(): JSX.Element {
                             </span>
                         )}
                         <span> {details.runtime} minutes</span>
-                        {ratingHandler(details)}
+                        <span> {details.age_rating} </span>
                     </div>
                     <div>
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
-                    <Providers id={details.id} />
+                    <div>
+                        {/* {details.networks !== undefined ? (
+                            details.networks.map((item, i) => (
+                                <span></span>
+                            ))
+                        ) : (
+                            <Providers id={details.id} />
+                        )} */}
+                        <Providers id={details.id} />
+                    </div>
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <div>
                         {details.vote_average} stars out of {details.vote_count}

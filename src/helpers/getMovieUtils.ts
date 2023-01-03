@@ -1,4 +1,4 @@
-import { MovieData, MovieDetailsData, MovieProviders } from '../types/tmdb';
+import { MovieData, MovieDetailsData, MovieProviders, ShowData } from '../types/tmdb';
 
 /**
  * This function is ran after the user enters a name of a movie.
@@ -17,13 +17,33 @@ const getMoviesByName = async (name: string): Promise<MovieData> => {
  * This function is ran for specific <ShowCard /> data with a movieID.
  * @returns {Promise<MovieDetailsData>} | Specific data for a movie that is not originally supplied by getMoviesByName.
  */
-const getMovieDetails = async (id: number): Promise<MovieDetailsData> => {
+const getMovieDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&append_to_response=images,release_dates`
     );
-    return response.json() as Promise<MovieDetailsData>;
+    const data = (await response.json()) as MovieDetailsData;
+    const returnRating = async (arr: MovieDetailsData) => {
+        for (let i = 0; i < arr.release_dates.results.length; i++) {
+            if (arr.release_dates.results[i].iso_3166_1 === 'US') {
+                return arr.release_dates.results[i].release_dates[0].certification;
+            }
+        }
+        return null;
+    };
+    const obj: ShowData = {
+        id: data.id,
+        poster_path: data.poster_path,
+        title: data.original_title,
+        release_date: data.release_date,
+        age_rating: await returnRating(data),
+        runtime: data.runtime,
+        vote_average: data.vote_average,
+        vote_count: data.vote_count,
+        overview: data.overview,
+    };
+    return obj;
 };
 
 /**

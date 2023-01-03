@@ -24,6 +24,8 @@ export default function Providers(props: ProviderProps): JSX.Element {
         handler();
     }, []);
 
+    console.log(providers);
+
     // TODO: #210 Create loader component
     if (loading) return <p>Loading</p>;
 

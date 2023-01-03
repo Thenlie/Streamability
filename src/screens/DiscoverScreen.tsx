@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { getTrending, getMovieDetails } from '../helpers/getMovieUtils';
-import { MovieDetailsData, MovieData } from '../types/tmdb';
+import { MovieData, ShowData } from '../types/tmdb';
 import { ShowCard } from '../components';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
-    const [trending, setTrending] = useState<MovieDetailsData[]>([]);
+    const [trending, setTrending] = useState<ShowData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
         const handler = async () => {
