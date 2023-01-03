@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
-import { ShowCard, ShowCarousel } from '../components';
+import { ShowCard } from '../components';
 import { MovieData, MovieDetailsData } from '../types/tmdb';
 
 /**
@@ -51,8 +51,9 @@ export default function SearchResultsScreen(): JSX.Element {
         <>
             <h1 data-testid='search-results-heading'>Search Results Page</h1>
             <p>Query: {query}</p>
-            {movieDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
-            <ShowCarousel />
+            <div className='flex flex-wrap justify-center'>
+                {movieDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
+            </div>
         </>
     );
 }
