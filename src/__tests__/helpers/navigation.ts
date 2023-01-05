@@ -13,4 +13,18 @@ const goHome = async (user: UserEvent) => {
     await waitFor(() => screen.getByTestId('featured-search-heading'));
 };
 
-export { openMenu, goHome };
+// navigate to login screen
+const goToLogin = async (user: UserEvent) => {
+    await openMenu(user);
+    await user.click(screen.getByText('Login'));
+    await waitFor(() => screen.getByTestId('login-heading'));
+};
+
+// navigate to sign up screen
+const goToSignUp = async (user: UserEvent) => {
+    await openMenu(user);
+    await user.click(screen.getByText('Sign Up'));
+    await waitFor(() => screen.getByTestId('signup-heading'));
+};
+
+export { openMenu, goHome, goToLogin, goToSignUp };
