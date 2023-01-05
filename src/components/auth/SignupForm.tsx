@@ -91,7 +91,7 @@ export default function SignUpForm(): JSX.Element {
             setConfirmPasswordError(true);
         }
         if (!email || !password || !confirmPassword || !username) {
-            showError('All fields must be filled out.');
+            showError('All fields must be filled out');
             return;
         }
 
@@ -113,7 +113,7 @@ export default function SignUpForm(): JSX.Element {
         if (password !== confirmPassword) {
             setPasswordError(true);
             setConfirmPasswordError(true);
-            showError('Passwords must match.');
+            showError('Passwords must match');
             return;
         }
 

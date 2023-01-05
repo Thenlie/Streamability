@@ -36,6 +36,7 @@ describe('Auth Screen Test Suite', async () => {
         expect(screen.getByText('Confirm Password')).toBeInTheDocument();
         expect(screen.getByText('Username')).toBeInTheDocument();
     });
+
     it('does not allow submission of incomplete login form', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
@@ -49,9 +50,10 @@ describe('Auth Screen Test Suite', async () => {
         const submitBtn = screen.getByText('Submit');
         // empty form
         await user.click(submitBtn);
-        const errorMsg = screen.getByTestId('error-message-message');
-        expect(errorMsg).toBeInTheDocument();
-        expect(errorMsg.textContent).toBe('Error! All fields must be filled out');
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
         act(() => {
             vi.runAllTimers();
         });
@@ -60,7 +62,9 @@ describe('Auth Screen Test Suite', async () => {
         await user.type(screen.getByLabelText('Email'), 'invalid@email');
         await user.click(submitBtn);
         expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
-        expect(errorMsg.textContent).toBe('Error! All fields must be filled out');
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
         act(() => {
             vi.runAllTimers();
         });
@@ -69,9 +73,12 @@ describe('Auth Screen Test Suite', async () => {
         await user.type(screen.getByLabelText('Password'), 'password');
         await user.click(submitBtn);
         expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
-        expect(errorMsg.textContent).toBe('Error! All fields must be filled out');
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
     });
-    it('does not allow submission of invalid email address', async () => {
+
+    it('does not allow submission of login form with invalid email address', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(routes, {
             initialEntries: ['/'],
@@ -81,14 +88,102 @@ describe('Auth Screen Test Suite', async () => {
 
         await waitFor(() => screen.getByTestId('featured-search-heading'));
         await goToLogin(user);
-        const submitBtn = screen.getByText('Submit');
-
-        // invalid email
-        await user.type(screen.getByTestId('login-email-input'), 'invalid@email');
-        await user.type(screen.getByTestId('login-password-input'), 'password');
-        await user.click(submitBtn);
-        const errorMsg = screen.getByTestId('error-message-message');
+        await user.type(screen.getByLabelText('Email'), 'invalid@email');
+        await user.type(screen.getByLabelText('Password'), 'password');
+        await user.click(screen.getByText('Submit'));
         expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
-        expect(errorMsg.textContent).toBe('Error! Must provide valid email');
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! Must provide valid email'
+        );
+    });
+
+    it('does not allow submission of incomplete sign up form', async () => {
+        const router = createMemoryRouter(routes, {
+            initialEntries: ['/'],
+        });
+        // render screens
+        render(<RouterProvider router={router} />);
+
+        await waitFor(() => screen.getByTestId('featured-search-heading'));
+        await goToSignUp(user);
+        const submitBtn = screen.getByText('Submit');
+        // empty form
+        await user.click(submitBtn);
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
+        act(() => {
+            vi.runAllTimers();
+        });
+        expect(screen.queryByTestId('error-message-message')).not.toBeInTheDocument();
+        // incomplete form
+        await user.type(screen.getByLabelText('Email'), 'invalid@email');
+        await user.click(submitBtn);
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
+        act(() => {
+            vi.runAllTimers();
+        });
+        expect(screen.queryByTestId('error-message-message')).not.toBeInTheDocument();
+        await user.type(screen.getByLabelText('Username'), 'testname');
+        await user.click(submitBtn);
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
+        act(() => {
+            vi.runAllTimers();
+        });
+        expect(screen.queryByTestId('error-message-message')).not.toBeInTheDocument();
+        await user.type(screen.getByLabelText('Password'), 'password');
+        await user.click(submitBtn);
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! All fields must be filled out'
+        );
+    });
+
+    it('does not allow submission of sign up form with invalid email address', async () => {
+        // create a new data router for the test
+        const router = createMemoryRouter(routes, {
+            initialEntries: ['/'],
+        });
+        // render screens
+        render(<RouterProvider router={router} />);
+
+        await waitFor(() => screen.getByTestId('featured-search-heading'));
+        await goToSignUp(user);
+        await user.type(screen.getByLabelText('Email'), 'invalid@email');
+        await user.type(screen.getByLabelText('Username'), 'testname');
+        await user.type(screen.getByLabelText('Password'), 'password');
+        await user.type(screen.getByLabelText('Confirm Password'), 'drowssap');
+        await user.click(screen.getByText('Submit'));
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! Must provide valid email'
+        );
+    });
+
+    it('does not allow submission of sign up form with non-matching passwords', async () => {
+        const router = createMemoryRouter(routes, {
+            initialEntries: ['/'],
+        });
+        // render screens
+        render(<RouterProvider router={router} />);
+
+        await waitFor(() => screen.getByTestId('featured-search-heading'));
+        await goToSignUp(user);
+        await user.type(screen.getByLabelText('Email'), 'valid@email.com');
+        await user.type(screen.getByLabelText('Username'), 'testname');
+        await user.type(screen.getByLabelText('Password'), 'password');
+        await user.type(screen.getByLabelText('Confirm Password'), 'drowssap');
+        await user.click(screen.getByText('Submit'));
+        expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
+        expect(screen.getByTestId('error-message-message').textContent).toBe(
+            'Error! Passwords must match'
+        );
     });
 });

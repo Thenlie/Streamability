@@ -94,9 +94,6 @@ export default function LoginForm(): JSX.Element {
                         autoComplete='email'
                         color='secondary'
                         value={email}
-                        inputProps={{
-                            'data-testid': 'login-email-input',
-                        }}
                         error={emailError}
                         onChange={(e) => setEmail(e.target.value)}
                         onFocus={() => setEmailError(false)}
@@ -114,9 +111,6 @@ export default function LoginForm(): JSX.Element {
                         value={password}
                         error={passwordError}
                         color='secondary'
-                        inputProps={{
-                            'data-testid': 'login-password-input',
-                        }}
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setPasswordError(false)}
                         endAdornment={
