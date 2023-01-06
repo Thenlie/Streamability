@@ -1,30 +1,32 @@
 import { useEffect, useState } from 'react';
-import { MovieProviders } from '../types/tmdb';
+import { ShowProviders, ShowData } from '../types/tmdb';
 import { getMovieProviders } from '../helpers/getMovieUtils';
+import { getTvProviders } from '../helpers/getShowUtils';
 
 interface ProviderProps {
-    id: number;
+    details: ShowData;
 }
 /**
  * Component to display streaming services logos for a given movie or show. Accepts an ID and
  * @returns {JSX.Element}
  */
-export default function Providers(props: ProviderProps): JSX.Element {
-    const [providers, setProviders] = useState<MovieProviders>();
+export default function Providers({ details }: ProviderProps): JSX.Element {
+    const [providers, setProviders] = useState<ShowProviders>();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const handler = async () => {
-            if (props.id) {
-                const data = await getMovieProviders(props.id);
+            if (details.id && details.networks === undefined) {
+                const data = await getMovieProviders(details.id);
+                setProviders(data);
+            } else if (details.id && details.networks !== undefined) {
+                const data = await getTvProviders(details.id);
                 setProviders(data);
             }
             setLoading(false);
         };
         handler();
     }, []);
-
-    console.log(providers);
 
     // TODO: #210 Create loader component
     if (loading) return <p>Loading</p>;

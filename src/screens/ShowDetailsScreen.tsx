@@ -17,8 +17,6 @@ export default function ShowDetailsScreen(): JSX.Element {
         location.state ? location.state.details : null
     );
 
-    console.log(location);
-
     useEffect(() => {
         const handler = async () => {
             if (!details) {
@@ -30,8 +28,6 @@ export default function ShowDetailsScreen(): JSX.Element {
         };
         handler();
     }, []);
-
-    console.log(details);
 
     // TODO: #199 Create skeleton loader
     if (!details) return <p>Loading</p>;
@@ -59,16 +55,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     <div>
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
-                    <div>
-                        {/* {details.networks !== undefined ? (
-                            details.networks.map((item, i) => (
-                                <span></span>
-                            ))
-                        ) : (
-                            <Providers id={details.id} />
-                        )} */}
-                        <Providers id={details.id} />
-                    </div>
+                    <Providers details={details} />
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <div>
                         {details.vote_average} stars out of {details.vote_count}

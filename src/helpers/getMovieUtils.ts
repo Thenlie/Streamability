@@ -1,4 +1,4 @@
-import { MovieData, MovieDetailsData, MovieProviders, ShowData } from '../types/tmdb';
+import { MovieData, MovieDetailsData, ShowProviders, ShowData } from '../types/tmdb';
 
 /**
  * This function is ran after the user enters a name of a movie.
@@ -24,44 +24,43 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
         }&append_to_response=images,release_dates`
     );
     const data = (await response.json()) as MovieDetailsData;
-    const returnRating = async (arr: MovieDetailsData) => {
+    const returnRating = (arr: MovieDetailsData) => {
         for (let i = 0; i < arr.release_dates.results.length; i++) {
             if (arr.release_dates.results[i].iso_3166_1 === 'US') {
                 return arr.release_dates.results[i].release_dates[0].certification;
             }
         }
-        return null;
+        return 'No rating available';
     };
-    const obj: ShowData = {
+    return {
         id: data.id,
         poster_path: data.poster_path,
         title: data.original_title,
         release_date: data.release_date,
-        age_rating: await returnRating(data),
+        age_rating: returnRating(data),
         runtime: data.runtime,
         vote_average: data.vote_average,
         vote_count: data.vote_count,
         overview: data.overview,
-    };
-    return obj;
+    } as ShowData;
 };
 
 /**
- * This function is ran for a specified movie to return streaming services with a movieID.
- * @returns {Promise<MovieDetailsData>} | Specific data for a movie that is not originally supplied by getMoviesByName.
+ * This function is ran for a specified movie to return streaming services with a Movie ID.
+ * @returns {Promise<ShowProviders>} | Returns list of streaming services.
  */
-const getMovieProviders = async (id: number): Promise<MovieProviders> => {
+const getMovieProviders = async (id: number): Promise<ShowProviders> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    return response.json() as Promise<MovieProviders>;
+    return response.json() as Promise<ShowProviders>;
 };
 
 /**
  * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
- * @returns @returns {Promise<MovieData>} | Trending Movies & TV Shows
+ * @returns {Promise<MovieData>} | Trending Movies & TV Shows
  */
 const getTrending = async (): Promise<MovieData> => {
     const response = await fetch(

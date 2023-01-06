@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-interface CardProps {
+interface MovieCardProps {
     details: ShowData;
 }
 
@@ -23,7 +23,7 @@ interface CardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard(props: CardProps): JSX.Element {
+export default function ShowCard({ details }: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
 
@@ -34,7 +34,7 @@ export default function ShowCard(props: CardProps): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && currentWatchQueue.includes(props.details.id)) {
+            if (currentWatchQueue && currentWatchQueue.includes(details.id)) {
                 setIsInWatchQueue(true);
             }
         };
@@ -64,41 +64,58 @@ export default function ShowCard(props: CardProps): JSX.Element {
 
     return (
         <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
-            <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
+            <Link to={`/details/${details.id}`} state={details} data-testid='show-details-link'>
                 {/* TODO: #193 Add placeholder poster if null */}
-                {props.details.poster_path && (
+                {details.poster_path && (
                     <CardMedia
                         component='img'
                         className='w-full cursor-pointer'
                         sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
-                        image={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
-                        alt={`${props.details.original_title} poster`}
+                        image={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                        alt={`${details.title} poster`}
                     />
                 )}
-                <div>
-                    <h2>{props.details.title}</h2>
-                    {props.details.release_date.length === 10 && (
+            </Link>
+            <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
+                <CardContent>
+                    <Typography variant='h5'>{details.title}</Typography>
+                    {details.release_date.length === 10 && (
                         <Typography>
-                            {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
+                            {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    <Typography variant='body2'>{props.details.runtime} minutes</Typography>
+                    <Typography variant='body2'>{details.runtime} minutes</Typography>
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                    <p>{props.details.vote_average} stars</p>
-                    <span>{props.details.vote_count} ratings</span>
-                    <p>{props.details.age_rating}</p>
-                </div>
-            </Link>
-            {profile &&
-                (isInWatchQueue ? (
-                    <button onClick={() => queueHandler(false, props.details?.id)}>
-                        Remove from queue
-                    </button>
-                ) : (
-                    <button onClick={() => queueHandler(true, props.details?.id)}>
-                        Add to queue
-                    </button>
-                ))}
+                    <Typography variant='body2'>{details.vote_average} stars</Typography>
+                    <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                    <Typography variant='body2'>{details.age_rating}</Typography>
+                </CardContent>
+                {profile && (
+                    <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
+                        {isInWatchQueue ? (
+                            <Button
+                                sx={{ m: 1 }}
+                                variant='outlined'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(true, details?.id)}
+                            >
+                                Add to queue
+                            </Button>
+                        ) : (
+                            <Button
+                                sx={{ m: 1 }}
+                                variant='outlined'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(false, details?.id)}
+                            >
+                                Remove from queue
+                            </Button>
+                        )}
+                    </CardActions>
+                )}
+            </Box>
         </div>
     );
 }

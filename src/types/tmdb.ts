@@ -35,7 +35,7 @@ export interface MovieResultData {
     original_title: string;
     overview: string;
     popularity: number;
-    poster_path: string;
+    poster_path: string | null;
     release_date: string;
     title: string;
     video: boolean;
@@ -44,10 +44,6 @@ export interface MovieResultData {
 }
 
 export interface MovieDetailsData extends MovieResultData {
-    title: string;
-    episode_run_time: number;
-    first_air_date: string;
-    original_name: string;
     belongs_to_collection: {
         backdrop_path: string;
         id: number;
@@ -80,19 +76,11 @@ export interface MovieDetailsData extends MovieResultData {
     release_dates: {
         results: MovieReleaseDateResults[];
     };
-    content_ratings?: {
-        results: MovieReleaseDateResults[];
-    };
     revenue: number;
     runtime: number;
     spoken_languages: MovieSpokenLanguages[];
     status: string;
     tagline: string;
-}
-
-interface MovieReleaseDateResults {
-    iso_3166_1: string;
-    release_dates: MovieReleaseDates[];
 }
 
 interface MovieReleaseDates {
@@ -101,6 +89,11 @@ interface MovieReleaseDates {
     note: string;
     release_date: string;
     type: number;
+}
+
+interface MovieReleaseDateResults {
+    iso_3166_1: string;
+    release_dates: MovieReleaseDates[];
 }
 
 interface ProviderDetails {
@@ -117,7 +110,7 @@ interface ProviderInfo {
     provider_name?: string;
 }
 
-export interface MovieProviders {
+export interface ShowProviders {
     id: number;
     results: {
         AR?: ProviderDetails;

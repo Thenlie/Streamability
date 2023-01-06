@@ -1,9 +1,9 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
-import { ShowCard, ShowCarousel } from '../components';
+import { ShowCard } from '../components';
 import { MovieData, ShowData, TvShowData } from '../types/tmdb';
-import { getShowsByName, getShowDetails } from '../helpers/getShowUtils';
+import { getTvByName, getTvDetails } from '../helpers/getShowUtils';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -35,18 +35,15 @@ export default function SearchResultsScreen(): JSX.Element {
         // Build array of show details, set to state once complete
         const handler = async () => {
             const movieData: MovieData = await getMoviesByName(query);
-            const showData: TvShowData = await getShowsByName(query);
-            console.log(showData);
+            const showData: TvShowData = await getTvByName(query);
             const movieArr = [];
             const showArr = [];
             for (let i = 0; i < movieData.results.length; i++) {
                 const movie = await getMovieDetails(movieData.results[i].id);
-                console.log(movie);
                 movieArr.push(movie);
             }
             for (let i = 0; i < showData.results.length; i++) {
-                const show = await getShowDetails(showData.results[i].id);
-                console.log(show);
+                const show = await getTvDetails(showData.results[i].id);
                 showArr.push(show);
             }
             setMovieDetails(movieArr);
@@ -56,8 +53,6 @@ export default function SearchResultsScreen(): JSX.Element {
         handler();
     }, [query]);
 
-    // console.log(movieDetails)
-
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p data-testid='search-results-loader'>Loading...</p>;
 
@@ -65,9 +60,10 @@ export default function SearchResultsScreen(): JSX.Element {
         <>
             <h1 data-testid='search-results-heading'>Search Results Page</h1>
             <p>Query: {query}</p>
-            {movieDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
-            {showDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
-            <ShowCarousel />
+            <div className='flex flex-wrap justify-center'>
+                {movieDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
+                {showDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
+            </div>
         </>
     );
 }

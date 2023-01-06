@@ -9,12 +9,12 @@ import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 // mock MovieDB API calls
 vi.mock('../../helpers/getMovieUtils', () => {
     const sampleMovieData = vi.importActual('./assets/searchData.json');
-    const sampleMovieDetailsData = vi.importActual('./assets/movieData.json');
     const sampleMovieProviders = vi.importActual('./assets/providerData.json');
+    const sampleShowData = vi.importActual('./assets/showData.json');
     return {
         default: {},
         getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
-        getMovieDetails: vi.fn().mockResolvedValue(sampleMovieDetailsData),
+        getMovieDetails: vi.fn().mockResolvedValue(sampleShowData),
         getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
     };
 });
