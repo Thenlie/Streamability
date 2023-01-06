@@ -36,16 +36,18 @@ export default function SearchResultsScreen(): JSX.Element {
         const handler = async () => {
             const movieData: MovieData = await getMoviesByName(query);
             const showData: TvShowData = await getShowsByName(query);
+            console.log(showData);
             const movieArr = [];
             const showArr = [];
             for (let i = 0; i < movieData.results.length; i++) {
                 const movie = await getMovieDetails(movieData.results[i].id);
+                console.log(movie);
                 movieArr.push(movie);
             }
             for (let i = 0; i < showData.results.length; i++) {
                 const show = await getShowDetails(showData.results[i].id);
-                showArr.push(show);
                 console.log(show);
+                showArr.push(show);
             }
             setMovieDetails(movieArr);
             setShowDetails(showArr);
@@ -53,6 +55,8 @@ export default function SearchResultsScreen(): JSX.Element {
         };
         handler();
     }, [query]);
+
+    // console.log(movieDetails)
 
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p data-testid='search-results-loader'>Loading...</p>;
