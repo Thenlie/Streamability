@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { SUPABASE } from '../helpers/supabaseClient';
 import { useSessionContext, useProfileContext } from '../hooks';
-import { deleteProfileById, updateProfileUsername, getProfileWatchQueue } from '../supabase/profiles';
+import {
+    deleteProfileById,
+    updateProfileUsername,
+    getProfileWatchQueue,
+} from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 /**
  * User must be logged in to access endpoint
- * 
+ *
  * @returns {JSX.Element} | A single users profile page
  */
 export default function DashboardScreen(): JSX.Element {
@@ -51,23 +55,26 @@ export default function DashboardScreen(): JSX.Element {
     };
 
     return (
-        <div aria-live="polite">
+        <div aria-live='polite'>
             <div>
                 <p>Email: {session?.user.email}</p>
                 <p>id: {profile?.id}</p>
                 <p>Username: {profile?.username}</p>
             </div>
-            <label htmlFor="username">Username:</label>
-            <input name="username" onChange={(e) => { setUsername(e.target.value); }} />
-            <button onClick={() => changeUsername()}>
-				Update Profile
-            </button><br />
-            <button type="button" onClick={() => SUPABASE.auth.signOut()}>
-				Sign Out
-            </button><br />
-            <button onClick={() => deleteProfile()}>
-				Delete Profile
+            <label htmlFor='username'>Username:</label>
+            <input
+                name='username'
+                onChange={(e) => {
+                    setUsername(e.target.value);
+                }}
+            />
+            <button onClick={() => changeUsername()}>Update Profile</button>
+            <br />
+            <button type='button' onClick={() => SUPABASE.auth.signOut()}>
+                Sign Out
             </button>
+            <br />
+            <button onClick={() => deleteProfile()}>Delete Profile</button>
         </div>
     );
 }

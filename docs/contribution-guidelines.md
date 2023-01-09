@@ -92,6 +92,17 @@ git push -f origin branch-name
 ```
 > NOTE: `HEAD~2` would pick the current HEAD and on commit previous for the rebase. Change this number as needed depending on the number of commits you have. You can read more about rebasing [here](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase).
 
+## Work-in-Progress Commits
+
+If you would like to make commits without running the full test suite, you can do so with the following command:
+```s
+git commit -m "msg" --no-verify
+```
+You can also set an enviornment flag in you shell to do this. Here is a helpful script for quickly creating WIP commits:
+```s
+export NO_VERIFY=1 && git add -A && git commit -m "CI Skipped. --WIP--" && export NO_VERIFY=
+```
+
 # Code Quality 🧼
 
 ## ES Lint

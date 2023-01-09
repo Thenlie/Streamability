@@ -1,0 +1,11 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "printWidth": 100,
+    "semi": true,
+    "parser": "typescript",
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "insert_final_newline": true
+}

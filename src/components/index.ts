@@ -5,16 +5,8 @@
 import ShowCard from './ShowCard';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
-import SideNavigator from './SideNavigator';
 import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
+import Providers from './Providers';
 
-export {
-    ShowCard,
-    ShowCarousel,
-    SearchInput,
-    SideNavigator,
-    LoginForm,
-    SignUpForm,
-    ErrorMessage,
-};
+export { ShowCard, ShowCarousel, SearchInput, LoginForm, SignUpForm, ErrorMessage, Providers };

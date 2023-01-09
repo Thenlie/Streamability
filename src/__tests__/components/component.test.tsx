@@ -11,23 +11,27 @@ describe('Component Test Suite', () => {
         render(<ErrorMessage message='test message' />);
 
         expect(screen.getByTestId('error-message-message')).toBeInTheDocument();
-        expect(screen.getByTestId('error-message-message')).toHaveTextContent('Error! test message');
+        expect(screen.getByTestId('error-message-message')).toHaveTextContent(
+            'Error! test message'
+        );
     });
     it('renders the search input component', async () => {
         // create a new data router for the test
-        const router = createMemoryRouter([{
-            path: '/',
-            element: <SearchInput />
-        }]);
+        const router = createMemoryRouter([
+            {
+                path: '/',
+                element: <SearchInput />,
+            },
+        ]);
         render(<RouterProvider router={router} />);
-        
-        expect(screen.getByTestId('featured-search-input')).toBeInTheDocument();
-        expect(screen.getByTestId('featured-search-button')).toBeInTheDocument();
+
+        expect(screen.getByTestId('search-input')).toBeInTheDocument();
+        expect(screen.getByTestId('search-button')).toBeInTheDocument();
     });
     it('renders the show card component', async () => {
         // create a new data router for the test
         const router = createMemoryRouter(showCardRoutes, {
-            initialEntries: ['/']
+            initialEntries: ['/'],
         });
         render(<RouterProvider router={router} />);
 

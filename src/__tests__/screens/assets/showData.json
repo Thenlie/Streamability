@@ -1,0 +1,19 @@
+{
+    "id": 1726,
+    "poster_path": "/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",
+    "title": "Iron Man",
+    "release_date": "2008-04-30",
+    "age_rating": "PG-13",
+    "runtime": 126,
+    "vote_average": 7.631,
+    "vote_count": 23740,
+    "overview": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
+    "networks": [
+        {
+            "name": "Disney Plus",
+            "id": 1234,
+            "logo_path": null,
+            "origin_country": "US"
+        }
+    ]
+}

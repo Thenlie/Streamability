@@ -3,12 +3,19 @@ import ErrorMessage from '../ErrorMessage';
 import { SUPABASE } from '../../helpers/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import { Button, InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import {
+    Button,
+    InputAdornment,
+    FilledInput,
+    InputLabel,
+    FormControl,
+    IconButton,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 /**
  * Screen to handle Supabase sign up
- * 
+ *
  * @returns {JSX.Element}
  */
 export default function SignUpForm(): JSX.Element {
@@ -29,7 +36,7 @@ export default function SignUpForm(): JSX.Element {
     if (session) {
         return <Navigate to={'/dashboard'} />;
     }
-    
+
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
         setErrorMessage(msg);
@@ -49,34 +56,42 @@ export default function SignUpForm(): JSX.Element {
 
     /**
      * Toggle whether password is displayed as dots or plaintext
-     * 
+     *
      * @param isConfirm | true if confirm password, false if password
      */
     const togglePasswordVisibility = (isConfirm: boolean): void => {
         isConfirm
-            ? setIsConfirmPasswordVisible(prev => !prev)
-            : setIsPasswordVisible(prev => !prev);
+            ? setIsConfirmPasswordVisible((prev) => !prev)
+            : setIsPasswordVisible((prev) => !prev);
     };
 
     /**
-	 * Function to authenticate and perform Supabase sign up
-	 * This will not log the user in, it will send the user an email with a link
-	 * Once they click that link they will be logged in
-	 * 
-	 * @param evt | DOM submit event
-	 * @returns {Promise<void>} | Does not redirect user
-	 */
+     * Function to authenticate and perform Supabase sign up
+     * This will not log the user in, it will send the user an email with a link
+     * Once they click that link they will be logged in
+     *
+     * @param evt | DOM submit event
+     * @returns {Promise<void>} | Does not redirect user
+     */
     const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
         evt.preventDefault();
         clearErrors();
 
         // Ensure all fields have input
-        if (!email) { setEmailError(true); }
-        if (!username) { setUsernameError(true); }
-        if (!password) { setPasswordError(true); }
-        if (!confirmPassword) { setConfirmPasswordError(true); }
+        if (!email) {
+            setEmailError(true);
+        }
+        if (!username) {
+            setUsernameError(true);
+        }
+        if (!password) {
+            setPasswordError(true);
+        }
+        if (!confirmPassword) {
+            setConfirmPasswordError(true);
+        }
         if (!email || !password || !confirmPassword || !username) {
-            showError('All fields must be filled out.');
+            showError('All fields must be filled out');
             return;
         }
 
@@ -98,7 +113,7 @@ export default function SignUpForm(): JSX.Element {
         if (password !== confirmPassword) {
             setPasswordError(true);
             setConfirmPasswordError(true);
-            showError('Passwords must match.');
+            showError('Passwords must match');
             return;
         }
 
@@ -109,12 +124,15 @@ export default function SignUpForm(): JSX.Element {
             options: {
                 data: {
                     username: username,
-                }
-            }
+                },
+            },
         });
 
         if (error) {
-            if (error.message == 'duplicate key value violates unique constraint "profiles_username_key"') {
+            if (
+                error.message ==
+                'duplicate key value violates unique constraint "profiles_username_key"'
+            ) {
                 showError('Username unavailable');
                 setUsernameError(true);
                 return;
@@ -122,7 +140,7 @@ export default function SignUpForm(): JSX.Element {
             showError(error.message);
             if (import.meta.env.DEV) console.error(error);
         }
-   
+
         // onAuthStateChange function will be triggered
         // User has not logged in yet but we still get some information back
         // Check if 'confirmed_at' exists on user to see if they validated their email
@@ -130,11 +148,13 @@ export default function SignUpForm(): JSX.Element {
     };
 
     return (
-        <div aria-live="polite" className='w-full'>
-            <h1>Signup</h1>
-            <form onSubmit={signUpHandler} className='flex flex-col'>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary'>Email</InputLabel>
+        <div aria-live='polite' className='w-full'>
+            <h1 data-testid='signup-heading'>Signup</h1>
+            <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='email-input' color='secondary'>
+                        Email
+                    </InputLabel>
                     <FilledInput
                         id='email-input'
                         type='email'
@@ -147,8 +167,10 @@ export default function SignUpForm(): JSX.Element {
                         onFocus={() => setEmailError(false)}
                     />
                 </FormControl>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='username-input' color='secondary'>Username</InputLabel>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='username-input' color='secondary'>
+                        Username
+                    </InputLabel>
                     <FilledInput
                         id='username-input'
                         type='username'
@@ -160,11 +182,13 @@ export default function SignUpForm(): JSX.Element {
                         onFocus={() => setUsernameError(false)}
                     />
                 </FormControl>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary'>Password</InputLabel>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='password-input' color='secondary'>
+                        Password
+                    </InputLabel>
                     <FilledInput
                         id='password-input'
-                        name="password"
+                        name='password'
                         type={isPasswordVisible ? 'text' : 'password'}
                         autoComplete='new-password'
                         color='secondary'
@@ -178,7 +202,7 @@ export default function SignUpForm(): JSX.Element {
                                     aria-label='toggle password visibility'
                                     onClick={() => togglePasswordVisibility(false)}
                                     edge='end'
-                                    sx={{backgroundColor: 'none'}}
+                                    sx={{ backgroundColor: 'none' }}
                                 >
                                     {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
@@ -186,11 +210,13 @@ export default function SignUpForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <FormControl sx={{m: .5}} variant='filled'>
-                    <InputLabel htmlFor='confirm-password-input' color='secondary'>Confirm Password</InputLabel>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='confirm-password-input' color='secondary'>
+                        Confirm Password
+                    </InputLabel>
                     <FilledInput
                         id='confirm-password-input'
-                        name="confirm-password"
+                        name='confirm-password'
                         type={isConfirmPasswordVisible ? 'text' : 'password'}
                         value={confirmPassword}
                         error={confirmPasswordError}
@@ -210,17 +236,10 @@ export default function SignUpForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <Button 
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    sx={{ margin: '10px'}}
-                >
+                <Button variant='contained' size='large' type='submit' sx={{ margin: '10px' }}>
                     Submit
                 </Button>
-                {errorMessage && (
-                    <ErrorMessage message={errorMessage} />
-                )}
+                {errorMessage && <ErrorMessage message={errorMessage} />}
             </form>
         </div>
     );
