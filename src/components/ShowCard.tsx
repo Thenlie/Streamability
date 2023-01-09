@@ -4,7 +4,7 @@ import {
     getProfileWatchQueue,
     removeFromProfileWatchQueue,
 } from '../supabase/profiles';
-import { MovieDetailsData } from '../types/tmdb';
+import { ShowData } from '../types/tmdb';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/ma
 import { Box } from '@mui/system';
 
 interface MovieCardProps {
-    details: MovieDetailsData;
+    details: ShowData;
 }
 
 /**
@@ -23,21 +23,9 @@ interface MovieCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard(props: MovieCardProps): JSX.Element {
+export default function ShowCard({ details }: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
-
-    const ratingHandler = (arr: MovieDetailsData): string => {
-        for (let i = 0; i < arr.release_dates.results.length; i++) {
-            if (
-                arr.release_dates.results[i].iso_3166_1 === 'US' &&
-                arr.release_dates.results[i].release_dates[0].certification
-            ) {
-                return arr.release_dates.results[i].release_dates[0].certification;
-            }
-        }
-        return 'No rating available';
-    };
 
     /**
      * On component render, get the current users watch queue from Supabase
@@ -46,7 +34,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && currentWatchQueue.includes(props.details.id)) {
+            if (currentWatchQueue && currentWatchQueue.includes(details.id)) {
                 setIsInWatchQueue(true);
             }
         };
@@ -76,31 +64,31 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
 
     return (
         <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
-            <Link to={`/details/${props.details.id}`} state={props} data-testid='show-details-link'>
+            <Link to={`/details/${details.id}`} state={details} data-testid='show-details-link'>
                 {/* TODO: #193 Add placeholder poster if null */}
-                {props.details.poster_path && (
+                {details.poster_path && (
                     <CardMedia
                         component='img'
                         className='w-full cursor-pointer'
                         sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
-                        image={`https://image.tmdb.org/t/p/w500${props.details.poster_path}`}
-                        alt={`${props.details.original_title} poster`}
+                        image={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                        alt={`${details.title} poster`}
                     />
                 )}
             </Link>
             <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
                 <CardContent>
-                    <Typography variant='h5'>{props.details.original_title}</Typography>
-                    {props.details.release_date.length === 10 && (
+                    <Typography variant='h5'>{details.title}</Typography>
+                    {details.release_date.length === 10 && (
                         <Typography>
-                            {formatReleaseDate(props.details.release_date, DateSize.MEDIUM)}
+                            {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    <Typography variant='body2'>{props.details.runtime} minutes</Typography>
+                    <Typography variant='body2'>{details.runtime} minutes</Typography>
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                    <Typography variant='body2'>{props.details.vote_average} stars</Typography>
-                    <Typography variant='body2'>{props.details.vote_count} ratings</Typography>
-                    <Typography variant='body2'>{ratingHandler(props.details)}</Typography>
+                    <Typography variant='body2'>{details.vote_average} stars</Typography>
+                    <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                    <Typography variant='body2'>{details.age_rating}</Typography>
                 </CardContent>
                 {profile && (
                     <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
@@ -110,7 +98,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                                 variant='outlined'
                                 size='small'
                                 color='secondary'
-                                onClick={() => queueHandler(true, props.details?.id)}
+                                onClick={() => queueHandler(true, details?.id)}
                             >
                                 Add to queue
                             </Button>
@@ -120,7 +108,7 @@ export default function ShowCard(props: MovieCardProps): JSX.Element {
                                 variant='outlined'
                                 size='small'
                                 color='secondary'
-                                onClick={() => queueHandler(false, props.details?.id)}
+                                onClick={() => queueHandler(false, details?.id)}
                             >
                                 Remove from queue
                             </Button>

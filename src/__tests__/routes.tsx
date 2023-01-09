@@ -12,7 +12,7 @@ import { loader as searchLoader } from '../screens/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
 import sampleMovieData from './screens/assets/movieData.json';
-import { MovieDetailsData } from '../types/tmdb';
+import { ShowData } from '../types/tmdb';
 
 /**
  * Routes to be used in screen unit tests
@@ -70,7 +70,7 @@ export const showCardRoutes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <ShowCard details={sampleMovieData as MovieDetailsData} />,
+                element: <ShowCard details={sampleMovieData as ShowData} />,
             },
         ],
     },
