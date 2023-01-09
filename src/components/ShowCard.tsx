@@ -4,7 +4,7 @@ import {
     getProfileWatchQueue,
     removeFromProfileWatchQueue,
 } from '../supabase/profiles';
-import { ShowData } from '../types/tmdb';
+import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';

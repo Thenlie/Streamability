@@ -12,7 +12,7 @@ import { loader as searchLoader } from '../screens/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
 import sampleMovieData from './screens/assets/movieData.json';
-import { ShowData } from '../types/tmdb';
+import { ShowData } from '../types';
 
 /**
  * Routes to be used in screen unit tests

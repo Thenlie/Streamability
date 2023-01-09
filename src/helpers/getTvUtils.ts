@@ -1,20 +1,22 @@
-import { ShowData, TvShowDetailsData, TvShowData, ShowProviders } from '../types/tmdb';
+import { ShowData, TvDetailsData, TvByName, ShowProviders } from '../types';
 
 /**
  * This function is ran after the user enters a name of a TV Show.
+ * @param name | Name of show being queried
  * @returns {Promise<TvShowData>} | List of shows by searched query.
  */
-const getTvByName = async (name: string): Promise<TvShowData> => {
+const getTvByName = async (name: string): Promise<TvByName> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/tv?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<TvShowData>;
+    return response.json() as Promise<TvByName>;
 };
 
 /**
  * This function is ran for specific <ShowCard /> data with a TV Show ID.
+ * @param id | MovieDB id of show being queried
  * @returns {Promise<ShowData>} | Specific data for a TV Show that is not originally supplied by getMoviesByName.
  */
 const getTvDetails = async (id: number): Promise<ShowData> => {
@@ -23,7 +25,7 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }&append_to_response=images,release_dates,content_ratings`
     );
-    const returnRating = (arr: TvShowDetailsData) => {
+    const returnRating = (arr: TvDetailsData) => {
         for (let i = 0; i < arr.content_ratings.results.length; i++) {
             if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
                 return arr.content_ratings.results[i].rating;
@@ -31,7 +33,7 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
         }
         return 'No rating available';
     };
-    const data = (await response.json()) as TvShowDetailsData;
+    const data = (await response.json()) as TvDetailsData;
     return {
         id: data.id,
         poster_path: data.poster_path,
@@ -43,11 +45,12 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
         age_rating: returnRating(data),
         overview: data.overview,
         networks: data.networks,
-    } as ShowData;
+    };
 };
 
 /**
  * This function is ran for a specified movie to return streaming services with a TV Show ID.
+ * @param id | MovieDB id of show being queried
  * @returns {Promise<ShowProviders>} | Returns list of streaming services
  */
 const getTvProviders = async (id: number): Promise<ShowProviders> => {

@@ -1,32 +1,4 @@
-interface MovieImage {
-    aspect_ratio: number;
-    file_path: string;
-    height: number;
-    iso_639_1: string | null;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-}
-
-interface MovieSpokenLanguages {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-}
-
-interface BasicData {
-    id: number;
-    name: string;
-}
-
-export interface MovieData {
-    page: number;
-    results: MovieResultData[];
-    total_pages: number;
-    total_results: number;
-}
-
-export interface MovieResultData {
+interface MovieData {
     adult: boolean;
     backdrop_path: string | null;
     genre_ids?: number[];
@@ -43,7 +15,30 @@ export interface MovieResultData {
     vote_count: number;
 }
 
-export interface MovieDetailsData extends MovieResultData {
+/**
+ * Returned by getMoviesByName
+ */
+export interface MovieByName {
+    page: number;
+    results: MovieData[];
+    total_pages: number;
+    total_results: number;
+}
+
+interface MovieImage {
+    aspect_ratio: number;
+    file_path: string;
+    height: number;
+    iso_639_1: string | null;
+    vote_average: number;
+    vote_count: number;
+    width: number;
+}
+
+/**
+ * Returned by MovieDB details request
+ */
+export interface MovieDetailsData extends MovieData {
     belongs_to_collection: {
         backdrop_path: string;
         id: number;
@@ -51,7 +46,12 @@ export interface MovieDetailsData extends MovieResultData {
         poster_path: string;
     };
     budget: number;
-    genres: BasicData[];
+    genres: [
+        {
+            id: number;
+            name: string;
+        }
+    ];
     homepage: string;
     images: {
         backdrops: MovieImage[];
@@ -74,102 +74,117 @@ export interface MovieDetailsData extends MovieResultData {
         }
     ];
     release_dates: {
-        results: MovieReleaseDateResults[];
+        results: [
+            {
+                iso_3166_1: string;
+                release_dates: [
+                    {
+                        certification: string;
+                        iso_639_1: string;
+                        note: string;
+                        release_date: string;
+                        type: number;
+                    }
+                ];
+            }
+        ];
     };
     revenue: number;
     runtime: number;
-    spoken_languages: MovieSpokenLanguages[];
+    spoken_languages: [
+        {
+            english_name: string;
+            iso_639_1: string;
+            name: string;
+        }
+    ];
     status: string;
     tagline: string;
 }
 
-interface MovieReleaseDates {
-    certification: string;
-    iso_639_1: string;
-    note: string;
-    release_date: string;
-    type: number;
-}
-
-interface MovieReleaseDateResults {
-    iso_3166_1: string;
-    release_dates: MovieReleaseDates[];
-}
-
-interface ProviderDetails {
-    link?: string;
-    flatrate?: ProviderInfo[];
-    rent?: ProviderInfo[];
-    buy?: ProviderInfo[];
-}
-
-interface ProviderInfo {
+interface ShowProviderInfo {
     display_priority?: number;
     logo_path?: string;
     provider_id?: number;
     provider_name?: string;
 }
 
+interface ShowProviderDetails {
+    link?: string;
+    flatrate?: ShowProviderInfo[];
+    rent?: ShowProviderInfo[];
+    buy?: ShowProviderInfo[];
+}
+
+/**
+ * Returned by getMovieProviders and getTvProviders
+ */
 export interface ShowProviders {
     id: number;
     results: {
-        AR?: ProviderDetails;
-        AT?: ProviderDetails;
-        AU?: ProviderDetails;
-        BE?: ProviderDetails;
-        BR?: ProviderDetails;
-        CA?: ProviderDetails;
-        CH?: ProviderDetails;
-        CL?: ProviderDetails;
-        CO?: ProviderDetails;
-        CZ?: ProviderDetails;
-        DE?: ProviderDetails;
-        DK?: ProviderDetails;
-        EC?: ProviderDetails;
-        EE?: ProviderDetails;
-        ES?: ProviderDetails;
-        FI?: ProviderDetails;
-        FR?: ProviderDetails;
-        GB?: ProviderDetails;
-        GR?: ProviderDetails;
-        HU?: ProviderDetails;
-        ID?: ProviderDetails;
-        IE?: ProviderDetails;
-        IN?: ProviderDetails;
-        IT?: ProviderDetails;
-        JP?: ProviderDetails;
-        KR?: ProviderDetails;
-        LT?: ProviderDetails;
-        LV?: ProviderDetails;
-        MX?: ProviderDetails;
-        MY?: ProviderDetails;
-        NL?: ProviderDetails;
-        NO?: ProviderDetails;
-        NZ?: ProviderDetails;
-        PE?: ProviderDetails;
-        PH?: ProviderDetails;
-        PL?: ProviderDetails;
-        PT?: ProviderDetails;
-        RO?: ProviderDetails;
-        RU?: ProviderDetails;
-        SE?: ProviderDetails;
-        SG?: ProviderDetails;
-        TH?: ProviderDetails;
-        TR?: ProviderDetails;
-        US?: ProviderDetails;
-        VE?: ProviderDetails;
-        ZA?: ProviderDetails;
+        AR?: ShowProviderDetails;
+        AT?: ShowProviderDetails;
+        AU?: ShowProviderDetails;
+        BE?: ShowProviderDetails;
+        BR?: ShowProviderDetails;
+        CA?: ShowProviderDetails;
+        CH?: ShowProviderDetails;
+        CL?: ShowProviderDetails;
+        CO?: ShowProviderDetails;
+        CZ?: ShowProviderDetails;
+        DE?: ShowProviderDetails;
+        DK?: ShowProviderDetails;
+        EC?: ShowProviderDetails;
+        EE?: ShowProviderDetails;
+        ES?: ShowProviderDetails;
+        FI?: ShowProviderDetails;
+        FR?: ShowProviderDetails;
+        GB?: ShowProviderDetails;
+        GR?: ShowProviderDetails;
+        HU?: ShowProviderDetails;
+        ID?: ShowProviderDetails;
+        IE?: ShowProviderDetails;
+        IN?: ShowProviderDetails;
+        IT?: ShowProviderDetails;
+        JP?: ShowProviderDetails;
+        KR?: ShowProviderDetails;
+        LT?: ShowProviderDetails;
+        LV?: ShowProviderDetails;
+        MX?: ShowProviderDetails;
+        MY?: ShowProviderDetails;
+        NL?: ShowProviderDetails;
+        NO?: ShowProviderDetails;
+        NZ?: ShowProviderDetails;
+        PE?: ShowProviderDetails;
+        PH?: ShowProviderDetails;
+        PL?: ShowProviderDetails;
+        PT?: ShowProviderDetails;
+        RO?: ShowProviderDetails;
+        RU?: ShowProviderDetails;
+        SE?: ShowProviderDetails;
+        SG?: ShowProviderDetails;
+        TH?: ShowProviderDetails;
+        TR?: ShowProviderDetails;
+        US?: ShowProviderDetails;
+        VE?: ShowProviderDetails;
+        ZA?: ShowProviderDetails;
     };
 }
 
-export interface TvShowData {
+/**
+ * Returned by getTvByName
+ */
+export interface TvByName {
     page: number;
-    results: TvShowDetailsData[];
+    results: TvDetailsData[];
     total_pages: number;
     total_results: number;
 }
 
-export interface TvShowDetailsData {
+/**
+ * Returned by MovieDB details request
+ */
+export interface TvDetailsData {
     backdrop_path: string | null;
     created_by: [
         {
@@ -270,18 +285,20 @@ export interface TvShowDetailsData {
             }
         ];
     };
-    release_dates: TvShowReleaseDates;
+    release_dates: {
+        results: [
+            {
+                iso_3166_1: string;
+                rating: string;
+            }
+        ];
+    };
 }
 
-interface TvShowReleaseDates {
-    results: [
-        {
-            iso_3166_1: string;
-            rating: string;
-        }
-    ];
-}
-
+/**
+ * Returned by getMovieDetails and getTvDetails
+ * Custom type to work with both types of shows
+ */
 export interface ShowData {
     id: number;
     overview: string;

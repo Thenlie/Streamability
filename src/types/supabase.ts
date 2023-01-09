@@ -1,3 +1,6 @@
+/**
+ * Supabase user object from authentication table
+ */
 export interface User {
     app_metadata: unknown;
     aud: string;
@@ -14,6 +17,9 @@ export interface User {
     user_metadata: unknown;
 }
 
+/**
+ * Supabase user session object
+ */
 export interface Session {
     access_token: string;
     expires_at: number;
@@ -23,6 +29,9 @@ export interface Session {
     user: User;
 }
 
+/**
+ * Supabase user profile object from public profiles table
+ */
 export interface Profile {
     avatar_url: string | null;
     email: string;

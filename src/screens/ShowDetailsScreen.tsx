@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import { getMovieDetails } from '../helpers/getMovieUtils';
-import { ShowData } from '../types/tmdb';
+import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import Providers from '../components/Providers';
+import { Providers } from '../components';
 
 /**
  * Screen to show more details of a specific show

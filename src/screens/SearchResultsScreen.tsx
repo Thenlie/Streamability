@@ -2,8 +2,8 @@ import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
-import { MovieData, ShowData, TvShowData } from '../types/tmdb';
-import { getTvByName, getTvDetails } from '../helpers/getShowUtils';
+import { MovieByName, ShowData, TvByName } from '../types';
+import { getTvByName, getTvDetails } from '../helpers/getTvUtils';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -34,8 +34,8 @@ export default function SearchResultsScreen(): JSX.Element {
     useEffect(() => {
         // Build array of show details, set to state once complete
         const handler = async () => {
-            const movieData: MovieData = await getMoviesByName(query);
-            const showData: TvShowData = await getTvByName(query);
+            const movieData: MovieByName = await getMoviesByName(query);
+            const showData: TvByName = await getTvByName(query);
             const movieArr = [];
             const showArr = [];
             for (let i = 0; i < movieData.results.length; i++) {
