@@ -19,6 +19,19 @@ vi.mock('../../helpers/getMovieUtils', () => {
     };
 });
 
+vi.mock('../../helpers/getTvUtils', () => {
+    // TODO: Create sample TV data, currently using movie data
+    const sampleMovieData = vi.importActual('./assets/searchData.json');
+    const sampleMovieProviders = vi.importActual('./assets/providerData.json');
+    const sampleShowData = vi.importActual('./assets/showData.json');
+    return {
+        default: {},
+        getTvByName: vi.fn().mockResolvedValue(sampleMovieData),
+        getTvDetails: vi.fn().mockResolvedValue(sampleShowData),
+        getTvProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
+    };
+});
+
 describe('Movie Screen Test Suite', async () => {
     // set up variables to be used on each test
     let user: UserEvent;

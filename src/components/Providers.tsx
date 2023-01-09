@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ShowProviders, ShowData } from '../types/tmdb';
+import { ShowProviders, ShowData } from '../types';
 import { getMovieProviders } from '../helpers/getMovieUtils';
-import { getTvProviders } from '../helpers/getShowUtils';
+import { getTvProviders } from '../helpers/getTvUtils';
 
 interface ProviderProps {
     details: ShowData;
 }
+
 /**
  * Component to display streaming services logos for a given movie or show. Accepts an ID and
  * @returns {JSX.Element}
