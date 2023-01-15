@@ -42,8 +42,10 @@ export default function AppWrapper(): JSX.Element {
             (!('theme' in localStorage) &&
                 window.matchMedia('(prefers-color-scheme: dark)').matches)
         ) {
+            document.documentElement.classList.add('dark');
             setTheme(darkTheme);
         } else {
+            document.documentElement.classList.remove('dark');
             setTheme(lightTheme);
         }
 

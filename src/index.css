@@ -32,3 +32,12 @@
     @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+    transition-delay: background-color 5000s, color 5000s;
+    -webkit-text-fill-color: var(--color-text);
+}

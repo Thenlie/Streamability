@@ -78,18 +78,10 @@ export default function SignUpForm(): JSX.Element {
         clearErrors();
 
         // Ensure all fields have input
-        if (!email) {
-            setEmailError(true);
-        }
-        if (!username) {
-            setUsernameError(true);
-        }
-        if (!password) {
-            setPasswordError(true);
-        }
-        if (!confirmPassword) {
-            setConfirmPasswordError(true);
-        }
+        if (!email) setEmailError(true);
+        if (!username) setUsernameError(true);
+        if (!password) setPasswordError(true);
+        if (!confirmPassword) setConfirmPasswordError(true);
         if (!email || !password || !confirmPassword || !username) {
             showError('All fields must be filled out');
             return;
@@ -152,7 +144,7 @@ export default function SignUpForm(): JSX.Element {
             <h1 data-testid='signup-heading'>Signup</h1>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary'>
+                    <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
                         Email
                     </InputLabel>
                     <FilledInput
@@ -161,6 +153,7 @@ export default function SignUpForm(): JSX.Element {
                         name='email'
                         autoComplete='email'
                         color='secondary'
+                        className='!text-text'
                         value={email}
                         error={emailError}
                         onChange={(e) => setEmail(e.target.value)}
@@ -168,7 +161,7 @@ export default function SignUpForm(): JSX.Element {
                     />
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='username-input' color='secondary'>
+                    <InputLabel htmlFor='username-input' color='secondary' className='!text-text'>
                         Username
                     </InputLabel>
                     <FilledInput
@@ -176,6 +169,7 @@ export default function SignUpForm(): JSX.Element {
                         type='username'
                         name='username'
                         color='secondary'
+                        className='!text-text'
                         value={username}
                         error={usernameError}
                         onChange={(e) => setUsername(e.target.value)}
@@ -183,7 +177,7 @@ export default function SignUpForm(): JSX.Element {
                     />
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary'>
+                    <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
                         Password
                     </InputLabel>
                     <FilledInput
@@ -192,6 +186,7 @@ export default function SignUpForm(): JSX.Element {
                         type={isPasswordVisible ? 'text' : 'password'}
                         autoComplete='new-password'
                         color='secondary'
+                        className='!text-text'
                         value={password}
                         error={passwordError}
                         onChange={(e) => setPassword(e.target.value)}
@@ -204,14 +199,22 @@ export default function SignUpForm(): JSX.Element {
                                     edge='end'
                                     sx={{ backgroundColor: 'none' }}
                                 >
-                                    {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                                    {isPasswordVisible ? (
+                                        <VisibilityOff className='!text-text' />
+                                    ) : (
+                                        <Visibility className='!text-text' />
+                                    )}
                                 </IconButton>
                             </InputAdornment>
                         }
                     />
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='confirm-password-input' color='secondary'>
+                    <InputLabel
+                        htmlFor='confirm-password-input'
+                        color='secondary'
+                        className='!text-text'
+                    >
                         Confirm Password
                     </InputLabel>
                     <FilledInput
@@ -221,6 +224,7 @@ export default function SignUpForm(): JSX.Element {
                         value={confirmPassword}
                         error={confirmPasswordError}
                         color='secondary'
+                        className='!text-text'
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         onFocus={() => setConfirmPasswordError(false)}
                         endAdornment={
@@ -230,13 +234,23 @@ export default function SignUpForm(): JSX.Element {
                                     onClick={() => togglePasswordVisibility(true)}
                                     edge='end'
                                 >
-                                    {isConfirmPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                                    {isConfirmPasswordVisible ? (
+                                        <VisibilityOff className='!text-text' />
+                                    ) : (
+                                        <Visibility className='!text-text' />
+                                    )}
                                 </IconButton>
                             </InputAdornment>
                         }
                     />
                 </FormControl>
-                <Button variant='contained' size='large' type='submit' sx={{ margin: '10px' }}>
+                <Button
+                    variant='contained'
+                    size='large'
+                    type='submit'
+                    color='secondary'
+                    sx={{ margin: '10px' }}
+                >
                     Submit
                 </Button>
                 {errorMessage && <ErrorMessage message={errorMessage} />}

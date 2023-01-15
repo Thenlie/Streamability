@@ -28,6 +28,7 @@ else
     printf "\033[41m❌ ESLint Failed\033[0m\n"
     exit 1
 fi
+
 echo "--- Running Unit Tests ---"
 npm run test
 if [[ "$?" == 0 ]]; then
