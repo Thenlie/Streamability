@@ -1,18 +1,17 @@
-import { MovieByName, MovieDetailsData, ShowProviders, ShowData } from '../types';
-import { RecommendationData } from '../types/tmdb';
+import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
 
 /**
  * This function is ran after the user enters a name of a movie.
  * @param name | Name of show being queried
- * @returns {Promise<MovieByName>} | List of movies by searched query.
+ * @returns {Promise<MovieResults>} | List of movies by searched query.
  */
-const getMoviesByName = async (name: string): Promise<MovieByName> => {
+const getMoviesByName = async (name: string): Promise<MovieResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<MovieByName>;
+    return response.json() as Promise<MovieResults>;
 };
 
 /**
@@ -64,15 +63,15 @@ const getMovieProviders = async (id: number): Promise<ShowProviders> => {
 
 /**
  * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
- * @returns {Promise<MovieByName>} | Trending Movies & TV Shows
+ * @returns {Promise<MovieResults>} | Trending Movies & TV Shows
  */
-const getTrending = async (): Promise<MovieByName> => {
+const getTrending = async (): Promise<MovieResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/trending/movie/week?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    return response.json() as Promise<MovieByName>;
+    return response.json() as Promise<MovieResults>;
 };
 
 /**
@@ -86,7 +85,7 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    const data = (await response.json()) as RecommendationData;
+    const data = (await response.json()) as MovieResults;
     if (!data.results || data.results.length < 1) return null;
     const recommendations: ShowData[] = [];
     data.results.map((rec) =>

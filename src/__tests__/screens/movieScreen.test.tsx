@@ -53,6 +53,33 @@ vi.mock('../../helpers/getTvUtils', () => {
         getTvByName: vi.fn().mockResolvedValue(sampleMovieData),
         getTvDetails: vi.fn().mockResolvedValue(sampleShowData),
         getTvProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
+        getTvRecommendations: vi.fn().mockResolvedValue([
+            {
+                id: 8592,
+                name: 'Parks and Recreation',
+                overview:
+                    'Hilarious ensemble comedy that follows Leslie Knope, a mid-level bureaucrat in the Parks and Recreation Department of Pawnee, Indiana, and her tireless efforts to make her quintessentially American town just a little bit more fun.',
+                poster_path: '/5IOj62y2Eb2ngyYmEn1IJ7bFhzH.jpg',
+                popularity: 55.525,
+                first_air_date: '2009-04-09',
+                vote_average: 8.037,
+                vote_count: 1085,
+            },
+            {
+                backdrop_path: '/yXSzo0VU1Q1QaB7Xg5Hqe4tXXA3.jpg',
+                id: 1396,
+                name: 'Breaking Bad',
+                overview:
+                    // eslint-disable-next-line prettier/prettier
+                    'When Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family\'s financial future at any cost as he enters the dangerous world of drugs and crime.',
+                poster_path: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
+                media_type: 'tv',
+                popularity: 370.341,
+                first_air_date: '2008-01-20',
+                vote_average: 8.9,
+                vote_count: 10892,
+            },
+        ]),
     };
 });
 

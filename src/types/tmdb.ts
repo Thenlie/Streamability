@@ -16,9 +16,9 @@ interface MovieData {
 }
 
 /**
- * Returned by getMoviesByName
+ * Returned by movie DB find and recommendations request
  */
-export interface MovieByName {
+export interface MovieResults {
     page: number;
     results: MovieData[];
     total_pages: number;
@@ -171,21 +171,36 @@ export interface ShowProviders {
     };
 }
 
+interface TvData {
+    id: number;
+    backdrop_path?: string | null;
+    genre_ids?: number[];
+    original_language?: string;
+    original_name?: string;
+    overview?: string;
+    popularity?: number;
+    poster_path?: string | null;
+    first_air_date?: string;
+    name?: string;
+    vote_average?: number;
+    vote_count?: number;
+    origin_country?: string[];
+}
+
 /**
- * Returned by getTvByName
+ * Returned by movieDB find and recommendations request
  */
-export interface TvByName {
-    page: number;
-    results: TvDetailsData[];
-    total_pages: number;
-    total_results: number;
+export interface TvResults {
+    page?: number;
+    results?: TvData[];
+    total_pages?: number;
+    total_results?: number;
 }
 
 /**
  * Returned by MovieDB details request
  */
-export interface TvDetailsData {
-    backdrop_path: string | null;
+export interface TvDetailsData extends TvData {
     created_by: [
         {
             id: number;
@@ -196,7 +211,6 @@ export interface TvDetailsData {
         }
     ];
     episode_run_time: number[];
-    first_air_date: string;
     genres: [
         {
             id: number;
@@ -204,7 +218,6 @@ export interface TvDetailsData {
         }
     ];
     homepage: string;
-    id: number;
     in_production: boolean;
     languages: string[];
     last_air_date: string;
@@ -220,7 +233,6 @@ export interface TvDetailsData {
         vote_average: number;
         vote_count: number;
     };
-    name: string;
     next_episode_to_air: null;
     networks: [
         {
@@ -232,12 +244,6 @@ export interface TvDetailsData {
     ];
     number_of_episodes: number;
     number_of_seasons: number;
-    origin_country: string[];
-    original_language: string;
-    original_name: string;
-    overview: string;
-    popularity: number;
-    poster_path: string | null;
     production_companies: [
         {
             id: number;
@@ -273,8 +279,6 @@ export interface TvDetailsData {
     status: string;
     tagline: string;
     type: string;
-    vote_average: number;
-    vote_count: number;
     // content_ratings append to response
     content_ratings: {
         id: number;
@@ -300,15 +304,15 @@ export interface TvDetailsData {
  * Custom type to work with both types of shows
  */
 export interface ShowData {
-    id: number;
-    overview: string;
-    poster_path: string | null;
-    release_date: string;
+    id?: number;
+    overview?: string;
+    poster_path?: string | null;
+    release_date?: string;
     age_rating?: string | null;
     runtime?: number | number[];
-    title: string;
-    vote_average: number;
-    vote_count: number;
+    title?: string;
+    vote_average?: number;
+    vote_count?: number;
     networks?: [
         {
             name: string;
@@ -317,11 +321,4 @@ export interface ShowData {
             origin_country: string;
         }
     ];
-}
-
-export interface RecommendationData {
-    page?: number;
-    results?: MovieData[];
-    total_pages?: number;
-    total_results?: number;
 }

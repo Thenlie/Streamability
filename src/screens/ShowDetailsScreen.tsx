@@ -21,15 +21,13 @@ export default function ShowDetailsScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
-            if (!details) {
-                const movieDetails = await getMovieDetails(id);
-                setDetails(movieDetails);
-            }
+            const movieDetails = await getMovieDetails(id);
+            setDetails(movieDetails);
             const recommendation = await getMovieRecommendations(id);
             if (recommendation) setRecommendation(recommendation);
         };
         handler();
-    }, []);
+    }, [location]);
 
     // TODO: #199 Create skeleton loader
     if (!details) return <p>Loading</p>;
@@ -46,7 +44,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                 <div>
                     <div>
                         <h2 data-testid='show-details-heading'>{details.title}</h2>
-                        {details.release_date.length === 10 && (
+                        {details.release_date && details.release_date.length === 10 && (
                             <span data-testid='details-release-date'>
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
                             </span>
