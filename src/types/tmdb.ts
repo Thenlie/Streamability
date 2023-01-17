@@ -305,7 +305,7 @@ export interface ShowData {
     poster_path: string | null;
     release_date: string;
     age_rating?: string | null;
-    runtime: number | number[];
+    runtime?: number | number[];
     title: string;
     vote_average: number;
     vote_count: number;
@@ -317,4 +317,11 @@ export interface ShowData {
             origin_country: string;
         }
     ];
+}
+
+export interface RecommendationData {
+    page?: number;
+    results?: MovieData[];
+    total_pages?: number;
+    total_results?: number;
 }

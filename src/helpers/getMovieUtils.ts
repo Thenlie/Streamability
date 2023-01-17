@@ -1,4 +1,5 @@
 import { MovieByName, MovieDetailsData, ShowProviders, ShowData } from '../types';
+import { RecommendationData } from '../types/tmdb';
 
 /**
  * This function is ran after the user enters a name of a movie.
@@ -74,4 +75,38 @@ const getTrending = async (): Promise<MovieByName> => {
     return response.json() as Promise<MovieByName>;
 };
 
-export { getMoviesByName, getMovieDetails, getMovieProviders, getTrending };
+/**
+ * Get recommended movies based off of a movie
+ * @param id | MovieDB id of movie being searched for
+ * @returns {Promise<ShowData[] | null>} | Array of recommended movies
+ */
+const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
+        }`
+    );
+    const data = (await response.json()) as RecommendationData;
+    if (!data.results || data.results.length < 1) return null;
+    const recommendations: ShowData[] = [];
+    data.results.map((rec) =>
+        recommendations.push({
+            id: rec.id,
+            overview: rec.overview,
+            poster_path: rec.poster_path,
+            release_date: rec.release_date,
+            title: rec.title,
+            vote_average: rec.vote_average,
+            vote_count: rec.vote_count,
+        })
+    );
+    return recommendations;
+};
+
+export {
+    getMoviesByName,
+    getMovieDetails,
+    getMovieProviders,
+    getTrending,
+    getMovieRecommendations,
+};

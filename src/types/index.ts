@@ -6,6 +6,7 @@ import type {
     TvDetailsData,
     ShowProviders,
     ShowData,
+    RecommendationData,
 } from './tmdb';
 
 export type {
@@ -18,4 +19,5 @@ export type {
     TvDetailsData,
     ShowProviders,
     ShowData,
+    RecommendationData,
 };

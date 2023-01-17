@@ -34,7 +34,7 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && currentWatchQueue.includes(details.id)) {
+            if (currentWatchQueue && details.id && currentWatchQueue.includes(details.id)) {
                 setIsInWatchQueue(true);
             }
         };

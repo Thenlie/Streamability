@@ -16,6 +16,30 @@ vi.mock('../../helpers/getMovieUtils', () => {
         getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
         getMovieDetails: vi.fn().mockResolvedValue(sampleShowData),
         getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
+        getMovieRecommendations: vi.fn().mockResolvedValue([
+            {
+                id: 10138,
+                overview:
+                    // eslint-disable-next-line prettier/prettier
+                    'With the world now aware of his dual life as the armored superhero Iron Man, billionaire inventor Tony Stark faces pressure from the government, the press and the public to share his technology with the military. Unwilling to let go of his invention, Stark, with Pepper Potts and James \'Rhodey\' Rhodes at his side, must forge new alliances – and confront powerful enemies.',
+                poster_path: '/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg',
+                release_date: '2010-05-07',
+                title: 'Iron Man 2',
+                vote_average: 6.831,
+                vote_count: 18830,
+            },
+            {
+                id: 68721,
+                overview:
+                    // eslint-disable-next-line prettier/prettier
+                    'When Tony Stark\'s world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.',
+                poster_path: '/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg',
+                release_date: '2013-04-18',
+                title: 'Iron Man 3',
+                vote_average: 6.929,
+                vote_count: 20246,
+            },
+        ]),
     };
 });
 
