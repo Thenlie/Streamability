@@ -1,17 +1,17 @@
-import { ShowData, TvDetailsData, TvByName, ShowProviders } from '../types';
+import { ShowData, TvDetailsData, TvResults, ShowProviders } from '../types';
 
 /**
  * This function is ran after the user enters a name of a TV Show.
  * @param name | Name of show being queried
  * @returns {Promise<TvShowData>} | List of shows by searched query.
  */
-const getTvByName = async (name: string): Promise<TvByName> => {
+const getTvByName = async (name: string): Promise<TvResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/tv?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<TvByName>;
+    return response.json() as Promise<TvResults>;
 };
 
 /**
@@ -62,4 +62,33 @@ const getTvProviders = async (id: number): Promise<ShowProviders> => {
     return response.json() as Promise<ShowProviders>;
 };
 
-export { getTvByName, getTvDetails, getTvProviders };
+/**
+ * Get recommended TV shows based off of a movie
+ * @param id | MovieDB id of TV show being searched for
+ * @returns {Promise<ShowData[] | null>} | Array of recommended TV shows
+ */
+const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
+        }`
+    );
+    const data = (await response.json()) as TvResults;
+    if (!data.results || data.results.length < 1) return null;
+    const recommendations: ShowData[] = [];
+    data.results.map((rec) =>
+        recommendations.push({
+            id: rec.id,
+            overview: rec.overview,
+            poster_path: rec.poster_path,
+            release_date: rec.first_air_date,
+            title: rec.name,
+            vote_average: rec.vote_average,
+            vote_count: rec.vote_count,
+        })
+    );
+    console.log(JSON.stringify(recommendations));
+    return recommendations;
+};
+
+export { getTvByName, getTvDetails, getTvProviders, getTvRecommendations };

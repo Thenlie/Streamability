@@ -2,7 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
-import { MovieByName, ShowData, TvByName } from '../types';
+import { MovieResults, ShowData, TvResults } from '../types';
 import { getTvByName, getTvDetails } from '../helpers/getTvUtils';
 
 /**
@@ -34,17 +34,19 @@ export default function SearchResultsScreen(): JSX.Element {
     useEffect(() => {
         // Build array of show details, set to state once complete
         const handler = async () => {
-            const movieData: MovieByName = await getMoviesByName(query);
-            const showData: TvByName = await getTvByName(query);
+            const movieData: MovieResults = await getMoviesByName(query);
+            const showData: TvResults = await getTvByName(query);
             const movieArr = [];
             const showArr = [];
             for (let i = 0; i < movieData.results.length; i++) {
                 const movie = await getMovieDetails(movieData.results[i].id);
                 movieArr.push(movie);
             }
-            for (let i = 0; i < showData.results.length; i++) {
-                const show = await getTvDetails(showData.results[i].id);
-                showArr.push(show);
+            if (showData.results) {
+                for (let i = 0; i < showData.results.length; i++) {
+                    const show = await getTvDetails(showData.results[i].id);
+                    showArr.push(show);
+                }
             }
             setMovieDetails(movieArr);
             setShowDetails(showArr);

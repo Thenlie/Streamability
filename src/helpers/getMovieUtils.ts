@@ -1,17 +1,17 @@
-import { MovieByName, MovieDetailsData, ShowProviders, ShowData } from '../types';
+import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
 
 /**
  * This function is ran after the user enters a name of a movie.
  * @param name | Name of show being queried
- * @returns {Promise<MovieByName>} | List of movies by searched query.
+ * @returns {Promise<MovieResults>} | List of movies by searched query.
  */
-const getMoviesByName = async (name: string): Promise<MovieByName> => {
+const getMoviesByName = async (name: string): Promise<MovieResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<MovieByName>;
+    return response.json() as Promise<MovieResults>;
 };
 
 /**
@@ -63,15 +63,49 @@ const getMovieProviders = async (id: number): Promise<ShowProviders> => {
 
 /**
  * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
- * @returns {Promise<MovieByName>} | Trending Movies & TV Shows
+ * @returns {Promise<MovieResults>} | Trending Movies & TV Shows
  */
-const getTrending = async (): Promise<MovieByName> => {
+const getTrending = async (): Promise<MovieResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/trending/movie/week?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    return response.json() as Promise<MovieByName>;
+    return response.json() as Promise<MovieResults>;
 };
 
-export { getMoviesByName, getMovieDetails, getMovieProviders, getTrending };
+/**
+ * Get recommended movies based off of a movie
+ * @param id | MovieDB id of movie being searched for
+ * @returns {Promise<ShowData[] | null>} | Array of recommended movies
+ */
+const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
+        }`
+    );
+    const data = (await response.json()) as MovieResults;
+    if (!data.results || data.results.length < 1) return null;
+    const recommendations: ShowData[] = [];
+    data.results.map((rec) =>
+        recommendations.push({
+            id: rec.id,
+            overview: rec.overview,
+            poster_path: rec.poster_path,
+            release_date: rec.release_date,
+            title: rec.title,
+            vote_average: rec.vote_average,
+            vote_count: rec.vote_count,
+        })
+    );
+    return recommendations;
+};
+
+export {
+    getMoviesByName,
+    getMovieDetails,
+    getMovieProviders,
+    getTrending,
+    getMovieRecommendations,
+};

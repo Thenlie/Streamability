@@ -34,7 +34,7 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && currentWatchQueue.includes(details.id)) {
+            if (currentWatchQueue && details.id && currentWatchQueue.includes(details.id)) {
                 setIsInWatchQueue(true);
             }
         };
@@ -79,7 +79,7 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
             <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
                 <CardContent>
                     <Typography variant='h5'>{details.title}</Typography>
-                    {details.release_date.length === 10 && (
+                    {details.release_date && details.release_date.length === 10 && (
                         <Typography>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
