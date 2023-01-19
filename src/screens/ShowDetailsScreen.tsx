@@ -34,7 +34,7 @@ export default function ShowDetailsScreen(): JSX.Element {
 
     return (
         <>
-            <section className='flex'>
+            <section className='m-3 flex'>
                 <div>
                     <img
                         style={{ width: '350px', height: '550px' }}

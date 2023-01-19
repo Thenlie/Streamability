@@ -3,15 +3,29 @@ import { ShowData, TvDetailsData, TvResults, ShowProviders } from '../types';
 /**
  * This function is ran after the user enters a name of a TV Show.
  * @param name | Name of show being queried
- * @returns {Promise<TvShowData>} | List of shows by searched query.
+ * @returns {Promise<ShowData[]>} | List of shows by searched query.
  */
-const getTvByName = async (name: string): Promise<TvResults> => {
+const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/tv?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<TvResults>;
+    const data = (await response.json()) as TvResults;
+    if (data.results) {
+        return data.results.map((show) => {
+            return {
+                id: show.id,
+                poster_path: show.poster_path,
+                title: show.name,
+                release_date: show.first_air_date,
+                vote_average: show.vote_average,
+                vote_count: show.vote_count,
+                overview: show.overview,
+            };
+        });
+    }
+    return null;
 };
 
 /**

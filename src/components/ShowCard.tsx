@@ -84,11 +84,9 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    <Typography variant='body2'>{details.runtime} minutes</Typography>
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <Typography variant='body2'>{details.vote_average} stars</Typography>
                     <Typography variant='body2'>{details.vote_count} ratings</Typography>
-                    <Typography variant='body2'>{details.age_rating}</Typography>
                 </CardContent>
                 {profile && (
                     <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>

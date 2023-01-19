@@ -13,11 +13,13 @@ export default function DiscoverScreen(): JSX.Element {
         const handler = async () => {
             const movieData: MovieResults = await getTrending();
             const movieArr = [];
-            for (let i = 0; i < movieData.results.length; i++) {
-                const movie = await getMovieDetails(movieData.results[i].id);
-                movieArr.push(movie);
+            if (movieData.results) {
+                for (let i = 0; i < movieData.results.length; i++) {
+                    const movie = await getMovieDetails(movieData.results[i].id);
+                    movieArr.push(movie);
+                    setTrending(movieArr);
+                }
             }
-            setTrending(movieArr);
             setLoading(false);
         };
         handler();

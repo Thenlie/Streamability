@@ -3,15 +3,29 @@ import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../type
 /**
  * This function is ran after the user enters a name of a movie.
  * @param name | Name of show being queried
- * @returns {Promise<MovieResults>} | List of movies by searched query.
+ * @returns {Promise<ShowData[]>} | List of movies by searched query.
  */
-const getMoviesByName = async (name: string): Promise<MovieResults> => {
+const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    return response.json() as Promise<MovieResults>;
+    const data = (await response.json()) as MovieResults;
+    if (data.results) {
+        return data.results.map((movie) => {
+            return {
+                id: movie.id,
+                poster_path: movie.poster_path,
+                title: movie.title,
+                release_date: movie.release_date,
+                vote_average: movie.vote_average,
+                vote_count: movie.vote_count,
+                overview: movie.overview,
+            };
+        });
+    }
+    return null;
 };
 
 /**
