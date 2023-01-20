@@ -5,81 +5,26 @@ import userEvent from '@testing-library/user-event';
 import { routes } from '../routes';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import { MOVIE_DATA, MOVIE_DATA_ARRAY, PROVIDER_DATA, TV_DATA, TV_DATA_ARRAY } from './assets';
 
 // mock MovieDB API calls
-vi.mock('../../helpers/getMovieUtils', () => {
-    const sampleMovieData = vi.importActual('./assets/searchData.json');
-    const sampleMovieProviders = vi.importActual('./assets/providerData.json');
-    const sampleShowData = vi.importActual('./assets/showData.json');
+vi.doMock('../../helpers/getMovieUtils', () => {
     return {
         default: {},
-        getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
-        getMovieDetails: vi.fn().mockResolvedValue(sampleShowData),
-        getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
-        getMovieRecommendations: vi.fn().mockResolvedValue([
-            {
-                id: 10138,
-                overview:
-                    // eslint-disable-next-line prettier/prettier
-                    'With the world now aware of his dual life as the armored superhero Iron Man, billionaire inventor Tony Stark faces pressure from the government, the press and the public to share his technology with the military. Unwilling to let go of his invention, Stark, with Pepper Potts and James \'Rhodey\' Rhodes at his side, must forge new alliances – and confront powerful enemies.',
-                poster_path: '/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg',
-                release_date: '2010-05-07',
-                title: 'Iron Man 2',
-                vote_average: 6.831,
-                vote_count: 18830,
-            },
-            {
-                id: 68721,
-                overview:
-                    // eslint-disable-next-line prettier/prettier
-                    'When Tony Stark\'s world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.',
-                poster_path: '/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg',
-                release_date: '2013-04-18',
-                title: 'Iron Man 3',
-                vote_average: 6.929,
-                vote_count: 20246,
-            },
-        ]),
+        getMoviesByName: vi.fn().mockResolvedValue(MOVIE_DATA_ARRAY),
+        getMovieDetails: vi.fn().mockResolvedValue(MOVIE_DATA),
+        getMovieProviders: vi.fn().mockResolvedValue(PROVIDER_DATA),
+        getMovieRecommendations: vi.fn().mockResolvedValue(MOVIE_DATA_ARRAY),
     };
 });
 
-vi.mock('../../helpers/getTvUtils', () => {
-    // TODO: Create sample TV data, currently using movie data
-    const sampleMovieData = vi.importActual('./assets/searchData.json');
-    const sampleMovieProviders = vi.importActual('./assets/providerData.json');
-    const sampleShowData = vi.importActual('./assets/showData.json');
+vi.doMock('../../helpers/getTvUtils', () => {
     return {
         default: {},
-        getTvByName: vi.fn().mockResolvedValue(sampleMovieData),
-        getTvDetails: vi.fn().mockResolvedValue(sampleShowData),
-        getTvProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
-        getTvRecommendations: vi.fn().mockResolvedValue([
-            {
-                id: 8592,
-                name: 'Parks and Recreation',
-                overview:
-                    'Hilarious ensemble comedy that follows Leslie Knope, a mid-level bureaucrat in the Parks and Recreation Department of Pawnee, Indiana, and her tireless efforts to make her quintessentially American town just a little bit more fun.',
-                poster_path: '/5IOj62y2Eb2ngyYmEn1IJ7bFhzH.jpg',
-                popularity: 55.525,
-                first_air_date: '2009-04-09',
-                vote_average: 8.037,
-                vote_count: 1085,
-            },
-            {
-                backdrop_path: '/yXSzo0VU1Q1QaB7Xg5Hqe4tXXA3.jpg',
-                id: 1396,
-                name: 'Breaking Bad',
-                overview:
-                    // eslint-disable-next-line prettier/prettier
-                    'When Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and given a prognosis of only two years left to live. He becomes filled with a sense of fearlessness and an unrelenting desire to secure his family\'s financial future at any cost as he enters the dangerous world of drugs and crime.',
-                poster_path: '/ggFHVNu6YYI5L9pCfOacjizRGt.jpg',
-                media_type: 'tv',
-                popularity: 370.341,
-                first_air_date: '2008-01-20',
-                vote_average: 8.9,
-                vote_count: 10892,
-            },
-        ]),
+        getTvByName: vi.fn().mockResolvedValue(TV_DATA_ARRAY),
+        getTvDetails: vi.fn().mockResolvedValue(TV_DATA),
+        getTvProviders: vi.fn().mockResolvedValue(PROVIDER_DATA),
+        getTvRecommendations: vi.fn().mockResolvedValue(TV_DATA_ARRAY),
     };
 });
 
@@ -140,10 +85,11 @@ describe('Movie Screen Test Suite', async () => {
         // click on show card to change screen
         await user.click(screen.getAllByTestId('show-details-link')[0]);
         await waitFor(() => screen.getByTestId('show-details-heading'));
+        await waitFor(() => screen.getByAltText('Disney Plus logo'));
         const image: HTMLImageElement = screen.getByAltText('Disney Plus logo');
         expect(image).toBeInTheDocument();
         expect(image.src).toBe('https://image.tmdb.org/t/p/w500/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg');
         expect(screen.getByTestId('details-release-date')).toBeInTheDocument();
-        expect(screen.getByTestId('details-release-date')).toHaveTextContent('April 30th, 2008');
+        expect(screen.getByTestId('details-release-date')).toHaveTextContent('May 7th, 2010');
     });
 });

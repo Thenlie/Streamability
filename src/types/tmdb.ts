@@ -19,10 +19,10 @@ interface MovieData {
  * Returned by movie DB find and recommendations request
  */
 export interface MovieResults {
-    page: number;
-    results: MovieData[];
-    total_pages: number;
-    total_results: number;
+    page?: number;
+    results?: MovieData[];
+    total_pages?: number;
+    total_results?: number;
 }
 
 interface MovieImage {
