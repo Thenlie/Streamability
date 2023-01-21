@@ -70,13 +70,20 @@ export default function ShowCard({ details, showType }: MovieCardProps): JSX.Ele
                 state={details}
                 data-testid='show-details-link'
             >
-                {/* TODO: #193 Add placeholder poster if null */}
-                {details.poster_path && (
+                {details.poster_path ? (
                     <CardMedia
                         component='img'
                         className='w-full cursor-pointer'
                         sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
                         image={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                        alt={`${details.title} poster`}
+                    />
+                ) : (
+                    <CardMedia
+                        component='img'
+                        className='w-full cursor-pointer'
+                        sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
+                        image={'/poster-placeholder.jpeg'}
                         alt={`${details.title} poster`}
                     />
                 )}
