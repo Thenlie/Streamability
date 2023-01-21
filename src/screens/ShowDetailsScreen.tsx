@@ -45,10 +45,17 @@ export default function ShowDetailsScreen(): JSX.Element {
         <>
             <section className='m-3 flex'>
                 <div>
-                    <img
-                        style={{ width: '350px', height: '550px' }}
-                        src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                    ></img>
+                    {details.poster_path ? (
+                        <img
+                            style={{ width: '350px', height: '550px' }}
+                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                        ></img>
+                    ) : (
+                        <img
+                            style={{ width: '350px', height: '550px' }}
+                            src={'/poster-placeholder.jpeg'}
+                        ></img>
+                    )}
                 </div>
                 <div>
                     <div>
