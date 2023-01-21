@@ -90,6 +90,6 @@ describe('Movie Screen Test Suite', async () => {
         expect(image).toBeInTheDocument();
         expect(image.src).toBe('https://image.tmdb.org/t/p/w500/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg');
         expect(screen.getByTestId('details-release-date')).toBeInTheDocument();
-        expect(screen.getByTestId('details-release-date')).toHaveTextContent('May 7th, 2010');
+        expect(screen.getByTestId('details-release-date')).toHaveTextContent('April 30th, 2008');
     });
 });
