@@ -50,8 +50,12 @@ export default function SearchResultsScreen(): JSX.Element {
             <h1 data-testid='search-results-heading'>Search Results Page</h1>
             <p>Query: {query}</p>
             <div className='flex flex-wrap justify-center'>
-                {movieDetails?.map((item, i) => item && <ShowCard key={i} details={item} />)}
-                {tvDetails?.map((item, i) => item && <ShowCard key={i} details={item} />)}
+                {movieDetails?.map(
+                    (item, i) => item && <ShowCard key={i} details={item} showType={'movie'} />
+                )}
+                {tvDetails?.map(
+                    (item, i) => item && <ShowCard key={i} details={item} showType={'tv'} />
+                )}
             </div>
         </>
     );

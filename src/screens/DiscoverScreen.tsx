@@ -28,5 +28,12 @@ export default function DiscoverScreen(): JSX.Element {
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
 
-    return <div>{trending.map((item, i) => item && <ShowCard key={i} details={item} />)}</div>;
+    return (
+        <div>
+            {trending.map(
+                // TODO: make showType dynamic
+                (item, i) => item && <ShowCard key={i} details={item} showType='movie' />
+            )}
+        </div>
+    );
 }

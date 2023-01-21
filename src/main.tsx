@@ -53,7 +53,11 @@ const router = createBrowserRouter([
                 loader: searchLoader,
             },
             {
-                path: 'details/:id',
+                path: 'details/movie/:id',
+                element: <ShowDetailsScreen />,
+            },
+            {
+                path: 'details/tv/:id',
                 element: <ShowDetailsScreen />,
             },
             {

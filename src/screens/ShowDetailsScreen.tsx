@@ -4,6 +4,7 @@ import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUti
 import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Providers, ShowCard } from '../components';
+import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
 
 /**
  * Screen to show more details of a specific show
@@ -17,14 +18,22 @@ export default function ShowDetailsScreen(): JSX.Element {
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
-    const id = parseInt(location.pathname.split('/')[2]);
+    const id = parseInt(location.pathname.split('/')[3]);
+    const showType = location.pathname.split('/')[2];
 
     useEffect(() => {
         const handler = async () => {
-            const movieDetails = await getMovieDetails(id);
-            setDetails(movieDetails);
-            const recommendation = await getMovieRecommendations(id);
-            if (recommendation) setRecommendation(recommendation);
+            if (showType === 'movie') {
+                const movieDetails = await getMovieDetails(id);
+                setDetails(movieDetails);
+                const recommendation = await getMovieRecommendations(id);
+                if (recommendation) setRecommendation(recommendation);
+            } else {
+                const tvDetails = await getTvDetails(id);
+                setDetails(tvDetails);
+                const recommendation = await getTvRecommendations(id);
+                if (recommendation) setRecommendation(recommendation);
+            }
         };
         handler();
     }, [location]);
@@ -64,7 +73,9 @@ export default function ShowDetailsScreen(): JSX.Element {
             </section>
             <section className='flex flex-wrap justify-center'>
                 {recommendations &&
-                    recommendations.map((item, i) => item && <ShowCard key={i} details={item} />)}
+                    recommendations.map(
+                        (item, i) => item && <ShowCard key={i} details={item} showType={showType} />
+                    )}
             </section>
         </>
     );

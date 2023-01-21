@@ -52,7 +52,7 @@ export const routes: RouteObject[] = [
                 loader: searchLoader,
             },
             {
-                path: 'details/:id',
+                path: 'details/movie/:id',
                 element: <ShowDetailsScreen />,
             },
         ],
@@ -70,7 +70,7 @@ export const showCardRoutes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <ShowCard details={sampleMovieData as ShowData} />,
+                element: <ShowCard details={sampleMovieData as ShowData} showType={'movie'} />,
             },
         ],
     },

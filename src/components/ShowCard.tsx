@@ -13,6 +13,7 @@ import { Box } from '@mui/system';
 
 interface MovieCardProps {
     details: ShowData;
+    showType: string;
 }
 
 /**
@@ -23,7 +24,7 @@ interface MovieCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard({ details }: MovieCardProps): JSX.Element {
+export default function ShowCard({ details, showType }: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
 
@@ -64,7 +65,11 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
 
     return (
         <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
-            <Link to={`/details/${details.id}`} state={details} data-testid='show-details-link'>
+            <Link
+                to={`/details/${showType}/${details.id}`}
+                state={details}
+                data-testid='show-details-link'
+            >
                 {/* TODO: #193 Add placeholder poster if null */}
                 {details.poster_path && (
                     <CardMedia
