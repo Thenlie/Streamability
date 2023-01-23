@@ -4,6 +4,7 @@ import { getMoviesByName } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
 import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
+import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -42,8 +43,9 @@ export default function SearchResultsScreen(): JSX.Element {
         handler();
     }, [query]);
 
-    // TODO: #194 Make skeleton loading screen
-    if (loading) return <p data-testid='search-results-loader'>Loading...</p>;
+    if (loading) {
+        return <ShowCardPlaceholder count={5} />;
+    }
 
     return (
         <>
