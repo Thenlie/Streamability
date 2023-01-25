@@ -7,6 +7,7 @@ import { getProfileById } from './supabase/profiles';
 import { ThemeProvider } from '@mui/system';
 import { darkTheme, lightTheme } from './theme';
 import { Theme } from '@mui/material';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 /**
  * The main app function, wrapping all other screens and components
@@ -120,12 +121,22 @@ export default function AppWrapper(): JSX.Element {
 
     return (
         <ThemeProvider theme={theme}>
-            <main className='flex min-h-screen flex-col place-items-center'>
-                <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
-                <div className='flex flex-auto flex-col items-center justify-center text-center'>
-                    <Outlet context={{ session, setSession, profile, setProfile }} />
-                </div>
-            </main>
+            <SkeletonTheme
+                // We need to expect-error here because ts is unaware we have 'main' and 'light' in theme.ts
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                baseColor={theme.palette.primary.light}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                highlightColor={theme.palette.primary.main}
+            >
+                <main className='flex min-h-screen flex-col place-items-center'>
+                    <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
+                    <div className='flex flex-auto flex-col items-center justify-center text-center'>
+                        <Outlet context={{ session, setSession, profile, setProfile }} />
+                    </div>
+                </main>
+            </SkeletonTheme>
         </ThemeProvider>
     );
 }
