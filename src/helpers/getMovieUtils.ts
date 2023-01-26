@@ -1,5 +1,12 @@
 import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
 
+enum MovieRatings {
+    'G',
+    'PG',
+    'PG-13',
+    'R',
+}
+
 /**
  * This function is ran after the user enters a name of a movie.
  * @param name | Name of show being queried
@@ -41,11 +48,18 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
     );
     const data = (await response.json()) as MovieDetailsData;
     const returnRating = (arr: MovieDetailsData) => {
+        let release_date, release_dates;
         for (let i = 0; i < arr.release_dates.results.length; i++) {
             if (arr.release_dates.results[i].iso_3166_1 === 'US') {
-                return arr.release_dates.results[i].release_dates[0].certification;
+                release_dates = arr.release_dates.results[i].release_dates;
+                break;
             }
         }
+        release_dates?.map((r) => {
+            if (r.certification in MovieRatings) release_date = r.certification;
+        });
+
+        if (release_date) return release_date;
         return 'No rating available';
     };
     return {
