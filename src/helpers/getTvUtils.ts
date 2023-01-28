@@ -53,7 +53,7 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
         poster_path: data.poster_path,
         title: data.original_name,
         release_date: data.first_air_date,
-        runtime: data.episode_run_time,
+        runtime: data.episode_run_time[0],
         vote_average: data.vote_average,
         vote_count: data.vote_count,
         age_rating: returnRating(data),
@@ -101,7 +101,6 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
             vote_count: rec.vote_count,
         })
     );
-    console.log(JSON.stringify(recommendations));
     return recommendations;
 };
 
