@@ -309,7 +309,7 @@ export interface ShowData {
     poster_path?: string | null;
     release_date?: string;
     age_rating?: string | null;
-    runtime?: number | number[];
+    runtime?: number;
     title?: string;
     vote_average?: number;
     vote_count?: number;

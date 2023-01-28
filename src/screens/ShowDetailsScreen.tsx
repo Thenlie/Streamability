@@ -65,7 +65,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
                             </span>
                         )}
-                        <span> {details.runtime} minutes</span>
+                        {details.runtime && <span> {details.runtime} minutes</span>}
                         <span> {details.age_rating} </span>
                     </div>
                     <div>
