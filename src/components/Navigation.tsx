@@ -10,6 +10,7 @@ import {
     ListItemIcon,
     Menu,
     MenuItem,
+    Theme,
     Toolbar,
     Tooltip,
 } from '@mui/material';
@@ -27,8 +28,12 @@ import {
     Settings,
 } from '@mui/icons-material';
 import SearchInput from './SearchInput';
+import { lightTheme } from '../theme';
+
 interface NavProps {
     session: Session | null;
+    theme: Theme;
+    switchTheme: () => void;
 }
 
 /**
@@ -36,8 +41,7 @@ interface NavProps {
  * Navigation elements are placeholder for the time being for development purposes.
  * @returns {JSX.Element} | Navigation
  */
-
-export default function Navigation(props: NavProps): JSX.Element {
+export default function Navigation({ session, theme, switchTheme }: NavProps): JSX.Element {
     const [themeIcon, setThemeIcon] = useState(<DarkMode />);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [expandedMenu, setExpandedMenu] = useState(false);
@@ -45,43 +49,24 @@ export default function Navigation(props: NavProps): JSX.Element {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const open = Boolean(anchorElUser);
 
+    // On component render, listen for changes to window size
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            document.documentElement.classList.add('dark');
-            setThemeIcon(<DarkMode className='mr-2' />);
-        } else {
-            document.documentElement.classList.remove('dark');
-            setThemeIcon(<LightMode className='mr-2' />);
-        }
-
-        mediaQuery.addEventListener('change', themeSwitcher);
         window.addEventListener('resize', handleResize);
         return () => {
-            mediaQuery.removeEventListener('change', themeSwitcher);
             window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    const themeSwitcher = () => {
-        if (
-            localStorage.theme === 'dark' ||
-            (!('theme' in localStorage) && document.documentElement.classList.contains('dark'))
-        ) {
-            localStorage.theme = 'light';
+    // Set theme icon according to theme from props
+    useEffect(() => {
+        if (theme === lightTheme) {
             setThemeIcon(<LightMode className='mr-2' />);
         } else {
-            localStorage.theme = 'dark';
             setThemeIcon(<DarkMode className='mr-2' />);
         }
-        document.documentElement.classList.toggle('dark');
-    };
+    }, [theme]);
 
+    // Anytime browser window changes size, check if expanded view should be shown
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
         if (windowWidth > 768) {
@@ -89,6 +74,7 @@ export default function Navigation(props: NavProps): JSX.Element {
         }
     };
 
+    // Handle drop down menu visibility
     const toggleUserMenu = (event: MouseEvent<HTMLElement> | null, open: boolean) => {
         if (event) {
             setAnchorElUser(event.currentTarget);
@@ -102,12 +88,15 @@ export default function Navigation(props: NavProps): JSX.Element {
         // TODO: Error handling if any
         await SUPABASE.auth.signOut();
     };
+
     return (
         // TODO: #162 Use MUI ThemeProvider
         <AppBar position='static'>
             <Toolbar className='flex items-center justify-between bg-primary px-8 py-3'>
                 <div>
-                    <Link to='/'>Streamability</Link>
+                    <Link to='/' className='!text-text'>
+                        Streamability
+                    </Link>
                 </div>
 
                 <div className='flex items-center'>
@@ -165,7 +154,7 @@ export default function Navigation(props: NavProps): JSX.Element {
                                 },
                             }}
                         >
-                            {props.session ? (
+                            {session ? (
                                 <div>
                                     <MenuItem
                                         className='!p-2'
@@ -217,13 +206,13 @@ export default function Navigation(props: NavProps): JSX.Element {
                                     Discover
                                 </ListItemIcon>
                             </MenuItem>
-                            <MenuItem className='!p-2' onClick={themeSwitcher}>
+                            <MenuItem className='!p-2' onClick={switchTheme}>
                                 <ListItemIcon className='!text-text'>
                                     {themeIcon}
                                     Switch Theme
                                 </ListItemIcon>
                             </MenuItem>
-                            {props.session && (
+                            {session && (
                                 <MenuItem
                                     className='!p-2'
                                     onClick={() => {

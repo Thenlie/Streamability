@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getTrending, getMovieDetails } from '../helpers/getMovieUtils';
-import { MovieByName, ShowData } from '../types';
+import { MovieResults, ShowData } from '../types';
 import { ShowCard } from '../components';
 /**
  * Requests trending movies, passing data to ShowCard components.
@@ -11,13 +11,15 @@ export default function DiscoverScreen(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
         const handler = async () => {
-            const movieData: MovieByName = await getTrending();
+            const movieData: MovieResults = await getTrending();
             const movieArr = [];
-            for (let i = 0; i < movieData.results.length; i++) {
-                const movie = await getMovieDetails(movieData.results[i].id);
-                movieArr.push(movie);
+            if (movieData.results) {
+                for (let i = 0; i < movieData.results.length; i++) {
+                    const movie = await getMovieDetails(movieData.results[i].id);
+                    movieArr.push(movie);
+                    setTrending(movieArr);
+                }
             }
-            setTrending(movieArr);
             setLoading(false);
         };
         handler();
@@ -26,5 +28,12 @@ export default function DiscoverScreen(): JSX.Element {
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
 
-    return <div>{trending.map((item, i) => item && <ShowCard key={i} details={item} />)}</div>;
+    return (
+        <div>
+            {trending.map(
+                // TODO: make showType dynamic
+                (item, i) => item && <ShowCard key={i} details={item} showType='movie' />
+            )}
+        </div>
+    );
 }

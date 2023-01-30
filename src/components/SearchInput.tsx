@@ -14,7 +14,7 @@ export default function SearchInput(): JSX.Element {
         // TODO: #162 Use MUI ThemeProvider
         <Form method='get' action='/search'>
             <FormControl variant='filled'>
-                <InputLabel htmlFor='q' color='secondary'>
+                <InputLabel htmlFor='q' color='secondary' className='!text-text'>
                     Search
                 </InputLabel>
                 <Input
@@ -30,7 +30,7 @@ export default function SearchInput(): JSX.Element {
                     endAdornment={
                         <InputAdornment aria-label='submit search' position='end'>
                             <IconButton type='submit' data-testid='search-button'>
-                                <Search />
+                                <Search className='!text-text' />
                             </IconButton>
                         </InputAdornment>
                     }

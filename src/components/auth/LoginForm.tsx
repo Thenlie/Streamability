@@ -84,7 +84,7 @@ export default function LoginForm(): JSX.Element {
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary'>
+                    <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
                         Email
                     </InputLabel>
                     <FilledInput
@@ -93,6 +93,7 @@ export default function LoginForm(): JSX.Element {
                         name='email'
                         autoComplete='email'
                         color='secondary'
+                        className='!text-text'
                         value={email}
                         error={emailError}
                         onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +101,7 @@ export default function LoginForm(): JSX.Element {
                     />
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary'>
+                    <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
                         Password
                     </InputLabel>
                     <FilledInput
@@ -111,6 +112,7 @@ export default function LoginForm(): JSX.Element {
                         value={password}
                         error={passwordError}
                         color='secondary'
+                        className='!text-text'
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setPasswordError(false)}
                         endAdornment={
@@ -126,7 +128,13 @@ export default function LoginForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <Button variant='contained' size='large' type='submit' sx={{ margin: '10px' }}>
+                <Button
+                    variant='contained'
+                    size='large'
+                    type='submit'
+                    color='secondary'
+                    sx={{ margin: '10px' }}
+                >
                     Submit
                 </Button>
                 {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}

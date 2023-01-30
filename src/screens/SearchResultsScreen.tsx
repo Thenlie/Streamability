@@ -1,9 +1,10 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getMoviesByName, getMovieDetails } from '../helpers/getMovieUtils';
+import { getMoviesByName } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
-import { MovieByName, ShowData, TvByName } from '../types';
-import { getTvByName, getTvDetails } from '../helpers/getTvUtils';
+import { ShowData } from '../types';
+import { getTvByName } from '../helpers/getTvUtils';
+import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -27,42 +28,36 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 export default function SearchResultsScreen(): JSX.Element {
     const query: string = useLoaderData() as string;
-    const [movieDetails, setMovieDetails] = useState<ShowData[]>([]);
-    const [showDetails, setShowDetails] = useState<ShowData[]>([]);
+    const [movieDetails, setMovieDetails] = useState<ShowData[] | null>(null);
+    const [tvDetails, setTvDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        // Build array of show details, set to state once complete
         const handler = async () => {
-            const movieData: MovieByName = await getMoviesByName(query);
-            const showData: TvByName = await getTvByName(query);
-            const movieArr = [];
-            const showArr = [];
-            for (let i = 0; i < movieData.results.length; i++) {
-                const movie = await getMovieDetails(movieData.results[i].id);
-                movieArr.push(movie);
-            }
-            for (let i = 0; i < showData.results.length; i++) {
-                const show = await getTvDetails(showData.results[i].id);
-                showArr.push(show);
-            }
-            setMovieDetails(movieArr);
-            setShowDetails(showArr);
+            const movieData: ShowData[] | null = await getMoviesByName(query);
+            const tvData: ShowData[] | null = await getTvByName(query);
+            setMovieDetails(movieData);
+            setTvDetails(tvData);
             setLoading(false);
         };
         handler();
     }, [query]);
 
-    // TODO: #194 Make skeleton loading screen
-    if (loading) return <p data-testid='search-results-loader'>Loading...</p>;
+    if (loading) {
+        return <ShowCardPlaceholder count={5} />;
+    }
 
     return (
         <>
             <h1 data-testid='search-results-heading'>Search Results Page</h1>
             <p>Query: {query}</p>
             <div className='flex flex-wrap justify-center'>
-                {movieDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
-                {showDetails.map((item, i) => item && <ShowCard key={i} details={item} />)}
+                {movieDetails?.map(
+                    (item, i) => item && <ShowCard key={i} details={item} showType={'movie'} />
+                )}
+                {tvDetails?.map(
+                    (item, i) => item && <ShowCard key={i} details={item} showType={'tv'} />
+                )}
             </div>
         </>
     );

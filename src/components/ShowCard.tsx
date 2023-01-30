@@ -13,6 +13,7 @@ import { Box } from '@mui/system';
 
 interface MovieCardProps {
     details: ShowData;
+    showType: string;
 }
 
 /**
@@ -23,7 +24,7 @@ interface MovieCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard({ details }: MovieCardProps): JSX.Element {
+export default function ShowCard({ details, showType }: MovieCardProps): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
 
@@ -34,7 +35,7 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && currentWatchQueue.includes(details.id)) {
+            if (currentWatchQueue && details.id && currentWatchQueue.includes(details.id)) {
                 setIsInWatchQueue(true);
             }
         };
@@ -64,9 +65,12 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
 
     return (
         <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
-            <Link to={`/details/${details.id}`} state={details} data-testid='show-details-link'>
-                {/* TODO: #193 Add placeholder poster if null */}
-                {details.poster_path && (
+            <Link
+                to={`/details/${showType}/${details.id}`}
+                state={details}
+                data-testid='show-details-link'
+            >
+                {details.poster_path ? (
                     <CardMedia
                         component='img'
                         className='w-full cursor-pointer'
@@ -74,21 +78,27 @@ export default function ShowCard({ details }: MovieCardProps): JSX.Element {
                         image={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
                         alt={`${details.title} poster`}
                     />
+                ) : (
+                    <CardMedia
+                        component='img'
+                        className='w-full cursor-pointer'
+                        sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
+                        image={'/poster-placeholder.jpeg'}
+                        alt={`${details.title} poster`}
+                    />
                 )}
             </Link>
             <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
                 <CardContent>
                     <Typography variant='h5'>{details.title}</Typography>
-                    {details.release_date.length === 10 && (
+                    {details.release_date && details.release_date.length === 10 && (
                         <Typography>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    <Typography variant='body2'>{details.runtime} minutes</Typography>
                     {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
                     <Typography variant='body2'>{details.vote_average} stars</Typography>
                     <Typography variant='body2'>{details.vote_count} ratings</Typography>
-                    <Typography variant='body2'>{details.age_rating}</Typography>
                 </CardContent>
                 {profile && (
                     <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>

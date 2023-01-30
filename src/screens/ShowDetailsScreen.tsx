@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
-import { getMovieDetails } from '../helpers/getMovieUtils';
+import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUtils';
 import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { Providers } from '../components';
+import { Providers, ShowCard } from '../components';
+import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
 
 /**
  * Screen to show more details of a specific show
@@ -16,40 +17,55 @@ export default function ShowDetailsScreen(): JSX.Element {
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
+    const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
+    const id = parseInt(location.pathname.split('/')[3]);
+    const showType = location.pathname.split('/')[2];
 
     useEffect(() => {
         const handler = async () => {
-            if (!details) {
-                const movieDetails = await getMovieDetails(
-                    parseInt(location.pathname.split('/')[2])
-                );
+            if (showType === 'movie') {
+                const movieDetails = await getMovieDetails(id);
                 setDetails(movieDetails);
+                const recommendation = await getMovieRecommendations(id);
+                if (recommendation) setRecommendation(recommendation);
+            } else {
+                const tvDetails = await getTvDetails(id);
+                setDetails(tvDetails);
+                const recommendation = await getTvRecommendations(id);
+                if (recommendation) setRecommendation(recommendation);
             }
         };
         handler();
-    }, []);
+    }, [location]);
 
     // TODO: #199 Create skeleton loader
     if (!details) return <p>Loading</p>;
 
     return (
-        <section>
-            <div className='flex'>
+        <>
+            <section className='m-3 flex'>
                 <div>
-                    <img
-                        style={{ width: '350px', height: '550px' }}
-                        src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                    ></img>
+                    {details.poster_path ? (
+                        <img
+                            style={{ width: '350px', height: '550px' }}
+                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                        ></img>
+                    ) : (
+                        <img
+                            style={{ width: '350px', height: '550px' }}
+                            src={'/poster-placeholder.jpeg'}
+                        ></img>
+                    )}
                 </div>
                 <div>
                     <div>
                         <h2 data-testid='show-details-heading'>{details.title}</h2>
-                        {details.release_date.length === 10 && (
+                        {details.release_date && details.release_date.length === 10 && (
                             <span data-testid='details-release-date'>
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
                             </span>
                         )}
-                        <span> {details.runtime} minutes</span>
+                        {details.runtime && <span> {details.runtime} minutes</span>}
                         <span> {details.age_rating} </span>
                     </div>
                     <div>
@@ -61,7 +77,13 @@ export default function ShowDetailsScreen(): JSX.Element {
                         {details.vote_average} stars out of {details.vote_count}
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <section className='flex flex-wrap justify-center'>
+                {recommendations &&
+                    recommendations.map(
+                        (item, i) => item && <ShowCard key={i} details={item} showType={showType} />
+                    )}
+            </section>
+        </>
     );
 }

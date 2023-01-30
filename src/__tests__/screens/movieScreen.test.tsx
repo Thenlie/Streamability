@@ -5,30 +5,26 @@ import userEvent from '@testing-library/user-event';
 import { routes } from '../routes';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import { MOVIE_DATA, MOVIE_DATA_ARRAY, PROVIDER_DATA, TV_DATA, TV_DATA_ARRAY } from './assets';
 
 // mock MovieDB API calls
-vi.mock('../../helpers/getMovieUtils', () => {
-    const sampleMovieData = vi.importActual('./assets/searchData.json');
-    const sampleMovieProviders = vi.importActual('./assets/providerData.json');
-    const sampleShowData = vi.importActual('./assets/showData.json');
+vi.doMock('../../helpers/getMovieUtils', () => {
     return {
         default: {},
-        getMoviesByName: vi.fn().mockResolvedValue(sampleMovieData),
-        getMovieDetails: vi.fn().mockResolvedValue(sampleShowData),
-        getMovieProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
+        getMoviesByName: vi.fn().mockResolvedValue(MOVIE_DATA_ARRAY),
+        getMovieDetails: vi.fn().mockResolvedValue(MOVIE_DATA),
+        getMovieProviders: vi.fn().mockResolvedValue(PROVIDER_DATA),
+        getMovieRecommendations: vi.fn().mockResolvedValue(MOVIE_DATA_ARRAY),
     };
 });
 
-vi.mock('../../helpers/getTvUtils', () => {
-    // TODO: Create sample TV data, currently using movie data
-    const sampleMovieData = vi.importActual('./assets/searchData.json');
-    const sampleMovieProviders = vi.importActual('./assets/providerData.json');
-    const sampleShowData = vi.importActual('./assets/showData.json');
+vi.doMock('../../helpers/getTvUtils', () => {
     return {
         default: {},
-        getTvByName: vi.fn().mockResolvedValue(sampleMovieData),
-        getTvDetails: vi.fn().mockResolvedValue(sampleShowData),
-        getTvProviders: vi.fn().mockResolvedValue(sampleMovieProviders),
+        getTvByName: vi.fn().mockResolvedValue(TV_DATA_ARRAY),
+        getTvDetails: vi.fn().mockResolvedValue(TV_DATA),
+        getTvProviders: vi.fn().mockResolvedValue(PROVIDER_DATA),
+        getTvRecommendations: vi.fn().mockResolvedValue(TV_DATA_ARRAY),
     };
 });
 
@@ -89,6 +85,7 @@ describe('Movie Screen Test Suite', async () => {
         // click on show card to change screen
         await user.click(screen.getAllByTestId('show-details-link')[0]);
         await waitFor(() => screen.getByTestId('show-details-heading'));
+        await waitFor(() => screen.getByAltText('Disney Plus logo'));
         const image: HTMLImageElement = screen.getByAltText('Disney Plus logo');
         expect(image).toBeInTheDocument();
         expect(image.src).toBe('https://image.tmdb.org/t/p/w500/7rwgEs15tFwyR9NPQ5vpzxTj19Q.jpg');

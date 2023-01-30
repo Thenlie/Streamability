@@ -1,8 +1,8 @@
 import type { User, Session, Profile } from './supabase';
 import type {
-    MovieByName,
+    MovieResults,
     MovieDetailsData,
-    TvByName,
+    TvResults,
     TvDetailsData,
     ShowProviders,
     ShowData,
@@ -12,9 +12,9 @@ export type {
     User,
     Session,
     Profile,
-    MovieByName,
+    MovieResults,
     MovieDetailsData,
-    TvByName,
+    TvResults,
     TvDetailsData,
     ShowProviders,
     ShowData,

@@ -4,6 +4,10 @@ import { SUPABASE } from './helpers/supabaseClient';
 import type { Session, Profile } from './types';
 import Navigation from './components/Navigation';
 import { getProfileById } from './supabase/profiles';
+import { ThemeProvider } from '@mui/system';
+import { darkTheme, lightTheme } from './theme';
+import { Theme } from '@mui/material';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 /**
  * The main app function, wrapping all other screens and components
@@ -14,6 +18,7 @@ import { getProfileById } from './supabase/profiles';
 export default function AppWrapper(): JSX.Element {
     const [session, setSession] = useState<Session | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
+    const [theme, setTheme] = useState<Theme>(darkTheme);
     const navigate = useNavigate();
 
     /**
@@ -27,6 +32,43 @@ export default function AppWrapper(): JSX.Element {
             const data = await getProfileById(session.user.id);
             setProfile(data);
         }
+    };
+
+    // On app load, check for browser preferred color scheme
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+            setTheme(darkTheme);
+        } else {
+            document.documentElement.classList.remove('dark');
+            setTheme(lightTheme);
+        }
+
+        mediaQuery.addEventListener('change', themeSwitcher);
+        return () => {
+            mediaQuery.removeEventListener('change', themeSwitcher);
+        };
+    }, []);
+
+    // Handle theme switched by browser or user on site
+    const themeSwitcher = () => {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && document.documentElement.classList.contains('dark'))
+        ) {
+            localStorage.theme = 'light';
+            setTheme(lightTheme);
+        } else {
+            localStorage.theme = 'dark';
+            setTheme(darkTheme);
+        }
+        document.documentElement.classList.toggle('dark');
     };
 
     /**
@@ -78,11 +120,23 @@ export default function AppWrapper(): JSX.Element {
     }, []);
 
     return (
-        <main className='flex min-h-screen flex-col place-items-center'>
-            <Navigation session={session} />
-            <div className='flex flex-auto flex-col items-center justify-center text-center'>
-                <Outlet context={{ session, setSession, profile, setProfile }} />
-            </div>
-        </main>
+        <ThemeProvider theme={theme}>
+            <SkeletonTheme
+                // We need to expect-error here because ts is unaware we have 'main' and 'light' in theme.ts
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                baseColor={theme.palette.primary.light}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                highlightColor={theme.palette.primary.main}
+            >
+                <main className='flex min-h-screen flex-col place-items-center'>
+                    <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
+                    <div className='flex flex-auto flex-col items-center justify-center text-center'>
+                        <Outlet context={{ session, setSession, profile, setProfile }} />
+                    </div>
+                </main>
+            </SkeletonTheme>
+        </ThemeProvider>
     );
 }
