@@ -78,6 +78,7 @@ export default function AppWrapper(): JSX.Element {
     useEffect(() => {
         SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
             if (error) {
+                // eslint-disable-next-line no-console
                 if (import.meta.env.DEV) console.error(error);
                 return;
             }

@@ -11,6 +11,7 @@ export default function PageNotFoundScreen(): JSX.Element {
      * action, loader, or rendering
      */
     const error: ErrorResponse = useRouteError() as ErrorResponse;
+    // eslint-disable-next-line no-console
     if (import.meta.env.DEV) console.error(error);
 
     /**

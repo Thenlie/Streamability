@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SUPABASE } from '../helpers/supabaseClient';
 import { Profile } from '../types/supabase';
 
