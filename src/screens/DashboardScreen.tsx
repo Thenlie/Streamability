@@ -27,6 +27,7 @@ export default function DashboardScreen(): JSX.Element {
         const handler = async () => {
             if (session) {
                 const queue = await getProfileWatchQueue(session.user.id);
+                // eslint-disable-next-line no-console
                 if (import.meta.env.DEV) console.log(queue);
             }
         };

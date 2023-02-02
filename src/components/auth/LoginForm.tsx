@@ -72,6 +72,7 @@ export default function LoginForm(): JSX.Element {
         if (error) {
             // We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
+            // eslint-disable-next-line no-console
             if (import.meta.env.DEV) console.error(error);
         }
 
