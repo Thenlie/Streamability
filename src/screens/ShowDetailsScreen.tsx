@@ -5,6 +5,7 @@ import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Providers, ShowCard } from '../components';
 import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
+import { Rating, Typography } from '@mui/material';
 
 /**
  * Screen to show more details of a specific show
@@ -72,10 +73,19 @@ export default function ShowDetailsScreen(): JSX.Element {
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
                     <Providers details={details} />
-                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                    <div>
-                        {details.vote_average} stars out of {details.vote_count}
-                    </div>
+                    {details.vote_average ? (
+                        <div>
+                            <Rating
+                                name='half-rating'
+                                defaultValue={details.vote_average / 2}
+                                precision={0.5}
+                                readOnly
+                            />
+                            <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                        </div>
+                    ) : (
+                        <Typography variant='body2'>No ratings available</Typography>
+                    )}
                 </div>
             </section>
             <section className='flex flex-wrap justify-center'>
