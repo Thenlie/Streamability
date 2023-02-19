@@ -77,30 +77,6 @@ const getTvProviders = async (id: number): Promise<ShowProviders> => {
 };
 
 /**
- * This function returns trending tv shows
- * @returns {Promise<ShowData>} | Trending TV Shows
- */
-const getTvTrending = async (): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
-    );
-    const data = (await response.json()) as TvResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.original_name,
-                release_date: movie.first_air_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-            };
-        });
-    }
-    return null;
-};
-/**
  * Get recommended TV shows based off of a movie
  * @param id | MovieDB id of TV show being searched for
  * @returns {Promise<ShowData[] | null>} | Array of recommended TV shows
@@ -128,4 +104,4 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
     return recommendations;
 };
 
-export { getTvByName, getTvDetails, getTvTrending, getTvProviders, getTvRecommendations };
+export { getTvByName, getTvDetails, getTvProviders, getTvRecommendations };

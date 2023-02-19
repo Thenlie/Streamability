@@ -93,27 +93,13 @@ const getMovieProviders = async (id: number): Promise<ShowProviders> => {
  * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
  * @returns {Promise<MovieResults>} | Trending Movies & TV Shows
  */
-const getMovieTrending = async (): Promise<ShowData[] | null> => {
+const getTrending = async (): Promise<MovieResults> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/trending/movie/week?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    const data = (await response.json()) as MovieResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-            };
-        });
-    }
-    return null;
+    return response.json() as Promise<MovieResults>;
 };
 
 /**
@@ -148,6 +134,6 @@ export {
     getMoviesByName,
     getMovieDetails,
     getMovieProviders,
-    getMovieTrending,
+    getTrending,
     getMovieRecommendations,
 };
