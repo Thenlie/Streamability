@@ -15,8 +15,6 @@ export interface User {
     role: string;
     updated_at: string;
     user_metadata: unknown;
-    adult: boolean | null;
-    country: string | null;
 }
 
 /**

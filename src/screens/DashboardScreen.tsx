@@ -5,8 +5,6 @@ import {
     deleteProfileById,
     updateProfileUsername,
     getProfileWatchQueue,
-    setProfileAdultFlag,
-    setProfileCountry,
 } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -19,8 +17,6 @@ export default function DashboardScreen(): JSX.Element {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
     const [username, setUsername] = useState('');
-    const [country, setCountry] = useState('');
-    const [isAdult, setIsAdult] = useState<boolean | null>();
     const navigate = useNavigate();
 
     if (!session) {
@@ -31,7 +27,6 @@ export default function DashboardScreen(): JSX.Element {
         const handler = async () => {
             if (session) {
                 const queue = await getProfileWatchQueue(session.user.id);
-                if (session.user.adult) setIsAdult(session.user.adult);
                 // eslint-disable-next-line no-console
                 if (import.meta.env.DEV) console.log(queue);
             }
@@ -40,23 +35,8 @@ export default function DashboardScreen(): JSX.Element {
     }, [session]);
 
     const changeUsername = async () => {
-        if (session && username.length > 2) {
+        if (session) {
             const data = await updateProfileUsername(session.user.id, username);
-            setProfile(data);
-        }
-    };
-
-    const toggleAdultFlag = async () => {
-        if (session && isAdult) {
-            const data = await setProfileAdultFlag(session.user.id, !isAdult);
-            setProfile(data);
-            setIsAdult(!isAdult);
-        }
-    };
-
-    const changeCountry = async () => {
-        if (session && country.length === 2) {
-            const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
         }
     };
@@ -88,21 +68,8 @@ export default function DashboardScreen(): JSX.Element {
                 onChange={(e) => {
                     setUsername(e.target.value);
                 }}
-                minLength={3}
             />
             <button onClick={() => changeUsername()}>Update Profile</button>
-            <br />
-            <button onClick={() => toggleAdultFlag()}>Toggle Adult Flag</button>
-            <br />
-            <input
-                name='country'
-                onChange={(e) => {
-                    setCountry(e.target.value);
-                }}
-                minLength={2}
-                maxLength={2}
-            />
-            <button onClick={() => changeCountry()}>Change Country</button>
             <br />
             <button type='button' onClick={() => SUPABASE.auth.signOut()}>
                 Sign Out
