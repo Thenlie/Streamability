@@ -1,38 +1,38 @@
 import { useState, useEffect } from 'react';
-import { getTrending, getMovieDetails } from '../helpers/getMovieUtils';
-import { MovieResults, ShowData } from '../types';
+import { getMovieTrending } from '../helpers/getMovieUtils';
+import { getTvTrending } from '../helpers/getTvUtils';
+import { ShowData } from '../types';
 import { ShowCard } from '../components';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
-    const [trending, setTrending] = useState<ShowData[]>([]);
+    const [movieTrending, setMovieTrending] = useState<ShowData[] | null>(null);
+    const [tvTrending, setTvTrending] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
         const handler = async () => {
-            const movieData: MovieResults = await getTrending();
-            const movieArr = [];
-            if (movieData.results) {
-                for (let i = 0; i < movieData.results.length; i++) {
-                    const movie = await getMovieDetails(movieData.results[i].id);
-                    movieArr.push(movie);
-                    setTrending(movieArr);
-                }
-            }
+            const movieData: ShowData[] | null = await getMovieTrending();
+            setMovieTrending(movieData);
+            const tvData: ShowData[] | null = await getTvTrending();
+            setTvTrending(tvData);
             setLoading(false);
         };
         handler();
     }, []);
-
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
 
     return (
         <div>
-            {trending.map(
+            {movieTrending?.map(
                 // TODO: make showType dynamic
                 (item, i) => item && <ShowCard key={i} details={item} showType='movie' />
+            )}
+            {tvTrending?.map(
+                // TODO: make showType dynamic
+                (item, i) => item && <ShowCard key={i} details={item} showType='tv' />
             )}
         </div>
     );

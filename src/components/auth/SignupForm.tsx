@@ -130,6 +130,7 @@ export default function SignUpForm(): JSX.Element {
                 return;
             }
             showError(error.message);
+            // eslint-disable-next-line no-console
             if (import.meta.env.DEV) console.error(error);
         }
 

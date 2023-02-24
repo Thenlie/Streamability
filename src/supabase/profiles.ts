@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { SUPABASE } from '../helpers/supabaseClient';
 import { Profile } from '../types/supabase';
 
@@ -91,7 +92,7 @@ export const getProfileWatchQueue = async (id: string): Promise<number[] | null>
 
         if (error) {
             if (import.meta.env.DEV) console.error(error);
-        } else {
+        } else if (data) {
             return data[0].watch_queue;
         }
     } catch (error) {
@@ -153,6 +154,60 @@ export const removeFromProfileWatchQueue = async (
             if (import.meta.env.DEV) console.error(error);
         } else if (data) {
             return data as Profile;
+        }
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
+};
+
+/**
+ * Update the adult flag of a users profile
+ *
+ * @param id | uuid of user being updated
+ * @param isAdult | whether the adult flag will be set to true or false
+ * @returns {Promise<Profile | null>}
+ */
+export const setProfileAdultFlag = async (
+    id: string,
+    isAdult: boolean
+): Promise<Profile | null> => {
+    try {
+        const { data, error } = await SUPABASE.from('profiles')
+            .update({ adult: isAdult })
+            .eq('id', id)
+            .select();
+
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if (data) {
+            return data[0] as Profile;
+        }
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
+};
+
+/**
+ * Update the country code of a users profile
+ *
+ * @param id | uuid of user being updated
+ * @param country | country code to be set on the profile
+ * @returns {Promise<Profile | null>}
+ */
+export const setProfileCountry = async (id: string, country: string): Promise<Profile | null> => {
+    try {
+        // TODO: Ensure country code is valid
+        const { data, error } = await SUPABASE.from('profiles')
+            .update({ country: country })
+            .eq('id', id)
+            .select();
+
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if (data) {
+            return data[0] as Profile;
         }
     } catch (error) {
         if (import.meta.env.DEV) console.error(error);

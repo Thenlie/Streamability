@@ -8,7 +8,7 @@ import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';
-import { Button, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { Button, CardActions, CardContent, CardMedia, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 interface MovieCardProps {
@@ -96,9 +96,19 @@ export default function ShowCard({ details, showType }: MovieCardProps): JSX.Ele
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    {/* TODO: #152 Include number of stars with styling, response returns rating out of 10  */}
-                    <Typography variant='body2'>{details.vote_average} stars</Typography>
-                    <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                    {details.vote_average ? (
+                        <div>
+                            <Rating
+                                name='half-rating'
+                                defaultValue={details.vote_average / 2}
+                                precision={0.5}
+                                readOnly
+                            />
+                            <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                        </div>
+                    ) : (
+                        <Typography variant='body2'>No ratings available</Typography>
+                    )}
                 </CardContent>
                 {profile && (
                     <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
