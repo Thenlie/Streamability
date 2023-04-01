@@ -17,7 +17,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.12",
+    "@mui/material": "^5.11.15",
     "@remix-run/web-fetch": "^4.3.3",
     "@supabase/supabase-js": "^2.10.0",
     "@testing-library/jest-dom": "^5.16.5",
