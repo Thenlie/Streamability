@@ -9,6 +9,8 @@ import {
     setProfileCountry,
 } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
+import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
 
 /**
  * User must be logged in to access endpoint
@@ -76,39 +78,87 @@ export default function DashboardScreen(): JSX.Element {
     };
 
     return (
-        <div aria-live='polite'>
+        <div aria-live='polite' className='flex flex-col '>
             <div>
-                <p>Email: {session?.user.email}</p>
-                <p>id: {profile?.id}</p>
-                <p>Username: {profile?.username}</p>
+                <Typography>Email: {session?.user.email}</Typography>
+                <Typography>Username: {profile?.username}</Typography>
             </div>
-            <label htmlFor='username'>Username:</label>
-            <input
-                name='username'
-                onChange={(e) => {
-                    setUsername(e.target.value);
-                }}
-                minLength={3}
-            />
-            <button onClick={() => changeUsername()}>Update Profile</button>
-            <br />
-            <button onClick={() => toggleAdultFlag()}>Toggle Adult Flag</button>
-            <br />
-            <input
-                name='country'
-                onChange={(e) => {
-                    setCountry(e.target.value);
-                }}
-                minLength={2}
-                maxLength={2}
-            />
-            <button onClick={() => changeCountry()}>Change Country</button>
-            <br />
-            <button type='button' onClick={() => SUPABASE.auth.signOut()}>
+            <FormControl sx={{ m: 0.5 }} variant='filled'>
+                <InputLabel htmlFor='username' color='secondary' className='!text-text'>
+                    Change Username
+                </InputLabel>
+                <FilledInput
+                    name='username'
+                    onChange={(e) => {
+                        setUsername(e.target.value);
+                    }}
+                    inputProps={{ minLength: 3 }}
+                    sx={{ m: 0.5 }}
+                />
+            </FormControl>
+            <Button
+                variant='contained'
+                type='button'
+                color='secondary'
+                startIcon={<Edit />}
+                sx={{ m: 0.5 }}
+                onClick={() => changeUsername()}
+            >
+                Update Profile
+            </Button>
+            <FormControl sx={{ m: 0.5 }} variant='filled'>
+                <InputLabel htmlFor='country' color='secondary' className='!text-text'>
+                    Change Country
+                </InputLabel>
+                <FilledInput
+                    name='country'
+                    onChange={(e) => {
+                        setCountry(e.target.value);
+                    }}
+                    inputProps={{ maxLength: 2, minLength: 2 }}
+                    sx={{ m: 0.5 }}
+                />
+            </FormControl>
+            <Button
+                variant='contained'
+                type='button'
+                color='secondary'
+                sx={{ m: 0.5 }}
+                onClick={() => changeCountry()}
+                startIcon={<Language />}
+            >
+                Change Country
+            </Button>
+            <Button
+                variant='contained'
+                type='button'
+                color='secondary'
+                startIcon={<NoAdultContent />}
+                sx={{ m: 0.5 }}
+                onClick={() => toggleAdultFlag()}
+            >
+                Toggle Adult Flag
+            </Button>
+            <Button
+                variant='contained'
+                type='button'
+                color='secondary'
+                sx={{ m: 0.5 }}
+                startIcon={<Logout />}
+                onClick={() => SUPABASE.auth.signOut()}
+            >
                 Sign Out
-            </button>
-            <br />
-            <button onClick={() => deleteProfile()}>Delete Profile</button>
+            </Button>
+            <Button
+                variant='contained'
+                size='large'
+                color='error'
+                type='button'
+                sx={{ m: 0.5 }}
+                onClick={() => deleteProfile()}
+            >
+                Delete Profile
+            </Button>
         </div>
     );
 }
