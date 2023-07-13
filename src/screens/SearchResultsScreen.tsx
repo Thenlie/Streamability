@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMoviesByName } from '../helpers/getMovieUtils';
-import { ShowCard } from '../components';
+import { ShowCard, ShowListCard } from '../components';
 import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
@@ -57,7 +57,7 @@ export default function SearchResultsScreen(): JSX.Element {
                 {movieDetails?.map(
                     (item, i) =>
                         item && (
-                            <ShowCard
+                            <ShowListCard
                                 key={i}
                                 details={item}
                                 showType={'movie'}

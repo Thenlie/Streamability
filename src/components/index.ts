@@ -3,6 +3,7 @@
  * Be sure to add any new components to this file
  */
 import ShowCard from './ShowCard';
+import ShowListCard from './ShowListCard';
 import ShowCardPlaceholder from './ShowCardPlaceholder';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
@@ -12,6 +13,7 @@ import Providers from './Providers';
 
 export {
     ShowCard,
+    ShowListCard,
     ShowCardPlaceholder,
     ShowCarousel,
     SearchInput,
