@@ -1,10 +1,9 @@
-import { useProfileContext } from '../hooks';
 import {
     addToProfileWatchQueue,
     getProfileWatchQueue,
     removeFromProfileWatchQueue,
 } from '../supabase/profiles';
-import { ShowData } from '../types';
+import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';
@@ -12,8 +11,22 @@ import { Button, CardActions, CardContent, CardMedia, Rating, Typography } from 
 import { Box } from '@mui/system';
 
 interface MovieCardProps {
+    /**
+     * Movie or TV show metadata
+     */
     details: ShowData;
+    /**
+     * Either 'movie' or 'tv'
+     */
     showType: string;
+    /**
+     * User profile if logged in, otherwise `null`
+     */
+    profile: Profile | null;
+    /**
+     * Profile setting function that accepts a `Profile` or `null`
+     */
+    setProfile: (profile: Profile | null) => void;
 }
 
 /**
@@ -24,8 +37,12 @@ interface MovieCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard({ details, showType }: MovieCardProps): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
+export default function ShowCard({
+    details,
+    showType,
+    profile,
+    setProfile,
+}: MovieCardProps): JSX.Element {
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
 
     /**
@@ -115,22 +132,22 @@ export default function ShowCard({ details, showType }: MovieCardProps): JSX.Ele
                         {isInWatchQueue ? (
                             <Button
                                 sx={{ m: 1 }}
-                                variant='outlined'
-                                size='small'
-                                color='secondary'
-                                onClick={() => queueHandler(true, details?.id)}
-                            >
-                                Add to queue
-                            </Button>
-                        ) : (
-                            <Button
-                                sx={{ m: 1 }}
-                                variant='outlined'
+                                variant='contained'
                                 size='small'
                                 color='secondary'
                                 onClick={() => queueHandler(false, details?.id)}
                             >
                                 Remove from queue
+                            </Button>
+                        ) : (
+                            <Button
+                                sx={{ m: 1 }}
+                                variant='contained'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(true, details?.id)}
+                            >
+                                Add to queue
                             </Button>
                         )}
                     </CardActions>

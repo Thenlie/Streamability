@@ -1,10 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getMoviesByName } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
-import { ShowData } from '../types';
+import { Profile, ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
+import { useProfileContext } from '../hooks';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -28,6 +29,7 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 export default function SearchResultsScreen(): JSX.Element {
     const query: string = useLoaderData() as string;
+    const { profile, setProfile } = useProfileContext();
     const [movieDetails, setMovieDetails] = useState<ShowData[] | null>(null);
     const [tvDetails, setTvDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -43,6 +45,13 @@ export default function SearchResultsScreen(): JSX.Element {
         handler();
     }, [query]);
 
+    const onSetProfile = useCallback(
+        (profile: Profile | null) => {
+            setProfile(profile);
+        },
+        [setProfile]
+    );
+
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
     }
@@ -53,10 +62,28 @@ export default function SearchResultsScreen(): JSX.Element {
             <p>Query: {query}</p>
             <div className='flex flex-wrap justify-center'>
                 {movieDetails?.map(
-                    (item, i) => item && <ShowCard key={i} details={item} showType={'movie'} />
+                    (item, i) =>
+                        item && (
+                            <ShowCard
+                                key={i}
+                                details={item}
+                                showType={'movie'}
+                                profile={profile}
+                                setProfile={onSetProfile}
+                            />
+                        )
                 )}
                 {tvDetails?.map(
-                    (item, i) => item && <ShowCard key={i} details={item} showType={'tv'} />
+                    (item, i) =>
+                        item && (
+                            <ShowCard
+                                key={i}
+                                details={item}
+                                showType={'tv'}
+                                profile={profile}
+                                setProfile={onSetProfile}
+                            />
+                        )
                 )}
             </div>
         </>

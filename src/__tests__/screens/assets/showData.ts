@@ -1,5 +1,7 @@
+import { ShowData } from '../../../types';
+
 /* eslint-disable prettier/prettier */
-const MOVIE_DATA = [
+const MOVIE_DATA: ShowData[] = [
     {
         id: 1726,
         poster_path: '/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
