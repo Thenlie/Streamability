@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ShowCard } from '../components';
-import { MOVIE_DATA } from '../__tests__/screens/assets';
+import { ShowCard } from '../../components';
+import { MOVIE_DATA } from '../../__tests__/screens/assets';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
@@ -8,7 +8,6 @@ const meta = {
     component: ShowCard,
     tags: ['autodocs'],
     parameters: {
-        // More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
         layout: 'centered',
     },
     decorators: [withRouter],
@@ -17,7 +16,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const IronMan: Story = {
     args: {
         details: MOVIE_DATA[0],
         showType: 'movie',

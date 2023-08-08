@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getMoviesByName } from '../helpers/getMovieUtils';
 import { ShowCard } from '../components';
-import { Profile, ShowData } from '../types';
+import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext } from '../hooks';
@@ -45,13 +45,6 @@ export default function SearchResultsScreen(): JSX.Element {
         handler();
     }, [query]);
 
-    const onSetProfile = useCallback(
-        (profile: Profile | null) => {
-            setProfile(profile);
-        },
-        [setProfile]
-    );
-
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
     }
@@ -69,7 +62,7 @@ export default function SearchResultsScreen(): JSX.Element {
                                 details={item}
                                 showType={'movie'}
                                 profile={profile}
-                                setProfile={onSetProfile}
+                                setProfile={setProfile}
                             />
                         )
                 )}
@@ -81,7 +74,7 @@ export default function SearchResultsScreen(): JSX.Element {
                                 details={item}
                                 showType={'tv'}
                                 profile={profile}
-                                setProfile={onSetProfile}
+                                setProfile={setProfile}
                             />
                         )
                 )}

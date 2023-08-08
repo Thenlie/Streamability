@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { Button, CardActions, CardContent, CardMedia, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-interface MovieCardProps {
+interface ShowCardProps {
     /**
      * Movie or TV show metadata
      */
@@ -42,7 +42,7 @@ export default function ShowCard({
     showType,
     profile,
     setProfile,
-}: MovieCardProps): JSX.Element {
+}: ShowCardProps): JSX.Element {
     const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
 
     /**
