@@ -31,9 +31,9 @@ interface ShowListCardProps {
 }
 
 /**
- * Show cards are rendered all over the application in different situations
- * Be sure changes made to this component are either conditionally applied
- * or intended to be on every single show card
+ * A horizontal show card that allows for a description and
+ * longer titles to be displayed. When the image is clicked,
+ * the user is navigated to the `ShowDetailsPage`.
  *
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
@@ -156,27 +156,15 @@ export default function ShowListCard({
             </Box>
             {profile && (
                 <CardActions sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                    {isInWatchQueue ? (
-                        <Button
-                            sx={{ m: 1, pl: 1 }}
-                            variant='contained'
-                            size='small'
-                            color='secondary'
-                            onClick={() => queueHandler(false, details?.id)}
-                        >
-                            Remove from queue
-                        </Button>
-                    ) : (
-                        <Button
-                            sx={{ m: 1 }}
-                            variant='contained'
-                            size='small'
-                            color='secondary'
-                            onClick={() => queueHandler(true, details?.id)}
-                        >
-                            Add to queue
-                        </Button>
-                    )}
+                    <Button
+                        sx={{ m: 1, pl: 1 }}
+                        variant='contained'
+                        size='small'
+                        color='secondary'
+                        onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                    >
+                        {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                    </Button>
                 </CardActions>
             )}
         </div>
