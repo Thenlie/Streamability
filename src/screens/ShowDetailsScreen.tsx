@@ -6,6 +6,7 @@ import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Providers, ShowCard } from '../components';
 import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
 import { Rating, Typography } from '@mui/material';
+import { useProfileContext } from '../hooks';
 
 /**
  * Screen to show more details of a specific show
@@ -14,6 +15,7 @@ import { Rating, Typography } from '@mui/material';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
+    const { profile, setProfile } = useProfileContext();
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
@@ -91,7 +93,16 @@ export default function ShowDetailsScreen(): JSX.Element {
             <section className='flex flex-wrap justify-center'>
                 {recommendations &&
                     recommendations.map(
-                        (item, i) => item && <ShowCard key={i} details={item} showType={showType} />
+                        (item, i) =>
+                            item && (
+                                <ShowCard
+                                    key={i}
+                                    details={item}
+                                    showType={showType}
+                                    profile={profile}
+                                    setProfile={setProfile}
+                                />
+                            )
                     )}
             </section>
         </>

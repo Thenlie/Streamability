@@ -4,7 +4,7 @@ import { Form } from 'react-router-dom';
 
 /**
  * Currently using a react router form,
- * this will redirect to /search?q=<input>
+ * this will redirect to /search?q=INPUT
  * We can then pull the query from the URL
  *
  * @returns {JSX.Element} | the main search input component
