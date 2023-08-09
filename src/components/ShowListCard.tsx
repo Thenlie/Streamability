@@ -9,6 +9,7 @@ import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { useEffect, useState } from 'react';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { pluralizeString } from '../helpers/stringFormatUtils';
 
 interface ShowListCardProps {
     /**
@@ -144,8 +145,10 @@ export default function ShowListCard({
                             readOnly
                         />
                         <Typography variant='body2' align='left' paddingLeft={1}>
-                            {details.vote_average
-                                ? `${details.vote_count} ratings`
+                            {details.vote_average && details.vote_count
+                                ? details.vote_count +
+                                  ' ' +
+                                  pluralizeString(details.vote_count, 'rating')
                                 : 'No Ratings available'}
                         </Typography>
                     </div>
