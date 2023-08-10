@@ -304,7 +304,7 @@ export interface TvDetailsData extends TvData {
  * Custom type to work with both types of shows
  */
 export interface ShowData {
-    id?: number;
+    id: number;
     overview?: string;
     poster_path?: string | null;
     release_date?: string;

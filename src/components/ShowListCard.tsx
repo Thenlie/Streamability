@@ -1,12 +1,7 @@
-import {
-    addToProfileWatchQueue,
-    getProfileWatchQueue,
-    removeFromProfileWatchQueue,
-} from '../supabase/profiles';
+import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { useEffect, useState } from 'react';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { pluralizeString } from '../helpers/stringFormatUtils';
@@ -20,6 +15,11 @@ interface ShowListCardProps {
      * Either 'movie' or 'tv'
      */
     showType: string;
+    /**
+     * If show is in profile watch queue
+     * False if profile is null
+     */
+    isInWatchQueue: boolean;
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -41,25 +41,10 @@ interface ShowListCardProps {
 export default function ShowListCard({
     details,
     showType,
+    isInWatchQueue,
     profile,
     setProfile,
 }: ShowListCardProps): JSX.Element {
-    const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
-
-    /**
-     * On component render, get the current users watch queue from Supabase
-     * Check if it contains the current shows ID and set the boolean accordingly
-     */
-    useEffect(() => {
-        const handler = async () => {
-            const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && details.id && currentWatchQueue.includes(details.id)) {
-                setIsInWatchQueue(true);
-            }
-        };
-        handler();
-    }, []);
-
     /**
      * Handle card being added to or removed from
      * a users watch queue
@@ -72,11 +57,9 @@ export default function ShowListCard({
             if (isPush && profile) {
                 const data = await addToProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
-                setIsInWatchQueue(true);
             } else if (profile) {
                 const data = await removeFromProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
-                setIsInWatchQueue(false);
             }
         }
     };
@@ -94,7 +77,7 @@ export default function ShowListCard({
                 <CardMedia
                     component='img'
                     className='w-full cursor-pointer rounded-l-md'
-                    sx={{ width: 100, minWidth: 100, height: 175, minHeight: 175 }}
+                    sx={{ width: 100, minWidth: 100, height: 180, minHeight: 180 }}
                     image={
                         details.poster_path
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
@@ -135,8 +118,8 @@ export default function ShowListCard({
                         {details.overview}
                     </Typography>
                 </Box>
-                <Box>
-                    <div style={{ textAlign: 'left' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div style={{ textAlign: 'left', alignSelf: 'end' }}>
                         <Rating
                             name='half-rating'
                             defaultValue={details.vote_average ? details.vote_average / 2 : 0}
@@ -152,21 +135,23 @@ export default function ShowListCard({
                                 : 'No Ratings available'}
                         </Typography>
                     </div>
+                    {profile && (
+                        <CardActions
+                            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}
+                        >
+                            <Button
+                                sx={{ m: 1, pl: 1 }}
+                                variant='contained'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                            >
+                                {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                            </Button>
+                        </CardActions>
+                    )}
                 </Box>
             </Box>
-            {profile && (
-                <CardActions sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                    <Button
-                        sx={{ m: 1, pl: 1 }}
-                        variant='contained'
-                        size='small'
-                        color='secondary'
-                        onClick={() => queueHandler(!isInWatchQueue, details?.id)}
-                    >
-                        {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
-                    </Button>
-                </CardActions>
-            )}
         </div>
     );
 }
