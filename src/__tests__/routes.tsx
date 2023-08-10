@@ -74,6 +74,7 @@ export const showCardRoutes: RouteObject[] = [
                     <ShowCard
                         details={sampleMovieData as ShowData}
                         showType={'movie'}
+                        isInWatchQueue={false}
                         profile={null}
                         // eslint-disable-next-line @typescript-eslint/no-empty-function
                         setProfile={() => {}}
