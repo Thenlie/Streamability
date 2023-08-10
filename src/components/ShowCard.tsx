@@ -1,14 +1,10 @@
-import {
-    addToProfileWatchQueue,
-    getProfileWatchQueue,
-    removeFromProfileWatchQueue,
-} from '../supabase/profiles';
+import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { useEffect, useState } from 'react';
-import { Button, CardActions, CardContent, CardMedia, Rating, Typography } from '@mui/material';
+import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { pluralizeString } from '../helpers/stringFormatUtils';
 
 interface ShowCardProps {
     /**
@@ -19,6 +15,11 @@ interface ShowCardProps {
      * Either 'movie' or 'tv'
      */
     showType: string;
+    /**
+     * If show is in profile watch queue
+     * `false` if profile is null
+     */
+    isInWatchQueue?: boolean;
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -40,25 +41,10 @@ interface ShowCardProps {
 export default function ShowCard({
     details,
     showType,
+    isInWatchQueue = false,
     profile,
     setProfile,
 }: ShowCardProps): JSX.Element {
-    const [isInWatchQueue, setIsInWatchQueue] = useState<boolean>(false);
-
-    /**
-     * On component render, get the current users watch queue from Supabase
-     * Check if it contains the current shows ID and set the boolean accordingly
-     */
-    useEffect(() => {
-        const handler = async () => {
-            const currentWatchQueue = profile ? await getProfileWatchQueue(profile.id) : null;
-            if (currentWatchQueue && details.id && currentWatchQueue.includes(details.id)) {
-                setIsInWatchQueue(true);
-            }
-        };
-        handler();
-    }, []);
-
     /**
      * Handle card being added to or removed from
      * a users watch queue
@@ -71,87 +57,99 @@ export default function ShowCard({
             if (isPush && profile) {
                 const data = await addToProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
-                setIsInWatchQueue(true);
             } else if (profile) {
                 const data = await removeFromProfileWatchQueue(profile.id, show_id);
                 setProfile(data);
-                setIsInWatchQueue(false);
             }
         }
     };
 
     return (
-        <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground'>
+        <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground rounded-sm'>
             <Link
                 to={`/details/${showType}/${details.id}`}
                 state={details}
                 data-testid='show-details-link'
             >
-                {details.poster_path ? (
-                    <CardMedia
-                        component='img'
-                        className='w-full cursor-pointer'
-                        sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
-                        image={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                        alt={`${details.title} poster`}
-                    />
-                ) : (
-                    <CardMedia
-                        component='img'
-                        className='w-full cursor-pointer'
-                        sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
-                        image={'/poster-placeholder.jpeg'}
-                        alt={`${details.title} poster`}
-                    />
-                )}
+                <CardMedia
+                    component='img'
+                    className='w-full cursor-pointer rounded-l-sm'
+                    sx={{ width: 180, minWidth: 180, height: 270, minHeight: 270 }}
+                    image={
+                        details.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+                            : '/poster-placeholder.jpeg'
+                    }
+                    alt={`${details.title} poster`}
+                />
             </Link>
-            <Box sx={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
-                <CardContent>
-                    <Typography variant='h5'>{details.title}</Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    paddingY: '10px',
+                }}
+            >
+                <Box>
+                    <Typography
+                        variant='h5'
+                        align='left'
+                        paddingLeft={1}
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: '2',
+                            WebkitBoxOrient: 'vertical',
+                        }}
+                    >
+                        {details.title}
+                    </Typography>
                     {details.release_date && details.release_date.length === 10 && (
-                        <Typography>
+                        <Typography align='left' paddingLeft={1}>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                    {details.vote_average ? (
-                        <div>
-                            <Rating
-                                name='half-rating'
-                                defaultValue={details.vote_average / 2}
-                                precision={0.5}
-                                readOnly
-                            />
-                            <Typography variant='body2'>{details.vote_count} ratings</Typography>
-                        </div>
-                    ) : (
-                        <Typography variant='body2'>No ratings available</Typography>
+                </Box>
+                <Box>
+                    <div>
+                        <Rating
+                            name='half-rating'
+                            defaultValue={details.vote_average ? details.vote_average / 2 : 0}
+                            precision={0.5}
+                            style={{ width: '100%', paddingLeft: '5px' }}
+                            readOnly
+                        />
+                        <Typography variant='body2' align='left' paddingLeft={1}>
+                            {details.vote_average && details.vote_count
+                                ? details.vote_count +
+                                  ' ' +
+                                  pluralizeString(details.vote_count, 'rating')
+                                : 'No Ratings available'}
+                        </Typography>
+                    </div>
+                    {profile && (
+                        <CardActions
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                padding: 0,
+                            }}
+                        >
+                            <Button
+                                sx={{ m: 1, fontSize: 12 }}
+                                variant='contained'
+                                size='small'
+                                color='secondary'
+                                onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                            >
+                                {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                            </Button>
+                        </CardActions>
                     )}
-                </CardContent>
-                {profile && (
-                    <CardActions sx={{ margin: 'auto', display: 'flex', flexDirection: 'column' }}>
-                        {isInWatchQueue ? (
-                            <Button
-                                sx={{ m: 1 }}
-                                variant='contained'
-                                size='small'
-                                color='secondary'
-                                onClick={() => queueHandler(false, details?.id)}
-                            >
-                                Remove from queue
-                            </Button>
-                        ) : (
-                            <Button
-                                sx={{ m: 1 }}
-                                variant='contained'
-                                size='small'
-                                color='secondary'
-                                onClick={() => queueHandler(true, details?.id)}
-                            >
-                                Add to queue
-                            </Button>
-                        )}
-                    </CardActions>
-                )}
+                </Box>
             </Box>
         </div>
     );

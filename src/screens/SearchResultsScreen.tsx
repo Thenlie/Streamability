@@ -43,41 +43,49 @@ export default function SearchResultsScreen(): JSX.Element {
             setLoading(false);
         };
         handler();
-    }, [query]);
+    }, []);
 
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
     }
 
+    // TODO: #438 Handle this error better
+    if (!movieDetails && !tvDetails) {
+        return <p>Sorry! No show data...</p>;
+    }
+
     return (
         <>
-            <h1 data-testid='search-results-heading'>Search Results Page</h1>
-            <p>Query: {query}</p>
+            <h1 data-testid='search-results-heading' className='w-full text-left text-xl p-2 pl-6'>
+                Search results for: {query}
+            </h1>
             <div className='flex flex-wrap justify-center'>
-                {movieDetails?.map(
-                    (item, i) =>
-                        item && (
-                            <ShowCard
-                                key={i}
-                                details={item}
-                                showType={'movie'}
-                                profile={profile}
-                                setProfile={setProfile}
-                            />
-                        )
-                )}
-                {tvDetails?.map(
-                    (item, i) =>
-                        item && (
-                            <ShowCard
-                                key={i}
-                                details={item}
-                                showType={'tv'}
-                                profile={profile}
-                                setProfile={setProfile}
-                            />
-                        )
-                )}
+                {movieDetails?.map((item, i) => {
+                    const isInWatchQueue = profile?.watch_queue.includes(item.id);
+                    return (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType={'movie'}
+                            isInWatchQueue={isInWatchQueue || false}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    );
+                })}
+                {tvDetails?.map((item, i) => {
+                    const isInWatchQueue = profile?.watch_queue.includes(item.id);
+                    return (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType={'tv'}
+                            isInWatchQueue={isInWatchQueue || false}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    );
+                })}
             </div>
         </>
     );
