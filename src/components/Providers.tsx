@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ShowProviders, ShowData } from '../types';
 import { getMovieProviders } from '../helpers/getMovieUtils';
 import { getTvProviders } from '../helpers/getTvUtils';
+import ProvidersPlaceholder from './ProvidersPlaceholder';
 
 interface ProviderProps {
     details: ShowData;
@@ -29,8 +30,13 @@ export default function Providers({ details }: ProviderProps): JSX.Element {
         handler();
     }, []);
 
-    // TODO: #210 Create loader component
-    if (loading) return <p>Loading</p>;
+    if (loading) {
+        return (
+            <div className='flex justify-center'>
+                <ProvidersPlaceholder count={3} />
+            </div>
+        );
+    }
 
     return (
         <div className='flex justify-center'>

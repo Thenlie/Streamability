@@ -11,6 +11,7 @@ import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
+import ProvidersPlaceholder from './ProvidersPlaceholder';
 
 export {
     ShowCard,
@@ -23,4 +24,5 @@ export {
     SignUpForm,
     ErrorMessage,
     Providers,
+    ProvidersPlaceholder,
 };
