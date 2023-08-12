@@ -42,12 +42,13 @@ export default function ShowDetailsScreen(): JSX.Element {
     }, [location]);
 
     // TODO: #199 Create skeleton loader
+    // TODO: Handle case when no details are ever returned
     if (!details) return <p>Loading</p>;
 
     return (
         <>
             <section className='m-3 flex'>
-                <div>
+                <div className='rounded-md overflow-hidden mr-2'>
                     {details.poster_path ? (
                         <img
                             style={{ width: '350px', height: '550px' }}
@@ -60,50 +61,59 @@ export default function ShowDetailsScreen(): JSX.Element {
                         ></img>
                     )}
                 </div>
-                <div>
+                <div className='m-3'>
                     <div>
-                        <h2 data-testid='show-details-heading'>{details.title}</h2>
+                        <Typography variant='h3' align='left' data-testid='show-details-heading'>
+                            {details.title}
+                        </Typography>
                         {details.release_date && details.release_date.length === 10 && (
-                            <span data-testid='details-release-date'>
+                            <Typography align='left' data-testid='details-release-date'>
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
-                            </span>
+                            </Typography>
                         )}
-                        {details.runtime && <span> {details.runtime} minutes</span>}
-                        <span> {details.age_rating} </span>
+                        <Typography align='left'>Rated {details.age_rating} </Typography>
+                        {details.runtime && (
+                            <Typography align='left' variant='body2'>
+                                {details.runtime} minutes
+                            </Typography>
+                        )}
                     </div>
-                    <div>
-                        <p className='max-w-md'>{details.overview}</p>
-                    </div>
-                    <Providers id={details.id} showType={showType} />
                     {details.vote_average ? (
-                        <div>
+                        <div className='flex flex-col my-2'>
                             <Rating
                                 name='half-rating'
                                 defaultValue={details.vote_average / 2}
                                 precision={0.5}
                                 readOnly
                             />
-                            <Typography variant='body2'>{details.vote_count} ratings</Typography>
+                            <Typography variant='body2' align='left'>
+                                {details.vote_count} ratings
+                            </Typography>
                         </div>
                     ) : (
                         <Typography variant='body2'>No ratings available</Typography>
                     )}
+                    <div>
+                        <Typography align='left' className='max-w-md py-3'>
+                            {details.overview}
+                        </Typography>
+                    </div>
+                    <div className='bg-primary rounded-md my-3 p-2'>
+                        <Providers id={details.id} showType={showType} />
+                    </div>
                 </div>
             </section>
             <section className='flex flex-wrap justify-center'>
                 {recommendations &&
-                    recommendations.map(
-                        (item, i) =>
-                            item && (
-                                <ShowCard
-                                    key={i}
-                                    details={item}
-                                    showType={showType}
-                                    profile={profile}
-                                    setProfile={setProfile}
-                                />
-                            )
-                    )}
+                    recommendations.map((item, i) => (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType={showType}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    ))}
             </section>
         </>
     );
