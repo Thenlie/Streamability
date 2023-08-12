@@ -74,7 +74,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     <div>
                         <p className='max-w-md'>{details.overview}</p>
                     </div>
-                    <Providers details={details} />
+                    <Providers id={details.id} showType={showType} />
                     {details.vote_average ? (
                         <div>
                             <Rating
