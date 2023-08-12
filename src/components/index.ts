@@ -12,6 +12,7 @@ import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
 import ProvidersPlaceholder from './ProvidersPlaceholder';
+import Rating from './Rating';
 
 export {
     ShowCard,
@@ -25,4 +26,5 @@ export {
     ErrorMessage,
     Providers,
     ProvidersPlaceholder,
+    Rating,
 };
