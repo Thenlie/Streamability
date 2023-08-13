@@ -7,6 +7,7 @@ import ShowListCard from './ShowListCard';
 import ShowCardPlaceholder from './ShowCardPlaceholder';
 import ShowListCardPlaceholder from './ShowListCardPlaceholder';
 import ProvidersPlaceholder from './ProvidersPlaceholder';
+import ShowCarouselPlaceholder from './ShowCarouselPlaceholder';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
@@ -22,6 +23,7 @@ export {
     ShowCardPlaceholder,
     ShowListCardPlaceholder,
     ProvidersPlaceholder,
+    ShowCarouselPlaceholder,
     ShowCarousel,
     SearchInput,
     LoginForm,

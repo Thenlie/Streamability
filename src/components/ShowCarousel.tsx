@@ -40,7 +40,12 @@ export default function ShowCarousel({
             for (let i = 0; i < data.length; i += size) {
                 const chunk = data.slice(i, i + size);
                 arr.push(
-                    <CarouselChildren data={chunk} profile={profile} setProfile={setProfile} />
+                    <CarouselChildren
+                        key={i}
+                        data={chunk}
+                        profile={profile}
+                        setProfile={setProfile}
+                    />
                 );
             }
         }
@@ -48,8 +53,11 @@ export default function ShowCarousel({
     };
 
     return (
-        <div className='w-screen '>
-            <Carousel>{handleDataSlice(data)}</Carousel>
-        </div>
+        <section className='flex flex-col items-center'>
+            <h2>Trending</h2>
+            <div className='w-screen'>
+                <Carousel>{handleDataSlice(data)}</Carousel>
+            </div>
+        </section>
     );
 }
