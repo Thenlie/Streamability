@@ -1,9 +1,4 @@
 #!/bin/bash
-#
-# An example hook script to verify what is about to be committed.
-# Called by "git commit" with no arguments.  The hook should
-# exit with non-zero status after issuing an appropriate message if
-# it wants to stop the commit.
 
 if [ "$NO_VERIFY" ]; then
     printf "\033[41m ⚠️  pre-commit hook skipped\033[0m\n"
@@ -19,13 +14,9 @@ else
     exit 1
 fi
 
-echo "--- Running ES-Lint ---"
-npm run lint-fix
-if [[ "$?" == 0 ]]; then
-    git add -A
-    printf "\033[32m✅ ESLint Passed\033[0m\n"
-else
-    printf "\033[41m❌ ESLint Failed\033[0m\n"
+# Run es-lint script
+bash scripts/lint-staged.sh
+if [[ "$?" != 0 ]]; then
     exit 1
 fi
 
