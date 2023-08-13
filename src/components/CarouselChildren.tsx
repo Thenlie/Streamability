@@ -33,7 +33,7 @@ export default function CarouselChildren({
                 <ShowCard
                     key={i}
                     details={item}
-                    showType='movie'
+                    showType={item.showType}
                     profile={profile}
                     setProfile={setProfile}
                 />
