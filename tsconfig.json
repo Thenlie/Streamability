@@ -24,8 +24,8 @@
     ]
   },
   "include": [
-    "src"
-    , "vitest.config.ts"  
+    "src",
+    "vitest.config.ts"
   ],
   "references": [
     {

@@ -8,7 +8,6 @@ import { ThemeProvider } from '@mui/system';
 import { darkTheme, lightTheme } from './theme';
 import { Theme } from '@mui/material';
 import { SkeletonTheme } from 'react-loading-skeleton';
-
 /**
  * The main app function, wrapping all other screens and components
  * This wraps the entire front end application and will be shown on every screen

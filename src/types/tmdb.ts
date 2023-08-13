@@ -321,4 +321,5 @@ export interface ShowData {
             origin_country: string;
         },
     ];
+    showType: 'movie' | 'tv';
 }

@@ -53,7 +53,7 @@ export default function ShowCarousel({
     };
 
     return (
-        <section className='flex flex-col items-center'>
+        <section className='flex flex-col items-center pt-12'>
             <h2>Trending</h2>
             <div className='w-screen'>
                 <Carousel>{handleDataSlice(data)}</Carousel>

@@ -12,6 +12,7 @@ const MOVIE_DATA: ShowData[] = [
         vote_average: 7.631,
         vote_count: 23740,
         overview: 'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.',
+        showType: 'movie',
         networks: [
             {
                 name: 'Disney Plus',
