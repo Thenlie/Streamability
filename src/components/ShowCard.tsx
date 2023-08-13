@@ -2,9 +2,9 @@ import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
+import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import { pluralizeString } from '../helpers/stringFormatUtils';
+import Rating from './Rating';
 
 interface ShowCardProps {
     /**
@@ -89,13 +89,13 @@ export default function ShowCard({
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     paddingY: '10px',
+                    paddingLeft: '5px',
                 }}
             >
                 <Box>
                     <Typography
                         variant='h5'
                         align='left'
-                        paddingLeft={1}
                         sx={{
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
@@ -107,28 +107,16 @@ export default function ShowCard({
                         {details.title}
                     </Typography>
                     {details.release_date && details.release_date.length === 10 && (
-                        <Typography align='left' paddingLeft={1}>
+                        <Typography align='left'>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
                 </Box>
                 <Box>
-                    <div>
-                        <Rating
-                            name='half-rating'
-                            defaultValue={details.vote_average ? details.vote_average / 2 : 0}
-                            precision={0.5}
-                            style={{ width: '100%', paddingLeft: '5px' }}
-                            readOnly
-                        />
-                        <Typography variant='body2' align='left' paddingLeft={1}>
-                            {details.vote_average && details.vote_count
-                                ? details.vote_count +
-                                  ' ' +
-                                  pluralizeString(details.vote_count, 'rating')
-                                : 'No Ratings available'}
-                        </Typography>
-                    </div>
+                    <Rating
+                        vote_average={details.vote_average || 0}
+                        vote_count={details.vote_count || 0}
+                    />
                     {profile && (
                         <CardActions
                             sx={{

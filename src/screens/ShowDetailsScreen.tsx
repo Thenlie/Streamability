@@ -5,8 +5,9 @@ import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Providers, ShowCard } from '../components';
 import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
-import { Rating, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useProfileContext } from '../hooks';
+import Rating from '../components/Rating';
 
 /**
  * Screen to show more details of a specific show
@@ -71,28 +72,17 @@ export default function ShowDetailsScreen(): JSX.Element {
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
                             </Typography>
                         )}
-                        <Typography align='left'>Rated {details.age_rating} </Typography>
+                        <Typography align='left'>{details.age_rating}</Typography>
                         {details.runtime && (
                             <Typography align='left' variant='body2'>
                                 {details.runtime} minutes
                             </Typography>
                         )}
                     </div>
-                    {details.vote_average ? (
-                        <div className='flex flex-col my-2'>
-                            <Rating
-                                name='half-rating'
-                                defaultValue={details.vote_average / 2}
-                                precision={0.5}
-                                readOnly
-                            />
-                            <Typography variant='body2' align='left'>
-                                {details.vote_count} ratings
-                            </Typography>
-                        </div>
-                    ) : (
-                        <Typography variant='body2'>No ratings available</Typography>
-                    )}
+                    <Rating
+                        vote_average={details.vote_average || 0}
+                        vote_count={details.vote_count || 0}
+                    />
                     <div>
                         <Typography align='left' className='max-w-md py-3'>
                             {details.overview}
