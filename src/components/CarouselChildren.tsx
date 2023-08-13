@@ -28,12 +28,12 @@ export default function CarouselChildren({
     setProfile,
 }: CarouselChildrenProps): JSX.Element {
     return (
-        <div className='flex justify-center'>
+        <div className='flex'>
             {data?.map((item, i) => (
                 <ShowCard
                     key={i}
                     details={item}
-                    showType='WIP'
+                    showType='movie'
                     profile={profile}
                     setProfile={setProfile}
                 />
