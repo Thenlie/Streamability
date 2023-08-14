@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './helpers/supabaseClient';
 import type { Session, Profile } from './types';
-import Navigation from './components/Navigation';
+import { Navigation } from './components';
 import { getProfileById } from './supabase/profiles';
 import { ThemeProvider } from '@mui/system';
 import { darkTheme, lightTheme } from './theme';
