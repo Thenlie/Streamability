@@ -61,26 +61,22 @@ export default function SearchResultsScreen(): JSX.Element {
             </h1>
             <div className='flex flex-wrap justify-center'>
                 {movieDetails?.map((item, i) => {
-                    const isInWatchQueue = profile?.watch_queue.includes(item.id);
                     return (
                         <ShowCard
                             key={i}
                             details={item}
                             showType={'movie'}
-                            isInWatchQueue={isInWatchQueue || false}
                             profile={profile}
                             setProfile={setProfile}
                         />
                     );
                 })}
                 {tvDetails?.map((item, i) => {
-                    const isInWatchQueue = profile?.watch_queue.includes(item.id);
                     return (
                         <ShowCard
                             key={i}
                             details={item}
                             showType={'tv'}
-                            isInWatchQueue={isInWatchQueue || false}
                             profile={profile}
                             setProfile={setProfile}
                         />

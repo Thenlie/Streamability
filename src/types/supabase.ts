@@ -39,7 +39,7 @@ export interface Profile {
     username: string;
     email: string;
     avatar_url: string | null;
-    watch_queue: number[];
+    watch_queue: string[];
     adult: boolean;
     country: string;
     updated_at: string;
