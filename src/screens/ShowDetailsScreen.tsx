@@ -3,7 +3,7 @@ import { Location, useLocation } from 'react-router-dom';
 import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUtils';
 import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { Providers, ShowCard } from '../components';
+import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
 import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
 import { Typography } from '@mui/material';
 import { useProfileContext } from '../hooks';
@@ -93,17 +93,17 @@ export default function ShowDetailsScreen(): JSX.Element {
                     </div>
                 </div>
             </section>
-            <section className='flex flex-wrap justify-center'>
-                {recommendations &&
-                    recommendations.map((item, i) => (
-                        <ShowCard
-                            key={i}
-                            details={item}
-                            showType={showType}
-                            profile={profile}
-                            setProfile={setProfile}
-                        />
-                    ))}
+            <section className=''>
+                {recommendations ? (
+                    <ShowCarousel
+                        data={recommendations}
+                        size={5}
+                        profile={profile}
+                        setProfile={setProfile}
+                    />
+                ) : (
+                    <ShowCarouselPlaceholder count={5} />
+                )}
             </section>
         </>
     );
