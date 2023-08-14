@@ -11,6 +11,10 @@ import {
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
 import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
+import { ShowData } from '../types';
+import { ShowCarousel, ShowCarouselPlaceholder } from '../components';
+import { getMovieDetails } from '../helpers/getMovieUtils';
+import { getTvDetails } from '../helpers/getTvUtils';
 
 /**
  * User must be logged in to access endpoint
@@ -23,6 +27,7 @@ export default function DashboardScreen(): JSX.Element {
     const [username, setUsername] = useState('');
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
+    const [watchQueue, setWatchQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
 
     if (!session) {
@@ -33,6 +38,19 @@ export default function DashboardScreen(): JSX.Element {
         const handler = async () => {
             if (session) {
                 const queue = await getProfileWatchQueue(session.user.id);
+                if (queue) {
+                    const arr = [];
+                    for (let i = 0; i < queue.length; i++) {
+                        if (queue[i].includes('tv-')) {
+                            const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
+                            arr.push(tvShow);
+                        } else {
+                            const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
+                            arr.push(movie);
+                        }
+                    }
+                    setWatchQueue(arr);
+                }
                 if (session.user.adult) setIsAdult(session.user.adult);
                 // eslint-disable-next-line no-console
                 if (import.meta.env.DEV) console.log(queue);
@@ -78,87 +96,101 @@ export default function DashboardScreen(): JSX.Element {
     };
 
     return (
-        <div aria-live='polite' className='flex flex-col '>
-            <div>
-                <Typography>Email: {session?.user.email}</Typography>
-                <Typography>Username: {profile?.username}</Typography>
-            </div>
-            <FormControl sx={{ m: 0.5 }} variant='filled'>
-                <InputLabel htmlFor='username' color='secondary' className='!text-text'>
-                    Change Username
-                </InputLabel>
-                <FilledInput
-                    name='username'
-                    onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}
-                    inputProps={{ minLength: 3 }}
+        <section>
+            <div aria-live='polite' className='flex flex-col items-center justify-center '>
+                <div>
+                    <Typography>Email: {session?.user.email}</Typography>
+                    <Typography>Username: {profile?.username}</Typography>
+                </div>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='username' color='secondary' className='!text-text'>
+                        Change Username
+                    </InputLabel>
+                    <FilledInput
+                        name='username'
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                        }}
+                        inputProps={{ minLength: 3 }}
+                        sx={{ m: 0.5 }}
+                    />
+                </FormControl>
+                <Button
+                    variant='contained'
+                    type='button'
+                    color='secondary'
+                    startIcon={<Edit />}
                     sx={{ m: 0.5 }}
-                />
-            </FormControl>
-            <Button
-                variant='contained'
-                type='button'
-                color='secondary'
-                startIcon={<Edit />}
-                sx={{ m: 0.5 }}
-                onClick={() => changeUsername()}
-            >
-                Update Profile
-            </Button>
-            <FormControl sx={{ m: 0.5 }} variant='filled'>
-                <InputLabel htmlFor='country' color='secondary' className='!text-text'>
+                    onClick={() => changeUsername()}
+                >
+                    Update Profile
+                </Button>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='country' color='secondary' className='!text-text'>
+                        Change Country
+                    </InputLabel>
+                    <FilledInput
+                        name='country'
+                        onChange={(e) => {
+                            setCountry(e.target.value);
+                        }}
+                        inputProps={{ maxLength: 2, minLength: 2 }}
+                        sx={{ m: 0.5 }}
+                    />
+                </FormControl>
+                <Button
+                    variant='contained'
+                    type='button'
+                    color='secondary'
+                    sx={{ m: 0.5 }}
+                    onClick={() => changeCountry()}
+                    startIcon={<Language />}
+                >
                     Change Country
-                </InputLabel>
-                <FilledInput
-                    name='country'
-                    onChange={(e) => {
-                        setCountry(e.target.value);
-                    }}
-                    inputProps={{ maxLength: 2, minLength: 2 }}
+                </Button>
+                <Button
+                    variant='contained'
+                    type='button'
+                    color='secondary'
+                    startIcon={<NoAdultContent />}
                     sx={{ m: 0.5 }}
-                />
-            </FormControl>
-            <Button
-                variant='contained'
-                type='button'
-                color='secondary'
-                sx={{ m: 0.5 }}
-                onClick={() => changeCountry()}
-                startIcon={<Language />}
-            >
-                Change Country
-            </Button>
-            <Button
-                variant='contained'
-                type='button'
-                color='secondary'
-                startIcon={<NoAdultContent />}
-                sx={{ m: 0.5 }}
-                onClick={() => toggleAdultFlag()}
-            >
-                Toggle Adult Flag
-            </Button>
-            <Button
-                variant='contained'
-                type='button'
-                color='secondary'
-                sx={{ m: 0.5 }}
-                startIcon={<Logout />}
-                onClick={() => SUPABASE.auth.signOut()}
-            >
-                Sign Out
-            </Button>
-            <Button
-                variant='contained'
-                size='large'
-                color='error'
-                type='button'
-                sx={{ m: 0.5 }}
-                onClick={() => deleteProfile()}
-            >
-                Delete Profile
-            </Button>
-        </div>
+                    onClick={() => toggleAdultFlag()}
+                >
+                    Toggle Adult Flag
+                </Button>
+                <Button
+                    variant='contained'
+                    type='button'
+                    color='secondary'
+                    sx={{ m: 0.5 }}
+                    startIcon={<Logout />}
+                    onClick={() => SUPABASE.auth.signOut()}
+                >
+                    Sign Out
+                </Button>
+                <Button
+                    variant='contained'
+                    size='large'
+                    color='error'
+                    type='button'
+                    sx={{ m: 0.5 }}
+                    onClick={() => deleteProfile()}
+                >
+                    Delete Profile
+                </Button>
+            </div>
+            <div>
+                {watchQueue ? (
+                    <ShowCarousel
+                        data={watchQueue}
+                        size={5}
+                        profile={profile}
+                        setProfile={setProfile}
+                    />
+                ) : (
+                    <ShowCarouselPlaceholder count={5} />
+                )}
+            </div>
+        </section>
     );
 }
