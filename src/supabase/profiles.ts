@@ -86,7 +86,7 @@ export const deleteProfileById = async (id: string): Promise<void> => {
  * @param id | uuid users profile being queried
  * @returns {Promise<number[] | null>}
  */
-export const getProfileWatchQueue = async (id: string): Promise<number[] | null> => {
+export const getProfileWatchQueue = async (id: string): Promise<string[] | null> => {
     try {
         const { data, error } = await SUPABASE.from('profiles').select('watch_queue').eq('id', id);
 
@@ -110,7 +110,7 @@ export const getProfileWatchQueue = async (id: string): Promise<number[] | null>
  */
 export const addToProfileWatchQueue = async (
     id: string,
-    show_id: number
+    show_id: string
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('append_array', {
@@ -140,7 +140,7 @@ export const addToProfileWatchQueue = async (
  */
 export const removeFromProfileWatchQueue = async (
     id: string,
-    show_id: number
+    show_id: string
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_array', {

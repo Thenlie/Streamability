@@ -55,10 +55,16 @@ export default function ShowCard({
     const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
         if (show_id) {
             if (isPush && profile) {
-                const data = await addToProfileWatchQueue(profile.id, show_id);
+                const data = await addToProfileWatchQueue(
+                    profile.id,
+                    `${details.showType}-${show_id}`
+                );
                 setProfile(data);
             } else if (profile) {
-                const data = await removeFromProfileWatchQueue(profile.id, show_id);
+                const data = await removeFromProfileWatchQueue(
+                    profile.id,
+                    `${details.showType}-${show_id}`
+                );
                 setProfile(data);
             }
         }
