@@ -6,12 +6,14 @@ import ShowCard from './ShowCard';
 import ShowListCard from './ShowListCard';
 import ShowCardPlaceholder from './ShowCardPlaceholder';
 import ShowListCardPlaceholder from './ShowListCardPlaceholder';
+import ProvidersPlaceholder from './ProvidersPlaceholder';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
-import ProvidersPlaceholder from './ProvidersPlaceholder';
+import Navigation from './Navigation';
+import CarouselChildren from './CarouselChildren';
 import Rating from './Rating';
 
 export {
@@ -19,12 +21,14 @@ export {
     ShowListCard,
     ShowCardPlaceholder,
     ShowListCardPlaceholder,
+    ProvidersPlaceholder,
     ShowCarousel,
     SearchInput,
     LoginForm,
     SignUpForm,
     ErrorMessage,
     Providers,
-    ProvidersPlaceholder,
+    Navigation,
+    CarouselChildren,
     Rating,
 };
