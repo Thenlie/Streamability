@@ -17,11 +17,6 @@ interface ShowCardProps {
      */
     showType: string;
     /**
-     * If show is in profile watch queue
-     * `false` if profile is null
-     */
-    isInWatchQueue?: boolean;
-    /**
      * User profile if logged in, otherwise `null`
      */
     profile: Profile | null;
@@ -46,6 +41,7 @@ export default function ShowCard({
     setProfile,
 }: ShowCardProps): JSX.Element {
     const isInWatchQueue = useIsInWatchQueue(details.id, profile);
+
     /**
      * Handle card being added to or removed from
      * a users watch queue
