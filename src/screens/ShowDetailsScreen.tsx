@@ -93,7 +93,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     </div>
                 </div>
             </section>
-            <section className=''>
+            <section>
                 {recommendations ? (
                     <ShowCarousel
                         data={recommendations}

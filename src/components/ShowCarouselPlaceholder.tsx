@@ -1,5 +1,4 @@
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import ShowCardPlaceholder from './ShowCardPlaceholder';
 
 interface ShowCarouselPlaceholderProps {
     /**
@@ -21,8 +20,7 @@ export default function ShowCarouselPlaceholder({
         <div className='m-3 flex flex-wrap justify-center'>
             {[...Array(count)].map((x, i) => (
                 <div key={i}>
-                    <Skeleton width={325} height={270} className='mb-2 mx-2' />
-                    <Skeleton width={325} count={3} className='mx-2' />
+                    <ShowCardPlaceholder count={1} />
                 </div>
             ))}
         </div>
