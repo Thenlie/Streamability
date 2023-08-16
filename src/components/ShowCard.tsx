@@ -5,6 +5,7 @@ import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Rating from './Rating';
+import { useIsInWatchQueue } from '../hooks';
 
 interface ShowCardProps {
     /**
@@ -15,11 +16,6 @@ interface ShowCardProps {
      * Either 'movie' or 'tv'
      */
     showType: string;
-    /**
-     * If show is in profile watch queue
-     * `false` if profile is null
-     */
-    isInWatchQueue?: boolean;
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -41,10 +37,11 @@ interface ShowCardProps {
 export default function ShowCard({
     details,
     showType,
-    isInWatchQueue = false,
     profile,
     setProfile,
 }: ShowCardProps): JSX.Element {
+    const isInWatchQueue = useIsInWatchQueue(details.id, profile);
+
     /**
      * Handle card being added to or removed from
      * a users watch queue

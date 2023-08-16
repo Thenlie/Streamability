@@ -21,7 +21,6 @@ export const LoggedOut: Story = {
         details: MOVIE_DATA,
         showType: 'movie',
         profile: null,
-        isInWatchQueue: false,
     },
 };
 
@@ -30,6 +29,5 @@ export const LoggedIn: Story = {
         details: MOVIE_DATA,
         showType: 'movie',
         profile: PROFILE,
-        isInWatchQueue: false,
     },
 };

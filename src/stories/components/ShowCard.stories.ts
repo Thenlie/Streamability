@@ -21,6 +21,5 @@ export const IronMan: Story = {
         details: MOVIE_DATA[0],
         showType: 'movie',
         profile: null,
-        isInWatchQueue: false,
     },
 };
