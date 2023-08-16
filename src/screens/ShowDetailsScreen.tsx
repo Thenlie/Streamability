@@ -97,7 +97,6 @@ export default function ShowDetailsScreen(): JSX.Element {
                 {recommendations ? (
                     <ShowCarousel
                         data={recommendations}
-                        size={5}
                         profile={profile}
                         setProfile={setProfile}
                     />

@@ -181,12 +181,7 @@ export default function DashboardScreen(): JSX.Element {
             </div>
             <div>
                 {watchQueue ? (
-                    <ShowCarousel
-                        data={watchQueue}
-                        size={5}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
+                    <ShowCarousel data={watchQueue} profile={profile} setProfile={setProfile} />
                 ) : (
                     <ShowCarouselPlaceholder count={5} />
                 )}

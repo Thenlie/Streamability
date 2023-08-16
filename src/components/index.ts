@@ -14,7 +14,6 @@ import { LoginForm, SignUpForm } from './auth';
 import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
 import Navigation from './Navigation';
-import CarouselChildren from './CarouselChildren';
 import Rating from './Rating';
 
 export {
@@ -31,6 +30,5 @@ export {
     ErrorMessage,
     Providers,
     Navigation,
-    CarouselChildren,
     Rating,
 };
