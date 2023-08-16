@@ -1,4 +1,7 @@
 interface ErrorMessageProps {
+    /**
+     * Message to be displayed with the error
+     */
     message: string;
 }
 

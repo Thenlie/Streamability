@@ -70,7 +70,15 @@ export const showCardRoutes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                element: <ShowCard details={sampleMovieData as ShowData} showType={'movie'} />,
+                element: (
+                    <ShowCard
+                        details={sampleMovieData as ShowData}
+                        showType={'movie'}
+                        profile={null}
+                        // eslint-disable-next-line @typescript-eslint/no-empty-function
+                        setProfile={() => {}}
+                    />
+                ),
             },
         ],
     },

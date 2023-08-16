@@ -5,6 +5,7 @@ import { ShowCard } from '../components';
 import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
+import { useProfileContext } from '../hooks';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -28,6 +29,7 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 export default function SearchResultsScreen(): JSX.Element {
     const query: string = useLoaderData() as string;
+    const { profile, setProfile } = useProfileContext();
     const [movieDetails, setMovieDetails] = useState<ShowData[] | null>(null);
     const [tvDetails, setTvDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,23 +43,45 @@ export default function SearchResultsScreen(): JSX.Element {
             setLoading(false);
         };
         handler();
-    }, [query]);
+    }, []);
 
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
     }
 
+    // TODO: #438 Handle this error better
+    if (!movieDetails && !tvDetails) {
+        return <p>Sorry! No show data...</p>;
+    }
+
     return (
         <>
-            <h1 data-testid='search-results-heading'>Search Results Page</h1>
-            <p>Query: {query}</p>
+            <h1 data-testid='search-results-heading' className='w-full text-left text-xl p-2 pl-6'>
+                Search results for: {query}
+            </h1>
             <div className='flex flex-wrap justify-center'>
-                {movieDetails?.map(
-                    (item, i) => item && <ShowCard key={i} details={item} showType={'movie'} />
-                )}
-                {tvDetails?.map(
-                    (item, i) => item && <ShowCard key={i} details={item} showType={'tv'} />
-                )}
+                {movieDetails?.map((item, i) => {
+                    return (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType={'movie'}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    );
+                })}
+                {tvDetails?.map((item, i) => {
+                    return (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType={'tv'}
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    );
+                })}
             </div>
         </>
     );

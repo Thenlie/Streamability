@@ -35,9 +35,13 @@ export interface Session {
  * Supabase user profile object from public profiles table
  */
 export interface Profile {
-    avatar_url: string | null;
-    email: string;
     id: string;
-    updated_at: string;
     username: string;
+    email: string;
+    avatar_url: string | null;
+    watch_queue: string[];
+    adult: boolean;
+    country: string;
+    updated_at: string;
+    created_at: string;
 }

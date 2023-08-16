@@ -3,11 +3,13 @@ import { getMovieTrending } from '../helpers/getMovieUtils';
 import { getTvTrending } from '../helpers/getTvUtils';
 import { ShowData } from '../types';
 import { ShowCard } from '../components';
+import { useProfileContext } from '../hooks';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
+    const { profile, setProfile } = useProfileContext();
     const [movieTrending, setMovieTrending] = useState<ShowData[] | null>(null);
     const [tvTrending, setTvTrending] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -28,11 +30,29 @@ export default function DiscoverScreen(): JSX.Element {
         <div>
             {movieTrending?.map(
                 // TODO: make showType dynamic
-                (item, i) => item && <ShowCard key={i} details={item} showType='movie' />
+                (item, i) =>
+                    item && (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType='movie'
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    )
             )}
             {tvTrending?.map(
                 // TODO: make showType dynamic
-                (item, i) => item && <ShowCard key={i} details={item} showType='tv' />
+                (item, i) =>
+                    item && (
+                        <ShowCard
+                            key={i}
+                            details={item}
+                            showType='tv'
+                            profile={profile}
+                            setProfile={setProfile}
+                        />
+                    )
             )}
         </div>
     );

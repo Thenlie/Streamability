@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { formatReleaseDate, DateSize } from '../../helpers/dateFormatUtils';
+import { formatReleaseDate, DateSize } from '../dateFormatUtils';
 
-describe('Utility Testing Suite', () => {
+describe('formatReleaseDate', () => {
     it('properly formats release date - LONG', () => {
         const date1 = '2022-04-20';
         const date2 = '2000-01-01';

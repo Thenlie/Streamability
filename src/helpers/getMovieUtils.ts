@@ -29,6 +29,7 @@ const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
                 vote_average: movie.vote_average,
                 vote_count: movie.vote_count,
                 overview: movie.overview,
+                showType: 'movie',
             };
         });
     }
@@ -72,6 +73,7 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
         vote_average: data.vote_average,
         vote_count: data.vote_count,
         overview: data.overview,
+        showType: 'movie',
     };
 };
 
@@ -110,6 +112,7 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
                 vote_average: movie.vote_average,
                 vote_count: movie.vote_count,
                 overview: movie.overview,
+                showType: 'movie',
             };
         });
     }
@@ -139,6 +142,7 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
             title: rec.title,
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
+            showType: 'movie',
         })
     );
     return recommendations;

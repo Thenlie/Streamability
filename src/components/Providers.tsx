@@ -1,47 +1,59 @@
 import { useEffect, useState } from 'react';
-import { ShowProviders, ShowData } from '../types';
+import { ShowProviders } from '../types';
 import { getMovieProviders } from '../helpers/getMovieUtils';
 import { getTvProviders } from '../helpers/getTvUtils';
+import ProvidersPlaceholder from './ProvidersPlaceholder';
 
 interface ProviderProps {
-    details: ShowData;
+    id: number;
+    showType: string;
 }
 
 /**
- * Component to display streaming services logos for a given movie or show. Accepts an ID and
+ * Displays streaming service logos for a given show
+ *
+ * @param id | TMDB id
+ * @param showType | 'movie' or 'tv'
  * @returns {JSX.Element}
  */
-export default function Providers({ details }: ProviderProps): JSX.Element {
+export default function Providers({ id, showType }: ProviderProps): JSX.Element {
     const [providers, setProviders] = useState<ShowProviders>();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
+        setLoading(true);
         const handler = async () => {
-            if (details.id && details.networks === undefined) {
-                const data = await getMovieProviders(details.id);
+            if (showType === 'movie') {
+                const data = await getMovieProviders(id);
                 setProviders(data);
-            } else if (details.id && details.networks !== undefined) {
-                const data = await getTvProviders(details.id);
+            } else {
+                const data = await getTvProviders(id);
                 setProviders(data);
             }
             setLoading(false);
         };
         handler();
-    }, []);
+    }, [id]);
 
-    // TODO: #210 Create loader component
-    if (loading) return <p>Loading</p>;
+    if (loading) {
+        return (
+            <div className='flex justify-center'>
+                <ProvidersPlaceholder count={3} />
+            </div>
+        );
+    }
 
     return (
         <div className='flex justify-center'>
             {providers?.results?.US?.flatrate ? (
                 providers.results.US.flatrate.map((item, i) => (
-                    <img
-                        className='h-16 w-16'
-                        key={i}
-                        src={`https://image.tmdb.org/t/p/w500${item.logo_path}`}
-                        alt={`${item.provider_name} logo`}
-                    ></img>
+                    <div key={i} className='m-1'>
+                        <img
+                            className='h-16 w-16'
+                            src={`https://image.tmdb.org/t/p/w500${item.logo_path}`}
+                            alt={`${item.provider_name} logo`}
+                        ></img>
+                    </div>
                 ))
             ) : (
                 <span>Sorry, no providers available for this show.</span>

@@ -3,9 +3,11 @@ import { Location, useLocation } from 'react-router-dom';
 import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUtils';
 import { ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { Providers, ShowCard } from '../components';
+import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
 import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
-import { Rating, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { useProfileContext } from '../hooks';
+import Rating from '../components/Rating';
 
 /**
  * Screen to show more details of a specific show
@@ -14,6 +16,7 @@ import { Rating, Typography } from '@mui/material';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
+    const { profile, setProfile } = useProfileContext();
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
@@ -40,12 +43,13 @@ export default function ShowDetailsScreen(): JSX.Element {
     }, [location]);
 
     // TODO: #199 Create skeleton loader
+    // TODO: Handle case when no details are ever returned
     if (!details) return <p>Loading</p>;
 
     return (
         <>
             <section className='m-3 flex'>
-                <div>
+                <div className='rounded-md overflow-hidden mr-2'>
                     {details.poster_path ? (
                         <img
                             style={{ width: '350px', height: '550px' }}
@@ -58,41 +62,47 @@ export default function ShowDetailsScreen(): JSX.Element {
                         ></img>
                     )}
                 </div>
-                <div>
+                <div className='m-3'>
                     <div>
-                        <h2 data-testid='show-details-heading'>{details.title}</h2>
+                        <Typography variant='h3' align='left' data-testid='show-details-heading'>
+                            {details.title}
+                        </Typography>
                         {details.release_date && details.release_date.length === 10 && (
-                            <span data-testid='details-release-date'>
+                            <Typography align='left' data-testid='details-release-date'>
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
-                            </span>
+                            </Typography>
                         )}
-                        {details.runtime && <span> {details.runtime} minutes</span>}
-                        <span> {details.age_rating} </span>
+                        <Typography align='left'>{details.age_rating}</Typography>
+                        {details.runtime && (
+                            <Typography align='left' variant='body2'>
+                                {details.runtime} minutes
+                            </Typography>
+                        )}
                     </div>
+                    <Rating
+                        vote_average={details.vote_average || 0}
+                        vote_count={details.vote_count || 0}
+                    />
                     <div>
-                        <p className='max-w-md'>{details.overview}</p>
+                        <Typography align='left' className='max-w-md py-3'>
+                            {details.overview}
+                        </Typography>
                     </div>
-                    <Providers details={details} />
-                    {details.vote_average ? (
-                        <div>
-                            <Rating
-                                name='half-rating'
-                                defaultValue={details.vote_average / 2}
-                                precision={0.5}
-                                readOnly
-                            />
-                            <Typography variant='body2'>{details.vote_count} ratings</Typography>
-                        </div>
-                    ) : (
-                        <Typography variant='body2'>No ratings available</Typography>
-                    )}
+                    <div className='bg-primary rounded-md my-3 p-2'>
+                        <Providers id={details.id} showType={showType} />
+                    </div>
                 </div>
             </section>
-            <section className='flex flex-wrap justify-center'>
-                {recommendations &&
-                    recommendations.map(
-                        (item, i) => item && <ShowCard key={i} details={item} showType={showType} />
-                    )}
+            <section className='pb-6'>
+                {recommendations ? (
+                    <ShowCarousel
+                        data={recommendations}
+                        profile={profile}
+                        setProfile={setProfile}
+                    />
+                ) : (
+                    <ShowCarouselPlaceholder count={5} />
+                )}
             </section>
         </>
     );

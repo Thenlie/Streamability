@@ -50,7 +50,7 @@ export interface MovieDetailsData extends MovieData {
         {
             id: number;
             name: string;
-        }
+        },
     ];
     homepage: string;
     images: {
@@ -65,13 +65,13 @@ export interface MovieDetailsData extends MovieData {
             logo_path: string;
             name: string;
             origin_country: string;
-        }
+        },
     ];
     production_countries: [
         {
             iso_3166_1: string;
             name: string;
-        }
+        },
     ];
     release_dates: {
         results: [
@@ -84,9 +84,9 @@ export interface MovieDetailsData extends MovieData {
                         note: string;
                         release_date: string;
                         type: number;
-                    }
+                    },
                 ];
-            }
+            },
         ];
     };
     revenue: number;
@@ -96,7 +96,7 @@ export interface MovieDetailsData extends MovieData {
             english_name: string;
             iso_639_1: string;
             name: string;
-        }
+        },
     ];
     status: string;
     tagline: string;
@@ -208,14 +208,14 @@ export interface TvDetailsData extends TvData {
             name: string;
             gender: number;
             profile_path: string | null;
-        }
+        },
     ];
     episode_run_time: number[];
     genres: [
         {
             id: number;
             name: string;
-        }
+        },
     ];
     homepage: string;
     in_production: boolean;
@@ -240,7 +240,7 @@ export interface TvDetailsData extends TvData {
             id: number;
             logo_path: string | null;
             origin_country: string;
-        }
+        },
     ];
     number_of_episodes: number;
     number_of_seasons: number;
@@ -250,13 +250,13 @@ export interface TvDetailsData extends TvData {
             logo_path: null | string;
             name: string;
             origin_country: string;
-        }
+        },
     ];
     production_countires: [
         {
             iso_3166_1: string;
             name: string;
-        }
+        },
     ];
     seasons: [
         {
@@ -267,14 +267,14 @@ export interface TvDetailsData extends TvData {
             overview: string;
             poster_path: string;
             season_number: number;
-        }
+        },
     ];
     spoken_languages: [
         {
             english_name: string;
             iso_639_1: string;
             name: string;
-        }
+        },
     ];
     status: string;
     tagline: string;
@@ -286,7 +286,7 @@ export interface TvDetailsData extends TvData {
             {
                 iso_3166_1: string;
                 rating: string;
-            }
+            },
         ];
     };
     release_dates: {
@@ -294,7 +294,7 @@ export interface TvDetailsData extends TvData {
             {
                 iso_3166_1: string;
                 rating: string;
-            }
+            },
         ];
     };
 }
@@ -304,7 +304,7 @@ export interface TvDetailsData extends TvData {
  * Custom type to work with both types of shows
  */
 export interface ShowData {
-    id?: number;
+    id: number;
     overview?: string;
     poster_path?: string | null;
     release_date?: string;
@@ -319,6 +319,7 @@ export interface ShowData {
             id: number;
             logo_path: string | null;
             origin_country: string;
-        }
+        },
     ];
+    showType: 'movie' | 'tv';
 }
