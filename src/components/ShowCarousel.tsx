@@ -4,16 +4,20 @@ import { ShowCard } from '../components';
 import { Profile } from '../types';
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '../hooks';
+import useDebounce from '../hooks/useDebounceValue';
+
+const SHOW_CARD_WIDTH = 390;
 
 interface ShowCarouselProps {
     /**
-     * Array of ShowCards
+     * Array of data to populate show cards
      */
     data: ShowData[] | null;
     /**
-     * Number of ShowCards to display in 1 step
+     * Number of ShowCards to display in 1 step.
+     * If `undefined` this number will be based on screen size
      */
-    size?: number;
+    size?: number | undefined;
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -51,29 +55,43 @@ function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-
-// TODO: #458
 export default function ShowCarousel({
     data,
+    size,
     profile,
     setProfile,
 }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
-    const [carouselSteps, setCarouselSteps] = useState<number | null>(null);
+    const debouncedWindowSize = useDebounce(windowSize, 250);
+    const [carouselSteps, setCarouselSteps] = useState<number>(size || 1);
+    const [carouselWidth, setCarouselWidth] = useState<string>(
+        (SHOW_CARD_WIDTH * (size || 1) + 100).toString() + 'px'
+    );
 
     useEffect(() => {
-        if (windowSize.width && windowSize.width > 1500) {
-            setCarouselSteps(5);
-        } else if (windowSize.width && windowSize.width > 900) {
+        if (size) {
+            setCarouselSteps(size);
+            setCarouselWidth((SHOW_CARD_WIDTH * size + 100).toString() + 'px');
+            return;
+        }
+        if (debouncedWindowSize.width && debouncedWindowSize.width > 1700) {
+            setCarouselSteps(4);
+            setCarouselWidth((SHOW_CARD_WIDTH * 4 + 100).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1500) {
             setCarouselSteps(3);
+            setCarouselWidth((SHOW_CARD_WIDTH * 3 + 100).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1100) {
+            setCarouselSteps(2);
+            setCarouselWidth((SHOW_CARD_WIDTH * 2 + 100).toString() + 'px');
         } else {
             setCarouselSteps(1);
+            setCarouselWidth((SHOW_CARD_WIDTH * 1 + 100).toString() + 'px');
         }
-    }, [windowSize]);
+    }, [debouncedWindowSize, size]);
 
     const handleDataSlice = (data: ShowData[] | null) => {
         const arr = [];
-        if (data && carouselSteps) {
+        if (data) {
             for (let i = 0; i < data.length; i += carouselSteps) {
                 const chunk = data.slice(i, i + carouselSteps);
                 arr.push(
@@ -91,8 +109,24 @@ export default function ShowCarousel({
 
     return (
         <section className='pt-12'>
-            <div className='w-[97vw]'>
-                <Carousel wrapAround={true}>{handleDataSlice(data)}</Carousel>
+            <div className={`w-[${carouselWidth}]`}>
+                <Carousel
+                    wrapAround
+                    className='bg-primary'
+                    style={{
+                        width: carouselWidth,
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        borderRadius: '5px',
+                    }}
+                    defaultControlsConfig={{
+                        pagingDotsClassName: 'hidden',
+                        nextButtonClassName: 'mr-3 rounded-sm',
+                        prevButtonClassName: 'ml-3 rounded-sm',
+                    }}
+                >
+                    {handleDataSlice(data)}
+                </Carousel>
             </div>
         </section>
     );
