@@ -35,12 +35,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
             {loading ? (
                 <ShowCarouselPlaceholder count={5} />
             ) : (
-                <ShowCarousel
-                    data={trendingShows}
-                    size={5}
-                    profile={profile}
-                    setProfile={setProfile}
-                />
+                <ShowCarousel data={trendingShows} profile={profile} setProfile={setProfile} />
             )}
         </>
     );
