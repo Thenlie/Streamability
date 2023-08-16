@@ -29,7 +29,7 @@ export const Carousel: Story = {
             MOVIE_DATA_ARRAY[7],
             MOVIE_DATA_ARRAY[8],
         ],
-        size: 5,
+        size: 1,
         profile: null,
     },
 };
