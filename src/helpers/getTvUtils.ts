@@ -13,16 +13,17 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     );
     const data = (await response.json()) as TvResults;
     if (data.results) {
-        return data.results.map((show) => {
+        return data.results.map((tv) => {
             return {
-                id: show.id,
-                poster_path: show.poster_path,
-                title: show.name,
-                release_date: show.first_air_date,
-                vote_average: show.vote_average,
-                vote_count: show.vote_count,
-                overview: show.overview,
+                id: tv.id,
+                poster_path: tv.poster_path,
+                title: tv.name,
+                release_date: tv.first_air_date,
+                vote_average: tv.vote_average,
+                vote_count: tv.vote_count,
+                overview: tv.overview,
                 showType: 'tv',
+                genre_ids: tv.genre_ids,
             };
         });
     }
@@ -32,7 +33,7 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
 /**
  * This function is ran for specific <ShowCard /> data with a TV Show ID.
  * @param id | MovieDB id of show being queried
- * @returns {Promise<ShowData>} | Specific data for a TV Show that is not originally supplied by getMoviesByName.
+ * @returns {Promise<ShowData>} | Specific data for a TV Show that is not originally supplied by getTvByName.
  */
 const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
@@ -88,16 +89,17 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
     );
     const data = (await response.json()) as TvResults;
     if (data.results) {
-        return data.results.map((movie) => {
+        return data.results.map((tv) => {
             return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.original_name,
-                release_date: movie.first_air_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
+                id: tv.id,
+                poster_path: tv.poster_path,
+                title: tv.original_name,
+                release_date: tv.first_air_date,
+                vote_average: tv.vote_average,
+                vote_count: tv.vote_count,
+                overview: tv.overview,
                 showType: 'tv',
+                genre_ids: tv.genre_ids,
             };
         });
     }
@@ -127,6 +129,7 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
             showType: 'tv',
+            genre_ids: rec.genre_ids,
         })
     );
     return recommendations;

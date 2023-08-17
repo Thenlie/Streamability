@@ -87,7 +87,6 @@ export interface ShowData {
     age_rating?: string | null;
     runtime?: number;
     title?: string;
-    genre_ids?: number[];
     vote_average?: number;
     vote_count?: number;
     networks?: [
@@ -99,6 +98,7 @@ export interface ShowData {
         },
     ];
     showType: 'movie' | 'tv';
+    genre_ids?: number[];
 }
 
 /**

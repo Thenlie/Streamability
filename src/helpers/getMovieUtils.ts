@@ -19,21 +19,20 @@ const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
     const data = (await response.json()) as MovieResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-                showType: 'movie',
-            };
-        });
-    }
-    return null;
+    if (!data.results) return null;
+    return data.results.map((movie) => {
+        return {
+            id: movie.id,
+            poster_path: movie.poster_path,
+            title: movie.title,
+            release_date: movie.release_date,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
+            overview: movie.overview,
+            showType: 'movie',
+            genre_ids: movie.genre_ids,
+        };
+    });
 };
 
 /**
@@ -74,6 +73,7 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
         vote_count: data.vote_count,
         overview: data.overview,
         showType: 'movie',
+        genre_ids: data.genre_ids,
     };
 };
 
@@ -102,21 +102,20 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
         }`
     );
     const data = (await response.json()) as MovieResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-                showType: 'movie',
-            };
-        });
-    }
-    return null;
+    if (!data.results) return null;
+    return data.results.map((movie) => {
+        return {
+            id: movie.id,
+            poster_path: movie.poster_path,
+            title: movie.title,
+            release_date: movie.release_date,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
+            overview: movie.overview,
+            showType: 'movie',
+            genre_ids: movie.genre_ids,
+        };
+    });
 };
 
 /**
@@ -132,9 +131,8 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
     );
     const data = (await response.json()) as MovieResults;
     if (!data.results || data.results.length < 1) return null;
-    const recommendations: ShowData[] = [];
-    data.results.map((rec) =>
-        recommendations.push({
+    return data.results.map((rec) => {
+        return {
             id: rec.id,
             overview: rec.overview,
             poster_path: rec.poster_path,
@@ -143,9 +141,9 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
             showType: 'movie',
-        })
-    );
-    return recommendations;
+            genre_ids: rec.genre_ids,
+        };
+    });
 };
 
 export {
