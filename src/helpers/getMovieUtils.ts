@@ -1,11 +1,5 @@
 import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
-
-enum MovieRatings {
-    'G',
-    'PG',
-    'PG-13',
-    'R',
-}
+import { MOVIE_RATINGS } from './constants';
 
 /**
  * This function is ran after the user enters a name of a movie.
@@ -56,7 +50,7 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
             }
         }
         release_dates?.map((r) => {
-            if (r.certification in MovieRatings) release_date = r.certification;
+            if (r.certification in MOVIE_RATINGS) release_date = r.certification;
         });
 
         if (release_date) return release_date;
