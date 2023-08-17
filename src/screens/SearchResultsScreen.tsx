@@ -36,6 +36,8 @@ export default function SearchResultsScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
+            // TODO: Refactor to use multi search
+            // https://developer.themoviedb.org/reference/search-multi
             const movieData: ShowData[] | null = await getMoviesByName(query);
             const tvData: ShowData[] | null = await getTvByName(query);
             setMovieDetails(movieData);

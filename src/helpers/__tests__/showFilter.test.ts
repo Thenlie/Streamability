@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { filterShowsByGenre, filterShowsByType } from '../showFilterUtils';
+import {
+    filterShowsByGenre,
+    filterShowsByReleasedBefore,
+    filterShowsByType,
+} from '../showFilterUtils';
 import { SHOW_DATA_ARRAY } from './constants';
 
 describe('filterShowsByGenre', () => {
@@ -15,5 +19,11 @@ describe('filterShowsByType', () => {
     it('properly filters shows based on a specified genre id', () => {
         expect(filterShowsByType(SHOW_DATA_ARRAY, 'movie').length).toBe(20);
         expect(filterShowsByType(SHOW_DATA_ARRAY, 'tv').length).toBe(11);
+    });
+});
+
+describe('filterShowsByReleasedBefore', () => {
+    it('properly filters shows based on a specified genre id', () => {
+        expect(filterShowsByReleasedBefore(SHOW_DATA_ARRAY, '2000-01-01').length).toBe(12);
     });
 });

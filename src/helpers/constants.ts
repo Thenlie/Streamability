@@ -5,6 +5,8 @@ export enum MOVIE_RATINGS {
     'R',
 }
 
+// https://developer.themoviedb.org/reference/genre-tv-list
+// https://developer.themoviedb.org/reference/genre-movie-list
 export enum GENRE_IDS {
     Action = 28, // movie only
     Adventure = 12, // movie only
