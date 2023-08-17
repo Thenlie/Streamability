@@ -1,6 +1,10 @@
 /* eslint-disable quotes */
 import { ShowData } from '../../types';
 
+/**
+ * A sample show data array that can be used for unit testing
+ * which contains both movies and tv shows
+ */
 export const SHOW_DATA_ARRAY: ShowData[] = [
     {
         id: 1726,
@@ -240,5 +244,136 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
             'When a stranger, Thaddeus, is found badly wounded near the village, miner Li Kung and his wife Ah Ni offer him refuge. As he heals, he becomes entrenched in a conflict that pits the townsfolk against the evil Master Ho, his nefarious Beetle Clan and the terrifying Lord Pi.',
         showType: 'movie',
         genre_ids: [28],
+    },
+    {
+        id: 3097,
+        poster_path: '/nTQWWH6CFtl37x1nPx8HRwbwvGn.jpg',
+        title: 'Iron Man',
+        release_date: '1994-09-24',
+        vote_average: 6.702,
+        vote_count: 85,
+        overview:
+            'Industrialist Tony Stark leads a private team of superheroes as Iron Man against the forces of evil.',
+        showType: 'tv',
+        genre_ids: [16, 10759, 10765],
+    },
+    {
+        id: 45418,
+        poster_path: '/zOTJT7JbzSrMBX2OCGPqUnkQA4y.jpg',
+        title: 'Iron Man',
+        release_date: '2010-10-01',
+        vote_average: 7.211,
+        vote_count: 76,
+        overview:
+            "When Tony Stark branches his company into Japan, he is opposed by the nefarious Zodiac organization. It's up to Stark's Iron Man to defeat the Zodiac, and defend Japan.",
+        showType: 'tv',
+        genre_ids: [16, 10759, 10765],
+    },
+    {
+        id: 7330,
+        poster_path: '/uwMIL8PR1jHpHQksIq7kzdeqg2A.jpg',
+        title: 'Iron Man: Armored Adventures',
+        release_date: '2009-04-24',
+        vote_average: 7.461,
+        vote_count: 115,
+        overview:
+            'Iron Man: Armored Adventures is a 3D CGI cartoon series based on the Marvel Comics superhero Iron Man. It debuted in the USA on the Nicktoons on April 24, 2009, and has already begun airing on Canadian network Teletoon. Iron Man: Armored Adventures aired on Nickelodeon on July 4, 2009 until September 12, 2009. The series is story edited by showrunner Christopher Yost, who also worked on Wolverine and the X-Men, and numerous other Marvel Animation projects. The television show is not related to the 2007 animated film The Invincible Iron Man; It has a different voice cast, but some story elements are similar and the show uses the same musical score as the film in some instances. It is the first Iron Man television series since Iron Man from 1994–1996, and started airing after the success of the live action Iron Man film.\n\nThe series follows the adventures of teenage child prodigy Tony Stark and his alter ego of Iron Man. As Iron Man, he uses his technological inventions to fight various similarly technologically advanced threats. His friends, James "Rhodey" Rhodes and Pepper Potts help him on his courageous, and dangerous adventures.',
+        showType: 'tv',
+        genre_ids: [16, 10759, 10765],
+    },
+    {
+        id: 77362,
+        poster_path: '/w10ClxT6uqnyxJZiMAx2ty9GkWu.jpg',
+        title: 'Iron Man: Extremis',
+        release_date: '2010-11-30',
+        vote_average: 6.3,
+        vote_count: 12,
+        overview:
+            "An experimental serum called Extremis gets stolen, and Iron Man rockets into action. The ensuing battles test Stark's spirit and Iron Man's power.",
+        showType: 'tv',
+        genre_ids: [16],
+    },
+    {
+        id: 18189,
+        poster_path: null,
+        title: 'Faujji...The Iron Man',
+        release_date: '',
+        vote_average: 0,
+        vote_count: 0,
+        overview:
+            'Faujji...The Iron Man is a Hindi language Indian television series that airs on the national channel, DD National. The series premiered on March 21, 2009, and airs every Saturday and Sunday at 8:30 pm IST. The story is about the army battling terrorism. On its first day, the series received a Television Rating Point of 1.7 among other shows on other general entertainment channels.',
+        showType: 'tv',
+        genre_ids: [10759, 18],
+    },
+    {
+        id: 61739,
+        poster_path: '/pRt6yU9zAJfzc9VhARcmn8tIFNl.jpg',
+        title: 'Blade Man',
+        release_date: '2014-09-10',
+        vote_average: 5.6,
+        vote_count: 10,
+        overview:
+            "Despite his wealth, Joo Hong Bin (Lee Dong Wook) is a prickly man harboring a broken heart. But when his emotional pain physically manifests itself as a gruesome ability to sprout knives from his body, Hong Bin quickly realizes that he’s got to start wearing his heart on his sleeve — with all of his newfound scars to prove it. Meanwhile, Son Se Dong (Shin Se Kyung) tries to heal Hong Bin's wounds inside and out, but is this supernatural love damaged beyond repair?",
+        showType: 'tv',
+        genre_ids: [18, 10765],
+    },
+    {
+        id: 6153,
+        poster_path: '/c0JLcw2vwmBGPsPTlzYerydAAQm.jpg',
+        title: 'Gigantor',
+        release_date: '1963-10-20',
+        vote_average: 6.7,
+        vote_count: 3,
+        overview:
+            'Gigantor is an American adaptation of the anime version of Tetsujin 28-go, a manga by Mitsuteru Yokoyama released in 1956. It debuted on U.S. television in 1964. As with Speed Racer, the characters\' original names were altered and the original series\' violence was toned down for American viewers. The series "was resurrected, in color, as The New Adventures of Gigantor, by the Sci Fi Channel in 1993."',
+        showType: 'tv',
+        genre_ids: [16, 10765],
+    },
+    {
+        id: 2164,
+        poster_path: '/sUcupSGQRxDfQxr3tcb4KodOXmm.jpg',
+        title: 'The Marvel Super Heroes',
+        release_date: '1966-09-05',
+        vote_average: 8.4,
+        vote_count: 5,
+        overview:
+            'This cartoon series, characterized by extremely limited animation, features five of the most popular super-powered heroes from Marvel Comics: the Incredible Hulk, the Mighty Thor, Captain America, Iron Man, and the Sub-Mariner.',
+        showType: 'tv',
+        genre_ids: [16, 10759, 10765, 10762],
+    },
+    {
+        id: 34391,
+        poster_path: '/ye6H7F8kKTd3betEfyGpuVD549a.jpg',
+        title: "Marvel's Ultimate Spider-Man",
+        release_date: '2012-04-01',
+        vote_average: 7.669,
+        vote_count: 919,
+        overview:
+            'While being trained by S.H.I.E.L.D., Spider-Man battles evil with a new team of teen colleagues.',
+        showType: 'tv',
+        genre_ids: [10762, 10759, 16, 35],
+    },
+    {
+        id: 75189,
+        poster_path: '/cPZjDzyDVrqsQzBDoRBLoAAL7iw.jpg',
+        title: 'Commandments',
+        release_date: '2017-10-17',
+        vote_average: 10,
+        vote_count: 2,
+        overview:
+            'The story, which deals with the ultra-Orthodox who enlist in combat training in the Israel Defense Forces, is presented through the eyes of three soldiers: Amram Elkayam the shabbanik, the national ultra-Orthodox Gur Aryeh and Yaakov Anielbitsh, a Vizhnitz Hasid, and soon they discover a world they did not know , To communicate with women in a regular framework, and in some cases, of course, to deal with the hostile attitude toward them in the places they came from, including Yehuda Barkan, Danny Steg and Yishai Golan.',
+        showType: 'tv',
+        genre_ids: [18],
+    },
+    {
+        id: 44307,
+        poster_path: '/ukS6Z66fFqS1DXsjq7D9282P5Th.jpg',
+        title: 'Tetsujin 28-go FX',
+        release_date: '1982-10-03',
+        vote_average: 0,
+        vote_count: 0,
+        overview: '',
+        showType: 'tv',
+        genre_ids: [16],
     },
 ];

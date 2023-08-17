@@ -1,4 +1,14 @@
 /**
+ * Object containing genre as string and TMDB genre id
+ * https://developer.themoviedb.org/reference/genre-movie-list
+ * https://developer.themoviedb.org/reference/genre-tv-list
+ */
+export interface ShowGenre {
+    id: number;
+    name: string;
+}
+
+/**
  * More detailed information about streaming providers
  */
 export interface ShowProviderInfo {
@@ -99,14 +109,4 @@ export interface ShowData {
     ];
     showType: 'movie' | 'tv';
     genre_ids?: number[];
-}
-
-/**
- * Object containing genre as string and TMDB genre id
- * https://developer.themoviedb.org/reference/genre-movie-list
- * https://developer.themoviedb.org/reference/genre-tv-list
- */
-export interface ShowGenre {
-    id: number;
-    name: string;
 }

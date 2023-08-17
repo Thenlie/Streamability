@@ -10,4 +10,14 @@ const filterShowsByGenre = (showData: ShowData[], genreId: number): ShowData[] =
     return filteredShows;
 };
 
-export { filterShowsByGenre };
+const filterShowsByType = (showData: ShowData[], showType: 'movie' | 'tv'): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (show.showType === showType) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
+export { filterShowsByGenre, filterShowsByType };
