@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
     filterShowsByGenre,
+    filterShowsByReleasedAfter,
     filterShowsByReleasedBefore,
     filterShowsByType,
 } from '../showFilterUtils';
@@ -23,7 +24,17 @@ describe('filterShowsByType', () => {
 });
 
 describe('filterShowsByReleasedBefore', () => {
-    it('properly filters shows based on a specified genre id', () => {
+    it('properly filters shows released on or before the specified date', () => {
         expect(filterShowsByReleasedBefore(SHOW_DATA_ARRAY, '2000-01-01').length).toBe(12);
+        expect(filterShowsByReleasedBefore(SHOW_DATA_ARRAY, '2015-03-09').length).toBe(27);
+        expect(filterShowsByReleasedBefore(SHOW_DATA_ARRAY, '1940-01-01').length).toBe(1);
+    });
+});
+
+describe('filterShowsByReleasedAfter', () => {
+    it('properly filters shows released on or after the specified date', () => {
+        expect(filterShowsByReleasedAfter(SHOW_DATA_ARRAY, '2000-01-01').length).toBe(18);
+        expect(filterShowsByReleasedAfter(SHOW_DATA_ARRAY, '2015-03-11').length).toBe(2);
+        expect(filterShowsByReleasedAfter(SHOW_DATA_ARRAY, '1940-01-01').length).toBe(29);
     });
 });
