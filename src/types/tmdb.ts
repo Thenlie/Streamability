@@ -35,6 +35,11 @@ interface MovieImage {
     width: number;
 }
 
+interface ShowGenre {
+    id: number;
+    name: string;
+}
+
 /**
  * Returned by MovieDB details request
  */
@@ -46,12 +51,7 @@ export interface MovieDetailsData extends MovieData {
         poster_path: string;
     };
     budget: number;
-    genres: [
-        {
-            id: number;
-            name: string;
-        },
-    ];
+    genres: ShowGenre[];
     homepage: string;
     images: {
         backdrops: MovieImage[];
@@ -211,12 +211,7 @@ export interface TvDetailsData extends TvData {
         },
     ];
     episode_run_time: number[];
-    genres: [
-        {
-            id: number;
-            name: string;
-        },
-    ];
+    genres: ShowGenre[];
     homepage: string;
     in_production: boolean;
     languages: string[];
