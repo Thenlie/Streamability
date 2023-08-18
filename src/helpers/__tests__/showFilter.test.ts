@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+    filterShowsByAvgRatingAbove,
+    filterShowsByAvgRatingBelow,
+    filterShowsByAvgRatingBetween,
     filterShowsByGenre,
     filterShowsByReleasedAfter,
     filterShowsByReleasedBefore,
@@ -41,7 +44,7 @@ describe('filterShowsByReleasedAfter', () => {
 });
 
 describe('filterShowsByReleasedBetween', () => {
-    it('properly filters shows released on or after the specified date', () => {
+    it('properly filters shows released on or between a specified date range', () => {
         expect(
             filterShowsByReleasedBetween(SHOW_DATA_ARRAY, '2000-01-01', '2010-01-01').length
         ).toBe(5);
@@ -51,5 +54,47 @@ describe('filterShowsByReleasedBetween', () => {
         expect(
             filterShowsByReleasedBetween(SHOW_DATA_ARRAY, '1920-10-23', '1950-01-01').length
         ).toBe(1);
+    });
+});
+
+describe('filterShowsByAvgRatingBelow', () => {
+    it('properly filters shows on or below a specified vote average', () => {
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 1).length).toBe(3);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 2).length).toBe(3);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 3).length).toBe(3);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 4).length).toBe(4);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 5).length).toBe(5);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 6).length).toBe(11);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 7).length).toBe(24);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 8).length).toBe(29);
+        expect(filterShowsByAvgRatingBelow(SHOW_DATA_ARRAY, 9).length).toBe(30);
+    });
+});
+
+describe('filterShowsByAvgRatingAbove', () => {
+    it('properly filters shows on or above a specified vote average', () => {
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 1).length).toBe(28);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 2).length).toBe(28);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 3).length).toBe(28);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 4).length).toBe(27);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 5).length).toBe(26);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 6).length).toBe(20);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 7).length).toBe(7);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 8).length).toBe(2);
+        expect(filterShowsByAvgRatingAbove(SHOW_DATA_ARRAY, 9).length).toBe(1);
+    });
+});
+
+describe('filterShowsBtAvgRatingBetween', () => {
+    it('properly filters shows on or between a specified vote average range', () => {
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 1, 10).length).toBe(28);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 2, 9).length).toBe(27);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 3, 8).length).toBe(26);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 4, 7).length).toBe(20);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 5, 6).length).toBe(6);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 6, 7).length).toBe(13);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 7, 10).length).toBe(7);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 1, 8).length).toBe(26);
+        expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 1, 9).length).toBe(27);
     });
 });

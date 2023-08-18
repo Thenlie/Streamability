@@ -153,7 +153,7 @@ const filterShowsByReleasedBetween = (
 const filterShowsByAvgRatingAbove = (showData: ShowData[], targetAverage: number): ShowData[] => {
     const filteredShows: ShowData[] = [];
     showData.forEach((show) => {
-        if (!show.vote_average) return;
+        if (show.vote_average === undefined) return;
         if (show.vote_average >= targetAverage) {
             filteredShows.push(show);
         }
@@ -171,7 +171,7 @@ const filterShowsByAvgRatingAbove = (showData: ShowData[], targetAverage: number
 const filterShowsByAvgRatingBelow = (showData: ShowData[], targetAverage: number): ShowData[] => {
     const filteredShows: ShowData[] = [];
     showData.forEach((show) => {
-        if (!show.vote_average) return;
+        if (show.vote_average === undefined) return;
         if (show.vote_average <= targetAverage) {
             filteredShows.push(show);
         }
@@ -194,7 +194,7 @@ const filterShowsByAvgRatingBetween = (
 ): ShowData[] => {
     const filteredShows: ShowData[] = [];
     showData.forEach((show) => {
-        if (!show.vote_average) return;
+        if (show.vote_average === undefined) return;
         if (show.vote_average >= averageFrom && show.vote_average <= averageTo) {
             filteredShows.push(show);
         }
