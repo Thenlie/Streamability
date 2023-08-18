@@ -33,7 +33,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
             <SearchInput />
 
             {loading ? (
-                <ShowCarouselPlaceholder count={5} />
+                <ShowCarouselPlaceholder count={4} />
             ) : (
                 <ShowCarousel data={trendingShows} profile={profile} setProfile={setProfile} />
             )}
