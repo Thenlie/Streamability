@@ -202,6 +202,65 @@ const filterShowsByAvgRatingBetween = (
     return filteredShows;
 };
 
+/**
+ * Filter an array of shows based on a specified number of votes
+ * Return shows that have the same or more number of votes
+ * @param showData | array of shows to be filtered
+ * @param targetCount | average to be filtered
+ * @returns array of shows at or above `targetCount`
+ */
+const filterShowsByRatingCountAbove = (showData: ShowData[], targetCount: number): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (show.vote_count === undefined) return;
+        if (show.vote_count >= targetCount) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
+/**
+ * Filter an array of shows based on a specified number of votes
+ * Return shows that are on at or below the specified vote average
+ * @param showData | array of shows to be filtered
+ * @param targetCount | average to be filtered
+ * @returns array of shows at or below `targetCount`
+ */
+const filterShowsByRatingCountBelow = (showData: ShowData[], targetCount: number): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (show.vote_count === undefined) return;
+        if (show.vote_count <= targetCount) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
+/**
+ * Filter an array of shows based on a range of number of votes
+ * Return shows that are on at or between the specified number of votes range
+ * @param showData | array of shows to be filtered
+ * @param countFrom | average to be filtered from
+ * @param countTo | average to be filtered up to
+ * @returns array of shows at or between `countFrom` - `countTo`
+ */
+const filterShowsByRatingCountBetween = (
+    showData: ShowData[],
+    countFrom: number,
+    countTo: number
+): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (show.vote_count === undefined) return;
+        if (show.vote_count >= countFrom && show.vote_count <= countTo) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
 export {
     filterShowsByGenre,
     filterShowsByType,
@@ -211,4 +270,7 @@ export {
     filterShowsByAvgRatingAbove,
     filterShowsByAvgRatingBelow,
     filterShowsByAvgRatingBetween,
+    filterShowsByRatingCountAbove,
+    filterShowsByRatingCountBelow,
+    filterShowsByRatingCountBetween,
 };

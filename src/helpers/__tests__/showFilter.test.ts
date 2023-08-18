@@ -4,6 +4,9 @@ import {
     filterShowsByAvgRatingBelow,
     filterShowsByAvgRatingBetween,
     filterShowsByGenre,
+    filterShowsByRatingCountAbove,
+    filterShowsByRatingCountBelow,
+    filterShowsByRatingCountBetween,
     filterShowsByReleasedAfter,
     filterShowsByReleasedBefore,
     filterShowsByReleasedBetween,
@@ -96,5 +99,32 @@ describe('filterShowsBtAvgRatingBetween', () => {
         expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 7, 10).length).toBe(7);
         expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 1, 8).length).toBe(26);
         expect(filterShowsByAvgRatingBetween(SHOW_DATA_ARRAY, 1, 9).length).toBe(27);
+    });
+});
+
+describe('filterShowsByRatingCountAbove', () => {
+    it('properly filters shows on or above a specified number of votes', () => {
+        expect(filterShowsByRatingCountAbove(SHOW_DATA_ARRAY, 1).length).toBe(28);
+        expect(filterShowsByRatingCountAbove(SHOW_DATA_ARRAY, 100).length).toBe(14);
+        expect(filterShowsByRatingCountAbove(SHOW_DATA_ARRAY, 1000).length).toBe(5);
+        expect(filterShowsByRatingCountAbove(SHOW_DATA_ARRAY, 10000).length).toBe(3);
+    });
+});
+
+describe('filterShowsByRatingCountBelow', () => {
+    it('properly filters shows on or below a specified number of votes', () => {
+        expect(filterShowsByRatingCountBelow(SHOW_DATA_ARRAY, 1).length).toBe(3);
+        expect(filterShowsByRatingCountBelow(SHOW_DATA_ARRAY, 100).length).toBe(17);
+        expect(filterShowsByRatingCountBelow(SHOW_DATA_ARRAY, 1000).length).toBe(26);
+        expect(filterShowsByRatingCountBelow(SHOW_DATA_ARRAY, 10000).length).toBe(28);
+    });
+});
+
+describe('filterShowsByRatingCountBetween', () => {
+    it('properly filters shows on or between a specified number of votes range', () => {
+        expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 1, 100).length).toBe(14);
+        expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 100, 1000).length).toBe(9);
+        expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 1000, 10000).length).toBe(2);
+        expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 10000, 20000).length).toBe(1);
     });
 });
