@@ -143,10 +143,72 @@ const filterShowsByReleasedBetween = (
     return filteredShows;
 };
 
+/**
+ * Filter an array of shows based on a specified vote average
+ * Return shows that are on at or above the specified vote average
+ * @param showData | array of shows to be filtered
+ * @param targetAverage | average to be filtered
+ * @returns array of shows at or above `targetAverage`
+ */
+const filterShowsByAvgRatingAbove = (showData: ShowData[], targetAverage: number): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (!show.vote_average) return;
+        if (show.vote_average >= targetAverage) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
+/**
+ * Filter an array of shows based on a specified vote average
+ * Return shows that are on at or below the specified vote average
+ * @param showData | array of shows to be filtered
+ * @param targetAverage | average to be filtered
+ * @returns array of shows at or below `targetAverage`
+ */
+const filterShowsByAvgRatingBelow = (showData: ShowData[], targetAverage: number): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (!show.vote_average) return;
+        if (show.vote_average <= targetAverage) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
+/**
+ * Filter an array of shows based on a specified range of vote averages
+ * Return shows that are on at or between the specified vote average range
+ * @param showData | array of shows to be filtered
+ * @param averageFrom | average to be filtered from
+ * @param averageTo | average to be filtered up to
+ * @returns array of shows at or between `averageFrom` - `averageTo`
+ */
+const filterShowsByAvgRatingBetween = (
+    showData: ShowData[],
+    averageFrom: number,
+    averageTo: number
+): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    showData.forEach((show) => {
+        if (!show.vote_average) return;
+        if (show.vote_average >= averageFrom && show.vote_average <= averageTo) {
+            filteredShows.push(show);
+        }
+    });
+    return filteredShows;
+};
+
 export {
     filterShowsByGenre,
     filterShowsByType,
     filterShowsByReleasedBefore,
     filterShowsByReleasedAfter,
     filterShowsByReleasedBetween,
+    filterShowsByAvgRatingAbove,
+    filterShowsByAvgRatingBelow,
+    filterShowsByAvgRatingBetween,
 };
