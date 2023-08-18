@@ -33,6 +33,52 @@ const filterShowsByType = (showData: ShowData[], showType: 'movie' | 'tv'): Show
 };
 
 /**
+ * Returns if `checkDate` is on or before `targetDate`
+ * @param targetDate | Date to compare
+ * @param checkDate | Date to check
+ * @returns {boolean}
+ */
+const isDateOnOrBefore = (targetDate: Date, checkDate: Date): boolean => {
+    if (checkDate.getFullYear() < targetDate.getFullYear()) {
+        return true;
+    }
+    if (checkDate.getFullYear() === targetDate.getFullYear()) {
+        if (checkDate.getMonth() < targetDate.getMonth()) {
+            return true;
+        }
+        if (checkDate.getMonth() === targetDate.getMonth()) {
+            if (checkDate.getDay() <= targetDate.getDay()) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+/**
+ * Returns if `checkDate` is on or after `targetDate`
+ * @param targetDate | Date to compare
+ * @param checkDate | Date to check
+ * @returns {boolean}
+ */
+const isDateOnOrAfter = (targetDate: Date, checkDate: Date): boolean => {
+    if (checkDate.getFullYear() > targetDate.getFullYear()) {
+        return true;
+    }
+    if (checkDate.getFullYear() === targetDate.getFullYear()) {
+        if (checkDate.getMonth() > targetDate.getMonth()) {
+            return true;
+        }
+        if (checkDate.getMonth() === targetDate.getMonth()) {
+            if (checkDate.getDay() >= targetDate.getDay()) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+/**
  * Filter an array of shows based on a specified release date
  * Return shows that are on or before the specified date
  * @param showData | array of shows to be filtered
@@ -45,21 +91,7 @@ const filterShowsByReleasedBefore = (showData: ShowData[], releaseDate: string):
     showData.forEach((show) => {
         if (!show.release_date) return;
         const showDate = new Date(show.release_date);
-        if (showDate.getFullYear() < targetDate.getFullYear()) {
-            filteredShows.push(show);
-            return;
-        }
-        if (showDate.getFullYear() === targetDate.getFullYear()) {
-            if (showDate.getMonth() < targetDate.getMonth()) {
-                filteredShows.push(show);
-                return;
-            }
-            if (showDate.getMonth() === targetDate.getMonth()) {
-                if (showDate.getDay() <= targetDate.getDay()) {
-                    filteredShows.push(show);
-                }
-            }
-        }
+        if (isDateOnOrBefore(targetDate, showDate)) filteredShows.push(show);
     });
     return filteredShows;
 };
@@ -77,20 +109,35 @@ const filterShowsByReleasedAfter = (showData: ShowData[], releaseDate: string): 
     showData.forEach((show) => {
         if (!show.release_date) return;
         const showDate = new Date(show.release_date);
-        if (showDate.getFullYear() > targetDate.getFullYear()) {
+        if (isDateOnOrAfter(targetDate, showDate)) filteredShows.push(show);
+    });
+    return filteredShows;
+};
+
+/**
+ * Filter an array of shows based on a range of release dates
+ * Return shows that are on or between the specified dates
+ * @param showData | array of shows to be filtered
+ * @param releasedFrom | date to filter from
+ * @param releasedTo | date to filter up to
+ * @returns array of shows on or between `releasedFrom` - `releasedTo`
+ */
+const filterShowsByReleasedBetween = (
+    showData: ShowData[],
+    releasedFrom: string,
+    releasedTo: string
+): ShowData[] => {
+    const filteredShows: ShowData[] = [];
+    const releasedFromDate = new Date(releasedFrom);
+    const releasedToDate = new Date(releasedTo);
+    showData.forEach((show) => {
+        if (!show.release_date) return;
+        const showDate = new Date(show.release_date);
+        if (
+            isDateOnOrBefore(releasedToDate, showDate) &&
+            isDateOnOrAfter(releasedFromDate, showDate)
+        ) {
             filteredShows.push(show);
-            return;
-        }
-        if (showDate.getFullYear() === targetDate.getFullYear()) {
-            if (showDate.getMonth() > targetDate.getMonth()) {
-                filteredShows.push(show);
-                return;
-            }
-            if (showDate.getMonth() === targetDate.getMonth()) {
-                if (showDate.getDay() >= targetDate.getDay()) {
-                    filteredShows.push(show);
-                }
-            }
         }
     });
     return filteredShows;
@@ -101,4 +148,5 @@ export {
     filterShowsByType,
     filterShowsByReleasedBefore,
     filterShowsByReleasedAfter,
+    filterShowsByReleasedBetween,
 };
