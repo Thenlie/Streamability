@@ -3,7 +3,6 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import { pluralizeString } from '../helpers/stringFormatUtils';
 import { useIsInWatchQueue } from '../hooks';
 
@@ -89,15 +88,8 @@ export default function ShowListCard({
                     alt={`${details.title} poster`}
                 />
             </Link>
-            <Box
-                padding={1}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <Box>
+            <div className='p-2 flex flex-col justify-between'>
+                <div>
                     <Typography variant='h5' align='left' paddingLeft={1} noWrap width={500}>
                         {details.title}
                     </Typography>
@@ -120,8 +112,8 @@ export default function ShowListCard({
                     >
                         {details.overview}
                     </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                </div>
+                <div className='flex justify-between'>
                     <div style={{ textAlign: 'left', alignSelf: 'end' }}>
                         <Rating
                             name='half-rating'
@@ -153,8 +145,8 @@ export default function ShowListCard({
                             </Button>
                         </CardActions>
                     )}
-                </Box>
-            </Box>
+                </div>
+            </div>
         </div>
     );
 }

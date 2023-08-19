@@ -3,7 +3,6 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import Rating from './Rating';
 import { useIsInWatchQueue } from '../hooks';
 
@@ -86,16 +85,8 @@ export default function ShowCard({
                     alt={`${details.title} poster`}
                 />
             </Link>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    paddingY: '10px',
-                    paddingLeft: '5px',
-                }}
-            >
-                <Box>
+            <div className='flex flex-col justify-between py-1 pl-2'>
+                <div>
                     <Typography
                         variant='h5'
                         align='left'
@@ -114,8 +105,8 @@ export default function ShowCard({
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
                         </Typography>
                     )}
-                </Box>
-                <Box>
+                </div>
+                <div>
                     <Rating
                         vote_average={details.vote_average || 0}
                         vote_count={details.vote_count || 0}
@@ -140,8 +131,8 @@ export default function ShowCard({
                             </Button>
                         </CardActions>
                     )}
-                </Box>
-            </Box>
+                </div>
+            </div>
         </div>
     );
 }
