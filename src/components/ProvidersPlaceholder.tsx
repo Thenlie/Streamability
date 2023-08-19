@@ -16,7 +16,7 @@ interface ProvidersPlaceholderProps {
  */
 export default function ProvidersPlaceholder({ count }: ProvidersPlaceholderProps): JSX.Element {
     return (
-        <div className='m-3 flex flex-wrap justify-center'>
+        <div className='m-3 flex flex-wrap justify-center bg-primary rounded-sm p-1'>
             {[...Array(count)].map((x, i) => (
                 <div key={i}>
                     <Skeleton width={64} height={64} className='m-1' />

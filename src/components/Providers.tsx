@@ -44,19 +44,19 @@ export default function Providers({ id, showType }: ProviderProps): JSX.Element 
     }
 
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center items-center bg-primary h-[72px] p-1 rounded-sm'>
             {providers?.results?.US?.flatrate ? (
                 providers.results.US.flatrate.map((item, i) => (
                     <div key={i} className='m-1'>
                         <img
-                            className='h-16 w-16'
+                            className='h-16 w-16 p-1 rounded-lg overflow-hidden'
                             src={`https://image.tmdb.org/t/p/w500${item.logo_path}`}
                             alt={`${item.provider_name} logo`}
                         ></img>
                     </div>
                 ))
             ) : (
-                <span>Sorry, no providers available for this show.</span>
+                <span className='p-2'>Sorry, no providers available for this show.</span>
             )}
         </div>
     );
