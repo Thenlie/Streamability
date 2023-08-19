@@ -15,6 +15,9 @@ import { ShowData } from '../types';
 import { ShowCarousel, ShowCarouselPlaceholder } from '../components';
 import { getMovieDetails } from '../helpers/getMovieUtils';
 import { getTvDetails } from '../helpers/getTvUtils';
+import Logger from '../logger';
+
+const LOG = new Logger('DashboardScreen');
 
 /**
  * User must be logged in to access endpoint
@@ -52,8 +55,7 @@ export default function DashboardScreen(): JSX.Element {
                     setWatchQueue(arr);
                 }
                 if (session.user.adult) setIsAdult(session.user.adult);
-                // eslint-disable-next-line no-console
-                if (import.meta.env.DEV) console.log(queue);
+                LOG.debug(String(queue));
             }
         };
         handler();

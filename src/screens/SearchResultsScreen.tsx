@@ -45,7 +45,7 @@ export default function SearchResultsScreen(): JSX.Element {
             setLoading(false);
         };
         handler();
-    }, []);
+    }, [query]);
 
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
