@@ -1,6 +1,9 @@
 import { ErrorResponse } from '@remix-run/router';
 import { useRouteError } from 'react-router-dom';
 import { ErrorMessage } from '../components';
+import Logger from '../logger';
+
+const LOG = new Logger('PageNotFoundScreen');
 
 /**
  * @returns {JSX.Element} | 404 page
@@ -11,8 +14,7 @@ export default function PageNotFoundScreen(): JSX.Element {
      * action, loader, or rendering
      */
     const error: ErrorResponse = useRouteError() as ErrorResponse;
-    // eslint-disable-next-line no-console
-    if (import.meta.env.DEV) console.error(error);
+    LOG.error(error);
 
     /**
      * @TODO Implement better error handling

@@ -12,6 +12,9 @@ import {
     IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Logger from '../../logger';
+
+const LOG = new Logger('LoginForm');
 
 /**
  * @returns {JSX.Element}
@@ -72,8 +75,7 @@ export default function LoginForm(): JSX.Element {
         if (error) {
             // We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
-            // eslint-disable-next-line no-console
-            if (import.meta.env.DEV) console.error(error);
+            LOG.error(error);
         }
 
         // onAuthStateChange function will be triggered

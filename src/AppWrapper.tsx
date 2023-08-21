@@ -8,6 +8,10 @@ import { ThemeProvider } from '@mui/system';
 import { darkTheme, lightTheme } from './theme';
 import { Theme } from '@mui/material';
 import { SkeletonTheme } from 'react-loading-skeleton';
+import Logger from './logger';
+
+const LOG = new Logger('AppWrapper');
+
 /**
  * The main app function, wrapping all other screens and components
  * This wraps the entire front end application and will be shown on every screen
@@ -77,8 +81,7 @@ export default function AppWrapper(): JSX.Element {
     useEffect(() => {
         SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
             if (error) {
-                // eslint-disable-next-line no-console
-                if (import.meta.env.DEV) console.error(error);
+                LOG.error(error);
                 return;
             }
             setSession(session as Session);

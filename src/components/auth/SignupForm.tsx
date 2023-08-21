@@ -12,6 +12,9 @@ import {
     IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Logger from '../../logger';
+
+const LOG = new Logger('SignupForm');
 
 /**
  * Screen to handle Supabase sign up
@@ -130,8 +133,7 @@ export default function SignUpForm(): JSX.Element {
                 return;
             }
             showError(error.message);
-            // eslint-disable-next-line no-console
-            if (import.meta.env.DEV) console.error(error);
+            LOG.error(error);
         }
 
         // onAuthStateChange function will be triggered
