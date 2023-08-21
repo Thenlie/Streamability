@@ -6,7 +6,7 @@ import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
 import { useIsInWatchQueue } from '../hooks';
 
-interface ShowCardProps {
+export interface ShowCardProps {
     /**
      * Movie or TV show metadata
      */
