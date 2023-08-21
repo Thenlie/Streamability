@@ -6,6 +6,7 @@ import {
     getProfileWatchQueue,
     setProfileAdultFlag,
     setProfileCountry,
+    removeProfileWatchQueue,
 } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
@@ -29,6 +30,7 @@ export default function DashboardScreen(): JSX.Element {
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
     const [watchQueue, setWatchQueue] = useState<ShowData[] | null>(null);
+    const [queueLoading, setQueueLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     if (!session) {
@@ -90,6 +92,13 @@ export default function DashboardScreen(): JSX.Element {
             setProfile(null);
             setSession(null);
             navigate('/');
+        }
+    };
+
+    const clearQueue = async () => {
+        if (session) {
+            await removeProfileWatchQueue(session.user.id);
+            setWatchQueue(null);
         }
     };
 
@@ -176,6 +185,18 @@ export default function DashboardScreen(): JSX.Element {
                 >
                     Delete Profile
                 </Button>
+                {watchQueue && (
+                    <Button
+                        variant='contained'
+                        size='large'
+                        color='error'
+                        type='button'
+                        sx={{ m: 0.5 }}
+                        onClick={() => clearQueue()}
+                    >
+                        Remove Queue
+                    </Button>
+                )}
             </div>
             {watchQueue && (
                 <div>
