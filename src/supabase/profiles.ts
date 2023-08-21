@@ -164,6 +164,31 @@ export const removeFromProfileWatchQueue = async (
 };
 
 /**
+ * Removes all shows from a users watch queue
+ *
+ * @param id | uuid of user being updated
+ * @returns {Promise<Profile | null>}
+ */
+export const removeProfileWatchQueue = async (id: string): Promise<Profile | null> => {
+    try {
+        const { data, error } = await SUPABASE.rpc('remove_queue', {
+            id: id,
+        })
+            .select()
+            .single();
+
+        if (error) {
+            if (import.meta.env.DEV) console.error(error);
+        } else if (data) {
+            return data as Profile;
+        }
+    } catch (error) {
+        if (import.meta.env.DEV) console.error(error);
+    }
+    return null;
+};
+
+/**
  * Update the adult flag of a users profile
  *
  * @param id | uuid of user being updated
