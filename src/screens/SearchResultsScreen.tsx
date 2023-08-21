@@ -1,14 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import { getMoviesByName } from '../helpers/getMovieUtils';
-import { ShowCard, ShowListCard } from '../components';
+import { ShowCard, ShowListCard, ShowCardProps, ShowListCardProps } from '../components';
 import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext, useWindowSize } from '../hooks';
 import { ToggleButton } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
-import { ShowCardProps } from '../components/ShowCard';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -72,7 +71,7 @@ export default function SearchResultsScreen(): JSX.Element {
      * @returns {JSX.Element}
      */
     const searchResultCards = useMemo((): JSX.Element => {
-        const CardComp: React.FC<ShowCardProps> = (props) => {
+        const CardComp: React.FC<ShowCardProps | ShowListCardProps> = (props) => {
             return viewState === 'grid' ? <ShowCard {...props} /> : <ShowListCard {...props} />;
         };
 
