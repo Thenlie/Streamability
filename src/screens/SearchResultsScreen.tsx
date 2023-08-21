@@ -76,7 +76,13 @@ export default function SearchResultsScreen(): JSX.Element {
         };
 
         return (
-            <>
+            <div
+                className={
+                    viewState === 'grid'
+                        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                        : 'flex flex-wrap justify-center'
+                }
+            >
                 {movieDetails?.map((item, i) => {
                     return (
                         <CardComp
@@ -99,7 +105,7 @@ export default function SearchResultsScreen(): JSX.Element {
                         />
                     );
                 })}
-            </>
+            </div>
         );
     }, [movieDetails, tvDetails, viewState]);
 
@@ -130,7 +136,7 @@ export default function SearchResultsScreen(): JSX.Element {
                     {viewState === 'grid' ? <ViewList /> : <ViewModule />}
                 </ToggleButton>
             </div>
-            <div className='flex flex-wrap justify-center pb-4'>{searchResultCards}</div>
+            {searchResultCards}
         </>
     );
 }
