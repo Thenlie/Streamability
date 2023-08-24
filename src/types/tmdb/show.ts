@@ -107,6 +107,17 @@ export interface ShowData {
             origin_country: string;
         },
     ];
-    showType: 'movie' | 'tv';
+    media_type: 'movie' | 'tv';
     genre_ids?: number[];
+}
+
+/**
+ * Returned by TMDB multi search request
+ * https://developer.themoviedb.org/reference/search-multi
+ */
+export interface ShowResults {
+    page?: number;
+    results?: ShowData[];
+    total_pages?: number;
+    total_results?: number;
 }

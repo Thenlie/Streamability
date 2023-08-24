@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getMovieTrending } from '../helpers/getMovieUtils';
-import { getTvTrending } from '../helpers/getTvUtils';
+import { getMovieTrending, getTvTrending } from '../helpers';
 import { ShowData } from '../types';
 import { ShowCard } from '../components';
 import { useProfileContext } from '../hooks';

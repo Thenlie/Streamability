@@ -40,7 +40,7 @@ function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX
                 <ShowCard
                     key={i}
                     details={item}
-                    showType={item.showType}
+                    showType={item.media_type}
                     profile={profile}
                     setProfile={setProfile}
                 />

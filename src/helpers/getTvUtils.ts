@@ -22,7 +22,7 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
                 vote_average: tv.vote_average,
                 vote_count: tv.vote_count,
                 overview: tv.overview,
-                showType: 'tv',
+                media_type: 'tv',
                 genre_ids: tv.genre_ids,
             };
         });
@@ -61,7 +61,7 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
         age_rating: returnRating(data),
         overview: data.overview,
         networks: data.networks,
-        showType: 'tv',
+        media_type: 'tv',
     };
 };
 
@@ -98,7 +98,7 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
                 vote_average: tv.vote_average,
                 vote_count: tv.vote_count,
                 overview: tv.overview,
-                showType: 'tv',
+                media_type: 'tv',
                 genre_ids: tv.genre_ids,
             };
         });
@@ -128,7 +128,7 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
             title: rec.name,
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
-            showType: 'tv',
+            media_type: 'tv',
             genre_ids: rec.genre_ids,
         })
     );

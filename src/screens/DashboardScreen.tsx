@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SUPABASE } from '../helpers/supabaseClient';
 import { useSessionContext, useProfileContext } from '../hooks';
 import {
     deleteProfileById,
@@ -13,8 +12,7 @@ import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/m
 import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
 import { ShowData } from '../types';
 import { ShowCarousel, ShowCarouselPlaceholder } from '../components';
-import { getMovieDetails } from '../helpers/getMovieUtils';
-import { getTvDetails } from '../helpers/getTvUtils';
+import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
 
 const LOG = new Logger('DashboardScreen');

@@ -1,4 +1,4 @@
-import { SUPABASE } from '../helpers/supabaseClient';
+import { SUPABASE } from '../helpers';
 import Logger from '../logger';
 import { Profile } from '../types/supabase';
 

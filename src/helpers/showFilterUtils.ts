@@ -25,7 +25,7 @@ const filterShowsByGenre = (showData: ShowData[], genreId: number): ShowData[] =
 const filterShowsByType = (showData: ShowData[], showType: 'movie' | 'tv'): ShowData[] => {
     const filteredShows: ShowData[] = [];
     showData.forEach((show) => {
-        if (show.showType === showType) {
+        if (show.media_type === showType) {
             filteredShows.push(show);
         }
     });

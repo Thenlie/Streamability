@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ShowCarousel, ShowCarouselPlaceholder, SearchInput } from '../components';
 import type { ShowData } from '../types';
-import { getMovieTrending } from '../helpers/getMovieUtils';
-import { getTvTrending } from '../helpers/getTvUtils';
+import { getMovieTrending, getTvTrending } from '../helpers';
 import { useProfileContext } from '../hooks';
 
 /**

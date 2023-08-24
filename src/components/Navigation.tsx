@@ -1,4 +1,4 @@
-import { SUPABASE } from '../helpers/supabaseClient';
+import { SUPABASE } from '../helpers';
 import { Link } from 'react-router-dom';
 import { Session } from '../types';
 import { useState, useEffect, MouseEvent } from 'react';

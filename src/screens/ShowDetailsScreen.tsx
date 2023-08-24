@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
-import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUtils';
+import {
+    getMovieDetails,
+    getMovieRecommendations,
+    formatReleaseDate,
+    DateSize,
+    getTvDetails,
+    getTvRecommendations,
+} from '../helpers';
 import { ShowData } from '../types';
-import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
 import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
-import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
 import { Typography } from '@mui/material';
 import { useProfileContext } from '../hooks';
 import Rating from '../components/Rating';
