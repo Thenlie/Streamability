@@ -1,9 +1,12 @@
+import Logger from '../logger';
 import { ShowData, TvDetailsData, TvResults, ShowProviders } from '../types';
 
+const LOG = new Logger('getTvUtils');
+
 /**
- * This function is ran after the user enters a name of a TV Show.
- * @param name | Name of show being queried
- * @returns {Promise<ShowData[]>} | List of shows by searched query.
+ * Returns a list of tv shows based on a given search query.
+ * @param name | Name of tv show being queried
+ * @returns {Promise<ShowData[]>} | List of tv shows
  */
 const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     const response = await fetch(
@@ -11,29 +14,30 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    const data = (await response.json()) as TvResults;
-    if (data.results) {
-        return data.results.map((tv) => {
-            return {
-                id: tv.id,
-                poster_path: tv.poster_path,
-                title: tv.name,
-                release_date: tv.first_air_date,
-                vote_average: tv.vote_average,
-                vote_count: tv.vote_count,
-                overview: tv.overview,
-                media_type: 'tv',
-                genre_ids: tv.genre_ids,
-            };
-        });
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    return null;
+    const data = (await response.json()) as TvResults;
+    if (!data.results) return null;
+    return data.results.map((tv) => {
+        return {
+            id: tv.id,
+            poster_path: tv.poster_path,
+            title: tv.name,
+            release_date: tv.first_air_date,
+            vote_average: tv.vote_average,
+            vote_count: tv.vote_count,
+            overview: tv.overview,
+            media_type: 'tv',
+            genre_ids: tv.genre_ids,
+        };
+    });
 };
 
 /**
- * This function is ran for specific <ShowCard /> data with a TV Show ID.
- * @param id | MovieDB id of show being queried
- * @returns {Promise<ShowData>} | Specific data for a TV Show that is not originally supplied by getTvByName.
+ * Returns more detailed information about a given movie.
+ * @param id | MovieDB id of tv show being queried
+ * @returns {Promise<ShowData>} | TV details
  */
 const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
@@ -41,6 +45,9 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }&append_to_response=images,release_dates,content_ratings`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     const returnRating = (arr: TvDetailsData) => {
         for (let i = 0; i < arr.content_ratings.results.length; i++) {
             if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
@@ -62,13 +69,14 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
         overview: data.overview,
         networks: data.networks,
         media_type: 'tv',
+        genre_ids: data.genres.map((genre) => genre.id),
     };
 };
 
 /**
- * This function is ran for a specified movie to return streaming services with a TV Show ID.
- * @param id | MovieDB id of show being queried
- * @returns {Promise<ShowProviders>} | Returns list of streaming services
+ * Returns a list of streaming providers for a given tv show.
+ * @param id | MovieDB id of tv show being queried
+ * @returns {Promise<ShowProviders>} | List of streaming services
  */
 const getTvProviders = async (id: number): Promise<ShowProviders> => {
     const response = await fetch(
@@ -76,37 +84,42 @@ const getTvProviders = async (id: number): Promise<ShowProviders> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     return response.json() as Promise<ShowProviders>;
 };
 
 /**
- * This function returns trending tv shows
- * @returns {Promise<ShowData>} | Trending TV Shows
+ * Returns a list of trending tv shows.
+ * @returns {Promise<ShowData>} | Trending TV shows
  */
 const getTvTrending = async (): Promise<ShowData[] | null> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
     );
-    const data = (await response.json()) as TvResults;
-    if (data.results) {
-        return data.results.map((tv) => {
-            return {
-                id: tv.id,
-                poster_path: tv.poster_path,
-                title: tv.original_name,
-                release_date: tv.first_air_date,
-                vote_average: tv.vote_average,
-                vote_count: tv.vote_count,
-                overview: tv.overview,
-                media_type: 'tv',
-                genre_ids: tv.genre_ids,
-            };
-        });
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    return null;
+    const data = (await response.json()) as TvResults;
+    if (!data.results) return null;
+    return data.results.map((tv) => {
+        return {
+            id: tv.id,
+            poster_path: tv.poster_path,
+            title: tv.original_name,
+            release_date: tv.first_air_date,
+            vote_average: tv.vote_average,
+            vote_count: tv.vote_count,
+            overview: tv.overview,
+            media_type: 'tv',
+            genre_ids: tv.genre_ids,
+        };
+    });
 };
+
 /**
- * Get recommended TV shows based off of a movie
+ * Returns recommended tv shows based off of a given tv show
  * @param id | MovieDB id of TV show being searched for
  * @returns {Promise<ShowData[] | null>} | Array of recommended TV shows
  */
@@ -116,6 +129,9 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
     const recommendations: ShowData[] = [];
