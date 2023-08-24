@@ -19,7 +19,7 @@ export default function ShowListCardPlaceholder({
     count,
 }: ShowListCardPlaceholderProps): JSX.Element {
     return (
-        <div className='m-3 flex flex-wrap justify-center'>
+        <div className='m-3 grid grid-cols-1 xl:grid-cols-2'>
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='w-[700px] h-[177px] flex m-1'>
                     <Skeleton width={100} height={175} />

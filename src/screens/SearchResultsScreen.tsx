@@ -106,9 +106,9 @@ export default function SearchResultsScreen(): JSX.Element {
                     Search results for: {query}
                 </Typography>
                 {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
-                    <ShowCardPlaceholder count={6} />
+                    <ShowCardPlaceholder count={10} />
                 ) : (
-                    <ShowListCardPlaceholder count={20} />
+                    <ShowListCardPlaceholder count={10} />
                 )}
             </div>
         );

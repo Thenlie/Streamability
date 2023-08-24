@@ -16,11 +16,17 @@ interface ShowCardPlaceholderProps {
  */
 export default function ShowCardPlaceholder({ count }: ShowCardPlaceholderProps): JSX.Element {
     return (
-        <div className='m-3 flex flex-wrap justify-center'>
+        <div className='m-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
             {[...Array(count)].map((x, i) => (
-                <div key={i}>
-                    <Skeleton width={180} height={270} className='mb-2' />
-                    <Skeleton width={180} count={3} />
+                <div key={i} className='flex w-80 mx-auto my-2'>
+                    <Skeleton width={175} height={270} className='mb-2' />
+                    <div className='flex flex-col justify-between py-1 pl-2'>
+                        <div>
+                            <Skeleton width={120} height={30} count={1} />
+                            <Skeleton width={120} count={1} />
+                        </div>
+                        <Skeleton width={120} count={2} />
+                    </div>
                 </div>
             ))}
         </div>
