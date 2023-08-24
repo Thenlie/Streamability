@@ -23,7 +23,7 @@ export default function ShowListCardPlaceholder({
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='w-[700px] h-[177px] flex m-1'>
                     <Skeleton width={100} height={175} />
-                    <div className='ml-2 my-1 flex flex-col justify-between'>
+                    <div className='ml-2 my-1 flex flex-col justify-between text-left'>
                         <div>
                             <Skeleton width={200} height={25} />
                             <Skeleton width={100} height={20} />

@@ -135,7 +135,7 @@ export default function AppWrapper(): JSX.Element {
             >
                 <main className='flex min-h-screen flex-col place-items-center'>
                     <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
-                    <div className='flex flex-auto flex-col items-center justify-center text-center w-full'>
+                    <div className='flex flex-auto flex-col items-center text-center w-full'>
                         <Outlet context={{ session, setSession, profile, setProfile }} />
                     </div>
                 </main>
