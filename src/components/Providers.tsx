@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ShowProviders } from '../types';
-import { getMovieProviders } from '../helpers/getMovieUtils';
-import { getTvProviders } from '../helpers/getTvUtils';
+import { getMovieProviders, getTvProviders } from '../helpers';
 import ProvidersPlaceholder from './ProvidersPlaceholder';
 
 interface ProviderProps {

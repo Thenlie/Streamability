@@ -1,13 +1,12 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
-import { getMoviesByName } from '../helpers/getMovieUtils';
 import { ShowCard, ShowListCard, ShowCardProps, ShowListCardProps } from '../components';
 import { ShowData } from '../types';
-import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext, useWindowSize } from '../hooks';
 import { ToggleButton, Tooltip } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
+import { getShowsByName } from '../helpers';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -36,8 +35,7 @@ export default function SearchResultsScreen(): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const windowSize = useWindowSize();
     const [viewState, setViewState] = useState<'list' | 'grid'>('list');
-    const [movieDetails, setMovieDetails] = useState<ShowData[] | null>(null);
-    const [tvDetails, setTvDetails] = useState<ShowData[] | null>(null);
+    const [showDetails, setShowDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -48,13 +46,10 @@ export default function SearchResultsScreen(): JSX.Element {
     }, [windowSize]);
 
     useEffect(() => {
+        setLoading(true);
         const handler = async () => {
-            // TODO: #478 Refactor to use multi search
-            // https://developer.themoviedb.org/reference/search-multi
-            const movieData: ShowData[] | null = await getMoviesByName(query);
-            const tvData: ShowData[] | null = await getTvByName(query);
-            setMovieDetails(movieData);
-            setTvDetails(tvData);
+            const showData: ShowData[] | null = await getShowsByName(query);
+            setShowDetails(showData);
             setLoading(false);
         };
         handler();
@@ -83,23 +78,12 @@ export default function SearchResultsScreen(): JSX.Element {
                         : 'flex flex-wrap justify-center'
                 }
             >
-                {movieDetails?.map((item, i) => {
+                {showDetails?.map((item, i) => {
                     return (
                         <CardComp
                             key={i}
                             details={item}
-                            showType={'movie'}
-                            profile={profile}
-                            setProfile={setProfile}
-                        />
-                    );
-                })}
-                {tvDetails?.map((item, i) => {
-                    return (
-                        <CardComp
-                            key={i}
-                            details={item}
-                            showType={'tv'}
+                            showType={item.media_type}
                             profile={profile}
                             setProfile={setProfile}
                         />
@@ -107,14 +91,14 @@ export default function SearchResultsScreen(): JSX.Element {
                 })}
             </div>
         );
-    }, [movieDetails, tvDetails, viewState]);
+    }, [showDetails, viewState]);
 
     if (loading) {
         return <ShowCardPlaceholder count={5} />;
     }
 
     // TODO: #438 Handle this error better
-    if (!movieDetails && !tvDetails) {
+    if (!showDetails) {
         return <p>Sorry! No show data...</p>;
     }
 

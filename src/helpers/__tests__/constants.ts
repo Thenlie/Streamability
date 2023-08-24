@@ -15,7 +15,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 24715,
         overview:
             'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 878, 12],
     },
     {
@@ -27,7 +27,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 152,
         overview:
             "Iron Man enlists the help of ruthless vigilante the Punisher to track down War Machine's murderer. All the while, he's being pursued by S.H.I.E.L.D. agents Black Widow and Hawkeye, who suspect his involvement in a recent terrorist plot.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [878, 16, 28],
     },
     {
@@ -39,7 +39,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 19625,
         overview:
             "With the world now aware of his dual life as the armored superhero Iron Man, billionaire inventor Tony Stark faces pressure from the government, the press and the public to share his technology with the military. Unwilling to let go of his invention, Stark, with Pepper Potts and James 'Rhodey' Rhodes at his side, must forge new alliances - and confront powerful enemies.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [12, 28, 878],
     },
     {
@@ -51,7 +51,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 20941,
         overview:
             "When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 12, 878],
     },
     {
@@ -63,7 +63,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 480,
         overview:
             'A "metal fetishist", driven mad by the maggots wriggling in the wound he\'s made to embed metal into his flesh, runs out into the night and is accidentally run down by a Japanese businessman and his girlfriend. The pair dispose of the corpse in hopes of quietly moving on with their lives. However, the businessman soon finds that he is now plagued by a vicious curse that transforms his flesh into iron.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [27, 878],
     },
     {
@@ -75,7 +75,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 59,
         overview:
             'In Warsaw in 1980, the Communist Party sends Winkel, a weak, alcoholic TV hack, to Gdansk to dig up dirt on the shipyard strikers, particularly on Maciek Tomczyk, an articulate worker whose father was killed in the December 1970 protests. Posing as sympathetic, Winkel interviews the people surrounding Tomczyk, including his detained wife, Agnieszka.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [18, 36],
     },
     {
@@ -87,7 +87,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 212,
         overview:
             "When a cocky industrialist's efforts to raise an ancient Chinese temple leads him to be seriously wounded and captured by enemy forces, he must use his ideas for a revolutionary power armor in order to fight back as a superhero.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 12, 16, 14, 878],
     },
     {
@@ -99,7 +99,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 9,
         overview:
             'Prizefighter Mason loses his opening fight so wife Rose leaves him for Hollywood. Without her around Mason trains and starts winning. Rose comes back and wants Mason to dump his manager Regan and replace him with her secret lover Lewis.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [18],
     },
     {
@@ -111,7 +111,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 696,
         overview:
             'With the Third Reich at its peak in 1942, the Czech resistance in London plans the most ambitious military operation of WWII -  Anthropoid. Two young recruits are sent to Prague to assassinate the most ruthless Nazi leader - Reinhardt Heydrich, head of the SS, the Gestapo and the architect of the Final Solution.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [10752, 28, 36, 53],
     },
     {
@@ -123,7 +123,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 7,
         overview:
             'In Coaltown, Pennsylvania, miner Coke Mason hopes to better himself, buy a radio store, and marry Rose Warren. His gambler brother George thinks Coke can be more successful as a boxer, knowing that when he fights he\'s consumed with a murderous rage that makes him an "iron man." Seeing dollar signs in Rose\'s eyes, Coke reluctantly agrees, though he\'s fearful of the "killer instinct" that makes him a knockout success in the ring...and brings him the booing hatred of the fans. Will Coke throw off his personal demon before he kills someone?',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [18],
     },
     {
@@ -135,7 +135,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 122,
         overview:
             'Iron Man and Captain America battle to keep the Red Skull and his triggerman, Taskmaster, from unleashing an army of Hydra Brutes on the world!  Sequel to the film "Iron Man & Hulk: Heroes United" and feature Iron Man teaming up with Captain America, it comes to accompany the live-action film "Captain America: The Winter Soldier".',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [12, 16, 28],
     },
     {
@@ -147,7 +147,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 44,
         overview:
             'TV Miniseries (2 episodes) about life and rivalry of italian bikers Gino Bartali and Fausto Coppi.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [10770, 18],
     },
     {
@@ -159,7 +159,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 3523,
         overview:
             "Years have passed since the Three Musketeers, Aramis, Athos and Porthos, have fought together with their friend, D'Artagnan. But with the tyrannical King Louis using his power to wreak havoc in the kingdom while his twin brother, Philippe, remains imprisoned, the Musketeers reunite to abduct Louis and replace him with Philippe.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [12, 28, 18],
     },
     {
@@ -171,7 +171,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 20,
         overview:
             'An Earth Defence Brigade is formed to protect the world against invaders from outer space. The ruthless Frang Gang begins its raid against the earth on land, sea and by air. But they meet their match in the super robots of the Earth Defence Brigade.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 35, 14, 878],
     },
     {
@@ -183,7 +183,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 6,
         overview:
             "Man of Iron was positioned as something of a follow-up to Boxer From Shantung, the rise-and-fall story of Ma Yung Chen and it reunites the directors and some of the cast in a similar but much slighter tale of a lesser gangster's rise and fall in Shanghai. While the opening narration specifically recalls the events and tragic conclusion of BOXER, this one is set 20 years later in the same section of Shanghai but otherwise has nothing to do with the events or characters of the previous film.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 18, 80],
     },
     {
@@ -195,7 +195,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 166,
         overview:
             "The Invincible Iron Man and the Incredible Hulk must join forces to save the Earth from its greatest threat yet! When two Hydra scientists try to supercharge a Stark Arc Reactor with Hulk's Gamma Energy, they unleash a being of pure electricity called Zzzax - and he's hungry for destruction. Together, Iron Man and Hulk are the only force that stands in the way of the Zzzax's planetary blackout. But first, the super heroic duo will have to get through snarling Wendigos, deadly robots and the scaly powerhouse, Abomination.  Can two of Marvel's mightiest heroes find a way to work together without smashing each other before time runs out?",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 12, 16, 10751],
     },
     {
@@ -207,7 +207,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 0,
         overview:
             "In 1944 Chang Chin's father was murdered by the Japanese with the help of Ching Tang and Fan Hsi-Shang, two collaborators led by Fung Mu. Now a grown up and a master of kung fu, Chang is ready to revenge his father.",
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28],
     },
     {
@@ -218,7 +218,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_average: 7.333,
         vote_count: 3,
         overview: 'A small animated movie from Marvel and IIRC Blur Studios.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28, 12, 16],
     },
     {
@@ -230,7 +230,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 1038,
         overview:
             'In feudal China, a blacksmith who makes weapons for a small village is put in the position where he must defend himself and his fellow villagers.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28],
     },
     {
@@ -242,7 +242,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 228,
         overview:
             'When a stranger, Thaddeus, is found badly wounded near the village, miner Li Kung and his wife Ah Ni offer him refuge. As he heals, he becomes entrenched in a conflict that pits the townsfolk against the evil Master Ho, his nefarious Beetle Clan and the terrifying Lord Pi.',
-        showType: 'movie',
+        media_type: 'movie',
         genre_ids: [28],
     },
     {
@@ -254,7 +254,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 85,
         overview:
             'Industrialist Tony Stark leads a private team of superheroes as Iron Man against the forces of evil.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16, 10759, 10765],
     },
     {
@@ -266,7 +266,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 76,
         overview:
             "When Tony Stark branches his company into Japan, he is opposed by the nefarious Zodiac organization. It's up to Stark's Iron Man to defeat the Zodiac, and defend Japan.",
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16, 10759, 10765],
     },
     {
@@ -278,7 +278,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 115,
         overview:
             'Iron Man: Armored Adventures is a 3D CGI cartoon series based on the Marvel Comics superhero Iron Man. It debuted in the USA on the Nicktoons on April 24, 2009, and has already begun airing on Canadian network Teletoon. Iron Man: Armored Adventures aired on Nickelodeon on July 4, 2009 until September 12, 2009. The series is story edited by showrunner Christopher Yost, who also worked on Wolverine and the X-Men, and numerous other Marvel Animation projects. The television show is not related to the 2007 animated film The Invincible Iron Man; It has a different voice cast, but some story elements are similar and the show uses the same musical score as the film in some instances. It is the first Iron Man television series since Iron Man from 1994–1996, and started airing after the success of the live action Iron Man film.\n\nThe series follows the adventures of teenage child prodigy Tony Stark and his alter ego of Iron Man. As Iron Man, he uses his technological inventions to fight various similarly technologically advanced threats. His friends, James "Rhodey" Rhodes and Pepper Potts help him on his courageous, and dangerous adventures.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16, 10759, 10765],
     },
     {
@@ -290,7 +290,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 12,
         overview:
             "An experimental serum called Extremis gets stolen, and Iron Man rockets into action. The ensuing battles test Stark's spirit and Iron Man's power.",
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16],
     },
     {
@@ -302,7 +302,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 0,
         overview:
             'Faujji...The Iron Man is a Hindi language Indian television series that airs on the national channel, DD National. The series premiered on March 21, 2009, and airs every Saturday and Sunday at 8:30 pm IST. The story is about the army battling terrorism. On its first day, the series received a Television Rating Point of 1.7 among other shows on other general entertainment channels.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [10759, 18],
     },
     {
@@ -314,7 +314,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 10,
         overview:
             "Despite his wealth, Joo Hong Bin (Lee Dong Wook) is a prickly man harboring a broken heart. But when his emotional pain physically manifests itself as a gruesome ability to sprout knives from his body, Hong Bin quickly realizes that he’s got to start wearing his heart on his sleeve — with all of his newfound scars to prove it. Meanwhile, Son Se Dong (Shin Se Kyung) tries to heal Hong Bin's wounds inside and out, but is this supernatural love damaged beyond repair?",
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [18, 10765],
     },
     {
@@ -326,7 +326,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 3,
         overview:
             'Gigantor is an American adaptation of the anime version of Tetsujin 28-go, a manga by Mitsuteru Yokoyama released in 1956. It debuted on U.S. television in 1964. As with Speed Racer, the characters\' original names were altered and the original series\' violence was toned down for American viewers. The series "was resurrected, in color, as The New Adventures of Gigantor, by the Sci Fi Channel in 1993."',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16, 10765],
     },
     {
@@ -338,7 +338,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 5,
         overview:
             'This cartoon series, characterized by extremely limited animation, features five of the most popular super-powered heroes from Marvel Comics: the Incredible Hulk, the Mighty Thor, Captain America, Iron Man, and the Sub-Mariner.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16, 10759, 10765, 10762],
     },
     {
@@ -350,7 +350,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 919,
         overview:
             'While being trained by S.H.I.E.L.D., Spider-Man battles evil with a new team of teen colleagues.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [10762, 10759, 16, 35],
     },
     {
@@ -362,7 +362,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_count: 2,
         overview:
             'The story, which deals with the ultra-Orthodox who enlist in combat training in the Israel Defense Forces, is presented through the eyes of three soldiers: Amram Elkayam the shabbanik, the national ultra-Orthodox Gur Aryeh and Yaakov Anielbitsh, a Vizhnitz Hasid, and soon they discover a world they did not know , To communicate with women in a regular framework, and in some cases, of course, to deal with the hostile attitude toward them in the places they came from, including Yehuda Barkan, Danny Steg and Yishai Golan.',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [18],
     },
     {
@@ -373,7 +373,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         vote_average: 0,
         vote_count: 0,
         overview: '',
-        showType: 'tv',
+        media_type: 'tv',
         genre_ids: [16],
     },
 ];

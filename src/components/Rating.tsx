@@ -1,5 +1,5 @@
 import { Rating as RatingMUI, Typography } from '@mui/material';
-import { pluralizeString } from '../helpers/stringFormatUtils';
+import { pluralizeString } from '../helpers';
 
 interface RatingProps {
     /**

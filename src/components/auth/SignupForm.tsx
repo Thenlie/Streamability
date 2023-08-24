@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
-import { SUPABASE } from '../../helpers/supabaseClient';
+import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import {

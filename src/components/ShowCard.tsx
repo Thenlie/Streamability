@@ -1,7 +1,7 @@
 import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
-import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
+import { formatReleaseDate, DateSize } from '../helpers';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
 import { useIsInWatchQueue } from '../hooks';
@@ -53,13 +53,13 @@ export default function ShowCard({
             if (isPush && profile) {
                 const data = await addToProfileWatchQueue(
                     profile.id,
-                    `${details.showType}-${show_id}`
+                    `${details.media_type}-${show_id}`
                 );
                 setProfile(data);
             } else if (profile) {
                 const data = await removeFromProfileWatchQueue(
                     profile.id,
-                    `${details.showType}-${show_id}`
+                    `${details.media_type}-${show_id}`
                 );
                 setProfile(data);
             }
