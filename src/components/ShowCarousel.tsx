@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useWindowSize } from '../hooks';
 import useDebounce from '../hooks/useDebounceValue';
 
-const SHOW_CARD_WIDTH = 390;
+const SHOW_CARD_WIDTH = 360;
 
 interface ShowCarouselProps {
     /**

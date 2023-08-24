@@ -83,7 +83,7 @@ export default function LoginForm(): JSX.Element {
     }
 
     return (
-        <div aria-live='polite' className='w-full'>
+        <div aria-live='polite'>
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>

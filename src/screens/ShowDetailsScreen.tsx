@@ -43,12 +43,12 @@ export default function ShowDetailsScreen(): JSX.Element {
     }, [location]);
 
     // TODO: #199 Create skeleton loader
-    // TODO: Handle case when no details are ever returned
+    // TODO: #438 Handle case when no details are ever returned
     if (!details) return <p>Loading</p>;
 
     return (
         <>
-            <section className='m-3 flex'>
+            <section className='m-12 flex'>
                 <div className='rounded-md overflow-hidden mr-2'>
                     {details.poster_path ? (
                         <img
@@ -64,7 +64,12 @@ export default function ShowDetailsScreen(): JSX.Element {
                 </div>
                 <div className='m-3'>
                     <div>
-                        <Typography variant='h3' align='left' data-testid='show-details-heading'>
+                        <Typography
+                            variant='h3'
+                            align='left'
+                            className='max-w-lg'
+                            data-testid='show-details-heading'
+                        >
                             {details.title}
                         </Typography>
                         {details.release_date && details.release_date.length === 10 && (
@@ -84,7 +89,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         vote_count={details.vote_count || 0}
                     />
                     <div>
-                        <Typography align='left' className='max-w-md py-3'>
+                        <Typography align='left' className='max-w-lg py-3'>
                             {details.overview}
                         </Typography>
                     </div>

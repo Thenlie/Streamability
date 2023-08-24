@@ -6,7 +6,7 @@ import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
 import { useIsInWatchQueue } from '../hooks';
 
-interface ShowCardProps {
+export interface ShowCardProps {
     /**
      * Movie or TV show metadata
      */
@@ -67,7 +67,7 @@ export default function ShowCard({
     };
 
     return (
-        <div data-testid='show-card-component' className='m-1 flex w-96 bg-foreground rounded-sm'>
+        <div data-testid='show-card-component' className='m-1 flex w-80 bg-foreground rounded-sm'>
             <Link
                 to={`/details/${showType}/${details.id}`}
                 state={details}
