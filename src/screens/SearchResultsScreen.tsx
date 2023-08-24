@@ -6,7 +6,7 @@ import { ShowData } from '../types';
 import { getTvByName } from '../helpers/getTvUtils';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext, useWindowSize } from '../hooks';
-import { ToggleButton } from '@mui/material';
+import { ToggleButton, Tooltip } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
 
 /**
@@ -127,14 +127,16 @@ export default function SearchResultsScreen(): JSX.Element {
                 >
                     Search results for: {query}
                 </h1>
-                <ToggleButton
-                    sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
-                    value='toggle card view'
-                    aria-label='toggle card view'
-                    onClick={handleViewToggle}
-                >
-                    {viewState === 'grid' ? <ViewList /> : <ViewModule />}
-                </ToggleButton>
+                <Tooltip title='toggle card view'>
+                    <ToggleButton
+                        sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
+                        value='toggle card view'
+                        aria-label='toggle card view'
+                        onClick={handleViewToggle}
+                    >
+                        {viewState === 'grid' ? <ViewList /> : <ViewModule />}
+                    </ToggleButton>
+                </Tooltip>
             </div>
             {searchResultCards}
         </>
