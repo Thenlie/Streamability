@@ -1,10 +1,16 @@
 import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
-import { ShowCard, ShowListCard, ShowCardProps, ShowListCardProps } from '../components';
+import {
+    ShowCard,
+    ShowListCard,
+    ShowCardProps,
+    ShowListCardProps,
+    ShowListCardPlaceholder,
+} from '../components';
 import { ShowData } from '../types';
 import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext, useWindowSize } from '../hooks';
-import { ToggleButton, Tooltip } from '@mui/material';
+import { ToggleButton, Tooltip, Typography } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
 import { getShowsByName } from '../helpers';
 
@@ -94,7 +100,18 @@ export default function SearchResultsScreen(): JSX.Element {
     }, [showDetails, viewState]);
 
     if (loading) {
-        return <ShowCardPlaceholder count={5} />;
+        return (
+            <div className='align-middle w-full p-3'>
+                <Typography align='left' variant='h5'>
+                    Search results for: {query}
+                </Typography>
+                {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
+                    <ShowCardPlaceholder count={10} />
+                ) : (
+                    <ShowListCardPlaceholder count={10} />
+                )}
+            </div>
+        );
     }
 
     // TODO: #438 Handle this error better
@@ -105,12 +122,9 @@ export default function SearchResultsScreen(): JSX.Element {
     return (
         <>
             <div className='flex justify-between align-middle w-full p-3'>
-                <h1
-                    data-testid='search-results-heading'
-                    className='w-full text-left text-xl self-center'
-                >
+                <Typography variant='h5' data-testid='search-results-heading'>
                     Search results for: {query}
-                </h1>
+                </Typography>
                 <Tooltip title='toggle card view'>
                     <ToggleButton
                         sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
