@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     ShowCard,
     ShowCardProps,
@@ -44,8 +44,8 @@ export default function SearchResultsScreen(): JSX.Element {
     const [showDetails, setShowDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
+    // default to grid view on mobile
     useEffect(() => {
-        // default to grid view on mobile
         if (windowSize.width && windowSize.width < 750) {
             setViewState('grid');
         }
@@ -61,9 +61,33 @@ export default function SearchResultsScreen(): JSX.Element {
         handler();
     }, [query]);
 
-    const handleViewToggle = () => {
+    const handleViewToggle = useCallback(() => {
         setViewState((prev) => (prev === 'grid' ? 'list' : 'grid'));
-    };
+    }, [setViewState]);
+
+    /**
+     * Heading of the screen showing the search query
+     * and containing the view toggle button.
+     */
+    const SearchResultHeader = useMemo((): JSX.Element => {
+        return (
+            <div className='flex justify-between align-middle w-full p-3'>
+                <Typography variant='h5' data-testid='search-results-heading'>
+                    Search results for: {query}
+                </Typography>
+                <Tooltip title='toggle card view'>
+                    <ToggleButton
+                        sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
+                        value='toggle card view'
+                        aria-label='toggle card view'
+                        onClick={handleViewToggle}
+                    >
+                        {viewState === 'grid' ? <ViewList /> : <ViewModule />}
+                    </ToggleButton>
+                </Tooltip>
+            </div>
+        );
+    }, [query, viewState]);
 
     /**
      * Loops over show details and creates an array of show cards
@@ -71,18 +95,19 @@ export default function SearchResultsScreen(): JSX.Element {
      *
      * @returns {JSX.Element}
      */
-    const searchResultCards = useMemo((): JSX.Element => {
+    const SearchResultCards = useMemo((): JSX.Element => {
         const CardComp: React.FC<ShowCardProps | ShowListCardProps> = (props) => {
             return viewState === 'grid' ? <ShowCard {...props} /> : <ShowListCard {...props} />;
         };
 
         return (
             <div
-                className={
+                className={`${
                     viewState === 'grid'
                         ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                         : 'flex flex-wrap justify-center'
-                }
+                } pb-6
+                `}
             >
                 {showDetails?.map((item, i) => {
                     return (
@@ -101,42 +126,39 @@ export default function SearchResultsScreen(): JSX.Element {
 
     if (loading) {
         return (
-            <div className='align-middle w-full p-3'>
-                <Typography align='left' variant='h5'>
-                    Search results for: {query}
-                </Typography>
-                {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
-                    <ShowCardLoader count={10} />
-                ) : (
-                    <ShowListCardLoader count={10} />
-                )}
-            </div>
+            <>
+                {SearchResultHeader}
+                <div
+                    className={
+                        viewState === 'grid'
+                            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                            : 'flex flex-wrap justify-center'
+                    }
+                >
+                    {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
+                        <ShowCardLoader count={10} />
+                    ) : (
+                        <ShowListCardLoader count={10} />
+                    )}
+                </div>
+            </>
         );
     }
 
     // TODO: #438 Handle this error better
     if (!showDetails) {
-        return <p>Sorry! No show data...</p>;
+        return (
+            <>
+                {SearchResultHeader}
+                <Typography variant='h6'>Sorry! No show data...</Typography>
+            </>
+        );
     }
 
     return (
         <>
-            <div className='flex justify-between align-middle w-full p-3'>
-                <Typography variant='h5' data-testid='search-results-heading'>
-                    Search results for: {query}
-                </Typography>
-                <Tooltip title='toggle card view'>
-                    <ToggleButton
-                        sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
-                        value='toggle card view'
-                        aria-label='toggle card view'
-                        onClick={handleViewToggle}
-                    >
-                        {viewState === 'grid' ? <ViewList /> : <ViewModule />}
-                    </ToggleButton>
-                </Tooltip>
-            </div>
-            {searchResultCards}
+            {SearchResultHeader}
+            {SearchResultCards}
         </>
     );
 }
