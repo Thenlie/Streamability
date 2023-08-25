@@ -11,7 +11,6 @@ import {
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
 import { Typography } from '@mui/material';
-import { useProfileContext } from '../hooks';
 import Rating from '../components/Rating';
 
 /**
@@ -21,7 +20,6 @@ import Rating from '../components/Rating';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
@@ -107,11 +105,7 @@ export default function ShowDetailsScreen(): JSX.Element {
             </section>
             <section className='pb-6'>
                 {recommendations ? (
-                    <ShowCarousel
-                        data={recommendations}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
+                    <ShowCarousel data={recommendations} />
                 ) : (
                     <ShowCarouselPlaceholder count={1} />
                 )}
