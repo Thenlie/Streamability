@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
@@ -44,6 +44,19 @@ export default function ShowDetailsScreen(): JSX.Element {
         };
         handler();
     }, [location]);
+
+    /**
+     * Display a carousel of recommended shows based on the main show.
+     * Show a placeholder while recommendation are loading.
+     * @todo #487 Show placeholder only when loading, not when no results.
+     */
+    const RecommendationSection = useMemo(() => {
+        return recommendations ? (
+            <ShowCarousel data={recommendations} />
+        ) : (
+            <ShowCarouselPlaceholder count={1} />
+        );
+    }, [recommendations]);
 
     // TODO: #199 Create skeleton loader
     // TODO: #438 Handle case when no details are ever returned
@@ -103,13 +116,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     </div>
                 </div>
             </section>
-            <section className='pb-6'>
-                {recommendations ? (
-                    <ShowCarousel data={recommendations} />
-                ) : (
-                    <ShowCarouselPlaceholder count={1} />
-                )}
-            </section>
+            <section className='pb-6'>{RecommendationSection}</section>
         </>
     );
 }
