@@ -4,11 +4,7 @@
  */
 import ShowCard, { ShowCardProps } from './ShowCard';
 import ShowListCard, { ShowListCardProps } from './ShowListCard';
-import ShowCardPlaceholder from './ShowCardPlaceholder';
-import ShowListCardPlaceholder from './ShowListCardPlaceholder';
 import ShowPoster from './ShowPoster';
-import ProvidersPlaceholder from './ProvidersPlaceholder';
-import ShowCarouselPlaceholder from './ShowCarouselPlaceholder';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
@@ -20,11 +16,7 @@ import Rating from './Rating';
 export {
     ShowCard,
     ShowListCard,
-    ShowCardPlaceholder,
-    ShowListCardPlaceholder,
     ShowPoster,
-    ProvidersPlaceholder,
-    ShowCarouselPlaceholder,
     ShowCarousel,
     SearchInput,
     LoginForm,
@@ -34,5 +26,5 @@ export {
     Navigation,
     Rating,
 };
-
+export * from './loaders';
 export type { ShowCardProps, ShowListCardProps };

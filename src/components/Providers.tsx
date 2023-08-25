@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ShowProviders } from '../types';
 import { getMovieProviders, getTvProviders } from '../helpers';
-import ProvidersPlaceholder from './ProvidersPlaceholder';
+import { ProvidersLoader } from './loaders';
 import { useWindowSize } from '../hooks';
 import useDebounceValue from '../hooks/useDebounceValue';
 
@@ -50,7 +50,7 @@ export default function Providers({ id, showType }: ProviderProps): JSX.Element 
     if (loading) {
         return (
             <div className='flex justify-center'>
-                <ProvidersPlaceholder count={3} />
+                <ProvidersLoader count={3} />
             </div>
         );
     }

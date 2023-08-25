@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShowCarousel, ShowCarouselPlaceholder, SearchInput } from '../components';
+import { ShowCarousel, ShowCarouselLoader, SearchInput } from '../components';
 import type { ShowData } from '../types';
 import { getMovieTrending, getTvTrending } from '../helpers';
 
@@ -29,11 +29,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
 
-            {loading ? (
-                <ShowCarouselPlaceholder count={4} />
-            ) : (
-                <ShowCarousel data={trendingShows} />
-            )}
+            {loading ? <ShowCarouselLoader count={4} /> : <ShowCarousel data={trendingShows} />}
         </div>
     );
 }

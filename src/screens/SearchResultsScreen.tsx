@@ -2,13 +2,13 @@ import { useLoaderData } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import {
     ShowCard,
-    ShowListCard,
     ShowCardProps,
+    ShowCardLoader,
+    ShowListCard,
     ShowListCardProps,
-    ShowListCardPlaceholder,
+    ShowListCardLoader,
 } from '../components';
 import { ShowData } from '../types';
-import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
 import { useProfileContext, useWindowSize } from '../hooks';
 import { ToggleButton, Tooltip, Typography } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
@@ -106,9 +106,9 @@ export default function SearchResultsScreen(): JSX.Element {
                     Search results for: {query}
                 </Typography>
                 {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
-                    <ShowCardPlaceholder count={10} />
+                    <ShowCardLoader count={10} />
                 ) : (
-                    <ShowListCardPlaceholder count={10} />
+                    <ShowListCardLoader count={10} />
                 )}
             </div>
         );
