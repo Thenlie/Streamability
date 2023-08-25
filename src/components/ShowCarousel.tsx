@@ -73,15 +73,16 @@ export default function ShowCarousel({ data, size }: ShowCarouselProps): JSX.Ele
     /**
      * Splits an array of shows into an array of CarouselChildren
      *
-     * @todo remove shows that do not have a poster_path
      * @param data Show
      * @returns {JSX.Element[]}
      */
     const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
         const arr: JSX.Element[] = [];
+        if (!data) return arr;
+        const filteredArray = data.filter((show) => show.poster_path);
         if (data) {
-            for (let i = 0; i < data.length; i += carouselSteps) {
-                const chunk = data.slice(i, i + carouselSteps);
+            for (let i = 0; i < filteredArray.length; i += carouselSteps) {
+                const chunk = filteredArray.slice(i, i + carouselSteps);
                 arr.push(<CarouselChildren key={i} data={chunk} />);
             }
         }
