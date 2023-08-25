@@ -25,7 +25,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
         handler();
     }, []);
     return (
-        <div className='mt-6'>
+        <div className='mt-6 flex-1 flex flex-col justify-center'>
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
 
