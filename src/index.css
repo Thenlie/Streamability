@@ -17,6 +17,7 @@
     --color-highlight: 151 71 255; /* #9747ff */
     --color-hlhover: 105 49 178; /* #6931b2 */
   }
+
   :root[class='dark'] {
     --color-background: 36 36 36; /* #242424 */
     --color-foreground: 78 78 78; /* #4e4e4e */
@@ -29,7 +30,7 @@
 
 @layer components {
   .btn {
-    @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
+    @apply bg-highlight py-2 px-4 rounded hover: bg-hlhover
   }
 }
 
@@ -37,7 +38,18 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
-    transition-delay: background-color 5000s, color 5000s;
-    -webkit-text-fill-color: var(--color-text);
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+  transition-delay: background-color 5000s, color 5000s;
+  -webkit-text-fill-color: var(--color-text);
+}
+
+.hidden-bg-scrollbar::-webkit-scrollbar {
+  background-color: transparent;
+  height: 10px;
+}
+
+.hidden-bg-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-background));
+  border-radius: 10px;
+  padding: 1px;
 }

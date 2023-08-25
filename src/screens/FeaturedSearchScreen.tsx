@@ -27,7 +27,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
         handler();
     }, []);
     return (
-        <>
+        <div className='mt-6'>
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
 
@@ -36,6 +36,6 @@ export default function FeaturedSearchScreen(): JSX.Element {
             ) : (
                 <ShowCarousel data={trendingShows} profile={profile} setProfile={setProfile} />
             )}
-        </>
+        </div>
     );
 }

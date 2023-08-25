@@ -53,21 +53,23 @@ export default function ShowDetailsScreen(): JSX.Element {
 
     return (
         <>
-            <section className='m-12 flex'>
-                <div className='rounded-md overflow-hidden mr-2'>
-                    {details.poster_path ? (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                        ></img>
-                    ) : (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={'/poster-placeholder.jpeg'}
-                        ></img>
-                    )}
+            <section className='m-6 flex flex-col md:flex-row'>
+                <div className='rounded-md m-auto w-[350px] h-[550px]'>
+                    <img
+                        style={{
+                            width: '350px',
+                            height: '550px',
+                            maxWidth: 'none',
+                            borderRadius: '5px',
+                        }}
+                        src={
+                            details.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+                                : '/poster-placeholder.jpeg'
+                        }
+                    ></img>
                 </div>
-                <div className='m-3'>
+                <div className='m-3 max-w-xl'>
                     <div>
                         <Typography
                             variant='h3'
@@ -94,7 +96,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         vote_count={details.vote_count || 0}
                     />
                     <div>
-                        <Typography align='left' className='max-w-lg py-3'>
+                        <Typography align='left' className='py-3'>
                             {details.overview}
                         </Typography>
                     </div>
@@ -111,7 +113,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         setProfile={setProfile}
                     />
                 ) : (
-                    <ShowCarouselPlaceholder count={5} />
+                    <ShowCarouselPlaceholder count={1} />
                 )}
             </section>
         </>
