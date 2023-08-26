@@ -4,5 +4,6 @@ export * from './getMovieUtils';
 export * from './getShowUtils';
 export * from './getTvUtils';
 export * from './showFilterUtils';
+export * from './showSortUtils';
 export * from './stringFormatUtils';
 export * from './supabaseClient';
