@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+    sortShowsAlphaAsc,
+    sortShowsAlphaDesc,
     sortShowsByAvgRatingAsc,
     sortShowsByAvgRatingDesc,
     sortShowsByRatingCountAsc,
@@ -63,5 +65,24 @@ describe('sortShowsByReleaseDate', () => {
         expect(sortShowsByReleaseDateDesc(SHOW_DATA_ARRAY)[30].release_date).toBe('1931-04-29');
         expect(sortShowsByReleaseDateDesc(SHOW_DATA_ARRAY)[29].release_date).toBe('1951-09-20');
         expect(sortShowsByReleaseDateDesc(SHOW_DATA_ARRAY)[28].release_date).toBe('1963-10-20');
+    });
+});
+
+describe('sortShowsByAlpha', () => {
+    it('properly sorts shows alphabetically', () => {
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[0].title).toBe('Bartali: The Iron Man');
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[1].title).toBe('Blade Man');
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[2].title).toBe('Commandments');
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[30].title).toBe('The Marvel Super Heroes');
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[29].title).toBe('The Man with the Iron Heart');
+        expect(sortShowsAlphaAsc(SHOW_DATA_ARRAY)[28].title).toBe('The Man with the Iron Fists 2');
+    });
+    it('properly sorts shows reverse alphabetically', () => {
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[0].title).toBe('The Marvel Super Heroes');
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[1].title).toBe('The Man with the Iron Heart');
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[2].title).toBe('The Man with the Iron Fists 2');
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[30].title).toBe('Bartali: The Iron Man');
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[29].title).toBe('Blade Man');
+        expect(sortShowsAlphaDesc(SHOW_DATA_ARRAY)[28].title).toBe('Commandments');
     });
 });

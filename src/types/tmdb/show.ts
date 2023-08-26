@@ -96,7 +96,7 @@ export interface ShowData {
     release_date?: string;
     age_rating?: string | null;
     runtime?: number;
-    title?: string;
+    title: string;
     vote_average?: number;
     vote_count?: number;
     networks?: [

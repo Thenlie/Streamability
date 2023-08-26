@@ -1,11 +1,6 @@
 import { ShowData } from '../types';
 
 /**
- * TODO:
- * - Release Date [H, L]
- */
-
-/**
  * Sort an array of shows based on the vote count.
  * The least votes will be first, the most will be last
  * @param showData | array of shows to be sorted
@@ -75,6 +70,42 @@ const sortShowsByReleaseDateDesc = (showData: ShowData[]): ShowData[] => {
     return showData;
 };
 
+/**
+ * Sort an array of shows alphabetically.
+ * @param showData | array of shows to be sorted
+ * @returns | array of sorted shows
+ */
+const sortShowsAlphaAsc = (showData: ShowData[]): ShowData[] => {
+    showData.sort((a, b) => {
+        if (a.title < b.title) {
+            return -1;
+        }
+        if (a.title > b.title) {
+            return 1;
+        }
+        return 0;
+    });
+    return showData;
+};
+
+/**
+ * Sort an array of shows reverse alphabetically.
+ * @param showData | array of shows to be sorted
+ * @returns | array of sorted shows
+ */
+const sortShowsAlphaDesc = (showData: ShowData[]): ShowData[] => {
+    showData.sort((a, b) => {
+        if (b.title < a.title) {
+            return -1;
+        }
+        if (b.title > a.title) {
+            return 1;
+        }
+        return 0;
+    });
+    return showData;
+};
+
 export {
     sortShowsByRatingCountAsc,
     sortShowsByRatingCountDesc,
@@ -82,4 +113,6 @@ export {
     sortShowsByAvgRatingDesc,
     sortShowsByReleaseDateAsc,
     sortShowsByReleaseDateDesc,
+    sortShowsAlphaAsc,
+    sortShowsAlphaDesc,
 };
