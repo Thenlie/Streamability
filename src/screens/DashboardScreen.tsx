@@ -6,7 +6,7 @@ import {
     getProfileWatchQueue,
     setProfileAdultFlag,
     setProfileCountry,
-    removeProfileWatchQueue,
+    removeProfileArray,
 } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
@@ -97,7 +97,7 @@ export default function DashboardScreen(): JSX.Element {
 
     const clearQueue = async () => {
         if (session) {
-            await removeProfileWatchQueue(session.user.id);
+            await removeProfileArray(session.user.id, 'watch_queue');
             setWatchQueue(null);
         }
     };

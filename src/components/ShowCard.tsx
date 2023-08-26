@@ -1,4 +1,4 @@
-import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
+import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
@@ -53,15 +53,17 @@ export default function ShowCard({
     const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
         if (show_id) {
             if (isPush && profile) {
-                const data = await addToProfileWatchQueue(
+                const data = await addToProfileArray(
                     profile.id,
-                    `${details.media_type}-${show_id}`
+                    `${details.media_type}-${show_id}`,
+                    'watch_queue'
                 );
                 setProfile(data);
             } else if (profile) {
-                const data = await removeFromProfileWatchQueue(
+                const data = await removeFromProfileArray(
                     profile.id,
-                    `${details.media_type}-${show_id}`
+                    `${details.media_type}-${show_id}`,
+                    'watch_queue'
                 );
                 setProfile(data);
             }
