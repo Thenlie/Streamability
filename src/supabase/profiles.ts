@@ -104,20 +104,23 @@ export const getProfileWatchQueue = async (id: string): Promise<string[] | null>
 };
 
 /**
- * Add a new show to a logged in users watch queue
+ * Add a new show to a logged in users watch_queue, watched_queue, or favorites
  *
  * @param id | uuid of user being updated
  * @param show_id | movieDB id of show being added
+ * @param which_col | profiles column to add to
  * @returns {Promise<Profile | null>}
  */
-export const addToProfileWatchQueue = async (
+export const addToProfileArray = async (
     id: string,
-    show_id: string
+    show_id: string,
+    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
 ): Promise<Profile | null> => {
     try {
-        const { data, error } = await SUPABASE.rpc('append_array', {
+        const { data, error } = await SUPABASE.rpc('add_item', {
             id,
             show_id,
+            which_col,
         })
             .select()
             .single();
@@ -134,20 +137,23 @@ export const addToProfileWatchQueue = async (
 };
 
 /**
- * Remove a single show from a users watch queue
+ * Remove a single show from a users watch_queue, watched_queue, or favorites
  *
  * @param id | uuid of user being updated
  * @param show_id | movieDB id of show being removed
+ * @param which_col | profiles column to delete from
  * @returns {Promise<Profile | null>}
  */
-export const removeFromProfileWatchQueue = async (
+export const removeFromProfileArray = async (
     id: string,
-    show_id: string
+    show_id: string,
+    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
 ): Promise<Profile | null> => {
     try {
-        const { data, error } = await SUPABASE.rpc('remove_array', {
+        const { data, error } = await SUPABASE.rpc('remove_item', {
             id,
             show_id,
+            which_col,
         })
             .select()
             .single();
@@ -164,15 +170,20 @@ export const removeFromProfileWatchQueue = async (
 };
 
 /**
- * Removes all shows from a users watch queue
+ * Removes all shows from a users watch queue, watched_queue, or favorites
  *
  * @param id | uuid of user being updated
+ * @param which_col | profiles column to delete
  * @returns {Promise<Profile | null>}
  */
-export const removeProfileWatchQueue = async (id: string): Promise<Profile | null> => {
+export const removeProfileArray = async (
+    id: string,
+    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
+): Promise<Profile | null> => {
     try {
-        const { data, error } = await SUPABASE.rpc('remove_queue', {
+        const { data, error } = await SUPABASE.rpc('delete_all', {
             id: id,
+            which_col,
         })
             .select()
             .single();
