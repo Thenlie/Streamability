@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShowCarousel, ShowCarouselLoader, SearchInput } from '../components';
+import { ShowCarousel, SearchInput } from '../components';
 import type { ShowData } from '../types';
 import { getMovieTrending, getTvTrending } from '../helpers';
 
@@ -15,6 +15,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
+            setLoading(true);
             const movieData: ShowData[] | null = await getMovieTrending();
             const tvData: ShowData[] | null = await getTvTrending();
             if (movieData && tvData) {
@@ -24,12 +25,12 @@ export default function FeaturedSearchScreen(): JSX.Element {
         };
         handler();
     }, []);
+
     return (
         <div className='mt-6 flex-1 flex flex-col justify-center'>
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
-
-            {loading ? <ShowCarouselLoader count={4} /> : <ShowCarousel data={trendingShows} />}
+            <ShowCarousel data={trendingShows} isLoading={loading} />
         </div>
     );
 }
