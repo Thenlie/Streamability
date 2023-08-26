@@ -11,7 +11,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
 import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
 import { ShowData } from '../types';
-import { ShowCarousel, ShowCarouselPlaceholder } from '../components';
+import { ShowCarousel, ShowCarouselLoader } from '../components';
 import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
 
@@ -180,11 +180,7 @@ export default function DashboardScreen(): JSX.Element {
                 </Button>
             </div>
             <div>
-                {watchQueue ? (
-                    <ShowCarousel data={watchQueue} />
-                ) : (
-                    <ShowCarouselPlaceholder count={5} />
-                )}
+                {watchQueue ? <ShowCarousel data={watchQueue} /> : <ShowCarouselLoader count={5} />}
             </div>
         </section>
     );

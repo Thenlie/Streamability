@@ -1,6 +1,6 @@
-import ShowCardPlaceholder from './ShowCardPlaceholder';
+import ShowCardLoader from './ShowCardLoader';
 
-interface ShowCarouselPlaceholderProps {
+interface ShowCarouselLoaderProps {
     /**
      * Number of skeleton loaders to display
      */
@@ -10,17 +10,15 @@ interface ShowCarouselPlaceholderProps {
 /**
  * A skeleton loader of the ShowCarousel component. To be rendered while
  * main component is loading.
- * @param count | number of card placeholders to be rendered
+ * @param count | number of card loaders to be rendered
  * @returns {JSX.Element}
  */
-export default function ShowCarouselPlaceholder({
-    count,
-}: ShowCarouselPlaceholderProps): JSX.Element {
+export default function ShowCarouselLoader({ count }: ShowCarouselLoaderProps): JSX.Element {
     return (
         <div className='m-3 flex justify-center'>
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='overflow-x-hidden'>
-                    <ShowCardPlaceholder count={1} />
+                    <ShowCardLoader count={1} />
                 </div>
             ))}
         </div>

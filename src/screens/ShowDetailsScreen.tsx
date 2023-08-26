@@ -9,7 +9,7 @@ import {
     getTvRecommendations,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
+import { Providers, ShowCarousel, ShowCarouselLoader } from '../components';
 import { Typography } from '@mui/material';
 import Rating from '../components/Rating';
 
@@ -54,7 +54,7 @@ export default function ShowDetailsScreen(): JSX.Element {
         return recommendations ? (
             <ShowCarousel data={recommendations} />
         ) : (
-            <ShowCarouselPlaceholder count={1} />
+            <ShowCarouselLoader count={1} />
         );
     }, [recommendations]);
 

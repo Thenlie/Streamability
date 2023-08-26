@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ShowCarouselPlaceholder } from '../../components';
+import { ShowCarouselLoader } from '../../components';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-    title: 'Components/Show Carousel Placeholder',
-    component: ShowCarouselPlaceholder,
+    title: 'Components/Show Carousel Loader',
+    component: ShowCarouselLoader,
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
     },
     decorators: [withRouter],
-} satisfies Meta<typeof ShowCarouselPlaceholder>;
+} satisfies Meta<typeof ShowCarouselLoader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
