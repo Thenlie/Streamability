@@ -68,7 +68,7 @@ export default function ShowListCard({
     return (
         <div
             data-testid='show-list-card-component'
-            className='items-left m-1 flex w-[700px] rounded-md bg-foreground border-[1px] border-gray-300 shadow-md'
+            className='items-left m-1 flex w-[700px] rounded-md bg-foreground shadow-md'
         >
             <Link
                 to={`/details/${showType}/${details.id}`}
@@ -78,7 +78,7 @@ export default function ShowListCard({
                 <CardMedia
                     component='img'
                     className='w-full cursor-pointer rounded-l-md'
-                    sx={{ width: 100, minWidth: 100, height: 180, minHeight: 180 }}
+                    sx={{ width: 115, minWidth: 115, height: 180, minHeight: 180 }}
                     image={
                         details.poster_path
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`

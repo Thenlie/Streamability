@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
@@ -11,7 +11,6 @@ import {
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
 import { Typography } from '@mui/material';
-import { useProfileContext } from '../hooks';
 import Rating from '../components/Rating';
 
 /**
@@ -21,7 +20,6 @@ import Rating from '../components/Rating';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
@@ -47,27 +45,42 @@ export default function ShowDetailsScreen(): JSX.Element {
         handler();
     }, [location]);
 
+    /**
+     * Display a carousel of recommended shows based on the main show.
+     * Show a placeholder while recommendation are loading.
+     * @todo #487 Show placeholder only when loading, not when no results.
+     */
+    const RecommendationSection = useMemo(() => {
+        return recommendations ? (
+            <ShowCarousel data={recommendations} />
+        ) : (
+            <ShowCarouselPlaceholder count={1} />
+        );
+    }, [recommendations]);
+
     // TODO: #199 Create skeleton loader
     // TODO: #438 Handle case when no details are ever returned
     if (!details) return <p>Loading</p>;
 
     return (
         <>
-            <section className='m-12 flex'>
-                <div className='rounded-md overflow-hidden mr-2'>
-                    {details.poster_path ? (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                        ></img>
-                    ) : (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={'/poster-placeholder.jpeg'}
-                        ></img>
-                    )}
+            <section className='m-6 flex flex-col md:flex-row'>
+                <div className='rounded-md m-auto w-[350px] h-[550px]'>
+                    <img
+                        style={{
+                            width: '350px',
+                            height: '550px',
+                            maxWidth: 'none',
+                            borderRadius: '5px',
+                        }}
+                        src={
+                            details.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+                                : '/poster-placeholder.jpeg'
+                        }
+                    ></img>
                 </div>
-                <div className='m-3'>
+                <div className='m-3 max-w-xl'>
                     <div>
                         <Typography
                             variant='h3'
@@ -94,7 +107,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         vote_count={details.vote_count || 0}
                     />
                     <div>
-                        <Typography align='left' className='max-w-lg py-3'>
+                        <Typography align='left' className='py-3'>
                             {details.overview}
                         </Typography>
                     </div>
@@ -103,17 +116,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                     </div>
                 </div>
             </section>
-            <section className='pb-6'>
-                {recommendations ? (
-                    <ShowCarousel
-                        data={recommendations}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
-                ) : (
-                    <ShowCarouselPlaceholder count={5} />
-                )}
-            </section>
+            <section className='pb-6'>{RecommendationSection}</section>
         </>
     );
 }

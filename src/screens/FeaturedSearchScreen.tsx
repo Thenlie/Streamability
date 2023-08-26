@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { ShowCarousel, ShowCarouselPlaceholder, SearchInput } from '../components';
 import type { ShowData } from '../types';
 import { getMovieTrending, getTvTrending } from '../helpers';
-import { useProfileContext } from '../hooks';
 
 /**
  * This is currently just a minimal sample file to get the directory structure of the project set up
@@ -11,7 +10,6 @@ import { useProfileContext } from '../hooks';
  * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
  */
 export default function FeaturedSearchScreen(): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
     const [loading, setLoading] = useState<boolean>(true);
     const [trendingShows, setTrendingShows] = useState<ShowData[] | null>(null);
 
@@ -27,15 +25,15 @@ export default function FeaturedSearchScreen(): JSX.Element {
         handler();
     }, []);
     return (
-        <>
+        <div className='mt-6 flex-1 flex flex-col justify-center'>
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
 
             {loading ? (
                 <ShowCarouselPlaceholder count={4} />
             ) : (
-                <ShowCarousel data={trendingShows} profile={profile} setProfile={setProfile} />
+                <ShowCarousel data={trendingShows} />
             )}
-        </>
+        </div>
     );
 }

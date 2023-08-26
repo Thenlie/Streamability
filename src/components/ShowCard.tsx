@@ -6,6 +6,8 @@ import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
 import { useIsInWatchQueue } from '../hooks';
 
+export const SHOW_CARD_WIDTH = 360;
+
 export interface ShowCardProps {
     /**
      * Movie or TV show metadata

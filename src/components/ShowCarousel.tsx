@@ -1,12 +1,9 @@
 import Carousel from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
-import { ShowCard } from '../components';
-import { Profile } from '../types';
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '../hooks';
 import useDebounce from '../hooks/useDebounceValue';
-
-const SHOW_CARD_WIDTH = 360;
+import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 
 interface ShowCarouselProps {
     /**
@@ -18,14 +15,6 @@ interface ShowCarouselProps {
      * If `undefined` this number will be based on screen size
      */
     size?: number | undefined;
-    /**
-     * User profile if logged in, otherwise `null`
-     */
-    profile: Profile | null;
-    /**
-     * Profile setting function that accepts a `Profile` or `null`
-     */
-    setProfile: (profile: Profile | null) => void;
 }
 
 /**
@@ -33,17 +22,11 @@ interface ShowCarouselProps {
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
-function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX.Element {
+function CarouselChildren({ data }: ShowCarouselProps): JSX.Element {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowCard
-                    key={i}
-                    details={item}
-                    showType={item.media_type}
-                    profile={profile}
-                    setProfile={setProfile}
-                />
+                <ShowPoster key={i} details={item} showType={item.media_type} />
             ))}
         </div>
     );
@@ -55,53 +38,52 @@ function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({
-    data,
-    size,
-    profile,
-    setProfile,
-}: ShowCarouselProps): JSX.Element {
+export default function ShowCarousel({ data, size }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounce(windowSize, 250);
     const [carouselSteps, setCarouselSteps] = useState<number>(size || 1);
     const [carouselWidth, setCarouselWidth] = useState<string>(
-        (SHOW_CARD_WIDTH * (size || 1) + 100).toString() + 'px'
+        (SHOW_POSTER_WIDTH * (size || 1) + 100).toString() + 'px'
     );
 
     useEffect(() => {
         if (size) {
             setCarouselSteps(size);
-            setCarouselWidth((SHOW_CARD_WIDTH * size + 100).toString() + 'px');
+            setCarouselWidth((SHOW_POSTER_WIDTH * size + 100).toString() + 'px');
             return;
         }
-        if (debouncedWindowSize.width && debouncedWindowSize.width > 1700) {
+        if (debouncedWindowSize.width && debouncedWindowSize.width > 1536) {
+            setCarouselSteps(5);
+            setCarouselWidth((SHOW_POSTER_WIDTH * 5 + 190).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1350) {
             setCarouselSteps(4);
-            setCarouselWidth((SHOW_CARD_WIDTH * 4 + 100).toString() + 'px');
-        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1500) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 4 + 190).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1024) {
             setCarouselSteps(3);
-            setCarouselWidth((SHOW_CARD_WIDTH * 3 + 100).toString() + 'px');
-        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1100) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 3 + 180).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 768) {
             setCarouselSteps(2);
-            setCarouselWidth((SHOW_CARD_WIDTH * 2 + 100).toString() + 'px');
+            setCarouselWidth((SHOW_POSTER_WIDTH * 2 + 180).toString() + 'px');
         } else {
             setCarouselSteps(1);
-            setCarouselWidth((SHOW_CARD_WIDTH * 1 + 100).toString() + 'px');
+            setCarouselWidth((SHOW_POSTER_WIDTH * 1 + 100).toString() + 'px');
         }
     }, [debouncedWindowSize, size]);
 
-    const handleDataSlice = (data: ShowData[] | null) => {
-        const arr = [];
+    /**
+     * Splits an array of shows into an array of CarouselChildren
+     *
+     * @param data Show
+     * @returns {JSX.Element[]}
+     */
+    const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
+        const arr: JSX.Element[] = [];
+        if (!data) return arr;
+        const filteredArray = data.filter((show) => show.poster_path);
         if (data) {
-            for (let i = 0; i < data.length; i += carouselSteps) {
-                const chunk = data.slice(i, i + carouselSteps);
-                arr.push(
-                    <CarouselChildren
-                        key={i}
-                        data={chunk}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
-                );
+            for (let i = 0; i < filteredArray.length; i += carouselSteps) {
+                const chunk = filteredArray.slice(i, i + carouselSteps);
+                arr.push(<CarouselChildren key={i} data={chunk} />);
             }
         }
         return arr;
@@ -121,8 +103,8 @@ export default function ShowCarousel({
                     }}
                     defaultControlsConfig={{
                         pagingDotsClassName: 'hidden',
-                        nextButtonClassName: 'mr-3 rounded-sm',
-                        prevButtonClassName: 'ml-3 rounded-sm',
+                        nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
+                        prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
                     }}
                 >
                     {handleDataSlice(data)}

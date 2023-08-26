@@ -17,9 +17,9 @@ export default function ShowCarouselPlaceholder({
     count,
 }: ShowCarouselPlaceholderProps): JSX.Element {
     return (
-        <div className='m-3 flex flex-wrap justify-center'>
+        <div className='m-3 flex justify-center'>
             {[...Array(count)].map((x, i) => (
-                <div key={i}>
+                <div key={i} className='overflow-x-hidden'>
                     <ShowCardPlaceholder count={1} />
                 </div>
             ))}

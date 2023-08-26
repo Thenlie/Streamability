@@ -16,7 +16,7 @@ interface ShowCardPlaceholderProps {
  */
 export default function ShowCardPlaceholder({ count }: ShowCardPlaceholderProps): JSX.Element {
     return (
-        <div className='m-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+        <>
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='flex w-80 mx-auto my-2'>
                     <Skeleton width={175} height={270} className='mb-2' />
@@ -29,6 +29,6 @@ export default function ShowCardPlaceholder({ count }: ShowCardPlaceholderProps)
                     </div>
                 </div>
             ))}
-        </div>
+        </>
     );
 }
