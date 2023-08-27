@@ -90,12 +90,12 @@ export const deleteProfileById = async (id: string): Promise<void> => {
  */
 export const getProfileWatchQueue = async (id: string): Promise<string[] | null> => {
     try {
-        const { data, error } = await SUPABASE.from('profiles').select('watch_queue').eq('id', id);
+        const { data, error } = await SUPABASE.from('profiles').select('queue').eq('id', id);
 
         if (error) {
             LOG.error(error);
         } else if (data) {
-            return data[0].watch_queue;
+            return data[0].queue;
         }
     } catch (error) {
         LOG.error(error as string);
@@ -114,7 +114,7 @@ export const getProfileWatchQueue = async (id: string): Promise<string[] | null>
 export const addToProfileArray = async (
     profile_id: string,
     show_id: string,
-    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
+    which_col: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('add_item', {
@@ -147,7 +147,7 @@ export const addToProfileArray = async (
 export const removeFromProfileArray = async (
     profile_id: string,
     show_id: string,
-    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
+    which_col: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_item', {
@@ -178,7 +178,7 @@ export const removeFromProfileArray = async (
  */
 export const removeProfileArray = async (
     profile_id: string,
-    which_col: 'watch_queue' | 'watched_queue' | 'favorites'
+    which_col: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_all', {
