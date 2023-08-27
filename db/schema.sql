@@ -56,3 +56,32 @@ create or replace function delete_user()
 LANGUAGE SQL SECURITY DEFINER as $$
    delete from auth.users where id = auth.uid();
 $$;
+
+-- add item to which_col provided, check if show_id exists before adding
+CREATE OR REPLACE FUNCTION add_item(show_id text, profile_id uuid, which_col text)
+RETURNS SETOF profiles AS
+$$
+DECLARE
+    dynamic_query text;
+    existing_show_id text;
+BEGIN
+    IF show_id NOT LIKE 'tv-%' AND show_id NOT LIKE 'movie-%' THEN
+        RAISE EXCEPTION 'Invalid show_id prefix';
+    END IF;
+
+    EXECUTE format('SELECT unnest(%I) FROM profiles WHERE id = %L', which_col, profile_id)
+    INTO existing_show_id;
+
+    IF existing_show_id = show_id THEN
+        RAISE NOTICE 'show_id already exists in %', which_col;
+    ELSE
+        EXECUTE format('
+            UPDATE profiles
+            SET %I = array_append(%I, %L)
+            WHERE id = %L', which_col, which_col, show_id, profile_id);
+    END IF;
+
+    RETURN QUERY SELECT * FROM profiles WHERE id = profile_id;
+END;
+$$
+LANGUAGE plpgsql;
