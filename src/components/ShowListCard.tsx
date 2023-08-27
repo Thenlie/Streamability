@@ -42,7 +42,7 @@ export default function ShowListCard({
 
     /**
      * Handle card being added to or removed from
-     * a users watch queue
+     * a users queue, watched, or favorites
      *
      * @param isPush | true if adding, false if removing
      * @param show_id | movie db id being updated
@@ -126,8 +126,8 @@ export default function ShowListCard({
                         <Typography variant='body2' align='left' paddingLeft={1}>
                             {details.vote_average && details.vote_count
                                 ? details.vote_count +
-                                ' ' +
-                                pluralizeString(details.vote_count, 'rating')
+                                  ' ' +
+                                  pluralizeString(details.vote_count, 'rating')
                                 : 'No Ratings available'}
                         </Typography>
                     </div>

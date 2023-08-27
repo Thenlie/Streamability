@@ -5,7 +5,7 @@ export const PROFILE = {
     username: 'TestUser',
     email: 'example@no.mail',
     avatar_url: null,
-    queue: ['1726'],
+    queue: ['movie-1726'],
     adult: true,
     country: 'US',
     updated_at: '2023-08-09T03:17:57.310334+00:00',

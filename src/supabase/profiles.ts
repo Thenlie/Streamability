@@ -82,13 +82,13 @@ export const deleteProfileById = async (id: string): Promise<void> => {
 };
 
 /**
- * Get a users watch queue. This method returns nothing
+ * Get a users queue. This method returns nothing
  * else so it can be a bit lighter than the full profile query
  *
  * @param id | uuid users profile being queried
  * @returns {Promise<number[] | null>}
  */
-export const getProfileWatchQueue = async (id: string): Promise<string[] | null> => {
+export const getProfileQueue = async (id: string): Promise<string[] | null> => {
     try {
         const { data, error } = await SUPABASE.from('profiles').select('queue').eq('id', id);
 
@@ -104,7 +104,7 @@ export const getProfileWatchQueue = async (id: string): Promise<string[] | null>
 };
 
 /**
- * Add a new show to a logged in users watch_queue, watched_queue, or favorites
+ * Add a new show to a logged in users queue, watched, or favorites
  *
  * @param id | uuid of user being updated
  * @param show_id | movieDB id of show being added
@@ -137,7 +137,7 @@ export const addToProfileArray = async (
 };
 
 /**
- * Remove a single show from a users watch_queue, watched_queue, or favorites
+ * Remove a single show from a users queue, watched, or favorites
  *
  * @param id | uuid of user being updated
  * @param show_id | movieDB id of show being removed
@@ -170,7 +170,7 @@ export const removeFromProfileArray = async (
 };
 
 /**
- * Removes all shows from a users watch queue, watched_queue, or favorites
+ * Removes all shows from a users queue, watched, or favorites
  *
  * @param id | uuid of user being updated
  * @param which_col | profiles column to delete
@@ -189,12 +189,12 @@ export const removeProfileArray = async (
             .single();
 
         if (error) {
-            if (import.meta.env.DEV) console.error(error);
+            if (import.meta.env.DEV) LOG.error(error);
         } else if (data) {
             return data as Profile;
         }
     } catch (error) {
-        if (import.meta.env.DEV) console.error(error);
+        if (import.meta.env.DEV) LOG.error(error as string);
     }
     return null;
 };

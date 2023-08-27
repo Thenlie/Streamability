@@ -85,3 +85,53 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+-- remove item from which_col provided
+CREATE OR REPLACE FUNCTION remove_item(show_id text, profile_id uuid, which_col text) RETURNS SETOF profiles AS
+$$
+DECLARE
+    updated_profile profiles;
+BEGIN
+    EXECUTE format('
+        UPDATE profiles
+        SET %I = array_remove(%I, %L)
+        WHERE id = %L
+        RETURNING *',
+        which_col, which_col, show_id, profile_id)
+    INTO updated_profile;
+    
+    RETURN NEXT updated_profile;
+END;
+$$
+LANGUAGE plpgsql;
+
+-- remove entire which_col provided
+CREATE OR REPLACE FUNCTION remove_all(profile_id uuid, which_col text) RETURNS SETOF profiles AS
+$$
+DECLARE
+  updated_profile profiles;
+BEGIN
+  EXECUTE format('
+    UPDATE profiles 
+    SET %I = ARRAY[]::text[]
+    WHERE id = %L
+    RETURNING *', 
+    which_col, profile_id)
+  INTO updated_profile;
+
+  RETURN NEXT updated_profile;
+END;
+$$
+language plpgsql;
+
+-- Set up Storage!
+-- insert into storage.buckets (id, name)
+--   values ('avatars', 'avatars');
+
+-- Set up access controls for storage.
+-- See https://supabase.com/docs/guides/storage#policy-examples for more details.
+-- create policy "Avatar images are publicly accessible." on storage.objects
+--   for select using (bucket_id = 'avatars');
+
+-- create policy "Anyone can upload an avatar." on storage.objects
+--   for insert with check (bucket_id = 'avatars');
