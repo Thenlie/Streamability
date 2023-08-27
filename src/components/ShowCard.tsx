@@ -45,7 +45,7 @@ export default function ShowCard({
 
     /**
      * Handle card being added to or removed from
-     * a users watch queue
+     * a users queue, watched, or favorites
      *
      * @param isPush | true if adding, false if removing
      * @param show_id | movie db id being updated

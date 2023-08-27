@@ -3,7 +3,7 @@ import { useSessionContext, useProfileContext } from '../hooks';
 import {
     deleteProfileById,
     updateProfileUsername,
-    getProfileWatchQueue,
+    getProfileQueue,
     setProfileAdultFlag,
     setProfileCountry,
     removeProfileArray,
@@ -29,8 +29,7 @@ export default function DashboardScreen(): JSX.Element {
     const [username, setUsername] = useState('');
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
-    const [watchQueue, setWatchQueue] = useState<ShowData[] | null>(null);
-    const [queueLoading, setQueueLoading] = useState<boolean>(false);
+    const [queue, setQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
 
     if (!session) {
@@ -40,7 +39,7 @@ export default function DashboardScreen(): JSX.Element {
     useEffect(() => {
         const handler = async () => {
             if (!session) return;
-            const queue = await getProfileWatchQueue(session.user.id);
+            const queue = await getProfileQueue(session.user.id);
             if (!queue) return;
             const arr = [];
             for (let i = 0; i < queue.length; i++) {
@@ -52,7 +51,7 @@ export default function DashboardScreen(): JSX.Element {
                     arr.push(movie);
                 }
             }
-            setWatchQueue(arr);
+            setQueue(arr);
             if (session.user.adult) setIsAdult(session.user.adult);
             LOG.debug(String(queue));
         };
@@ -98,7 +97,7 @@ export default function DashboardScreen(): JSX.Element {
     const clearQueue = async () => {
         if (session) {
             await removeProfileArray(session.user.id, 'queue');
-            setWatchQueue(null);
+            setQueue(null);
         }
     };
 
@@ -185,7 +184,7 @@ export default function DashboardScreen(): JSX.Element {
                 >
                     Delete Profile
                 </Button>
-                {watchQueue && (
+                {queue && (
                     <Button
                         variant='contained'
                         size='large'
@@ -198,9 +197,9 @@ export default function DashboardScreen(): JSX.Element {
                     </Button>
                 )}
             </div>
-            {watchQueue && (
+            {queue && (
                 <div>
-                    <ShowCarousel data={watchQueue} />
+                    <ShowCarousel data={queue} />
                 </div>
             )}
         </section>

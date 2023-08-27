@@ -4,7 +4,7 @@
 
 https://github.com/Thenlie/Streamability/tree/1.0.0-main
 
-Streamability is a collaborative and responsive application made to display where an individual can stream their favorite TV shows and movies. When a user searches for their desired title, they'll be met with information about the title itself, what services stream the title, shows that are similar to the searched title, and a watch queue. Streamability is your one-stop-shop for planning your perfect movie night.
+Streamability is a collaborative and responsive application made to display where an individual can stream their favorite TV shows and movies. When a user searches for their desired title, they'll be met with information about the title itself, what services stream the title, shows that are similar to the searched title, and a queue. Streamability is your one-stop-shop for planning your perfect movie night.
 
 # Table of Contents
 
