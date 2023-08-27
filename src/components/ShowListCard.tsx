@@ -3,7 +3,7 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { useIsInWatchQueue } from '../hooks';
+import { useIsInQueue } from '../hooks';
 
 export interface ShowListCardProps {
     /**
@@ -38,7 +38,7 @@ export default function ShowListCard({
     profile,
     setProfile,
 }: ShowListCardProps): JSX.Element {
-    const isInWatchQueue = useIsInWatchQueue(details.id, profile);
+    const isInQueue = useIsInQueue(details.id, profile);
 
     /**
      * Handle card being added to or removed from
@@ -53,14 +53,14 @@ export default function ShowListCard({
                 const data = await addToProfileArray(
                     profile.id,
                     `${details.media_type}-${show_id}`,
-                    'watch_queue'
+                    'queue'
                 );
                 setProfile(data);
             } else if (profile) {
                 const data = await removeFromProfileArray(
                     profile.id,
                     `${details.media_type}-${show_id}`,
-                    'watch_queue'
+                    'queue'
                 );
                 setProfile(data);
             }
@@ -140,9 +140,9 @@ export default function ShowListCard({
                                 variant='contained'
                                 size='small'
                                 color='secondary'
-                                onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                                onClick={() => queueHandler(!isInQueue, details?.id)}
                             >
-                                {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                                {isInQueue ? 'Remove from queue' : 'Add to queue'}
                             </Button>
                         </CardActions>
                     )}

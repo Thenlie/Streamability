@@ -97,7 +97,7 @@ export default function DashboardScreen(): JSX.Element {
 
     const clearQueue = async () => {
         if (session) {
-            await removeProfileArray(session.user.id, 'watch_queue');
+            await removeProfileArray(session.user.id, 'queue');
             setWatchQueue(null);
         }
     };

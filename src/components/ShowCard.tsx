@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
-import { useIsInWatchQueue } from '../hooks';
+import { useIsInQueue } from '../hooks';
 
 export const SHOW_CARD_WIDTH = 360;
 
@@ -41,7 +41,7 @@ export default function ShowCard({
     profile,
     setProfile,
 }: ShowCardProps): JSX.Element {
-    const isInWatchQueue = useIsInWatchQueue(details.id, profile);
+    const isInQueue = useIsInQueue(details.id, profile);
 
     /**
      * Handle card being added to or removed from
@@ -56,14 +56,14 @@ export default function ShowCard({
                 const data = await addToProfileArray(
                     profile.id,
                     `${details.media_type}-${show_id}`,
-                    'watch_queue'
+                    'queue'
                 );
                 setProfile(data);
             } else if (profile) {
                 const data = await removeFromProfileArray(
                     profile.id,
                     `${details.media_type}-${show_id}`,
-                    'watch_queue'
+                    'queue'
                 );
                 setProfile(data);
             }
@@ -129,9 +129,9 @@ export default function ShowCard({
                                 variant='contained'
                                 size='small'
                                 color='secondary'
-                                onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                                onClick={() => queueHandler(!isInQueue, details?.id)}
                             >
-                                {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                                {isInQueue ? 'Remove from queue' : 'Add to queue'}
                             </Button>
                         </CardActions>
                     )}
