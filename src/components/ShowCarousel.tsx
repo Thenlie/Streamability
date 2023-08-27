@@ -17,10 +17,6 @@ interface ShowCarouselProps {
      * If `undefined` this number will be based on screen size
      */
     size?: number | undefined;
-    /**
-     * If component is loading data
-     */
-    isLoading: boolean;
 }
 
 /**
@@ -64,10 +60,10 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({ data, size, isLoading }: ShowCarouselProps): JSX.Element {
+export default function ShowCarousel({ data, size }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
-    const [loading, setLoading] = useState(isLoading);
+    const [loading, setLoading] = useState(true);
     const [carouselSteps, setCarouselSteps] = useState<number>(
         size || getCarouselSteps(windowSize)
     );

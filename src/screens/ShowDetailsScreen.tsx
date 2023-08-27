@@ -11,6 +11,7 @@ import {
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating } from '../components';
 import { Typography } from '@mui/material';
+import { ShowDetailsLoader } from './loaders';
 
 /**
  * Screen to show more details of a specific show
@@ -47,9 +48,14 @@ export default function ShowDetailsScreen(): JSX.Element {
         handler();
     }, [location]);
 
-    // TODO: #199 Create skeleton loader
+    if (loading) {
+        return <ShowDetailsLoader />;
+    }
+
     // TODO: #438 Handle case when no details are ever returned
-    if (!details) return <p>Loading</p>;
+    if (!details) {
+        return <p>No details found!</p>;
+    }
 
     return (
         <>
@@ -106,7 +112,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                 </div>
             </section>
             <section className='pb-6'>
-                <ShowCarousel data={recommendations} isLoading={loading} />
+                <ShowCarousel data={recommendations} />
             </section>
         </>
     );
