@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
@@ -9,9 +9,8 @@ import {
     getTvRecommendations,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, ShowCarouselLoader } from '../components';
+import { Providers, ShowCarousel, Rating } from '../components';
 import { Typography } from '@mui/material';
-import Rating from '../components/Rating';
 
 /**
  * Screen to show more details of a specific show
@@ -25,11 +24,13 @@ export default function ShowDetailsScreen(): JSX.Element {
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
+    const [loading, setLoading] = useState(true);
     const id = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
 
     useEffect(() => {
         const handler = async () => {
+            setLoading(true);
             if (showType === 'movie') {
                 const movieDetails = await getMovieDetails(id);
                 setDetails(movieDetails);
@@ -41,22 +42,10 @@ export default function ShowDetailsScreen(): JSX.Element {
                 const recommendation = await getTvRecommendations(id);
                 if (recommendation) setRecommendation(recommendation);
             }
+            setLoading(false);
         };
         handler();
     }, [location]);
-
-    /**
-     * Display a carousel of recommended shows based on the main show.
-     * Show a placeholder while recommendation are loading.
-     * @todo #487 Show placeholder only when loading, not when no results.
-     */
-    const RecommendationSection = useMemo(() => {
-        return recommendations ? (
-            <ShowCarousel data={recommendations} />
-        ) : (
-            <ShowCarouselLoader count={1} />
-        );
-    }, [recommendations]);
 
     // TODO: #199 Create skeleton loader
     // TODO: #438 Handle case when no details are ever returned
@@ -116,7 +105,9 @@ export default function ShowDetailsScreen(): JSX.Element {
                     </div>
                 </div>
             </section>
-            <section className='pb-6'>{RecommendationSection}</section>
+            <section className='pb-6'>
+                <ShowCarousel data={recommendations} isLoading={loading} />
+            </section>
         </>
     );
 }

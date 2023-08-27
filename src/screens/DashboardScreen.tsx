@@ -11,7 +11,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
 import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
 import { ShowData } from '../types';
-import { ShowCarousel, ShowCarouselLoader } from '../components';
+import { ShowCarousel } from '../components';
 import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
 
@@ -25,6 +25,7 @@ const LOG = new Logger('DashboardScreen');
 export default function DashboardScreen(): JSX.Element {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
+    const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
@@ -37,24 +38,24 @@ export default function DashboardScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
-            if (session) {
-                const queue = await getProfileWatchQueue(session.user.id);
-                if (queue) {
-                    const arr = [];
-                    for (let i = 0; i < queue.length; i++) {
-                        if (queue[i].includes('tv-')) {
-                            const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
-                            arr.push(tvShow);
-                        } else {
-                            const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
-                            arr.push(movie);
-                        }
-                    }
-                    setWatchQueue(arr);
+            setLoading(true);
+            if (!session) return;
+            const queue = await getProfileWatchQueue(session.user.id);
+            if (!queue) return;
+            const arr = [];
+            for (let i = 0; i < queue.length; i++) {
+                if (queue[i].includes('tv-')) {
+                    const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
+                    arr.push(tvShow);
+                } else {
+                    const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
+                    arr.push(movie);
                 }
-                if (session.user.adult) setIsAdult(session.user.adult);
-                LOG.debug(String(queue));
             }
+            setWatchQueue(arr);
+            if (session.user.adult) setIsAdult(session.user.adult);
+            LOG.debug(String(queue));
+            setLoading(false);
         };
         handler();
     }, [session]);
@@ -179,9 +180,11 @@ export default function DashboardScreen(): JSX.Element {
                     Delete Profile
                 </Button>
             </div>
-            <div>
-                {watchQueue ? <ShowCarousel data={watchQueue} /> : <ShowCarouselLoader count={5} />}
-            </div>
+            {watchQueue && (
+                <div>
+                    <ShowCarousel data={watchQueue} isLoading={loading} />
+                </div>
+            )}
         </section>
     );
 }
