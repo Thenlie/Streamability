@@ -112,13 +112,13 @@ export const getProfileWatchQueue = async (id: string): Promise<string[] | null>
  * @returns {Promise<Profile | null>}
  */
 export const addToProfileArray = async (
-    id: string,
+    profile_id: string,
     show_id: string,
     which_col: 'watch_queue' | 'watched_queue' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('add_item', {
-            id,
+            profile_id,
             show_id,
             which_col,
         })
@@ -145,13 +145,13 @@ export const addToProfileArray = async (
  * @returns {Promise<Profile | null>}
  */
 export const removeFromProfileArray = async (
-    id: string,
+    profile_id: string,
     show_id: string,
     which_col: 'watch_queue' | 'watched_queue' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_item', {
-            id,
+            profile_id,
             show_id,
             which_col,
         })
@@ -177,12 +177,12 @@ export const removeFromProfileArray = async (
  * @returns {Promise<Profile | null>}
  */
 export const removeProfileArray = async (
-    id: string,
+    profile_id: string,
     which_col: 'watch_queue' | 'watched_queue' | 'favorites'
 ): Promise<Profile | null> => {
     try {
-        const { data, error } = await SUPABASE.rpc('delete_all', {
-            id: id,
+        const { data, error } = await SUPABASE.rpc('remove_all', {
+            profile_id,
             which_col,
         })
             .select()
