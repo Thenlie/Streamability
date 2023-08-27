@@ -3,7 +3,7 @@ import { ShowCarouselLoader } from '../../components';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-    title: 'Components/Show Carousel Loader',
+    title: 'Loaders/Show Carousel',
     component: ShowCarouselLoader,
     tags: ['autodocs'],
     parameters: {

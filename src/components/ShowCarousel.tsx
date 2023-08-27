@@ -1,11 +1,10 @@
 import Carousel from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
 import { useEffect, useState } from 'react';
-import { useWindowSize } from '../hooks';
-import useDebounce from '../hooks/useDebounceValue';
+import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWIndowSize';
-import { ShowCarouselLoader } from './loaders';
+import { ShowPosterLoader } from './loaders';
 import { Typography } from '@mui/material';
 
 interface ShowCarouselProps {
@@ -67,7 +66,7 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
  */
 export default function ShowCarousel({ data, size, isLoading }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
-    const debouncedWindowSize = useDebounce(windowSize, 250);
+    const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [loading, setLoading] = useState(isLoading);
     const [carouselSteps, setCarouselSteps] = useState<number>(
         size || getCarouselSteps(windowSize)
@@ -125,8 +124,8 @@ export default function ShowCarousel({ data, size, isLoading }: ShowCarouselProp
     if (loading) {
         return (
             <section className='pt-12'>
-                <div className={`w-[${carouselWidth}]`}>
-                    <ShowCarouselLoader count={getCarouselSteps(windowSize)} />
+                <div className={`w-[${carouselWidth}] flex justify-center`}>
+                    <ShowPosterLoader count={getCarouselSteps(windowSize)} />
                 </div>
             </section>
         );

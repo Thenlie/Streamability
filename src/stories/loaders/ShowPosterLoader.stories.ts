@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ShowListCardLoader } from '../../components';
+import { ShowPosterLoader } from '../../components';
 
 const meta = {
-    title: 'Components/Show List Card Loader',
-    component: ShowListCardLoader,
+    title: 'Loaders/Show Poster',
+    component: ShowPosterLoader,
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
     },
-} satisfies Meta<typeof ShowListCardLoader>;
+} satisfies Meta<typeof ShowPosterLoader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
