@@ -25,7 +25,6 @@ const LOG = new Logger('DashboardScreen');
 export default function DashboardScreen(): JSX.Element {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
@@ -38,7 +37,6 @@ export default function DashboardScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
-            setLoading(true);
             if (!session) return;
             const queue = await getProfileWatchQueue(session.user.id);
             if (!queue) return;
@@ -55,7 +53,6 @@ export default function DashboardScreen(): JSX.Element {
             setWatchQueue(arr);
             if (session.user.adult) setIsAdult(session.user.adult);
             LOG.debug(String(queue));
-            setLoading(false);
         };
         handler();
     }, [session]);
@@ -182,7 +179,7 @@ export default function DashboardScreen(): JSX.Element {
             </div>
             {watchQueue && (
                 <div>
-                    <ShowCarousel data={watchQueue} isLoading={loading} />
+                    <ShowCarousel data={watchQueue} />
                 </div>
             )}
         </section>

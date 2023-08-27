@@ -10,18 +10,15 @@ import { getMovieTrending, getTvTrending } from '../helpers';
  * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
  */
 export default function FeaturedSearchScreen(): JSX.Element {
-    const [loading, setLoading] = useState<boolean>(true);
     const [trendingShows, setTrendingShows] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const handler = async () => {
-            setLoading(true);
             const movieData: ShowData[] | null = await getMovieTrending();
             const tvData: ShowData[] | null = await getTvTrending();
             if (movieData && tvData) {
                 setTrendingShows([...movieData, ...tvData]);
             }
-            setLoading(false);
         };
         handler();
     }, []);
@@ -30,7 +27,7 @@ export default function FeaturedSearchScreen(): JSX.Element {
         <div className='mt-6 flex-1 flex flex-col justify-center'>
             <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
             <SearchInput />
-            <ShowCarousel data={trendingShows} isLoading={loading} />
+            <ShowCarousel data={trendingShows} />
         </div>
     );
 }
