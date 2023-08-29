@@ -29,6 +29,8 @@ export default function ShowDetailsScreen(): JSX.Element {
     const id = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
 
+    const fallbackText = 'Sorry, we could not find any recommendations based on this title.';
+
     useEffect(() => {
         const handler = async () => {
             setLoading(true);
@@ -112,7 +114,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                 </div>
             </section>
             <section className='pb-6'>
-                <ShowCarousel data={recommendations} />
+                <ShowCarousel data={recommendations} fallbackText={fallbackText} />
             </section>
         </>
     );
