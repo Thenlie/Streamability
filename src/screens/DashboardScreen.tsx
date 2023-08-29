@@ -32,6 +32,8 @@ export default function DashboardScreen(): JSX.Element {
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
 
+    const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
+
     if (!session) {
         return <Navigate to={'/auth/login'} />;
     }
@@ -197,11 +199,9 @@ export default function DashboardScreen(): JSX.Element {
                     </Button>
                 )}
             </div>
-            {queue && (
-                <div>
-                    <ShowCarousel data={queue} />
-                </div>
-            )}
+            <div>
+                <ShowCarousel data={queue} fallbackText={fallbackText} />
+            </div>
         </section>
     );
 }

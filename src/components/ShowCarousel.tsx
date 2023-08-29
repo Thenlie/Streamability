@@ -17,6 +17,11 @@ interface ShowCarouselProps {
      * If `undefined` this number will be based on screen size
      */
     size?: number | undefined;
+    /**
+     * Text to be shown if there is no data to display
+     * in the carousel
+     */
+    fallbackText?: string;
 }
 
 /**
@@ -60,7 +65,7 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({ data, size }: ShowCarouselProps): JSX.Element {
+export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [loading, setLoading] = useState(true);
@@ -127,12 +132,33 @@ export default function ShowCarousel({ data, size }: ShowCarouselProps): JSX.Ele
         );
     }
 
-    // TODO: #487 Handle no data state
-    if (!data) {
+    if (!data || data.length === 0) {
         return (
             <section className='pt-12'>
                 <div className={`w-[${carouselWidth}]`}>
-                    <Typography variant='body1'>Sorry, no data!</Typography>
+                    <Carousel
+                        className='bg-primary'
+                        style={{
+                            width: carouselWidth,
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                            borderRadius: '5px',
+                        }}
+                        defaultControlsConfig={{
+                            pagingDotsClassName: 'hidden',
+                            nextButtonClassName: 'hidden',
+                            prevButtonClassName: 'hidden',
+                        }}
+                    >
+                        <Typography
+                            variant='body1'
+                            className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
+                        >
+                            {fallbackText
+                                ? fallbackText
+                                : 'Sorry, no shows to display at this time.'}
+                        </Typography>
+                    </Carousel>
                 </div>
             </section>
         );
