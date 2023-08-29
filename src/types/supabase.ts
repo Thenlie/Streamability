@@ -40,6 +40,8 @@ export interface Profile {
     email: string;
     avatar_url: string | null;
     queue: string[];
+    watched: string[];
+    favorites: string[];
     adult: boolean;
     country: string;
     updated_at: string;
