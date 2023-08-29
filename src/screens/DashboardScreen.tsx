@@ -35,6 +35,160 @@ import Logger from '../logger';
 const LOG = new Logger('DashboardScreen');
 
 /**
+ * A modal that allows the user to edit details
+ * about their profile including the username,
+ * country of origin and adult flag status.
+ *
+ * This will render to the screen as a button that
+ * will open the modal when clicked.
+ * @returns {JSX.Element}
+ */
+function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
+    const { session } = useSessionContext();
+    const { profile, setProfile } = useProfileContext();
+    const [open, setOpen] = useState(false);
+    const [username, setUsername] = useState('');
+    const [country, setCountry] = useState('');
+    const [isAdult, setIsAdult] = useState<boolean>(adult || false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const changeUsername = async () => {
+        if (session && username.length > 2) {
+            const data = await updateProfileUsername(session.user.id, username);
+            setProfile(data);
+        }
+    };
+
+    const toggleAdultFlag = async () => {
+        if (session && isAdult) {
+            const data = await setProfileAdultFlag(session.user.id, !isAdult);
+            setProfile(data);
+            setIsAdult(!isAdult);
+        }
+    };
+
+    const changeCountry = async () => {
+        if (session && country.length === 2) {
+            const data = await setProfileCountry(session.user.id, country);
+            setProfile(data);
+        }
+    };
+
+    const modalStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: 2,
+        width: 400,
+        boxShadow: 24,
+    };
+
+    return (
+        <>
+            <Button
+                variant='contained'
+                size='large'
+                type='button'
+                color='secondary'
+                startIcon={<Edit />}
+                sx={{ m: 0.5, width: 210 }}
+                onClick={handleOpen}
+            >
+                Edit Profile
+            </Button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+            >
+                <Box sx={modalStyle}>
+                    <div className='flex flex-col items-center bg-background p-4 rounded-md'>
+                        <FormControl sx={{ m: 0.5 }} variant='filled'>
+                            <InputLabel htmlFor='username' color='secondary' className='!text-text'>
+                                Change Username
+                            </InputLabel>
+                            <FilledInput
+                                name='username'
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                }}
+                                inputProps={{ minLength: 3 }}
+                                sx={{ m: 0.5, width: 210 }}
+                            />
+                        </FormControl>
+                        <Button
+                            variant='contained'
+                            type='button'
+                            color='secondary'
+                            startIcon={<Edit />}
+                            sx={{ m: 0.5, width: 210 }}
+                            onClick={() => changeUsername()}
+                        >
+                            Update Profile
+                        </Button>
+                        <FormControl sx={{ m: 0.5 }} variant='filled'>
+                            <InputLabel htmlFor='country' color='secondary' className='!text-text'>
+                                Change Country
+                            </InputLabel>
+                            <FilledInput
+                                name='country'
+                                onChange={(e) => {
+                                    setCountry(e.target.value);
+                                }}
+                                inputProps={{ maxLength: 2, minLength: 2 }}
+                                sx={{ m: 0.5, width: 210 }}
+                            />
+                        </FormControl>
+                        <Button
+                            variant='contained'
+                            type='button'
+                            color='secondary'
+                            sx={{ m: 0.5, width: 210 }}
+                            onClick={() => changeCountry()}
+                            startIcon={<Language />}
+                        >
+                            Change Country
+                        </Button>
+                        <Typography>
+                            Adult content is: {profile?.adult ? 'visible' : 'not visible'}
+                        </Typography>
+                        <Button
+                            variant='contained'
+                            type='button'
+                            color='secondary'
+                            startIcon={<NoAdultContent />}
+                            sx={{ m: 0.5 }}
+                            onClick={() => toggleAdultFlag()}
+                        >
+                            Toggle Adult Flag
+                        </Button>
+                        <Button
+                            variant='contained'
+                            type='button'
+                            color='error'
+                            startIcon={<Close />}
+                            sx={{ m: 0.5 }}
+                            onClick={handleClose}
+                        >
+                            Close
+                        </Button>
+                    </div>
+                </Box>
+            </Modal>
+        </>
+    );
+}
+
+/**
  * User must be logged in to access endpoint
  *
  * @returns {JSX.Element} | A single users profile page
@@ -42,9 +196,6 @@ const LOG = new Logger('DashboardScreen');
 export default function DashboardScreen(): JSX.Element {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const [open, setOpen] = useState(false);
-    const [username, setUsername] = useState('');
-    const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>(null);
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
@@ -78,46 +229,6 @@ export default function DashboardScreen(): JSX.Element {
         };
         handler();
     }, [session]);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: 2,
-        width: 400,
-        boxShadow: 24,
-    };
-
-    const changeUsername = async () => {
-        if (session && username.length > 2) {
-            const data = await updateProfileUsername(session.user.id, username);
-            setProfile(data);
-        }
-    };
-
-    const toggleAdultFlag = async () => {
-        if (session && isAdult) {
-            const data = await setProfileAdultFlag(session.user.id, !isAdult);
-            setProfile(data);
-            setIsAdult(!isAdult);
-        }
-    };
-
-    const changeCountry = async () => {
-        if (session && country.length === 2) {
-            const data = await setProfileCountry(session.user.id, country);
-            setProfile(data);
-        }
-    };
 
     /**
      * Delete profile row and auth entry.
@@ -179,105 +290,8 @@ export default function DashboardScreen(): JSX.Element {
                             {profile?.favorites?.length || 0}
                         </Typography>
                     </div>
-                    <Button
-                        variant='contained'
-                        size='large'
-                        type='button'
-                        color='secondary'
-                        startIcon={<Edit />}
-                        sx={{ m: 0.5, width: 210 }}
-                        onClick={handleOpen}
-                    >
-                        Edit Profile
-                    </Button>
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby='modal-modal-title'
-                        aria-describedby='modal-modal-description'
-                    >
-                        <Box sx={modalStyle}>
-                            <div className='flex flex-col items-center bg-background p-4 rounded-md'>
-                                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                                    <InputLabel
-                                        htmlFor='username'
-                                        color='secondary'
-                                        className='!text-text'
-                                    >
-                                        Change Username
-                                    </InputLabel>
-                                    <FilledInput
-                                        name='username'
-                                        onChange={(e) => {
-                                            setUsername(e.target.value);
-                                        }}
-                                        inputProps={{ minLength: 3 }}
-                                        sx={{ m: 0.5, width: 210 }}
-                                    />
-                                </FormControl>
-                                <Button
-                                    variant='contained'
-                                    type='button'
-                                    color='secondary'
-                                    startIcon={<Edit />}
-                                    sx={{ m: 0.5, width: 210 }}
-                                    onClick={() => changeUsername()}
-                                >
-                                    Update Profile
-                                </Button>
-                                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                                    <InputLabel
-                                        htmlFor='country'
-                                        color='secondary'
-                                        className='!text-text'
-                                    >
-                                        Change Country
-                                    </InputLabel>
-                                    <FilledInput
-                                        name='country'
-                                        onChange={(e) => {
-                                            setCountry(e.target.value);
-                                        }}
-                                        inputProps={{ maxLength: 2, minLength: 2 }}
-                                        sx={{ m: 0.5, width: 210 }}
-                                    />
-                                </FormControl>
-                                <Button
-                                    variant='contained'
-                                    type='button'
-                                    color='secondary'
-                                    sx={{ m: 0.5, width: 210 }}
-                                    onClick={() => changeCountry()}
-                                    startIcon={<Language />}
-                                >
-                                    Change Country
-                                </Button>
-                                <Typography>
-                                    Adult content is: {profile?.adult ? 'visible' : 'not visible'}
-                                </Typography>
-                                <Button
-                                    variant='contained'
-                                    type='button'
-                                    color='secondary'
-                                    startIcon={<NoAdultContent />}
-                                    sx={{ m: 0.5 }}
-                                    onClick={() => toggleAdultFlag()}
-                                >
-                                    Toggle Adult Flag
-                                </Button>
-                                <Button
-                                    variant='contained'
-                                    type='button'
-                                    color='error'
-                                    startIcon={<Close />}
-                                    sx={{ m: 0.5 }}
-                                    onClick={() => toggleAdultFlag()}
-                                >
-                                    Close
-                                </Button>
-                            </div>
-                        </Box>
-                    </Modal>
+
+                    <EditProfileModal adult={isAdult} />
 
                     <Button
                         variant='contained'
