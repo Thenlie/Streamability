@@ -19,6 +19,7 @@ import {
     Typography,
 } from '@mui/material';
 import {
+    ArrowBackIosNew,
     Close,
     Delete,
     Edit,
@@ -58,6 +59,10 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
     };
 
     const handleClose = () => {
+        setUsername('');
+        setUsernameError(false);
+        setCountry('');
+        setCountryError(false);
         setOpen(false);
     };
 
@@ -65,6 +70,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
         if (session && username.length > 2) {
             const data = await updateProfileUsername(session.user.id, username);
             setProfile(data);
+            setUsername('');
         } else {
             setUsernameError(true);
         }
@@ -82,19 +88,10 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
         if (session && country.length === 2) {
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
+            setCountry('');
         } else {
             setCountryError(true);
         }
-    };
-
-    const modalStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: 2,
-        width: 400,
-        boxShadow: 24,
     };
 
     return (
@@ -116,7 +113,17 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                 aria-labelledby='modal-modal-title'
                 aria-describedby='modal-modal-description'
             >
-                <Box sx={modalStyle}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        borderRadius: 2,
+                        width: 400,
+                        boxShadow: 24,
+                    }}
+                >
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
                         <Typography variant='h5'>Edit Profile</Typography>
                         <FormControl sx={{ m: 0.5 }} variant='filled'>
@@ -125,6 +132,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                             </InputLabel>
                             <FilledInput
                                 name='username'
+                                value={username}
                                 onChange={(e) => {
                                     setUsername(e.target.value);
                                 }}
@@ -151,6 +159,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                             </InputLabel>
                             <FilledInput
                                 name='country'
+                                value={country}
                                 onChange={(e) => {
                                     setCountry(e.target.value);
                                 }}
@@ -249,13 +258,87 @@ export default function DashboardScreen(): JSX.Element {
      * the util does not have access to the hook
      */
     const deleteProfile = async () => {
-        // TODO: Create confirmation modal
         if (session) {
             await deleteProfileById(session.user.id);
             setProfile(null);
             setSession(null);
             navigate('/');
         }
+    };
+
+    const ConfirmDeleteModal = () => {
+        const [open, setOpen] = useState(false);
+
+        const handleOpen = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };
+
+        return (
+            <>
+                <Button
+                    variant='contained'
+                    size='large'
+                    color='error'
+                    type='button'
+                    sx={{ m: 0.5, width: 210 }}
+                    startIcon={<WarningSharp />}
+                    onClick={handleOpen}
+                >
+                    Delete Profile
+                </Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='modal-modal-title'
+                    aria-describedby='modal-modal-description'
+                >
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            borderRadius: 2,
+                            width: 400,
+                            boxShadow: 24,
+                        }}
+                    >
+                        <div className='flex flex-col items-center bg-background p-4 rounded-md'>
+                            <Typography variant='h6' align='center'>
+                                Are you sure you want to delete your profile?
+                            </Typography>
+                            <Typography mb={2}>⚠️ Waring! This action cannot be undone.</Typography>
+                            <Button
+                                variant='contained'
+                                size='large'
+                                type='button'
+                                color='error'
+                                startIcon={<Delete />}
+                                sx={{ m: 0.5, width: 210 }}
+                                onClick={deleteProfile}
+                            >
+                                Yes
+                            </Button>
+                            <Button
+                                variant='contained'
+                                size='large'
+                                type='button'
+                                color='secondary'
+                                startIcon={<ArrowBackIosNew />}
+                                sx={{ m: 0.5, width: 210 }}
+                                onClick={handleClose}
+                            >
+                                No
+                            </Button>
+                        </div>
+                    </Box>
+                </Modal>
+            </>
+        );
     };
 
     const clearQueue = async () => {
@@ -324,17 +407,7 @@ export default function DashboardScreen(): JSX.Element {
                     >
                         Logout
                     </Button>
-                    <Button
-                        variant='contained'
-                        size='large'
-                        color='error'
-                        type='button'
-                        sx={{ m: 0.5, width: 210 }}
-                        startIcon={<WarningSharp />}
-                        onClick={() => deleteProfile()}
-                    >
-                        Delete Profile
-                    </Button>
+                    <ConfirmDeleteModal />
                     {queue && (
                         <Button
                             variant='contained'
