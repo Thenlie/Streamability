@@ -48,7 +48,9 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
     const { profile, setProfile } = useProfileContext();
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
+    const [usernameError, setUsernameError] = useState(false);
     const [country, setCountry] = useState('');
+    const [countryError, setCountryError] = useState(false);
     const [isAdult, setIsAdult] = useState<boolean>(adult || false);
 
     const handleOpen = () => {
@@ -63,11 +65,13 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
         if (session && username.length > 2) {
             const data = await updateProfileUsername(session.user.id, username);
             setProfile(data);
+        } else {
+            setUsernameError(true);
         }
     };
 
     const toggleAdultFlag = async () => {
-        if (session && isAdult) {
+        if (session) {
             const data = await setProfileAdultFlag(session.user.id, !isAdult);
             setProfile(data);
             setIsAdult(!isAdult);
@@ -78,6 +82,8 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
         if (session && country.length === 2) {
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
+        } else {
+            setCountryError(true);
         }
     };
 
@@ -112,6 +118,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
             >
                 <Box sx={modalStyle}>
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
+                        <Typography variant='h5'>Edit Profile</Typography>
                         <FormControl sx={{ m: 0.5 }} variant='filled'>
                             <InputLabel htmlFor='username' color='secondary' className='!text-text'>
                                 Change Username
@@ -121,19 +128,22 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                                 onChange={(e) => {
                                     setUsername(e.target.value);
                                 }}
+                                error={usernameError}
+                                onFocus={() => setUsernameError(false)}
                                 inputProps={{ minLength: 3 }}
                                 sx={{ m: 0.5, width: 210 }}
                             />
                         </FormControl>
+                        <Typography>Current Username: {profile?.username}</Typography>
                         <Button
                             variant='contained'
                             type='button'
                             color='secondary'
                             startIcon={<Edit />}
-                            sx={{ m: 0.5, width: 210 }}
+                            sx={{ m: 0.5, width: 210, mb: 2 }}
                             onClick={() => changeUsername()}
                         >
-                            Update Profile
+                            Change Username
                         </Button>
                         <FormControl sx={{ m: 0.5 }} variant='filled'>
                             <InputLabel htmlFor='country' color='secondary' className='!text-text'>
@@ -144,29 +154,32 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                                 onChange={(e) => {
                                     setCountry(e.target.value);
                                 }}
+                                error={countryError}
+                                onFocus={() => setCountryError(false)}
                                 inputProps={{ maxLength: 2, minLength: 2 }}
                                 sx={{ m: 0.5, width: 210 }}
                             />
                         </FormControl>
+                        <Typography>Current Country: {profile?.country}</Typography>
                         <Button
                             variant='contained'
                             type='button'
                             color='secondary'
-                            sx={{ m: 0.5, width: 210 }}
+                            sx={{ m: 0.5, width: 210, mb: 2 }}
                             onClick={() => changeCountry()}
                             startIcon={<Language />}
                         >
                             Change Country
                         </Button>
                         <Typography>
-                            Adult content is: {profile?.adult ? 'visible' : 'not visible'}
+                            Adult Content: {profile?.adult ? 'visible' : 'not visible'}
                         </Typography>
                         <Button
                             variant='contained'
                             type='button'
                             color='secondary'
                             startIcon={<NoAdultContent />}
-                            sx={{ m: 0.5 }}
+                            sx={{ m: 0.5, mb: 2 }}
                             onClick={() => toggleAdultFlag()}
                         >
                             Toggle Adult Flag
@@ -236,6 +249,7 @@ export default function DashboardScreen(): JSX.Element {
      * the util does not have access to the hook
      */
     const deleteProfile = async () => {
+        // TODO: Create confirmation modal
         if (session) {
             await deleteProfileById(session.user.id);
             setProfile(null);
@@ -270,6 +284,12 @@ export default function DashboardScreen(): JSX.Element {
                                 Username:{' '}
                             </Typography>
                             {profile?.username}
+                        </Typography>
+                        <Typography align='left'>
+                            <Typography fontWeight={'bold'} display={'inline'}>
+                                Country of Origin:{' '}
+                            </Typography>
+                            {profile?.country}
                         </Typography>
                         <Typography align='left'>
                             <Typography fontWeight={'bold'} display={'inline'}>
