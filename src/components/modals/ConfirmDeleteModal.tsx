@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { Delete, ArrowBackIosNew, WarningSharp } from '@mui/icons-material';
 
@@ -17,9 +17,7 @@ interface ConfirmDeleteModalProps {
  * will open the modal when clicked.
  * @returns {JSX.Element}
  */
-export default function ConfirmDeleteModal({
-    deleteProfile,
-}: ConfirmDeleteModalProps): JSX.Element {
+const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ deleteProfile }): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -95,4 +93,6 @@ export default function ConfirmDeleteModal({
             </Modal>
         </>
     );
-}
+};
+
+export default ConfirmDeleteModal;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
@@ -21,7 +21,7 @@ const LOG = new Logger('SignupForm');
  *
  * @returns {JSX.Element}
  */
-export default function SignUpForm(): JSX.Element {
+const SignUpForm: React.FC = (): JSX.Element => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -261,4 +261,6 @@ export default function SignUpForm(): JSX.Element {
             </form>
         </div>
     );
-}
+};
+
+export default SignUpForm;

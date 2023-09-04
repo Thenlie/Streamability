@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ErrorMessageProps {
     /**
      * Message to be displayed with the error
@@ -13,10 +15,12 @@ interface ErrorMessageProps {
  * @param props | The error message to be displayed
  * @returns {JSX.Element}
  */
-export default function ErrorMessage(props: ErrorMessageProps): JSX.Element {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }): JSX.Element => {
     return (
         <div>
-            <p data-testid='error-message-message'>Error! {props.message}</p>
+            <p data-testid='error-message-message'>Error! {message}</p>
         </div>
     );
-}
+};
+
+export default ErrorMessage;

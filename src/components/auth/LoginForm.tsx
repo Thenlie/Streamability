@@ -21,7 +21,7 @@ const LOG = new Logger('LoginForm');
  *
  * @returns {JSX.Element}
  */
-export default function LoginForm(): JSX.Element {
+const LoginForm: React.FC = (): JSX.Element => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -146,4 +146,6 @@ export default function LoginForm(): JSX.Element {
             </form>
         </div>
     );
-}
+};
+
+export default LoginForm;

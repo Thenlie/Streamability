@@ -1,6 +1,6 @@
 import Carousel from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWIndowSize';
@@ -49,7 +49,7 @@ export function getCarouselSteps(windowSize: WindowSize): number {
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
-function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
+const CarouselChildren: React.FC<{ data: ShowData[] }> = ({ data }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
@@ -57,7 +57,7 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
             ))}
         </div>
     );
-}
+};
 
 /**
  * Show carousels will be used throughout the site to display collections of shows
@@ -65,7 +65,7 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselProps): JSX.Element {
+const ShowCarousel: React.FC<ShowCarouselProps> = ({ data, size, fallbackText }): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [loading, setLoading] = useState(true);
@@ -187,4 +187,6 @@ export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselP
             </div>
         </section>
     );
-}
+};
+
+export default ShowCarousel;

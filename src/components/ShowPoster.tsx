@@ -1,6 +1,7 @@
 import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia } from '@mui/material';
+import React from 'react';
 
 export const SHOW_POSTER_WIDTH = 180;
 
@@ -23,7 +24,7 @@ export interface ShowPosterProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowPoster({ details, showType }: ShowPosterProps): JSX.Element {
+const ShowPoster: React.FC<ShowPosterProps> = ({ details, showType }): JSX.Element => {
     return (
         <div
             data-testid='show-card-component'
@@ -48,4 +49,6 @@ export default function ShowPoster({ details, showType }: ShowPosterProps): JSX.
             </Link>
         </div>
     );
-}
+};
+
+export default ShowPoster;
