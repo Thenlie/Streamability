@@ -3,7 +3,7 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { useIsInQueue, useProfileContext } from '../hooks';
+import { useIsInQueue } from '../hooks';
 
 export interface ShowListCardProps {
     /**
@@ -32,8 +32,12 @@ export interface ShowListCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowListCard({ details, showType }: ShowListCardProps): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
+export default function ShowListCard({
+    details,
+    showType,
+    profile,
+    setProfile,
+}: ShowListCardProps): JSX.Element {
     const isInQueue = useIsInQueue(details.id, profile);
 
     /**

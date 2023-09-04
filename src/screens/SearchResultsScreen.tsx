@@ -122,7 +122,7 @@ export default function SearchResultsScreen(): JSX.Element {
                 })}
             </div>
         );
-    }, [showDetails, viewState]);
+    }, [showDetails, viewState, profile]);
 
     if (loading) {
         return (
