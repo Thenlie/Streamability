@@ -311,7 +311,9 @@ export default function DashboardScreen(): JSX.Element {
                             <Typography variant='h6' align='center'>
                                 Are you sure you want to delete your profile?
                             </Typography>
-                            <Typography mb={2}>⚠️ Waring! This action cannot be undone.</Typography>
+                            <Typography mb={2}>
+                                ⚠️ Warning! This action cannot be undone.
+                            </Typography>
                             <Button
                                 variant='contained'
                                 size='large'
@@ -408,22 +410,21 @@ export default function DashboardScreen(): JSX.Element {
                         Logout
                     </Button>
                     <ConfirmDeleteModal />
-                    {queue && (
-                        <Button
-                            variant='contained'
-                            size='large'
-                            color='error'
-                            type='button'
-                            sx={{ m: 0.5, width: 210 }}
-                            startIcon={<Delete />}
-                            onClick={() => clearQueue()}
-                        >
-                            Clear Queue
-                        </Button>
-                    )}
                 </div>
                 <div>
                     <ShowCarousel data={queue} fallbackText={fallbackText} />
+                    <Button
+                        disabled={queue ? false : true}
+                        variant='contained'
+                        size='large'
+                        color='error'
+                        type='button'
+                        sx={{ m: 0.5, width: 210 }}
+                        startIcon={<Delete />}
+                        onClick={() => clearQueue()}
+                    >
+                        Clear Queue
+                    </Button>
                 </div>
             </section>
         </>

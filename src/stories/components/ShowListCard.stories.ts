@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ShowListCard } from '../../components';
 import { MOVIE_DATA, PROFILE } from '../constants';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { useProfileContext } from '../../hooks';
 
 const meta = {
     title: 'Components/Show List Card',
@@ -10,7 +11,7 @@ const meta = {
     parameters: {
         layout: 'centered',
     },
-    decorators: [withRouter],
+    decorators: [withRouter, useProfileContext],
 } satisfies Meta<typeof ShowListCard>;
 
 export default meta;

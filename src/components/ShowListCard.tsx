@@ -3,7 +3,7 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { useIsInQueue } from '../hooks';
+import { useIsInQueue, useProfileContext } from '../hooks';
 
 export interface ShowListCardProps {
     /**
@@ -32,12 +32,8 @@ export interface ShowListCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowListCard({
-    details,
-    showType,
-    profile,
-    setProfile,
-}: ShowListCardProps): JSX.Element {
+export default function ShowListCard({ details, showType }: ShowListCardProps): JSX.Element {
+    const { profile, setProfile } = useProfileContext();
     const isInQueue = useIsInQueue(details.id, profile);
 
     /**
@@ -89,7 +85,7 @@ export default function ShowListCard({
                     alt={`${details.title} poster`}
                 />
             </Link>
-            <div className='p-2 flex flex-col justify-between'>
+            <div className='p-2 flex flex-col justify-between flex-1'>
                 <div>
                     <Typography variant='h5' align='left' paddingLeft={1} noWrap width={500}>
                         {details.title}
