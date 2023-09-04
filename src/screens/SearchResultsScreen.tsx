@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     ShowCard,
     ShowCardProps,
@@ -36,7 +36,7 @@ export async function loader({ request }: { request: Request }): Promise<string>
  *
  * @returns {JSX.Element}
  */
-export default function SearchResultsScreen(): JSX.Element {
+const SearchResultsScreen: React.FC = (): JSX.Element => {
     const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
     const windowSize = useWindowSize();
@@ -161,4 +161,6 @@ export default function SearchResultsScreen(): JSX.Element {
             {SearchResultCards}
         </>
     );
-}
+};
+
+export default SearchResultsScreen;

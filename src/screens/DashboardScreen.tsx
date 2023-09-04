@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSessionContext, useProfileContext } from '../hooks';
 import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ const LOG = new Logger('DashboardScreen');
  *
  * @returns {JSX.Element} | A single users profile page
  */
-export default function DashboardScreen(): JSX.Element {
+const DashboardScreen: React.FC = (): JSX.Element => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
     const [queue, setQueue] = useState<ShowData[] | null>(null);
@@ -40,7 +40,7 @@ export default function DashboardScreen(): JSX.Element {
             if (!session) return;
             const queue = await getProfileQueue(session.user.id);
             if (!queue) return;
-            const arr = [];
+            const arr: ShowData[] = [];
             for (let i = 0; i < queue.length; i++) {
                 if (queue[i].includes('tv-')) {
                     const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
@@ -160,4 +160,6 @@ export default function DashboardScreen(): JSX.Element {
             </section>
         </>
     );
-}
+};
+
+export default DashboardScreen;

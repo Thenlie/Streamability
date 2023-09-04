@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
@@ -19,7 +19,7 @@ import { ShowDetailsLoader } from './loaders';
  *
  * @returns {JSX.Element}
  */
-export default function ShowDetailsScreen(): JSX.Element {
+const ShowDetailsScreen: React.FC = (): JSX.Element => {
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
@@ -118,4 +118,6 @@ export default function ShowDetailsScreen(): JSX.Element {
             </section>
         </>
     );
-}
+};
+
+export default ShowDetailsScreen;

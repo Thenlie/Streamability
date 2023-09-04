@@ -1,7 +1,8 @@
 import Skeleton from 'react-loading-skeleton';
 import { ProvidersLoader } from '../../components';
+import React from 'react';
 
-export default function ShowDetailsLoader(): JSX.Element {
+const ShowDetailsLoader: React.FC = (): JSX.Element => {
     return (
         <section className='m-6 flex flex-col md:flex-row'>
             <div className='rounded-md m-auto'>
@@ -25,4 +26,6 @@ export default function ShowDetailsLoader(): JSX.Element {
             </div>
         </section>
     );
-}
+};
+
+export default ShowDetailsLoader;
