@@ -1,10 +1,9 @@
-import { SUPABASE } from '../helpers/supabaseClient';
+import { SUPABASE } from '../helpers';
 import { Link } from 'react-router-dom';
 import { Session } from '../types';
 import { useState, useEffect, MouseEvent } from 'react';
 import {
     AppBar,
-    Box,
     Divider,
     IconButton,
     ListItemIcon,
@@ -112,7 +111,7 @@ export default function Navigation({ session, theme, switchTheme }: NavProps): J
                     ) : (
                         <SearchInput />
                     )}
-                    <Box sx={{ flexGrow: 0 }}>
+                    <div className='grow-0'>
                         <Tooltip title='Expand Menu'>
                             <IconButton
                                 onClick={(event) => toggleUserMenu(event, true)}
@@ -227,14 +226,14 @@ export default function Navigation({ session, theme, switchTheme }: NavProps): J
                                 </MenuItem>
                             )}
                         </Menu>
-                    </Box>
+                    </div>
                 </div>
             </Toolbar>
             {/* TODO: Add a transition when search is expanded or collapsed */}
             {expandedSearch && (
-                <Box className='flex items-center justify-center bg-primary px-8 py-3'>
+                <div className='flex items-center justify-center bg-primary px-8 py-3'>
                     <SearchInput />
-                </Box>
+                </div>
             )}
         </AppBar>
     );

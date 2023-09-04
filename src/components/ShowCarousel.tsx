@@ -1,12 +1,11 @@
 import Carousel from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
-import { ShowCard } from '../components';
-import { Profile } from '../types';
 import { useEffect, useState } from 'react';
-import { useWindowSize } from '../hooks';
-import useDebounce from '../hooks/useDebounceValue';
-
-const SHOW_CARD_WIDTH = 390;
+import { useWindowSize, useDebounceValue } from '../hooks';
+import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
+import { WindowSize } from '../hooks/useWIndowSize';
+import { ShowPosterLoader } from './loaders';
+import { Typography } from '@mui/material';
 
 interface ShowCarouselProps {
     /**
@@ -19,13 +18,30 @@ interface ShowCarouselProps {
      */
     size?: number | undefined;
     /**
-     * User profile if logged in, otherwise `null`
+     * Text to be shown if there is no data to display
+     * in the carousel
      */
-    profile: Profile | null;
-    /**
-     * Profile setting function that accepts a `Profile` or `null`
-     */
-    setProfile: (profile: Profile | null) => void;
+    fallbackText?: string;
+}
+
+/**
+ * Given a window size, return the appropriate number
+ * of cards per slide for the carousel
+ * @param windowSize | width and height of the current window
+ * @returns {number} | 1-5
+ */
+export function getCarouselSteps(windowSize: WindowSize): number {
+    if (windowSize.width && windowSize.width > 1536) {
+        return 5;
+    } else if (windowSize.width && windowSize.width > 1350) {
+        return 4;
+    } else if (windowSize.width && windowSize.width > 1024) {
+        return 3;
+    } else if (windowSize.width && windowSize.width > 768) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 /**
@@ -33,17 +49,11 @@ interface ShowCarouselProps {
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
-function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX.Element {
+function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowCard
-                    key={i}
-                    details={item}
-                    showType={item.showType}
-                    profile={profile}
-                    setProfile={setProfile}
-                />
+                <ShowPoster key={i} details={item} showType={item.media_type} />
             ))}
         </div>
     );
@@ -55,57 +65,104 @@ function CarouselChildren({ data, profile, setProfile }: ShowCarouselProps): JSX
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({
-    data,
-    size,
-    profile,
-    setProfile,
-}: ShowCarouselProps): JSX.Element {
+export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselProps): JSX.Element {
     const windowSize = useWindowSize();
-    const debouncedWindowSize = useDebounce(windowSize, 250);
-    const [carouselSteps, setCarouselSteps] = useState<number>(size || 1);
-    const [carouselWidth, setCarouselWidth] = useState<string>(
-        (SHOW_CARD_WIDTH * (size || 1) + 100).toString() + 'px'
+    const debouncedWindowSize = useDebounceValue(windowSize, 250);
+    const [loading, setLoading] = useState(true);
+    const [carouselSteps, setCarouselSteps] = useState<number>(
+        size || getCarouselSteps(windowSize)
     );
+    const [carouselWidth, setCarouselWidth] = useState<string>(
+        (SHOW_POSTER_WIDTH * (size || 1) + 100).toString() + 'px'
+    );
+
+    // Delay first render to allow windowSize to load
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
+    }, []);
 
     useEffect(() => {
         if (size) {
             setCarouselSteps(size);
-            setCarouselWidth((SHOW_CARD_WIDTH * size + 100).toString() + 'px');
+            setCarouselWidth((SHOW_POSTER_WIDTH * size + 100).toString() + 'px');
             return;
         }
-        if (debouncedWindowSize.width && debouncedWindowSize.width > 1700) {
-            setCarouselSteps(4);
-            setCarouselWidth((SHOW_CARD_WIDTH * 4 + 100).toString() + 'px');
-        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1500) {
-            setCarouselSteps(3);
-            setCarouselWidth((SHOW_CARD_WIDTH * 3 + 100).toString() + 'px');
-        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1100) {
-            setCarouselSteps(2);
-            setCarouselWidth((SHOW_CARD_WIDTH * 2 + 100).toString() + 'px');
+        if (debouncedWindowSize.width && debouncedWindowSize.width > 1536) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 5 + 190).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1350) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 4 + 190).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1024) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 3 + 180).toString() + 'px');
+        } else if (debouncedWindowSize.width && debouncedWindowSize.width > 768) {
+            setCarouselWidth((SHOW_POSTER_WIDTH * 2 + 180).toString() + 'px');
         } else {
-            setCarouselSteps(1);
-            setCarouselWidth((SHOW_CARD_WIDTH * 1 + 100).toString() + 'px');
+            setCarouselWidth((SHOW_POSTER_WIDTH * 1 + 100).toString() + 'px');
         }
+        setCarouselSteps(getCarouselSteps(debouncedWindowSize));
     }, [debouncedWindowSize, size]);
 
-    const handleDataSlice = (data: ShowData[] | null) => {
-        const arr = [];
+    /**
+     * Splits an array of shows into an array of CarouselChildren
+     *
+     * @param data Show
+     * @returns {JSX.Element[]}
+     */
+    const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
+        const arr: JSX.Element[] = [];
+        if (!data) return arr;
+        const filteredArray = data.filter((show) => show.poster_path);
         if (data) {
-            for (let i = 0; i < data.length; i += carouselSteps) {
-                const chunk = data.slice(i, i + carouselSteps);
-                arr.push(
-                    <CarouselChildren
-                        key={i}
-                        data={chunk}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
-                );
+            for (let i = 0; i < filteredArray.length; i += carouselSteps) {
+                const chunk = filteredArray.slice(i, i + carouselSteps);
+                arr.push(<CarouselChildren key={i} data={chunk} />);
             }
         }
         return arr;
     };
+
+    if (loading) {
+        return (
+            <section className='pt-12'>
+                <div className={`w-[${carouselWidth}] flex justify-center`}>
+                    <ShowPosterLoader count={getCarouselSteps(windowSize)} />
+                </div>
+            </section>
+        );
+    }
+
+    if (!data || data.length === 0) {
+        return (
+            <section className='pt-12'>
+                <div className={`w-[${carouselWidth}]`}>
+                    <Carousel
+                        className='bg-primary'
+                        style={{
+                            width: carouselWidth,
+                            paddingTop: '10px',
+                            paddingBottom: '10px',
+                            borderRadius: '5px',
+                        }}
+                        defaultControlsConfig={{
+                            pagingDotsClassName: 'hidden',
+                            nextButtonClassName: 'hidden',
+                            prevButtonClassName: 'hidden',
+                        }}
+                    >
+                        <Typography
+                            variant='body1'
+                            className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
+                        >
+                            {fallbackText
+                                ? fallbackText
+                                : 'Sorry, no shows to display at this time.'}
+                        </Typography>
+                    </Carousel>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className='pt-12'>
@@ -121,8 +178,8 @@ export default function ShowCarousel({
                     }}
                     defaultControlsConfig={{
                         pagingDotsClassName: 'hidden',
-                        nextButtonClassName: 'mr-3 rounded-sm',
-                        prevButtonClassName: 'ml-3 rounded-sm',
+                        nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
+                        prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
                     }}
                 >
                     {handleDataSlice(data)}

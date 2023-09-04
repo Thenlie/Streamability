@@ -1,11 +1,18 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { getMoviesByName } from '../helpers/getMovieUtils';
-import { ShowCard } from '../components';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import {
+    ShowCard,
+    ShowCardProps,
+    ShowCardLoader,
+    ShowListCard,
+    ShowListCardProps,
+    ShowListCardLoader,
+} from '../components';
 import { ShowData } from '../types';
-import { getTvByName } from '../helpers/getTvUtils';
-import ShowCardPlaceholder from '../components/ShowCardPlaceholder';
-import { useProfileContext } from '../hooks';
+import { useProfileContext, useWindowSize } from '../hooks';
+import { ToggleButton, Tooltip, Typography } from '@mui/material';
+import { ViewList, ViewModule } from '@mui/icons-material';
+import { getShowsByName } from '../helpers';
 
 /**
  * This loader is mostly built straight from the react-router docs
@@ -25,64 +32,133 @@ export async function loader({ request }: { request: Request }): Promise<string>
 }
 
 /**
- * @returns {JSX.Element} results page after user input
+ * The page displayed after a user makes a search query
+ *
+ * @returns {JSX.Element}
  */
 export default function SearchResultsScreen(): JSX.Element {
     const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
-    const [movieDetails, setMovieDetails] = useState<ShowData[] | null>(null);
-    const [tvDetails, setTvDetails] = useState<ShowData[] | null>(null);
+    const windowSize = useWindowSize();
+    const [viewState, setViewState] = useState<'list' | 'grid'>('list');
+    const [showDetails, setShowDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
+    // default to grid view on mobile
     useEffect(() => {
+        if (windowSize.width && windowSize.width < 750) {
+            setViewState('grid');
+        }
+    }, [windowSize]);
+
+    useEffect(() => {
+        setLoading(true);
         const handler = async () => {
-            const movieData: ShowData[] | null = await getMoviesByName(query);
-            const tvData: ShowData[] | null = await getTvByName(query);
-            setMovieDetails(movieData);
-            setTvDetails(tvData);
+            const showData: ShowData[] | null = await getShowsByName(query);
+            setShowDetails(showData);
             setLoading(false);
         };
         handler();
-    }, []);
+    }, [query]);
 
-    if (loading) {
-        return <ShowCardPlaceholder count={5} />;
-    }
+    const handleViewToggle = useCallback(() => {
+        setViewState((prev) => (prev === 'grid' ? 'list' : 'grid'));
+    }, [setViewState]);
 
-    // TODO: #438 Handle this error better
-    if (!movieDetails && !tvDetails) {
-        return <p>Sorry! No show data...</p>;
-    }
+    /**
+     * Heading of the screen showing the search query
+     * and containing the view toggle button.
+     */
+    const SearchResultHeader = useMemo((): JSX.Element => {
+        return (
+            <div className='flex justify-between align-middle w-full p-3'>
+                <Typography variant='h5' data-testid='search-results-heading'>
+                    Search results for: {query}
+                </Typography>
+                <Tooltip title='toggle card view'>
+                    <ToggleButton
+                        sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
+                        value='toggle card view'
+                        aria-label='toggle card view'
+                        onClick={handleViewToggle}
+                    >
+                        {viewState === 'grid' ? <ViewList /> : <ViewModule />}
+                    </ToggleButton>
+                </Tooltip>
+            </div>
+        );
+    }, [query, viewState]);
 
-    return (
-        <>
-            <h1 data-testid='search-results-heading' className='w-full text-left text-xl p-2 pl-6'>
-                Search results for: {query}
-            </h1>
-            <div className='flex flex-wrap justify-center'>
-                {movieDetails?.map((item, i) => {
+    /**
+     * Loops over show details and creates an array of show cards
+     * using the correct component based on the `viewState`
+     *
+     * @returns {JSX.Element}
+     */
+    const SearchResultCards = useMemo((): JSX.Element => {
+        const CardComp: React.FC<ShowCardProps | ShowListCardProps> = (props) => {
+            return viewState === 'grid' ? <ShowCard {...props} /> : <ShowListCard {...props} />;
+        };
+
+        return (
+            <div
+                className={`${
+                    viewState === 'grid'
+                        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                        : 'flex flex-wrap justify-center'
+                } pb-6
+                `}
+            >
+                {showDetails?.map((item, i) => {
                     return (
-                        <ShowCard
+                        <CardComp
                             key={i}
                             details={item}
-                            showType={'movie'}
-                            profile={profile}
-                            setProfile={setProfile}
-                        />
-                    );
-                })}
-                {tvDetails?.map((item, i) => {
-                    return (
-                        <ShowCard
-                            key={i}
-                            details={item}
-                            showType={'tv'}
+                            showType={item.media_type}
                             profile={profile}
                             setProfile={setProfile}
                         />
                     );
                 })}
             </div>
+        );
+    }, [showDetails, viewState]);
+
+    if (loading) {
+        return (
+            <>
+                {SearchResultHeader}
+                <div
+                    className={
+                        viewState === 'grid'
+                            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                            : 'flex flex-wrap justify-center'
+                    }
+                >
+                    {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
+                        <ShowCardLoader count={10} />
+                    ) : (
+                        <ShowListCardLoader count={10} />
+                    )}
+                </div>
+            </>
+        );
+    }
+
+    // TODO: #438 Handle this error better
+    if (!showDetails) {
+        return (
+            <>
+                {SearchResultHeader}
+                <Typography variant='h6'>Sorry! No show data...</Typography>
+            </>
+        );
+    }
+
+    return (
+        <>
+            {SearchResultHeader}
+            {SearchResultCards}
         </>
     );
 }

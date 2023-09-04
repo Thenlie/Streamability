@@ -1,13 +1,11 @@
-import { addToProfileWatchQueue, removeFromProfileWatchQueue } from '../supabase/profiles';
+import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
-import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
+import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { pluralizeString } from '../helpers/stringFormatUtils';
-import { useIsInWatchQueue } from '../hooks';
+import { useIsInQueue } from '../hooks';
 
-interface ShowListCardProps {
+export interface ShowListCardProps {
     /**
      * Movie or TV show metadata
      */
@@ -40,11 +38,11 @@ export default function ShowListCard({
     profile,
     setProfile,
 }: ShowListCardProps): JSX.Element {
-    const isInWatchQueue = useIsInWatchQueue(details.id, profile);
+    const isInQueue = useIsInQueue(details.id, profile);
 
     /**
      * Handle card being added to or removed from
-     * a users watch queue
+     * a users queue, watched, or favorites
      *
      * @param isPush | true if adding, false if removing
      * @param show_id | movie db id being updated
@@ -52,15 +50,17 @@ export default function ShowListCard({
     const queueHandler = async (isPush: boolean, show_id: number | undefined) => {
         if (show_id) {
             if (isPush && profile) {
-                const data = await addToProfileWatchQueue(
+                const data = await addToProfileArray(
                     profile.id,
-                    `${details.showType}-${show_id}`
+                    `${details.media_type}-${show_id}`,
+                    'queue'
                 );
                 setProfile(data);
             } else if (profile) {
-                const data = await removeFromProfileWatchQueue(
+                const data = await removeFromProfileArray(
                     profile.id,
-                    `${details.showType}-${show_id}`
+                    `${details.media_type}-${show_id}`,
+                    'queue'
                 );
                 setProfile(data);
             }
@@ -70,7 +70,7 @@ export default function ShowListCard({
     return (
         <div
             data-testid='show-list-card-component'
-            className='items-left m-1 flex w-[700px] rounded-md bg-foreground border-[1px] border-gray-300 shadow-md'
+            className='items-left m-1 flex w-[700px] rounded-md bg-foreground shadow-md'
         >
             <Link
                 to={`/details/${showType}/${details.id}`}
@@ -80,7 +80,7 @@ export default function ShowListCard({
                 <CardMedia
                     component='img'
                     className='w-full cursor-pointer rounded-l-md'
-                    sx={{ width: 100, minWidth: 100, height: 180, minHeight: 180 }}
+                    sx={{ width: 115, minWidth: 115, height: 180, minHeight: 180 }}
                     image={
                         details.poster_path
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
@@ -89,15 +89,8 @@ export default function ShowListCard({
                     alt={`${details.title} poster`}
                 />
             </Link>
-            <Box
-                padding={1}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <Box>
+            <div className='p-2 flex flex-col justify-between'>
+                <div>
                     <Typography variant='h5' align='left' paddingLeft={1} noWrap width={500}>
                         {details.title}
                     </Typography>
@@ -120,8 +113,8 @@ export default function ShowListCard({
                     >
                         {details.overview}
                     </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                </div>
+                <div className='flex justify-between'>
                     <div style={{ textAlign: 'left', alignSelf: 'end' }}>
                         <Rating
                             name='half-rating'
@@ -147,14 +140,14 @@ export default function ShowListCard({
                                 variant='contained'
                                 size='small'
                                 color='secondary'
-                                onClick={() => queueHandler(!isInWatchQueue, details?.id)}
+                                onClick={() => queueHandler(!isInQueue, details?.id)}
                             >
-                                {isInWatchQueue ? 'Remove from queue' : 'Add to queue'}
+                                {isInQueue ? 'Remove from queue' : 'Add to queue'}
                             </Button>
                         </CardActions>
                     )}
-                </Box>
-            </Box>
+                </div>
+            </div>
         </div>
     );
 }

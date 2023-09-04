@@ -1,16 +1,12 @@
+import Logger from '../logger';
 import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
+import { MOVIE_RATINGS } from './constants';
 
-enum MovieRatings {
-    'G',
-    'PG',
-    'PG-13',
-    'R',
-}
-
+const LOG = new Logger('getMovieUtils');
 /**
- * This function is ran after the user enters a name of a movie.
- * @param name | Name of show being queried
- * @returns {Promise<ShowData[]>} | List of movies by searched query.
+ * Returns a list of movies based on a given search query.
+ * @param name | Name of movie being queried
+ * @returns {Promise<ShowData[]>} | List of movies
  */
 const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
     const response = await fetch(
@@ -18,28 +14,30 @@ const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
-    const data = (await response.json()) as MovieResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-                showType: 'movie',
-            };
-        });
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    return null;
+    const data = (await response.json()) as MovieResults;
+    if (!data.results) return null;
+    return data.results.map((movie) => {
+        return {
+            id: movie.id,
+            poster_path: movie.poster_path,
+            title: movie.title,
+            release_date: movie.release_date,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
+            overview: movie.overview,
+            media_type: 'movie',
+            genre_ids: movie.genre_ids,
+        };
+    });
 };
 
 /**
- * This function is ran for specific <ShowCard /> data with a movieID.
- * @param id | MovieDB id of show being queried
- * @returns {Promise<ShowData>} | Specific data for a movie that is not originally supplied by getMoviesByName.
+ * Returns more detailed information about a given movie.
+ * @param id | MovieDB id of movie being queried
+ * @returns {Promise<ShowData>} | Movie details
  */
 const getMovieDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
@@ -47,6 +45,9 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }&append_to_response=images,release_dates`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     const data = (await response.json()) as MovieDetailsData;
     const returnRating = (arr: MovieDetailsData) => {
         let release_date, release_dates;
@@ -57,7 +58,7 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
             }
         }
         release_dates?.map((r) => {
-            if (r.certification in MovieRatings) release_date = r.certification;
+            if (r.certification in MOVIE_RATINGS) release_date = r.certification;
         });
 
         if (release_date) return release_date;
@@ -73,14 +74,15 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
         vote_average: data.vote_average,
         vote_count: data.vote_count,
         overview: data.overview,
-        showType: 'movie',
+        media_type: 'movie',
+        genre_ids: data.genre_ids,
     };
 };
 
 /**
- * This function is ran for a specified movie to return streaming services with a Movie ID.
- * @param id | MovieDB id of show being queried
- * @returns {Promise<ShowProviders>} | Returns list of streaming services.
+ * Returns a list of streaming providers for a given movie.
+ * @param id | MovieDB id of movie being queried
+ * @returns {Promise<ShowProviders>} | List of streaming services.
  */
 const getMovieProviders = async (id: number): Promise<ShowProviders> => {
     const response = await fetch(
@@ -88,12 +90,15 @@ const getMovieProviders = async (id: number): Promise<ShowProviders> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     return response.json() as Promise<ShowProviders>;
 };
 
 /**
- * This function returns trending movies, tv shows, or both. /all instead of /movie will alter its behavior. Similarly, /day instead of /week will return daily trending.
- * @returns {Promise<MovieResults>} | Trending Movies & TV Shows
+ * Returns a list of currently trending movies.
+ * @returns {Promise<MovieResults>} | Trending movies
  */
 const getMovieTrending = async (): Promise<ShowData[] | null> => {
     const response = await fetch(
@@ -101,26 +106,28 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
-    const data = (await response.json()) as MovieResults;
-    if (data.results) {
-        return data.results.map((movie) => {
-            return {
-                id: movie.id,
-                poster_path: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-                overview: movie.overview,
-                showType: 'movie',
-            };
-        });
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    return null;
+    const data = (await response.json()) as MovieResults;
+    if (!data.results) return null;
+    return data.results.map((movie) => {
+        return {
+            id: movie.id,
+            poster_path: movie.poster_path,
+            title: movie.title,
+            release_date: movie.release_date,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
+            overview: movie.overview,
+            media_type: 'movie',
+            genre_ids: movie.genre_ids,
+        };
+    });
 };
 
 /**
- * Get recommended movies based off of a movie
+ * Returns recommended movies based off of a given movie
  * @param id | MovieDB id of movie being searched for
  * @returns {Promise<ShowData[] | null>} | Array of recommended movies
  */
@@ -130,11 +137,13 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
             import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
     const data = (await response.json()) as MovieResults;
     if (!data.results || data.results.length < 1) return null;
-    const recommendations: ShowData[] = [];
-    data.results.map((rec) =>
-        recommendations.push({
+    return data.results.map((rec) => {
+        return {
             id: rec.id,
             overview: rec.overview,
             poster_path: rec.poster_path,
@@ -142,10 +151,10 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
             title: rec.title,
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
-            showType: 'movie',
-        })
-    );
-    return recommendations;
+            media_type: 'movie',
+            genre_ids: rec.genre_ids,
+        };
+    });
 };
 
 export {

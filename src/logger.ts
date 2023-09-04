@@ -1,0 +1,35 @@
+import { AuthError, PostgrestError } from '@supabase/supabase-js';
+import { ErrorResponse } from '@remix-run/router';
+
+/* eslint-disable no-console */
+export default class Logger {
+    prefix: string;
+
+    constructor(logName = 'streamability') {
+        this.prefix = `[${logName}] `;
+    }
+
+    error(message: string | AuthError | ErrorResponse | PostgrestError) {
+        if (!import.meta.env.DEV) return;
+        const log = '%c ERROR ' + this.prefix + message;
+        console.log(log, 'background: firebrick; color: white');
+    }
+
+    warn(message: string) {
+        if (!import.meta.env.DEV) return;
+        const log = '%c WARN  ' + this.prefix + message;
+        console.log(log, 'background: gold; color: black');
+    }
+
+    debug(message: string) {
+        if (!import.meta.env.DEV) return;
+        const log = '%c DEBUG ' + this.prefix + message;
+        console.log(log, 'background: lightskyblue; color: black');
+    }
+
+    json(message: string) {
+        if (!import.meta.env.DEV) return;
+        const log = '%c DEBUG ' + this.prefix + JSON.stringify(message);
+        console.log(log, 'background: lightskyblue; color: black');
+    }
+}

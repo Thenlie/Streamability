@@ -2,12 +2,9 @@
  * This file exports all components to make imports easier
  * Be sure to add any new components to this file
  */
-import ShowCard from './ShowCard';
-import ShowListCard from './ShowListCard';
-import ShowCardPlaceholder from './ShowCardPlaceholder';
-import ShowListCardPlaceholder from './ShowListCardPlaceholder';
-import ProvidersPlaceholder from './ProvidersPlaceholder';
-import ShowCarouselPlaceholder from './ShowCarouselPlaceholder';
+import ShowCard, { ShowCardProps } from './ShowCard';
+import ShowListCard, { ShowListCardProps } from './ShowListCard';
+import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
@@ -19,10 +16,7 @@ import Rating from './Rating';
 export {
     ShowCard,
     ShowListCard,
-    ShowCardPlaceholder,
-    ShowListCardPlaceholder,
-    ProvidersPlaceholder,
-    ShowCarouselPlaceholder,
+    ShowPoster,
     ShowCarousel,
     SearchInput,
     LoginForm,
@@ -32,3 +26,5 @@ export {
     Navigation,
     Rating,
 };
+export * from './loaders';
+export type { ShowCardProps, ShowListCardProps };

@@ -5,7 +5,7 @@ export const PROFILE = {
     username: 'TestUser',
     email: 'example@no.mail',
     avatar_url: null,
-    watch_queue: ['1726'],
+    queue: ['movie-1726'],
     adult: true,
     country: 'US',
     updated_at: '2023-08-09T03:17:57.310334+00:00',
@@ -23,7 +23,7 @@ export const MOVIE_DATA: ShowData = {
     vote_count: 23740,
     overview:
         'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.',
-    showType: 'movie',
+    media_type: 'movie',
     networks: [
         {
             name: 'Disney Plus',

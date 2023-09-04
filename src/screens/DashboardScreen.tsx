@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
-import { SUPABASE } from '../helpers/supabaseClient';
 import { useSessionContext, useProfileContext } from '../hooks';
 import {
     deleteProfileById,
     updateProfileUsername,
-    getProfileWatchQueue,
+    getProfileQueue,
     setProfileAdultFlag,
     setProfileCountry,
+    removeProfileArray,
 } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, FilledInput, FormControl, InputLabel, Typography } from '@mui/material';
 import { Edit, Language, Logout, NoAdultContent } from '@mui/icons-material';
 import { ShowData } from '../types';
-import { ShowCarousel, ShowCarouselPlaceholder } from '../components';
-import { getMovieDetails } from '../helpers/getMovieUtils';
-import { getTvDetails } from '../helpers/getTvUtils';
+import { ShowCarousel } from '../components';
+import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
+import Logger from '../logger';
+
+const LOG = new Logger('DashboardScreen');
 
 /**
  * User must be logged in to access endpoint
@@ -27,8 +29,10 @@ export default function DashboardScreen(): JSX.Element {
     const [username, setUsername] = useState('');
     const [country, setCountry] = useState('');
     const [isAdult, setIsAdult] = useState<boolean | null>();
-    const [watchQueue, setWatchQueue] = useState<ShowData[] | null>(null);
+    const [queue, setQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
+
+    const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
 
     if (!session) {
         return <Navigate to={'/auth/login'} />;
@@ -36,25 +40,22 @@ export default function DashboardScreen(): JSX.Element {
 
     useEffect(() => {
         const handler = async () => {
-            if (session) {
-                const queue = await getProfileWatchQueue(session.user.id);
-                if (queue) {
-                    const arr = [];
-                    for (let i = 0; i < queue.length; i++) {
-                        if (queue[i].includes('tv-')) {
-                            const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
-                            arr.push(tvShow);
-                        } else {
-                            const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
-                            arr.push(movie);
-                        }
-                    }
-                    setWatchQueue(arr);
+            if (!session) return;
+            const queue = await getProfileQueue(session.user.id);
+            if (!queue) return;
+            const arr = [];
+            for (let i = 0; i < queue.length; i++) {
+                if (queue[i].includes('tv-')) {
+                    const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
+                    arr.push(tvShow);
+                } else {
+                    const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
+                    arr.push(movie);
                 }
-                if (session.user.adult) setIsAdult(session.user.adult);
-                // eslint-disable-next-line no-console
-                if (import.meta.env.DEV) console.log(queue);
             }
+            setQueue(arr);
+            if (session.user.adult) setIsAdult(session.user.adult);
+            LOG.debug(String(queue));
         };
         handler();
     }, [session]);
@@ -92,6 +93,13 @@ export default function DashboardScreen(): JSX.Element {
             setProfile(null);
             setSession(null);
             navigate('/');
+        }
+    };
+
+    const clearQueue = async () => {
+        if (session) {
+            await removeProfileArray(session.user.id, 'queue');
+            setQueue(null);
         }
     };
 
@@ -178,13 +186,21 @@ export default function DashboardScreen(): JSX.Element {
                 >
                     Delete Profile
                 </Button>
+                {queue && (
+                    <Button
+                        variant='contained'
+                        size='large'
+                        color='error'
+                        type='button'
+                        sx={{ m: 0.5 }}
+                        onClick={() => clearQueue()}
+                    >
+                        Remove Queue
+                    </Button>
+                )}
             </div>
             <div>
-                {watchQueue ? (
-                    <ShowCarousel data={watchQueue} profile={profile} setProfile={setProfile} />
-                ) : (
-                    <ShowCarouselPlaceholder count={5} />
-                )}
+                <ShowCarousel data={queue} fallbackText={fallbackText} />
             </div>
         </section>
     );

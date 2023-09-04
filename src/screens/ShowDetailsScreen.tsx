@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Location, useLocation } from 'react-router-dom';
-import { getMovieDetails, getMovieRecommendations } from '../helpers/getMovieUtils';
+import {
+    getMovieDetails,
+    getMovieRecommendations,
+    formatReleaseDate,
+    DateSize,
+    getTvDetails,
+    getTvRecommendations,
+} from '../helpers';
 import { ShowData } from '../types';
-import { formatReleaseDate, DateSize } from '../helpers/dateFormatUtils';
-import { Providers, ShowCarousel, ShowCarouselPlaceholder } from '../components';
-import { getTvDetails, getTvRecommendations } from '../helpers/getTvUtils';
+import { Providers, ShowCarousel, Rating } from '../components';
 import { Typography } from '@mui/material';
-import { useProfileContext } from '../hooks';
-import Rating from '../components/Rating';
+import { ShowDetailsLoader } from './loaders';
 
 /**
  * Screen to show more details of a specific show
@@ -16,17 +20,20 @@ import Rating from '../components/Rating';
  * @returns {JSX.Element}
  */
 export default function ShowDetailsScreen(): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
     const location: Location = useLocation();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
+    const [loading, setLoading] = useState(true);
     const id = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
 
+    const fallbackText = 'Sorry, we could not find any recommendations based on this title.';
+
     useEffect(() => {
         const handler = async () => {
+            setLoading(true);
             if (showType === 'movie') {
                 const movieDetails = await getMovieDetails(id);
                 setDetails(movieDetails);
@@ -38,33 +45,46 @@ export default function ShowDetailsScreen(): JSX.Element {
                 const recommendation = await getTvRecommendations(id);
                 if (recommendation) setRecommendation(recommendation);
             }
+            setLoading(false);
         };
         handler();
     }, [location]);
 
-    // TODO: #199 Create skeleton loader
-    // TODO: Handle case when no details are ever returned
-    if (!details) return <p>Loading</p>;
+    if (loading) {
+        return <ShowDetailsLoader />;
+    }
+
+    // TODO: #438 Handle case when no details are ever returned
+    if (!details) {
+        return <p>No details found!</p>;
+    }
 
     return (
         <>
-            <section className='m-3 flex'>
-                <div className='rounded-md overflow-hidden mr-2'>
-                    {details.poster_path ? (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                        ></img>
-                    ) : (
-                        <img
-                            style={{ width: '350px', height: '550px' }}
-                            src={'/poster-placeholder.jpeg'}
-                        ></img>
-                    )}
+            <section className='m-6 flex flex-col md:flex-row'>
+                <div className='rounded-md m-auto w-[350px] h-[550px]'>
+                    <img
+                        style={{
+                            width: '350px',
+                            height: '550px',
+                            maxWidth: 'none',
+                            borderRadius: '5px',
+                        }}
+                        src={
+                            details.poster_path
+                                ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+                                : '/poster-placeholder.jpeg'
+                        }
+                    ></img>
                 </div>
-                <div className='m-3'>
+                <div className='m-3 max-w-xl'>
                     <div>
-                        <Typography variant='h3' align='left' data-testid='show-details-heading'>
+                        <Typography
+                            variant='h3'
+                            align='left'
+                            className='max-w-lg'
+                            data-testid='show-details-heading'
+                        >
                             {details.title}
                         </Typography>
                         {details.release_date && details.release_date.length === 10 && (
@@ -84,7 +104,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                         vote_count={details.vote_count || 0}
                     />
                     <div>
-                        <Typography align='left' className='max-w-md py-3'>
+                        <Typography align='left' className='py-3'>
                             {details.overview}
                         </Typography>
                     </div>
@@ -94,15 +114,7 @@ export default function ShowDetailsScreen(): JSX.Element {
                 </div>
             </section>
             <section className='pb-6'>
-                {recommendations ? (
-                    <ShowCarousel
-                        data={recommendations}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
-                ) : (
-                    <ShowCarouselPlaceholder count={5} />
-                )}
+                <ShowCarousel data={recommendations} fallbackText={fallbackText} />
             </section>
         </>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
-import { SUPABASE } from '../../helpers/supabaseClient';
+import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import {
@@ -12,6 +12,9 @@ import {
     IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Logger from '../../logger';
+
+const LOG = new Logger('LoginForm');
 
 /**
  * @returns {JSX.Element}
@@ -72,8 +75,7 @@ export default function LoginForm(): JSX.Element {
         if (error) {
             // We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
-            // eslint-disable-next-line no-console
-            if (import.meta.env.DEV) console.error(error);
+            LOG.error(error);
         }
 
         // onAuthStateChange function will be triggered
@@ -81,7 +83,7 @@ export default function LoginForm(): JSX.Element {
     }
 
     return (
-        <div aria-live='polite' className='w-full'>
+        <div aria-live='polite'>
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>

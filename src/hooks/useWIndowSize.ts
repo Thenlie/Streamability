@@ -1,10 +1,16 @@
 import { useState, useLayoutEffect } from 'react';
 
-interface WindowSize {
+export interface WindowSize {
     width: number | null;
     height: number | null;
 }
-export default function useWindowSize() {
+
+/**
+ * Custom hook that returns the window width and height
+ * Automatically updates as the window size changes
+ * @returns {WindowSize}
+ */
+export default function useWindowSize(): WindowSize {
     const [size, setSize] = useState<WindowSize>({
         width: null,
         height: null,

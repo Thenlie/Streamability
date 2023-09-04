@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Providers } from '../../components';
-import { MOVIE_DATA } from '../constants';
 
 const meta = {
     title: 'Components/Providers',
@@ -16,7 +15,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        id: MOVIE_DATA.id,
+        id: 136797,
+        showType: 'movie',
+    },
+};
+
+export const Empty: Story = {
+    args: {
+        id: 0,
         showType: 'movie',
     },
 };
