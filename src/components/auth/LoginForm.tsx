@@ -17,6 +17,8 @@ import Logger from '../../logger';
 const LOG = new Logger('LoginForm');
 
 /**
+ * Form to handle user login.
+ *
  * @returns {JSX.Element}
  */
 export default function LoginForm(): JSX.Element {
@@ -83,7 +85,7 @@ export default function LoginForm(): JSX.Element {
     }
 
     return (
-        <div aria-live='polite'>
+        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>

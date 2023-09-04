@@ -28,7 +28,7 @@ import {
     NoAdultContent,
     WarningSharp,
 } from '@mui/icons-material';
-import { ShowData } from '../types';
+import { Profile, Session, ShowData } from '../types';
 import { ShowCarousel } from '../components';
 import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
@@ -44,15 +44,21 @@ const LOG = new Logger('DashboardScreen');
  * will open the modal when clicked.
  * @returns {JSX.Element}
  */
-function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
-    const { session } = useSessionContext();
-    const { profile, setProfile } = useProfileContext();
+function EditProfileModal({
+    session,
+    profile,
+    setProfile,
+}: {
+    session: Session;
+    profile: Profile;
+    setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
+}): JSX.Element {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
     const [country, setCountry] = useState('');
     const [countryError, setCountryError] = useState(false);
-    const [isAdult, setIsAdult] = useState<boolean>(adult || false);
+    const [isAdult, setIsAdult] = useState<boolean>(session.user.adult || false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -120,7 +126,10 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         borderRadius: 2,
-                        width: 400,
+                        width: {
+                            xs: 250,
+                            sm: 500,
+                        },
                         boxShadow: 24,
                     }}
                 >
@@ -149,7 +158,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                             color='secondary'
                             startIcon={<Edit />}
                             sx={{ m: 0.5, width: 210, mb: 2 }}
-                            onClick={() => changeUsername()}
+                            onClick={changeUsername}
                         >
                             Change Username
                         </Button>
@@ -175,7 +184,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                             type='button'
                             color='secondary'
                             sx={{ m: 0.5, width: 210, mb: 2 }}
-                            onClick={() => changeCountry()}
+                            onClick={changeCountry}
                             startIcon={<Language />}
                         >
                             Change Country
@@ -189,7 +198,7 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
                             color='secondary'
                             startIcon={<NoAdultContent />}
                             sx={{ m: 0.5, mb: 2 }}
-                            onClick={() => toggleAdultFlag()}
+                            onClick={toggleAdultFlag}
                         >
                             Toggle Adult Flag
                         </Button>
@@ -211,14 +220,99 @@ function EditProfileModal({ adult }: { adult: boolean | null }): JSX.Element {
 }
 
 /**
- * User must be logged in to access endpoint
+ * A modal to confirm if the user wants to permanently
+ * delete their account.
+ *
+ * @returns {JSX.Element}
+ */
+const ConfirmDeleteModal = ({ deleteProfile }: { deleteProfile: () => void }): JSX.Element => {
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <>
+            <Button
+                variant='contained'
+                size='large'
+                color='error'
+                type='button'
+                sx={{ m: 0.5, width: 210 }}
+                startIcon={<WarningSharp />}
+                onClick={handleOpen}
+            >
+                Delete Profile
+            </Button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='modal-modal-title'
+                aria-describedby='modal-modal-description'
+            >
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        borderRadius: 2,
+                        width: {
+                            xs: 250,
+                            sm: 500,
+                        },
+                        boxShadow: 24,
+                    }}
+                >
+                    <div className='flex flex-col items-center bg-background p-4 rounded-md'>
+                        <Typography variant='h6' align='center'>
+                            Are you sure you want to delete your profile?
+                        </Typography>
+                        <Typography mb={2}>⚠️ Warning! This action cannot be undone.</Typography>
+                        <Button
+                            variant='contained'
+                            size='large'
+                            type='button'
+                            color='error'
+                            startIcon={<Delete />}
+                            sx={{ m: 0.5, width: 210 }}
+                            onClick={deleteProfile}
+                        >
+                            Yes
+                        </Button>
+                        <Button
+                            variant='contained'
+                            size='large'
+                            type='button'
+                            color='secondary'
+                            startIcon={<ArrowBackIosNew />}
+                            sx={{ m: 0.5, width: 210 }}
+                            onClick={handleClose}
+                        >
+                            No
+                        </Button>
+                    </div>
+                </Box>
+            </Modal>
+        </>
+    );
+};
+
+/**
+ * A logged in users profile screen. This is used to display
+ * users personal information, queue, favorites and anything
+ * else related directly to a user.
  *
  * @returns {JSX.Element} | A single users profile page
  */
 export default function DashboardScreen(): JSX.Element {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const [isAdult, setIsAdult] = useState<boolean | null>(null);
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const navigate = useNavigate();
 
@@ -226,10 +320,12 @@ export default function DashboardScreen(): JSX.Element {
 
     const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
 
-    if (!session) {
+    // If the user is not logged in, redirect to login
+    if (!session || !profile) {
         return <Navigate to={'/auth/login'} />;
     }
 
+    // On page load get the users watch queue
     useEffect(() => {
         const handler = async () => {
             if (!session) return;
@@ -246,7 +342,6 @@ export default function DashboardScreen(): JSX.Element {
                 }
             }
             setQueue(arr);
-            if (session.user.adult) setIsAdult(session.user.adult);
             LOG.debug(String(queue));
         };
         handler();
@@ -266,83 +361,10 @@ export default function DashboardScreen(): JSX.Element {
         }
     };
 
-    const ConfirmDeleteModal = () => {
-        const [open, setOpen] = useState(false);
-
-        const handleOpen = () => {
-            setOpen(true);
-        };
-
-        const handleClose = () => {
-            setOpen(false);
-        };
-
-        return (
-            <>
-                <Button
-                    variant='contained'
-                    size='large'
-                    color='error'
-                    type='button'
-                    sx={{ m: 0.5, width: 210 }}
-                    startIcon={<WarningSharp />}
-                    onClick={handleOpen}
-                >
-                    Delete Profile
-                </Button>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby='modal-modal-title'
-                    aria-describedby='modal-modal-description'
-                >
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            borderRadius: 2,
-                            width: 400,
-                            boxShadow: 24,
-                        }}
-                    >
-                        <div className='flex flex-col items-center bg-background p-4 rounded-md'>
-                            <Typography variant='h6' align='center'>
-                                Are you sure you want to delete your profile?
-                            </Typography>
-                            <Typography mb={2}>
-                                ⚠️ Warning! This action cannot be undone.
-                            </Typography>
-                            <Button
-                                variant='contained'
-                                size='large'
-                                type='button'
-                                color='error'
-                                startIcon={<Delete />}
-                                sx={{ m: 0.5, width: 210 }}
-                                onClick={deleteProfile}
-                            >
-                                Yes
-                            </Button>
-                            <Button
-                                variant='contained'
-                                size='large'
-                                type='button'
-                                color='secondary'
-                                startIcon={<ArrowBackIosNew />}
-                                sx={{ m: 0.5, width: 210 }}
-                                onClick={handleClose}
-                            >
-                                No
-                            </Button>
-                        </div>
-                    </Box>
-                </Modal>
-            </>
-        );
-    };
-
+    /**
+     * Remove all shows from the users watch queue.
+     * Displayed below the queue carousel.
+     */
     const clearQueue = async () => {
         if (session) {
             await removeProfileArray(session.user.id, 'queue');
@@ -396,7 +418,7 @@ export default function DashboardScreen(): JSX.Element {
                         </Typography>
                     </div>
 
-                    <EditProfileModal adult={isAdult} />
+                    <EditProfileModal session={session} profile={profile} setProfile={setProfile} />
 
                     <Button
                         variant='contained'
@@ -409,19 +431,19 @@ export default function DashboardScreen(): JSX.Element {
                     >
                         Logout
                     </Button>
-                    <ConfirmDeleteModal />
+                    <ConfirmDeleteModal deleteProfile={deleteProfile} />
                 </div>
                 <div>
                     <ShowCarousel data={queue} fallbackText={fallbackText} />
                     <Button
-                        disabled={queue ? false : true}
+                        disabled={!queue || queue.length === 0}
                         variant='contained'
                         size='large'
                         color='error'
                         type='button'
                         sx={{ m: 0.5, width: 210 }}
                         startIcon={<Delete />}
-                        onClick={() => clearQueue()}
+                        onClick={clearQueue}
                     >
                         Clear Queue
                     </Button>

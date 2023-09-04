@@ -17,7 +17,7 @@ import Logger from '../../logger';
 const LOG = new Logger('SignupForm');
 
 /**
- * Screen to handle Supabase sign up
+ * Form to handle user sign up
  *
  * @returns {JSX.Element}
  */
@@ -136,14 +136,15 @@ export default function SignUpForm(): JSX.Element {
             LOG.error(error);
         }
 
-        // onAuthStateChange function will be triggered
-        // User has not logged in yet but we still get some information back
-        // Check if 'confirmed_at' exists on user to see if they validated their email
+        /**
+         * After return a session will be created,
+         * redirecting the user to their dashboard
+         */
         return;
     };
 
     return (
-        <div aria-live='polite'>
+        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
             <h1 data-testid='signup-heading'>Signup</h1>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
