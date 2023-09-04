@@ -89,7 +89,7 @@ export default function ShowListCard({
                     alt={`${details.title} poster`}
                 />
             </Link>
-            <div className='p-2 flex flex-col justify-between'>
+            <div className='p-2 flex flex-col justify-between flex-1'>
                 <div>
                     <Typography variant='h5' align='left' paddingLeft={1} noWrap width={500}>
                         {details.title}

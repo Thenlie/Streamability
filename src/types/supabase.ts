@@ -4,7 +4,7 @@
 export interface User {
     app_metadata: unknown;
     aud: string;
-    confirmation_sent_at: string;
+    confirmation_sent_at?: string;
     confirmed_at?: string;
     created_at: string;
     email: string;
@@ -17,6 +17,7 @@ export interface User {
     user_metadata: unknown;
     adult: boolean | null;
     country: string | null;
+    last_sign_in_at: string;
 }
 
 /**
@@ -40,6 +41,8 @@ export interface Profile {
     email: string;
     avatar_url: string | null;
     queue: string[];
+    watched: string[];
+    favorites: string[];
     adult: boolean;
     country: string;
     updated_at: string;

@@ -27,4 +27,5 @@ export {
     Rating,
 };
 export * from './loaders';
+export * from './modals';
 export type { ShowCardProps, ShowListCardProps };
