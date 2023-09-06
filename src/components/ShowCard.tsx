@@ -5,6 +5,7 @@ import { formatReleaseDate, DateSize } from '../helpers';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
 import { useIsInQueue } from '../hooks';
+import React from 'react';
 
 export const SHOW_CARD_WIDTH = 360;
 
@@ -35,12 +36,12 @@ export interface ShowCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard({
+const ShowCard: React.FC<ShowCardProps> = ({
     details,
     showType,
     profile,
     setProfile,
-}: ShowCardProps): JSX.Element {
+}): JSX.Element => {
     const isInQueue = useIsInQueue(details.id, profile);
 
     /**
@@ -139,4 +140,6 @@ export default function ShowCard({
             </div>
         </div>
     );
-}
+};
+
+export default ShowCard;

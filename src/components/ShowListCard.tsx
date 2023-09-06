@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
 import { useIsInQueue } from '../hooks';
+import React from 'react';
 
 export interface ShowListCardProps {
     /**
@@ -32,12 +33,12 @@ export interface ShowListCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowListCard({
+const ShowListCard: React.FC<ShowListCardProps> = ({
     details,
     showType,
     profile,
     setProfile,
-}: ShowListCardProps): JSX.Element {
+}): JSX.Element => {
     const isInQueue = useIsInQueue(details.id, profile);
 
     /**
@@ -150,4 +151,6 @@ export default function ShowListCard({
             </div>
         </div>
     );
-}
+};
+
+export default ShowListCard;

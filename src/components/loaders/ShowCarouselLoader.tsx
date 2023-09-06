@@ -1,3 +1,4 @@
+import React from 'react';
 import ShowCardLoader from './ShowCardLoader';
 
 interface ShowCarouselLoaderProps {
@@ -13,7 +14,7 @@ interface ShowCarouselLoaderProps {
  * @param count | number of card loaders to be rendered
  * @returns {JSX.Element}
  */
-export default function ShowCarouselLoader({ count }: ShowCarouselLoaderProps): JSX.Element {
+const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ count }): JSX.Element => {
     return (
         <div className='m-3 flex justify-center'>
             {[...Array(count)].map((x, i) => (
@@ -23,4 +24,6 @@ export default function ShowCarouselLoader({ count }: ShowCarouselLoaderProps): 
             ))}
         </div>
     );
-}
+};
+
+export default ShowCarouselLoader;

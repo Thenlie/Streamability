@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
     updateProfileUsername,
     setProfileAdultFlag,
@@ -31,11 +31,11 @@ interface EditProfileModalProps {
  * will open the modal when clicked.
  * @returns {JSX.Element}
  */
-export default function EditProfileModal({
+const EditProfileModal: React.FC<EditProfileModalProps> = ({
     session,
     profile,
     setProfile,
-}: EditProfileModalProps): JSX.Element {
+}): JSX.Element => {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
@@ -200,4 +200,6 @@ export default function EditProfileModal({
             </Modal>
         </>
     );
-}
+};
+
+export default EditProfileModal;

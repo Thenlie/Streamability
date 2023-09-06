@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useSessionContext } from '../hooks';
+import React from 'react';
 
 /**
  * Wrapper for all authentication components
@@ -7,7 +8,7 @@ import { useSessionContext } from '../hooks';
  *
  * @returns {JSX.Element}
  */
-export default function AuthScreen(): JSX.Element {
+const AuthScreen: React.FC = (): JSX.Element => {
     const { session } = useSessionContext();
 
     return (
@@ -15,4 +16,6 @@ export default function AuthScreen(): JSX.Element {
             <Outlet context={{ session }} />
         </>
     );
-}
+};
+
+export default AuthScreen;

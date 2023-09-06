@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShowProviders } from '../types';
 import { getMovieProviders, getTvProviders } from '../helpers';
 import { ProvidersLoader } from './loaders';
@@ -17,7 +17,7 @@ interface ProviderProps {
  * @param showType | 'movie' or 'tv'
  * @returns {JSX.Element}
  */
-export default function Providers({ id, showType }: ProviderProps): JSX.Element {
+const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [providers, setProviders] = useState<ShowProviders>();
@@ -78,4 +78,6 @@ export default function Providers({ id, showType }: ProviderProps): JSX.Element 
             )}
         </div>
     );
-}
+};
+
+export default Providers;

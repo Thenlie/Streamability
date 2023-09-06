@@ -1,7 +1,7 @@
 import { SUPABASE } from '../helpers';
 import { Link } from 'react-router-dom';
 import { Session } from '../types';
-import { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
 import {
     AppBar,
     Divider,
@@ -29,7 +29,7 @@ import {
 import SearchInput from './SearchInput';
 import { lightTheme } from '../theme';
 
-interface NavProps {
+interface NavigationProps {
     session: Session | null;
     theme: Theme;
     switchTheme: () => void;
@@ -40,7 +40,7 @@ interface NavProps {
  * Navigation elements are placeholder for the time being for development purposes.
  * @returns {JSX.Element} | Navigation
  */
-export default function Navigation({ session, theme, switchTheme }: NavProps): JSX.Element {
+const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }): JSX.Element => {
     const [themeIcon, setThemeIcon] = useState(<DarkMode />);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [expandedMenu, setExpandedMenu] = useState(false);
@@ -237,4 +237,6 @@ export default function Navigation({ session, theme, switchTheme }: NavProps): J
             )}
         </AppBar>
     );
-}
+};
+
+export default Navigation;

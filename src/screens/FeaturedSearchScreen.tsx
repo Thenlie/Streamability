@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShowCarousel, SearchInput } from '../components';
 import type { ShowData } from '../types';
 import { getMovieTrending, getTvTrending } from '../helpers';
@@ -9,7 +9,7 @@ import { getMovieTrending, getTvTrending } from '../helpers';
  *
  * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
  */
-export default function FeaturedSearchScreen(): JSX.Element {
+const FeaturedSearchScreen: React.FC = (): JSX.Element => {
     const [trendingShows, setTrendingShows] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
@@ -30,4 +30,6 @@ export default function FeaturedSearchScreen(): JSX.Element {
             <ShowCarousel data={trendingShows} />
         </div>
     );
-}
+};
+
+export default FeaturedSearchScreen;

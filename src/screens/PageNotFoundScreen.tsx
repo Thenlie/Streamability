@@ -2,13 +2,14 @@ import { ErrorResponse } from '@remix-run/router';
 import { useRouteError } from 'react-router-dom';
 import { ErrorMessage } from '../components';
 import Logger from '../logger';
+import React from 'react';
 
 const LOG = new Logger('PageNotFoundScreen');
 
 /**
  * @returns {JSX.Element} | 404 page
  */
-export default function PageNotFoundScreen(): JSX.Element {
+const PageNotFoundScreen: React.FC = (): JSX.Element => {
     /**
      * This hook returns anything thrown during an
      * action, loader, or rendering
@@ -27,4 +28,6 @@ export default function PageNotFoundScreen(): JSX.Element {
             <ErrorMessage message={error.statusText} />
         </div>
     );
-}
+};
+
+export default PageNotFoundScreen;

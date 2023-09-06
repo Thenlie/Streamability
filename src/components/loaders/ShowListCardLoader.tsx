@@ -1,3 +1,4 @@
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -15,7 +16,7 @@ interface ShowListCardLoaderProps {
  * @param count | number of card placeholders to be rendered
  * @returns {JSX.Element}
  */
-export default function ShowListCardLoader({ count }: ShowListCardLoaderProps): JSX.Element {
+const ShowListCardLoader: React.FC<ShowListCardLoaderProps> = ({ count }): JSX.Element => {
     return (
         <div className='m-3 grid grid-cols-1 xl:grid-cols-2'>
             {[...Array(count)].map((x, i) => (
@@ -36,4 +37,6 @@ export default function ShowListCardLoader({ count }: ShowListCardLoaderProps): 
             ))}
         </div>
     );
-}
+};
+
+export default ShowListCardLoader;
