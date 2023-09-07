@@ -12,6 +12,7 @@ import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
+import SubmitButton from './SubmitButton';
 
 export {
     ShowCard,
@@ -25,6 +26,7 @@ export {
     Providers,
     Navigation,
     Rating,
+    SubmitButton,
 };
 export * from './loaders';
 export * from './modals';
