@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ErrorMessage, SubmitButton } from '../../components';
+import { ErrorMessage, Button } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
@@ -132,7 +132,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                         }
                     />
                 </FormControl>
-                <SubmitButton loading={loading} title='submit' />
+                <Button title='Submit' type='submit' loading={loading} color='secondary' />
                 {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
             </form>
         </div>

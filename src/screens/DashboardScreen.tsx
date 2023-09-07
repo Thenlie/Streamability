@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSessionContext, useProfileContext } from '../hooks';
 import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
 import { ShowData } from '../types';
-import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, SubmitButton } from '../components';
+import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
 import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
 
@@ -137,30 +137,27 @@ const DashboardScreen: React.FC = (): JSX.Element => {
 
                     <EditProfileModal session={session} profile={profile} setProfile={setProfile} />
 
-                    <div onClick={handleLogout}>
-                        <SubmitButton
-                            title='Logout'
-                            loading={loading}
-                            startIcon={!loading && <Logout />}
-                            // onClick={handleLogout}
-                        />
-                    </div>
+                    <Button
+                        title='Logout'
+                        type='button'
+                        color='secondary'
+                        loading={loading}
+                        startIcon={!loading && <Logout />}
+                        onClick={handleLogout}
+                    />
                     <ConfirmDeleteModal deleteProfile={deleteProfile} />
                 </div>
                 <div>
                     <ShowCarousel data={queue} fallbackText={fallbackText} />
                     <Button
+                        title='Clear Queue'
                         disabled={!queue || queue.length === 0}
-                        variant='contained'
-                        size='large'
                         color='error'
                         type='button'
                         sx={{ m: 0.5, width: 210 }}
                         startIcon={<Delete />}
                         onClick={clearQueue}
-                    >
-                        Clear Queue
-                    </Button>
+                    />
                 </div>
             </section>
         </>
