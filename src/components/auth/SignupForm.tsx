@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../ErrorMessage';
+import { ErrorMessage, SubmitButton } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import {
-    Button,
-    InputAdornment,
-    FilledInput,
-    InputLabel,
-    FormControl,
-    IconButton,
-} from '@mui/material';
+import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 
@@ -34,6 +27,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // redirect users that are logged in
     if (session) {
@@ -77,6 +71,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
      * @returns {Promise<void>} | Does not redirect user
      */
     const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
+        setLoading(true);
         evt.preventDefault();
         clearErrors();
 
@@ -87,6 +82,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
         if (!confirmPassword) setConfirmPasswordError(true);
         if (!email || !password || !confirmPassword || !username) {
             showError('All fields must be filled out');
+            setLoading(false);
             return;
         }
 
@@ -94,6 +90,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
             return;
         }
 
@@ -101,6 +98,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
         if (password.length < 3) {
             showError('Password must be at least 6 characters');
             setPasswordError(true);
+            setLoading(false);
             return;
         }
 
@@ -109,6 +107,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
             setPasswordError(true);
             setConfirmPasswordError(true);
             showError('Passwords must match');
+            setLoading(false);
             return;
         }
 
@@ -130,10 +129,13 @@ const SignUpForm: React.FC = (): JSX.Element => {
             ) {
                 showError('Username unavailable');
                 setUsernameError(true);
+                setLoading(false);
                 return;
             }
             showError(error.message);
             LOG.error(error);
+            setLoading(false);
+            return;
         }
 
         /**
@@ -248,15 +250,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         }
                     />
                 </FormControl>
-                <Button
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    color='secondary'
-                    sx={{ margin: '10px' }}
-                >
-                    Submit
-                </Button>
+                <SubmitButton loading={loading} />
                 {errorMessage && <ErrorMessage message={errorMessage} />}
             </form>
         </div>
