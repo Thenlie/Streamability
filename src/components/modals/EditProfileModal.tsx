@@ -4,17 +4,10 @@ import {
     setProfileAdultFlag,
     setProfileCountry,
 } from '../../supabase/profiles';
-import {
-    Box,
-    Button,
-    FilledInput,
-    FormControl,
-    InputLabel,
-    Modal,
-    Typography,
-} from '@mui/material';
+import { Box, FilledInput, FormControl, InputLabel, Modal, Typography } from '@mui/material';
 import { Close, Edit, Language, NoAdultContent } from '@mui/icons-material';
 import { Profile, Session } from '../../types';
+import Button from '../Button';
 
 interface EditProfileModalProps {
     session: Session;
@@ -85,17 +78,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     return (
         <>
-            <Button
-                variant='contained'
-                size='large'
-                type='button'
-                color='secondary'
-                startIcon={<Edit />}
-                sx={{ m: 0.5, width: 210 }}
-                onClick={handleOpen}
-            >
-                Edit Profile
-            </Button>
+            <Button title='Edit Profile' startIcon={<Edit />} onClick={handleOpen} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -136,15 +119,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </FormControl>
                         <Typography>Current Username: {profile?.username}</Typography>
                         <Button
-                            variant='contained'
-                            type='button'
-                            color='secondary'
+                            title='Change Username'
                             startIcon={<Edit />}
-                            sx={{ m: 0.5, width: 210, mb: 2 }}
+                            sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
-                        >
-                            Change Username
-                        </Button>
+                        />
                         <FormControl sx={{ m: 0.5 }} variant='filled'>
                             <InputLabel htmlFor='country' color='secondary' className='!text-text'>
                                 Change Country
@@ -163,38 +142,27 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </FormControl>
                         <Typography>Current Country: {profile?.country}</Typography>
                         <Button
-                            variant='contained'
-                            type='button'
-                            color='secondary'
-                            sx={{ m: 0.5, width: 210, mb: 2 }}
-                            onClick={changeCountry}
+                            title='Change Country'
+                            sx={{ width: 250, mb: 2 }}
                             startIcon={<Language />}
-                        >
-                            Change Country
-                        </Button>
+                            onClick={changeCountry}
+                        />
                         <Typography>
                             Adult Content: {profile?.adult ? 'visible' : 'not visible'}
                         </Typography>
                         <Button
-                            variant='contained'
-                            type='button'
-                            color='secondary'
+                            title='Toggle Adult Flag'
                             startIcon={<NoAdultContent />}
-                            sx={{ m: 0.5, mb: 2 }}
+                            sx={{ width: 250, mb: 2 }}
                             onClick={toggleAdultFlag}
-                        >
-                            Toggle Adult Flag
-                        </Button>
+                        />
                         <Button
-                            variant='contained'
-                            type='button'
+                            title='Close'
                             color='error'
+                            sx={{ minWidth: 100 }}
                             startIcon={<Close />}
-                            sx={{ m: 0.5 }}
                             onClick={handleClose}
-                        >
-                            Close
-                        </Button>
+                        />
                     </div>
                 </Box>
             </Modal>

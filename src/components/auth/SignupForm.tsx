@@ -250,7 +250,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         }
                     />
                 </FormControl>
-                <Button title='Submit' type='submit' loading={loading} color='secondary' />
+                <Button title='Submit' type='submit' loading={loading} />
                 {errorMessage && <ErrorMessage message={errorMessage} />}
             </form>
         </div>

@@ -22,7 +22,8 @@ const DashboardScreen: React.FC = (): JSX.Element => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
     const [queue, setQueue] = useState<ShowData[] | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [logoutLoading, setLogoutLoading] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
 
     const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
@@ -61,6 +62,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      */
     const deleteProfile = async () => {
         if (session) {
+            setDeleteLoading(true);
             await deleteProfileById(session.user.id);
             setProfile(null);
             setSession(null);
@@ -84,9 +86,9 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      * is redirected to login page.
      */
     const handleLogout = async () => {
-        setLoading(true);
+        setLogoutLoading(true);
         await SUPABASE.auth.signOut();
-        setLoading(false);
+        setLogoutLoading(false);
     };
 
     return (
@@ -139,22 +141,18 @@ const DashboardScreen: React.FC = (): JSX.Element => {
 
                     <Button
                         title='Logout'
-                        type='button'
-                        color='secondary'
-                        loading={loading}
-                        startIcon={!loading && <Logout />}
+                        loading={logoutLoading}
+                        startIcon={<Logout />}
                         onClick={handleLogout}
                     />
-                    <ConfirmDeleteModal deleteProfile={deleteProfile} />
+                    <ConfirmDeleteModal deleteProfile={deleteProfile} loading={deleteLoading} />
                 </div>
                 <div>
                     <ShowCarousel data={queue} fallbackText={fallbackText} />
                     <Button
                         title='Clear Queue'
-                        disabled={!queue || queue.length === 0}
                         color='error'
-                        type='button'
-                        sx={{ m: 0.5, width: 210 }}
+                        disabled={!queue || queue.length === 0}
                         startIcon={<Delete />}
                         onClick={clearQueue}
                     />

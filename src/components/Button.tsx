@@ -8,19 +8,19 @@ interface ButtonProps {
      */
     title: string;
     /**
-     * Type of button
+     * Type of button, defaults to `button`
      */
-    type: 'button' | 'submit' | 'reset';
+    type?: 'button' | 'submit' | 'reset';
     /**
-     * MUI color of button
+     * MUI color of button, defaults to `secondary`
      */
-    color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+    color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     /**
-     * Displays loading spinner when true, defaults to false
+     * Displays loading spinner when true, defaults to `false`
      */
     loading?: boolean;
     /**
-     * If the button is clickable, false by default
+     * If the button is clickable, defaults to `false`
      */
     disabled?: boolean;
     /**
@@ -32,7 +32,7 @@ interface ButtonProps {
      */
     onClick?: () => void;
     /**
-     * Styling props to override default styling
+     * MUI styling props to override default styling
      */
     sx?: SxProps<Theme>;
 }
@@ -42,8 +42,8 @@ interface ButtonProps {
  */
 const Button: React.FC<ButtonProps> = ({
     title,
-    type,
-    color,
+    type = 'button',
+    color = 'secondary',
     loading = false,
     disabled = false,
     startIcon,
@@ -58,7 +58,7 @@ const Button: React.FC<ButtonProps> = ({
                 type={type}
                 color={color}
                 disabled={disabled || loading}
-                startIcon={startIcon}
+                startIcon={!loading && startIcon}
                 onClick={onClick}
                 sx={{ margin: 0.5, minWidth: 210, minHeight: 45, ...sx }}
             >
