@@ -132,7 +132,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                         }
                     />
                 </FormControl>
-                <SubmitButton loading={loading} />
+                <SubmitButton loading={loading} title='submit' />
                 {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
             </form>
         </div>
