@@ -1,22 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ConfirmDeleteModal } from '../../components';
+import { Button } from '../../components';
 
 const meta = {
-    title: 'Modals/Confirm Delete Profile',
-    component: ConfirmDeleteModal,
+    title: 'Components/Button',
+    component: Button,
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
     },
-} satisfies Meta<typeof ConfirmDeleteModal>;
+} satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        deleteProfile: () => {},
+        title: 'Submit',
+        type: 'submit',
+        color: 'secondary',
         loading: false,
+        disabled: false,
     },
 };

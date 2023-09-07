@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 import { Delete, ArrowBackIosNew, WarningSharp } from '@mui/icons-material';
+import Button from '../Button';
 
 interface ConfirmDeleteModalProps {
     /**
      * Delete a users profile from supabase
      */
     deleteProfile: () => void;
+    /**
+     * Loading triggered by deleting profile
+     */
+    loading: boolean;
 }
 
 /**
@@ -17,7 +22,10 @@ interface ConfirmDeleteModalProps {
  * will open the modal when clicked.
  * @returns {JSX.Element}
  */
-const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ deleteProfile }): JSX.Element => {
+const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
+    deleteProfile,
+    loading,
+}): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -31,16 +39,11 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ deleteProfile }
     return (
         <>
             <Button
-                variant='contained'
-                size='large'
+                title='Delete Profile'
                 color='error'
-                type='button'
-                sx={{ m: 0.5, width: 210 }}
                 startIcon={<WarningSharp />}
                 onClick={handleOpen}
-            >
-                Delete Profile
-            </Button>
+            />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -67,27 +70,13 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({ deleteProfile }
                         </Typography>
                         <Typography mb={2}>⚠️ Warning! This action cannot be undone.</Typography>
                         <Button
-                            variant='contained'
-                            size='large'
-                            type='button'
+                            title='Yes'
                             color='error'
+                            loading={loading}
                             startIcon={<Delete />}
-                            sx={{ m: 0.5, width: 210 }}
                             onClick={deleteProfile}
-                        >
-                            Yes
-                        </Button>
-                        <Button
-                            variant='contained'
-                            size='large'
-                            type='button'
-                            color='secondary'
-                            startIcon={<ArrowBackIosNew />}
-                            sx={{ m: 0.5, width: 210 }}
-                            onClick={handleClose}
-                        >
-                            No
-                        </Button>
+                        />
+                        <Button title='No' startIcon={<ArrowBackIosNew />} onClick={handleClose} />
                     </div>
                 </Box>
             </Modal>

@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../ErrorMessage';
+import { ErrorMessage, Button } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import {
-    Button,
-    InputAdornment,
-    FilledInput,
-    InputLabel,
-    FormControl,
-    IconButton,
-} from '@mui/material';
+import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 
@@ -29,6 +22,7 @@ const LoginForm: React.FC = (): JSX.Element => {
     const [passwordError, setPasswordError] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     if (session) {
         return <Navigate to={'/dashboard'} />;
@@ -51,6 +45,7 @@ const LoginForm: React.FC = (): JSX.Element => {
      * @returns {Promise<void>} | Does not redirect user
      */
     async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
+        setLoading(true);
         evt.preventDefault();
 
         // Ensure both fields have input
@@ -58,6 +53,7 @@ const LoginForm: React.FC = (): JSX.Element => {
             showError('All fields must be filled out');
             if (!email) setEmailError(true);
             if (!password) setPasswordError(true);
+            setLoading(false);
             return;
         }
 
@@ -65,6 +61,7 @@ const LoginForm: React.FC = (): JSX.Element => {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
             return;
         }
 
@@ -78,6 +75,8 @@ const LoginForm: React.FC = (): JSX.Element => {
             // We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
             LOG.error(error);
+            setLoading(false);
+            return;
         }
 
         // onAuthStateChange function will be triggered
@@ -133,15 +132,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                         }
                     />
                 </FormControl>
-                <Button
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    color='secondary'
-                    sx={{ margin: '10px' }}
-                >
-                    Submit
-                </Button>
+                <Button title='Submit' type='submit' loading={loading} />
                 {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
             </form>
         </div>

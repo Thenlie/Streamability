@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSessionContext, useProfileContext } from '../hooks';
 import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
 import { ShowData } from '../types';
-import { ConfirmDeleteModal, EditProfileModal, ShowCarousel } from '../components';
+import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
 import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
 import Logger from '../logger';
 
@@ -22,10 +22,9 @@ const DashboardScreen: React.FC = (): JSX.Element => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
     const [queue, setQueue] = useState<ShowData[] | null>(null);
+    const [logoutLoading, setLogoutLoading] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
-
-    LOG.debug(JSON.stringify(profile));
-    LOG.debug(JSON.stringify(session));
 
     const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
 
@@ -63,6 +62,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      */
     const deleteProfile = async () => {
         if (session) {
+            setDeleteLoading(true);
             await deleteProfileById(session.user.id);
             setProfile(null);
             setSession(null);
@@ -79,6 +79,16 @@ const DashboardScreen: React.FC = (): JSX.Element => {
             await removeProfileArray(session.user.id, 'queue');
             setQueue(null);
         }
+    };
+
+    /**
+     * Logout current user. When logged out user
+     * is redirected to login page.
+     */
+    const handleLogout = async () => {
+        setLogoutLoading(true);
+        await SUPABASE.auth.signOut();
+        setLogoutLoading(false);
     };
 
     return (
@@ -130,32 +140,22 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <EditProfileModal session={session} profile={profile} setProfile={setProfile} />
 
                     <Button
-                        variant='contained'
-                        size='large'
-                        type='button'
-                        color='secondary'
-                        sx={{ m: 0.5, width: 210 }}
+                        title='Logout'
+                        loading={logoutLoading}
                         startIcon={<Logout />}
-                        onClick={() => SUPABASE.auth.signOut()}
-                    >
-                        Logout
-                    </Button>
-                    <ConfirmDeleteModal deleteProfile={deleteProfile} />
+                        onClick={handleLogout}
+                    />
+                    <ConfirmDeleteModal deleteProfile={deleteProfile} loading={deleteLoading} />
                 </div>
                 <div>
                     <ShowCarousel data={queue} fallbackText={fallbackText} />
                     <Button
-                        disabled={!queue || queue.length === 0}
-                        variant='contained'
-                        size='large'
+                        title='Clear Queue'
                         color='error'
-                        type='button'
-                        sx={{ m: 0.5, width: 210 }}
+                        disabled={!queue || queue.length === 0}
                         startIcon={<Delete />}
                         onClick={clearQueue}
-                    >
-                        Clear Queue
-                    </Button>
+                    />
                 </div>
             </section>
         </>
