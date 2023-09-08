@@ -40,14 +40,19 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
     const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
     const windowSize = useWindowSize();
-    const [viewState, setViewState] = useState<'list' | 'grid'>('list');
+    const storageItem = localStorage.getItem('streamabilityView');
+    const initialView = storageItem === 'grid' ? 'grid' : 'list';
+    const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [showDetails, setShowDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+
+    if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
     // default to grid view on mobile
     useEffect(() => {
         if (windowSize.width && windowSize.width < 750) {
             setViewState('grid');
+            localStorage.setItem('streamabilityView', 'grid');
         }
     }, [windowSize]);
 
@@ -63,6 +68,8 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
 
     const handleViewToggle = useCallback(() => {
         setViewState((prev) => (prev === 'grid' ? 'list' : 'grid'));
+        const view = localStorage.getItem('streamabilityView');
+        localStorage.setItem('streamabilityView', view === 'grid' ? 'list' : 'grid');
     }, [setViewState]);
 
     /**
