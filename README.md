@@ -1,6 +1,13 @@
-# Streamability 2! 🎬
+<p align="center">
+    <img src="./public/android-chrome-192x192.png">
+    <h1 align="center">Streamability 🎬</h1>
+</p>
 
-🚧 Project currently under construction. Please check out version 1! 🚧
+---
+
+### 🚧 Project currently under construction 🚧
+
+---
 
 https://github.com/Thenlie/Streamability/tree/1.0.0-main
 
