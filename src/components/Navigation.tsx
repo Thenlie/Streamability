@@ -12,6 +12,7 @@ import {
     Theme,
     Toolbar,
     Tooltip,
+    Typography,
 } from '@mui/material';
 import {
     AccountCircle,
@@ -91,12 +92,22 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
     return (
         // TODO: #162 Use MUI ThemeProvider
         <AppBar position='static'>
-            <Toolbar className='flex items-center justify-between bg-primary px-8 py-3'>
-                <div>
-                    <Link to='/' className='!text-text'>
-                        Streamability
-                    </Link>
-                </div>
+            <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-primary px-8 py-3 flex-wrap'>
+                <Link to='/' className='!text-text flex items-center'>
+                    <img src='images/logo-transparent.png' className='w-16 inline'></img>
+                    <Typography
+                        variant='h5'
+                        sx={{
+                            display: 'inline',
+                            m: 1,
+                            letterSpacing: 2.5,
+                            fontSize: { xs: 20, sm: 24, md: 36 },
+                        }}
+                        fontFamily={'sunday-grapes'}
+                    >
+                        STREAMABILITY
+                    </Typography>
+                </Link>
 
                 <div className='flex items-center'>
                     {windowWidth <= 768 ? (
