@@ -25,7 +25,7 @@ const FeaturedSearchScreen: React.FC = (): JSX.Element => {
 
     return (
         <div className='mt-6 flex-1 flex flex-col justify-center'>
-            <h1 data-testid='featured-search-heading'>Featured Search Page</h1>
+            <img src='/images/logo-transparent.png' className='w-60 mx-auto' />
             <SearchInput />
             <ShowCarousel data={trendingShows} />
         </div>
