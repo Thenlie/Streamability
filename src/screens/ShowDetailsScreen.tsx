@@ -8,10 +8,105 @@ import {
     getTvDetails,
     getTvRecommendations,
 } from '../helpers';
-import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating } from '../components';
-import { Typography } from '@mui/material';
+import { ProfileArrayCols, ShowData } from '../types';
+import { Providers, ShowCarousel, Rating, Button } from '../components';
+import { Tooltip, Typography } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
+import { useIsInQueue, useIsInWatched, useIsInFavorites, useProfileContext } from '../hooks';
+import {
+    AddToQueue,
+    Cancel,
+    CheckCircle,
+    Favorite,
+    HeartBroken,
+    RemoveFromQueue,
+} from '@mui/icons-material';
+import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
+
+const ProfileButtonSection: React.FC = (): JSX.Element | null => {
+    const location: Location = useLocation();
+    const id = parseInt(location.pathname.split('/')[3]);
+    const showType = location.pathname.split('/')[2];
+    const { profile, setProfile } = useProfileContext();
+    const isInQueue = useIsInQueue(id, profile);
+    const isInFavorites = useIsInFavorites(id, profile);
+    const isInWatched = useIsInWatched(id, profile);
+    const [queueLoading, setQueueLoading] = useState(false);
+    const [favoritesLoading, setFavoritesLoading] = useState(false);
+    const [watchedLoading, setWatchedLoading] = useState(false);
+
+    const handleLoading = (col: ProfileArrayCols, loading: boolean) => {
+        switch (col) {
+            case 'queue':
+                setQueueLoading(loading);
+                break;
+            case 'favorites':
+                setFavoritesLoading(loading);
+                break;
+            case 'watched':
+                setWatchedLoading(loading);
+                break;
+        }
+    };
+
+    const clickHandler = async (col: ProfileArrayCols, type: 'add' | 'remove') => {
+        if (!profile) return;
+        handleLoading(col, true);
+        if (type === 'add') {
+            const res = await addToProfileArray(profile?.id, showType + '-' + id, col);
+            if (!res) return;
+            setProfile(res);
+        } else {
+            const res = await removeFromProfileArray(profile?.id, showType + '-' + id, col);
+            if (!res) return;
+            setProfile(res);
+        }
+        handleLoading(col, false);
+    };
+
+    if (!profile) return null;
+
+    return (
+        <div className='flex flex-col sm:flex-row items-center justify-center'>
+            <Tooltip title={isInQueue ? 'Remove from Queue' : 'Add to Queue'}>
+                <div>
+                    <Button
+                        title='Queue'
+                        color={isInQueue ? 'error' : 'success'}
+                        loading={queueLoading}
+                        onClick={() => clickHandler('queue', isInQueue ? 'remove' : 'add')}
+                        startIcon={isInQueue ? <RemoveFromQueue /> : <AddToQueue />}
+                        sx={{ minWidth: 185 }}
+                    />
+                </div>
+            </Tooltip>
+            <Tooltip title={isInFavorites ? 'Remove from Favorites' : 'Add to Favorites'}>
+                <div>
+                    <Button
+                        title='Favorite'
+                        color={isInFavorites ? 'error' : 'success'}
+                        loading={favoritesLoading}
+                        onClick={() => clickHandler('favorites', isInFavorites ? 'remove' : 'add')}
+                        startIcon={isInFavorites ? <HeartBroken /> : <Favorite />}
+                        sx={{ minWidth: 185 }}
+                    />
+                </div>
+            </Tooltip>
+            <Tooltip title={isInWatched ? 'Remove from Watched' : 'Add to Watched'}>
+                <div>
+                    <Button
+                        title='Watched'
+                        color={isInWatched ? 'error' : 'success'}
+                        loading={watchedLoading}
+                        onClick={() => clickHandler('watched', isInWatched ? 'remove' : 'add')}
+                        startIcon={isInWatched ? <Cancel /> : <CheckCircle />}
+                        sx={{ minWidth: 185 }}
+                    />
+                </div>
+            </Tooltip>
+        </div>
+    );
+};
 
 /**
  * Screen to show more details of a specific show
@@ -21,13 +116,13 @@ import { ShowDetailsLoader } from './loaders';
  */
 const ShowDetailsScreen: React.FC = (): JSX.Element => {
     const location: Location = useLocation();
+    const id = parseInt(location.pathname.split('/')[3]);
+    const showType = location.pathname.split('/')[2];
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState(true);
-    const id = parseInt(location.pathname.split('/')[3]);
-    const showType = location.pathname.split('/')[2];
 
     const fallbackText = 'Sorry, we could not find any recommendations based on this title.';
 
@@ -61,15 +156,10 @@ const ShowDetailsScreen: React.FC = (): JSX.Element => {
 
     return (
         <>
-            <section className='m-6 flex flex-col md:flex-row'>
-                <div className='rounded-md m-auto w-[350px] h-[550px]'>
+            <section className='m-6 mb-8 flex flex-col lg:flex-row'>
+                <div className='rounded-md m-3 w-[250px] lg:w-[300px] h-[400px] lg:h-[550px]'>
                     <img
-                        style={{
-                            width: '350px',
-                            height: '550px',
-                            maxWidth: 'none',
-                            borderRadius: '5px',
-                        }}
+                        className='w-[250px] lg:w-[300px] h-[400px] lg:h-[550px] max-w-none rounded-md'
                         src={
                             details.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
@@ -111,6 +201,7 @@ const ShowDetailsScreen: React.FC = (): JSX.Element => {
                     <div className='bg-primary rounded-md my-3 p-2'>
                         <Providers id={details.id} showType={showType} />
                     </div>
+                    <ProfileButtonSection />
                 </div>
             </section>
             <section className='pb-6'>
