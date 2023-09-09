@@ -3,7 +3,7 @@ import { ShowData } from '../types/tmdb';
 import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
-import { WindowSize } from '../hooks/useWIndowSize';
+import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
 import { Typography } from '@mui/material';
 
@@ -165,27 +165,25 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({ data, size, fallbackText })
     }
 
     return (
-        <section className='pt-12'>
-            <div className={`w-[${carouselWidth}]`}>
-                <Carousel
-                    wrapAround
-                    className='bg-primary'
-                    style={{
-                        width: carouselWidth,
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                        borderRadius: '5px',
-                    }}
-                    defaultControlsConfig={{
-                        pagingDotsClassName: 'hidden',
-                        nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
-                        prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
-                    }}
-                >
-                    {handleDataSlice(data)}
-                </Carousel>
-            </div>
-        </section>
+        <div className={`w-[${carouselWidth}]`}>
+            <Carousel
+                wrapAround
+                className='bg-primary'
+                style={{
+                    width: carouselWidth,
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    borderRadius: '5px',
+                }}
+                defaultControlsConfig={{
+                    pagingDotsClassName: 'hidden',
+                    nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
+                    prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
+                }}
+            >
+                {handleDataSlice(data)}
+            </Carousel>
+        </div>
     );
 };
 
