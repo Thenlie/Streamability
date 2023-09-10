@@ -36,7 +36,7 @@
 
 @font-face {
   font-family: 'sunday-grapes';
-  src: url('/public/fonts/Sunday\ Grapes.ttf');
+  src: url('/fonts/Sunday\ Grapes.ttf');
 }
 
 input:-webkit-autofill,

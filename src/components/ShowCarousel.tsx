@@ -22,6 +22,10 @@ interface ShowCarouselProps {
      * in the carousel
      */
     fallbackText?: string;
+    /**
+     * TODO:
+     */
+    removeFromQueue?: (showId: string) => Promise<void>;
 }
 
 /**
@@ -49,11 +53,19 @@ export function getCarouselSteps(windowSize: WindowSize): number {
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
-const CarouselChildren: React.FC<{ data: ShowData[] }> = ({ data }): JSX.Element => {
+const CarouselChildren: React.FC<{
+    data: ShowData[];
+    removeFromQueue?: (showId: string) => Promise<void>;
+}> = ({ data, removeFromQueue }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster key={i} details={item} showType={item.media_type} />
+                <ShowPoster
+                    key={i}
+                    details={item}
+                    showType={item.media_type}
+                    removeFromQueue={removeFromQueue}
+                />
             ))}
         </div>
     );
@@ -65,7 +77,12 @@ const CarouselChildren: React.FC<{ data: ShowData[] }> = ({ data }): JSX.Element
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-const ShowCarousel: React.FC<ShowCarouselProps> = ({ data, size, fallbackText }): JSX.Element => {
+const ShowCarousel: React.FC<ShowCarouselProps> = ({
+    data,
+    size,
+    fallbackText,
+    removeFromQueue,
+}): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [loading, setLoading] = useState(true);
@@ -116,7 +133,9 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({ data, size, fallbackText })
         if (data) {
             for (let i = 0; i < filteredArray.length; i += carouselSteps) {
                 const chunk = filteredArray.slice(i, i + carouselSteps);
-                arr.push(<CarouselChildren key={i} data={chunk} />);
+                arr.push(
+                    <CarouselChildren key={i} data={chunk} removeFromQueue={removeFromQueue} />
+                );
             }
         }
         return arr;
