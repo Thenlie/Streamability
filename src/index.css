@@ -30,7 +30,7 @@
 
 @layer components {
   .btn {
-    @apply bg-highlight py-2 px-4 rounded hover: bg-hlhover
+    @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
   }
 }
 
