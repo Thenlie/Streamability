@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { ErrorMessage, Button } from '../../components';
-import { SUPABASE } from '../../helpers';
+import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import {
+    InputAdornment,
+    FilledInput,
+    InputLabel,
+    FormControl,
+    IconButton,
+    Select,
+    MenuItem,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 
@@ -20,6 +28,8 @@ const SignUpForm: React.FC = (): JSX.Element => {
     const [emailError, setEmailError] = useState(false);
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
+    const [country, setCountry] = useState('United States of America');
+    const [countryError, setCountryError] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -80,7 +90,8 @@ const SignUpForm: React.FC = (): JSX.Element => {
         if (!username) setUsernameError(true);
         if (!password) setPasswordError(true);
         if (!confirmPassword) setConfirmPasswordError(true);
-        if (!email || !password || !confirmPassword || !username) {
+        if (!country) setCountryError(true);
+        if (!email || !password || !confirmPassword || !username || !country) {
             showError('All fields must be filled out');
             setLoading(false);
             return;
@@ -118,10 +129,10 @@ const SignUpForm: React.FC = (): JSX.Element => {
             options: {
                 data: {
                     username: username,
+                    country: country,
                 },
             },
         });
-
         if (error) {
             if (
                 error.message ==
@@ -181,6 +192,29 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         onChange={(e) => setUsername(e.target.value)}
                         onFocus={() => setUsernameError(false)}
                     />
+                </FormControl>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='country-input' color='secondary' className='!text-text'>
+                        Country
+                    </InputLabel>
+                    <Select
+                        id='country-input'
+                        name='country'
+                        color='secondary'
+                        className='!text-text text-left'
+                        value={country}
+                        error={countryError}
+                        onChange={(e) => setCountry(e.target.value)}
+                        onFocus={() => setCountryError(false)}
+                        MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
+                        defaultValue={country}
+                    >
+                        {COUNTRIES.map((item, i) => (
+                            <MenuItem key={i} value={item.country}>
+                                {item.country}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>

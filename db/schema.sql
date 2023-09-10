@@ -36,8 +36,8 @@ create policy "Users can delete own profiles." on profiles
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin
-  insert into public.profiles (id, email, username)
-  values (new.id, new.email, new.raw_user_meta_data->>'username');
+  insert into public.profiles (id, email, username, country)
+  values (new.id, new.email, new.raw_user_meta_data->>'username', new.raw_user_meta_data->>'country');
   return new;
 end;
 $$ language plpgsql security definer;
@@ -105,6 +105,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
+
 -- remove entire which_col provided
 CREATE OR REPLACE FUNCTION remove_all(profile_id uuid, which_col text) RETURNS SETOF profiles AS
 $$
@@ -123,6 +124,8 @@ BEGIN
 END;
 $$
 language plpgsql;
+
+-- TODO: clear entire watch queue
 
 -- Set up Storage!
 -- insert into storage.buckets (id, name)
