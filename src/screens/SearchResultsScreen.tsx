@@ -158,7 +158,7 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
         if (showDetails.length === 0) {
             return (
                 <>
-                    <SearchError />
+                    <SearchError query={query} />
                 </>
             );
         }
