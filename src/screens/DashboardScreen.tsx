@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSessionContext, useProfileContext } from '../hooks';
-import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
+import {
+    deleteProfileById,
+    getProfileQueue,
+    removeFromProfileArray,
+    removeProfileArray,
+} from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
@@ -53,7 +58,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
             LOG.debug(String(queue));
         };
         handler();
-    }, [session]);
+    }, [session, profile]);
 
     /**
      * Delete profile row and auth entry.
@@ -78,6 +83,14 @@ const DashboardScreen: React.FC = (): JSX.Element => {
         if (session) {
             await removeProfileArray(session.user.id, 'queue');
             setQueue(null);
+        }
+    };
+
+    const removeFromQueue = async (showId: string) => {
+        if (profile) {
+            const res = await removeFromProfileArray(profile.id, showId, 'queue');
+            if (!res) return;
+            setProfile(res);
         }
     };
 
@@ -148,7 +161,11 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <ConfirmDeleteModal deleteProfile={deleteProfile} loading={deleteLoading} />
                 </div>
                 <div>
-                    <ShowCarousel data={queue} fallbackText={fallbackText} />
+                    <ShowCarousel
+                        data={queue}
+                        fallbackText={fallbackText}
+                        removeFromQueue={removeFromQueue}
+                    />
                     <Button
                         title='Clear Queue'
                         color='error'

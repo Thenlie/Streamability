@@ -30,13 +30,13 @@
 
 @layer components {
   .btn {
-    @apply bg-highlight py-2 px-4 rounded hover: bg-hlhover
+    @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
   }
 }
 
 @font-face {
   font-family: 'sunday-grapes';
-  src: url('/public/fonts/Sunday\ Grapes.ttf');
+  src: url('/fonts/Sunday\ Grapes.ttf');
 }
 
 input:-webkit-autofill,

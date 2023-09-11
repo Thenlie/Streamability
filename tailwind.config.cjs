@@ -9,6 +9,7 @@ module.exports = {
                 background: 'rgb(var(--color-background))',
                 foreground: 'rgb(var(--color-foreground))',
                 primary: 'rgb(var(--color-primary))',
+                transprimary: 'rgb(var(--color-primary) / 0.5)',
                 text: 'rgb(var(--color-text))',
                 highlight: 'rgb(var(--color-highlight))',
                 hlhover: 'rgb(var(--color-hlhover))',
