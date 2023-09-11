@@ -13,6 +13,7 @@ import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
+import SearchError from './SearchError';
 
 export {
     ShowCard,
@@ -27,6 +28,7 @@ export {
     Navigation,
     Rating,
     Button,
+    SearchError,
 };
 export * from './loaders';
 export * from './modals';

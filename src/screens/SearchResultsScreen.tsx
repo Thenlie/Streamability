@@ -7,6 +7,7 @@ import {
     ShowListCard,
     ShowListCardProps,
     ShowListCardLoader,
+    SearchError,
 } from '../components';
 import { ShowData } from '../types';
 import { useProfileContext, useWindowSize } from '../hooks';
@@ -153,13 +154,14 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
     }
 
     // TODO: #438 Handle this error better
-    if (!showDetails) {
-        return (
-            <>
-                {SearchResultHeader}
-                <Typography variant='h6'>Sorry! No show data...</Typography>
-            </>
-        );
+    if (showDetails) {
+        if (showDetails.length === 0) {
+            return (
+                <>
+                    <SearchError />
+                </>
+            );
+        }
     }
 
     return (
