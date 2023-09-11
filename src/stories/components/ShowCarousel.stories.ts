@@ -8,7 +8,7 @@ const meta = {
     component: ShowCarousel,
     tags: ['autodocs'],
     parameters: {
-        layout: 'centered',
+        layout: 'fullscreen',
     },
     decorators: [withRouter],
 } satisfies Meta<typeof ShowCarousel>;
