@@ -13,7 +13,9 @@
     "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
     "setup": "git config core.hooksPath .githooks",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean": "./scripts/clean.sh",
+    "postclean": "npm install"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
