@@ -125,8 +125,6 @@ END;
 $$
 language plpgsql;
 
--- TODO: clear entire watch queue
-
 -- Set up Storage!
 -- insert into storage.buckets (id, name)
 --   values ('avatars', 'avatars');

@@ -62,7 +62,7 @@ export const COUNTRIES = [
     { country: 'Canada', abbrev: 'CA' },
     { country: 'Congo', abbrev: 'CD' },
     { country: 'Switzerland', abbrev: 'CH' },
-    // eslint-disable-next-line
+    // eslint-disable-next-line prettier/prettier
     { country: 'Cote D\'Ivoire', abbrev: 'CI' },
     { country: 'Chile', abbrev: 'CL' },
     { country: 'Cameroon', abbrev: 'CM' },

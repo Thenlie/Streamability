@@ -13,7 +13,7 @@ import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
-import SearchError from './SearchError';
+import EmptySearchResults from './EmptySearchResults';
 
 export {
     ShowCard,
@@ -28,7 +28,7 @@ export {
     Navigation,
     Rating,
     Button,
-    SearchError,
+    EmptySearchResults,
 };
 export * from './loaders';
 export * from './modals';

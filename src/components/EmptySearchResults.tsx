@@ -4,7 +4,7 @@ import { ShowData } from '../types';
 import { getMovieTrending } from '../helpers';
 import ShowCarousel from './ShowCarousel';
 
-interface ShowErrorProps {
+interface EmptySearchResultsProps {
     /**
      * String of query searched by user
      */
@@ -16,7 +16,7 @@ interface ShowErrorProps {
  *
  * @returns {JSX.Element} | Search Error
  */
-const SearchError: React.FC<ShowErrorProps> = ({ query }): JSX.Element => {
+const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query }): JSX.Element => {
     const [trending, setTrending] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
@@ -37,8 +37,7 @@ const SearchError: React.FC<ShowErrorProps> = ({ query }): JSX.Element => {
                     </Typography>
                 </div>
                 <Typography>
-                    {/* eslint-disable-next-line */}
-                    We couldn't find any results for
+                    We couldn&apos;t find any results for
                     <Typography sx={{ fontWeight: 700, display: 'inline' }}> {query}! </Typography>
                     Please try again with a different keyword or check your spelling.
                 </Typography>
@@ -55,4 +54,4 @@ const SearchError: React.FC<ShowErrorProps> = ({ query }): JSX.Element => {
     );
 };
 
-export default SearchError;
+export default EmptySearchResults;
