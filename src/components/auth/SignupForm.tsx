@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ErrorMessage, Button } from '../../components';
 import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
@@ -156,6 +156,14 @@ const SignUpForm: React.FC = (): JSX.Element => {
         return;
     };
 
+    const DropDownItems: JSX.Element[] = useMemo(() => {
+        return COUNTRIES.map((item, i) => (
+            <MenuItem key={i} value={item.country}>
+                {item.country}
+            </MenuItem>
+        ));
+    }, [COUNTRIES]);
+
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
             <h1 data-testid='signup-heading'>Signup</h1>
@@ -209,11 +217,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
                         defaultValue={country}
                     >
-                        {COUNTRIES.map((item, i) => (
-                            <MenuItem key={i} value={item.country}>
-                                {item.country}
-                            </MenuItem>
-                        ))}
+                        {DropDownItems}
                     </Select>
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>

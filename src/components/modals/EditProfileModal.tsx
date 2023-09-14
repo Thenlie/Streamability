@@ -4,10 +4,20 @@ import {
     setProfileAdultFlag,
     setProfileCountry,
 } from '../../supabase/profiles';
-import { Box, FilledInput, FormControl, InputLabel, Modal, Typography } from '@mui/material';
+import {
+    Box,
+    FilledInput,
+    FormControl,
+    InputLabel,
+    Modal,
+    Typography,
+    Select,
+    MenuItem,
+} from '@mui/material';
 import { Close, Edit, Language, NoAdultContent } from '@mui/icons-material';
 import { Profile, Session } from '../../types';
 import Button from '../Button';
+import { COUNTRIES } from '../../helpers';
 
 interface EditProfileModalProps {
     session: Session;
@@ -67,7 +77,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     };
 
     const changeCountry = async () => {
-        if (session && country.length === 2) {
+        if (session) {
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
             setCountry('');
@@ -124,21 +134,32 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
                         />
-                        <FormControl sx={{ m: 0.5 }} variant='filled'>
-                            <InputLabel htmlFor='country' color='secondary' className='!text-text'>
+                        <FormControl sx={{ m: 0.5, width: 210 }} variant='filled'>
+                            <InputLabel
+                                htmlFor='country-input'
+                                color='secondary'
+                                className='!text-text'
+                            >
                                 Change Country
                             </InputLabel>
-                            <FilledInput
+                            <Select
+                                id='country-input'
                                 name='country'
+                                color='secondary'
+                                className='!text-text text-left'
                                 value={country}
-                                onChange={(e) => {
-                                    setCountry(e.target.value);
-                                }}
                                 error={countryError}
+                                onChange={(e) => setCountry(e.target.value)}
                                 onFocus={() => setCountryError(false)}
-                                inputProps={{ maxLength: 2, minLength: 2 }}
-                                sx={{ m: 0.5, width: 210 }}
-                            />
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
+                                defaultValue={country}
+                            >
+                                {COUNTRIES.map((item, i) => (
+                                    <MenuItem key={i} value={item.country}>
+                                        {item.country}
+                                    </MenuItem>
+                                ))}
+                            </Select>
                         </FormControl>
                         <Typography>Current Country: {profile?.country}</Typography>
                         <Button

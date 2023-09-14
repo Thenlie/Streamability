@@ -7,7 +7,7 @@ import {
     ShowListCard,
     ShowListCardProps,
     ShowListCardLoader,
-    SearchError,
+    EmptySearchResults,
 } from '../components';
 import { ShowData } from '../types';
 import { useProfileContext, useWindowSize } from '../hooks';
@@ -153,15 +153,12 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
         );
     }
 
-    // TODO: #438 Handle this error better
-    if (showDetails) {
-        if (showDetails.length === 0) {
-            return (
-                <>
-                    <SearchError query={query} />
-                </>
-            );
-        }
+    if (showDetails && showDetails.length === 0) {
+        return (
+            <>
+                <EmptySearchResults query={query} />
+            </>
+        );
     }
 
     return (
