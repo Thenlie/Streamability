@@ -154,6 +154,8 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                         fallbackText={fallbackText}
                         profileActions={profileActions}
                         showQueueButton
+                        showFavoritesButton
+                        showWatchedButton
                     />
                     <Button
                         title='Clear Queue'

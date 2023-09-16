@@ -1,15 +1,12 @@
 import { useProfileContext } from './context';
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
+import { ProfileActions } from '../types';
 
-export type ProfileActions = {
-    removeFromQueue: (showId: string) => Promise<void>;
-    addToQueue: (showId: string) => Promise<void>;
-    removeFromFavorites: (showId: string) => Promise<void>;
-    addToFavorites: (showId: string) => Promise<void>;
-    removeFromWatched: (showId: string) => Promise<void>;
-    addToWatched: (showId: string) => Promise<void>;
-};
-
+/**
+ * Custom hook that returns an object containing all
+ * the possible profile actions such as adding to and
+ * removing from all profile arrays
+ */
 const useProfileActions = (): ProfileActions | undefined => {
     const { profile, setProfile } = useProfileContext();
 

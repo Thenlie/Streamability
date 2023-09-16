@@ -49,4 +49,13 @@ export interface Profile {
     created_at: string;
 }
 
+export type ProfileActions = {
+    removeFromQueue: (showId: string) => Promise<void>;
+    addToQueue: (showId: string) => Promise<void>;
+    removeFromFavorites: (showId: string) => Promise<void>;
+    addToFavorites: (showId: string) => Promise<void>;
+    removeFromWatched: (showId: string) => Promise<void>;
+    addToWatched: (showId: string) => Promise<void>;
+};
+
 export type ProfileArrayCols = 'queue' | 'favorites' | 'watched';

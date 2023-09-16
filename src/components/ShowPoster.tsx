@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { CardMedia, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { CheckCircle, Delete, Favorite } from '@mui/icons-material';
-import { ProfileActions } from '../hooks/useProfileActions';
+import { ProfileActions } from '../types';
 
 export const SHOW_POSTER_WIDTH = 180;
 
-export interface ShowPosterButtonProps {
+interface ShowPosterButtonProps {
     /**
      * If buttons are visible
      */
@@ -34,7 +34,14 @@ export interface ShowPosterButtonProps {
     showWatchedButton?: boolean;
 }
 
-export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
+/**
+ * Buttons that perform profile actions such as adding to
+ * or removing from the profile arrays.
+ *
+ * @todo update icons based on "in profile" status
+ * @todo update tooltip position
+ */
+const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     visible,
     details,
     profileActions,
@@ -42,6 +49,18 @@ export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     showFavoritesButton = false,
     showWatchedButton = false,
 }) => {
+    const ICON_WIDTH = 40;
+    const ICON_POS = -175;
+
+    const calcIconThreePos = (): number => {
+        if (showQueueButton && showFavoritesButton) return ICON_POS + ICON_WIDTH * 2;
+        else if (showQueueButton || showFavoritesButton) return ICON_POS + ICON_WIDTH;
+        else return ICON_POS;
+    };
+
+    const icon_two_pos = showQueueButton ? ICON_POS + ICON_WIDTH : ICON_POS;
+    const icon_three_pos = calcIconThreePos();
+
     if (!profileActions) return <></>;
 
     return (
@@ -63,7 +82,7 @@ export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                                 display: visible ? 'block' : 'none',
                                 position: 'relative',
                                 top: 0,
-                                right: -175,
+                                right: ICON_POS,
                                 marginLeft: -4.4,
                                 zIndex: 1,
                             }}
@@ -90,7 +109,7 @@ export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                                 display: visible ? 'block' : 'none',
                                 position: 'relative',
                                 top: 0,
-                                right: -175,
+                                right: icon_two_pos,
                                 marginLeft: -4.4,
                                 zIndex: 1,
                             }}
@@ -115,7 +134,7 @@ export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                                 display: visible ? 'block' : 'none',
                                 position: 'relative',
                                 top: 0,
-                                right: -135,
+                                right: icon_three_pos,
                                 marginLeft: -4.4,
                                 zIndex: 1,
                             }}
@@ -127,7 +146,7 @@ export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     );
 };
 
-export interface ShowPosterProps {
+interface ShowPosterProps {
     /**
      * Movie or TV show metadata
      */
@@ -155,13 +174,8 @@ export interface ShowPosterProps {
 }
 
 /**
- * Show cards are rendered all over the application in different situations
- * Be sure changes made to this component are either conditionally applied
- * or intended to be on every single show card
- *
- * @todo Make button positioning conditional for 1, 2 or 3 icons
- * @param props | returns details object passed from SearchResultScreen.tsx
- * @returns {JSX.Element} | Single show card
+ * A show card that only shows the poster image, no text or other content.
+ * Used in the Show Carousel.
  */
 const ShowPoster: React.FC<ShowPosterProps> = ({ details, showType, ...rest }): JSX.Element => {
     const [hover, setHover] = useState(false);

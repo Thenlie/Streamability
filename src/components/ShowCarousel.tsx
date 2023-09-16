@@ -6,7 +6,7 @@ import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
 import { Typography } from '@mui/material';
-import { ProfileActions } from '../hooks/useProfileActions';
+import { ProfileActions } from '../types';
 
 interface ShowCarouselProps {
     /**
