@@ -2,7 +2,8 @@ import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
-import { Delete } from '@mui/icons-material';
+import { CheckCircle, Delete, Favorite } from '@mui/icons-material';
+import { ProfileActions } from '../hooks/useProfileActions';
 
 export const SHOW_POSTER_WIDTH = 180;
 
@@ -16,9 +17,21 @@ export interface ShowPosterProps {
      */
     showType: string;
     /**
-     * Remove a single show from the users queue
+     * Functions to alter profile arrays
      */
-    removeFromQueue?: (showId: string) => Promise<void>;
+    profileActions?: ProfileActions;
+    /**
+     * If the queue button should be visible
+     */
+    showQueueButton?: boolean;
+    /**
+     * If the favorites button should be visible
+     */
+    showFavoritesButton?: boolean;
+    /**
+     * If the watched button should be visible
+     */
+    showWatchedButton?: boolean;
 }
 
 /**
@@ -26,13 +39,17 @@ export interface ShowPosterProps {
  * Be sure changes made to this component are either conditionally applied
  * or intended to be on every single show card
  *
+ * @todo Make button positioning conditional for 1, 2 or 3 icons
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
 const ShowPoster: React.FC<ShowPosterProps> = ({
     details,
     showType,
-    removeFromQueue,
+    profileActions,
+    showQueueButton = false,
+    showFavoritesButton = false,
+    showWatchedButton = false,
 }): JSX.Element => {
     const [hover, setHover] = useState(false);
 
@@ -47,10 +64,12 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             data-testid='show-card-component'
             className='m-1 flex w-[180px] rounded-sm'
         >
-            {removeFromQueue && (
+            {showQueueButton && (
                 <Tooltip title='Remove from Queue' placement='right-start' className='mt-2'>
                     <div
-                        onClick={() => removeFromQueue(details.media_type + '-' + details.id)}
+                        onClick={() =>
+                            profileActions?.removeFromQueue(details.media_type + '-' + details.id)
+                        }
                         className='cursor-pointer'
                     >
                         <Delete
@@ -63,6 +82,58 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
                                 position: 'relative',
                                 top: 0,
                                 right: -175,
+                                marginLeft: -4.4,
+                                zIndex: 1,
+                            }}
+                        />
+                    </div>
+                </Tooltip>
+            )}
+            {showFavoritesButton && (
+                <Tooltip title='Add to Favorites' placement='right-start' className='mt-2'>
+                    <div
+                        onClick={() =>
+                            profileActions?.removeFromFavorites(
+                                details.media_type + '-' + details.id
+                            )
+                        }
+                        className='cursor-pointer'
+                    >
+                        <Favorite
+                            titleAccess={`Add ${details.title} to favorites`}
+                            color='error'
+                            fontSize='large'
+                            className='bg-transprimary rounded-full p-[2px]'
+                            sx={{
+                                display: hover ? 'block' : 'none',
+                                position: 'relative',
+                                top: 0,
+                                right: -175,
+                                marginLeft: -4.4,
+                                zIndex: 1,
+                            }}
+                        />
+                    </div>
+                </Tooltip>
+            )}
+            {showWatchedButton && (
+                <Tooltip title='Mark as Watched' placement='right-start' className='mt-2'>
+                    <div
+                        onClick={() =>
+                            profileActions?.removeFromWatched(details.media_type + '-' + details.id)
+                        }
+                        className='cursor-pointer'
+                    >
+                        <CheckCircle
+                            titleAccess={`Mark ${details.title} as watched`}
+                            color='success'
+                            fontSize='large'
+                            className='bg-transprimary rounded-full p-[2px]'
+                            sx={{
+                                display: hover ? 'block' : 'none',
+                                position: 'relative',
+                                top: 0,
+                                right: -135,
                                 marginLeft: -4.4,
                                 zIndex: 1,
                             }}

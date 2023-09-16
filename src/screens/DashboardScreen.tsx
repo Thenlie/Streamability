@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSessionContext, useProfileContext } from '../hooks';
-import {
-    deleteProfileById,
-    getProfileQueue,
-    removeFromProfileArray,
-    removeProfileArray,
-} from '../supabase/profiles';
+import { useSessionContext, useProfileContext, useProfileActions } from '../hooks';
+import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
@@ -26,6 +21,7 @@ const LOG = new Logger('DashboardScreen');
 const DashboardScreen: React.FC = (): JSX.Element => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
+    const profileActions = useProfileActions();
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -83,14 +79,6 @@ const DashboardScreen: React.FC = (): JSX.Element => {
         if (session) {
             await removeProfileArray(session.user.id, 'queue');
             setQueue(null);
-        }
-    };
-
-    const removeFromQueue = async (showId: string) => {
-        if (profile) {
-            const res = await removeFromProfileArray(profile.id, showId, 'queue');
-            if (!res) return;
-            setProfile(res);
         }
     };
 
@@ -164,7 +152,8 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <ShowCarousel
                         data={queue}
                         fallbackText={fallbackText}
-                        removeFromQueue={removeFromQueue}
+                        profileActions={profileActions}
+                        showQueueButton
                     />
                     <Button
                         title='Clear Queue'
