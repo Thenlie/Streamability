@@ -28,15 +28,15 @@ interface ShowCarouselProps {
      */
     profileActions?: ProfileActions;
     /**
-     * If the queue button should be visible
+     * If the queue button on the show posters should be visible
      */
     showQueueButton?: boolean;
     /**
-     * If the favorites button should be visible
+     * If the favorites button on the show posters should be visible
      */
     showFavoritesButton?: boolean;
     /**
-     * If the watched button should be visible
+     * If the watched button on the show posters should be visible
      */
     showWatchedButton?: boolean;
 }

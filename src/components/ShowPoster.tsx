@@ -7,6 +7,126 @@ import { ProfileActions } from '../hooks/useProfileActions';
 
 export const SHOW_POSTER_WIDTH = 180;
 
+export interface ShowPosterButtonProps {
+    /**
+     * If buttons are visible
+     */
+    visible: boolean;
+    /**
+     * Movie or TV show metadata
+     */
+    details: ShowData;
+    /**
+     * Functions to alter profile arrays
+     */
+    profileActions?: ProfileActions;
+    /**
+     * If the queue button should be visible
+     */
+    showQueueButton?: boolean;
+    /**
+     * If the favorites button should be visible
+     */
+    showFavoritesButton?: boolean;
+    /**
+     * If the watched button should be visible
+     */
+    showWatchedButton?: boolean;
+}
+
+export const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
+    visible,
+    details,
+    profileActions,
+    showQueueButton = false,
+    showFavoritesButton = false,
+    showWatchedButton = false,
+}) => {
+    if (!profileActions) return <></>;
+
+    return (
+        <>
+            {showQueueButton && (
+                <Tooltip title='Remove from Queue' placement='right-start' className='mt-2'>
+                    <div
+                        onClick={() =>
+                            profileActions.removeFromQueue(details.media_type + '-' + details.id)
+                        }
+                        className='cursor-pointer'
+                    >
+                        <Delete
+                            titleAccess={`Remove ${details.title} from queue`}
+                            color='error'
+                            fontSize='large'
+                            className='bg-transprimary rounded-full p-[2px]'
+                            sx={{
+                                display: visible ? 'block' : 'none',
+                                position: 'relative',
+                                top: 0,
+                                right: -175,
+                                marginLeft: -4.4,
+                                zIndex: 1,
+                            }}
+                        />
+                    </div>
+                </Tooltip>
+            )}
+            {showFavoritesButton && (
+                <Tooltip title='Add to Favorites' placement='right-start' className='mt-2'>
+                    <div
+                        onClick={() =>
+                            profileActions.removeFromFavorites(
+                                details.media_type + '-' + details.id
+                            )
+                        }
+                        className='cursor-pointer'
+                    >
+                        <Favorite
+                            titleAccess={`Add ${details.title} to favorites`}
+                            color='error'
+                            fontSize='large'
+                            className='bg-transprimary rounded-full p-[2px]'
+                            sx={{
+                                display: visible ? 'block' : 'none',
+                                position: 'relative',
+                                top: 0,
+                                right: -175,
+                                marginLeft: -4.4,
+                                zIndex: 1,
+                            }}
+                        />
+                    </div>
+                </Tooltip>
+            )}
+            {showWatchedButton && (
+                <Tooltip title='Mark as Watched' placement='right-start' className='mt-2'>
+                    <div
+                        onClick={() =>
+                            profileActions.removeFromWatched(details.media_type + '-' + details.id)
+                        }
+                        className='cursor-pointer'
+                    >
+                        <CheckCircle
+                            titleAccess={`Mark ${details.title} as watched`}
+                            color='success'
+                            fontSize='large'
+                            className='bg-transprimary rounded-full p-[2px]'
+                            sx={{
+                                display: visible ? 'block' : 'none',
+                                position: 'relative',
+                                top: 0,
+                                right: -135,
+                                marginLeft: -4.4,
+                                zIndex: 1,
+                            }}
+                        />
+                    </div>
+                </Tooltip>
+            )}
+        </>
+    );
+};
+
 export interface ShowPosterProps {
     /**
      * Movie or TV show metadata
@@ -64,83 +184,14 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             data-testid='show-card-component'
             className='m-1 flex w-[180px] rounded-sm'
         >
-            {showQueueButton && (
-                <Tooltip title='Remove from Queue' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            profileActions?.removeFromQueue(details.media_type + '-' + details.id)
-                        }
-                        className='cursor-pointer'
-                    >
-                        <Delete
-                            titleAccess={`Remove ${details.title} from queue`}
-                            color='error'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: hover ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: -175,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
-                    </div>
-                </Tooltip>
-            )}
-            {showFavoritesButton && (
-                <Tooltip title='Add to Favorites' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            profileActions?.removeFromFavorites(
-                                details.media_type + '-' + details.id
-                            )
-                        }
-                        className='cursor-pointer'
-                    >
-                        <Favorite
-                            titleAccess={`Add ${details.title} to favorites`}
-                            color='error'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: hover ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: -175,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
-                    </div>
-                </Tooltip>
-            )}
-            {showWatchedButton && (
-                <Tooltip title='Mark as Watched' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            profileActions?.removeFromWatched(details.media_type + '-' + details.id)
-                        }
-                        className='cursor-pointer'
-                    >
-                        <CheckCircle
-                            titleAccess={`Mark ${details.title} as watched`}
-                            color='success'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: hover ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: -135,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
-                    </div>
-                </Tooltip>
-            )}
+            <ShowPosterButtons
+                visible={hover}
+                details={details}
+                profileActions={profileActions}
+                showQueueButton={showQueueButton}
+                showFavoritesButton={showFavoritesButton}
+                showWatchedButton={showWatchedButton}
+            />
             <Link
                 to={`/details/${showType}/${details.id}`}
                 state={details}
