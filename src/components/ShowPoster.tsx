@@ -163,14 +163,7 @@ export interface ShowPosterProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-const ShowPoster: React.FC<ShowPosterProps> = ({
-    details,
-    showType,
-    profileActions,
-    showQueueButton = false,
-    showFavoritesButton = false,
-    showWatchedButton = false,
-}): JSX.Element => {
+const ShowPoster: React.FC<ShowPosterProps> = ({ details, showType, ...rest }): JSX.Element => {
     const [hover, setHover] = useState(false);
 
     const hoverHandler = (hovering: boolean) => {
@@ -184,14 +177,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             data-testid='show-card-component'
             className='m-1 flex w-[180px] rounded-sm'
         >
-            <ShowPosterButtons
-                visible={hover}
-                details={details}
-                profileActions={profileActions}
-                showQueueButton={showQueueButton}
-                showFavoritesButton={showFavoritesButton}
-                showWatchedButton={showWatchedButton}
-            />
+            <ShowPosterButtons visible={hover} details={details} {...rest} />
             <Link
                 to={`/details/${showType}/${details.id}`}
                 state={details}

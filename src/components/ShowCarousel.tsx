@@ -69,28 +69,14 @@ export function getCarouselSteps(windowSize: WindowSize): number {
 const CarouselChildren: React.FC<{
     data: ShowData[];
     profileActions?: ProfileActions;
-    showQueueButton: boolean;
-    showFavoritesButton: boolean;
-    showWatchedButton: boolean;
-}> = ({
-    data,
-    profileActions,
-    showQueueButton,
-    showWatchedButton,
-    showFavoritesButton,
-}): JSX.Element => {
+    showQueueButton?: boolean;
+    showFavoritesButton?: boolean;
+    showWatchedButton?: boolean;
+}> = ({ data, ...rest }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster
-                    key={i}
-                    details={item}
-                    showType={item.media_type}
-                    profileActions={profileActions}
-                    showQueueButton={showQueueButton}
-                    showFavoritesButton={showFavoritesButton}
-                    showWatchedButton={showWatchedButton}
-                />
+                <ShowPoster key={i} details={item} showType={item.media_type} {...rest} />
             ))}
         </div>
     );
@@ -106,10 +92,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     data,
     size,
     fallbackText,
-    profileActions,
-    showQueueButton = false,
-    showFavoritesButton = false,
-    showWatchedButton = false,
+    ...rest
 }): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
@@ -161,16 +144,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         if (data) {
             for (let i = 0; i < filteredArray.length; i += carouselSteps) {
                 const chunk = filteredArray.slice(i, i + carouselSteps);
-                arr.push(
-                    <CarouselChildren
-                        key={i}
-                        data={chunk}
-                        profileActions={profileActions}
-                        showQueueButton={showQueueButton}
-                        showFavoritesButton={showFavoritesButton}
-                        showWatchedButton={showWatchedButton}
-                    />
-                );
+                arr.push(<CarouselChildren key={i} data={chunk} {...rest} />);
             }
         }
         return arr;
