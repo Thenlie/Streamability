@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Profile } from '../types';
+import { useProfileContext } from './context';
 
-const useIsInWatched = (showId: number, profile: Profile | null) => {
+const useIsInWatched = (showId: number) => {
+    const { profile } = useProfileContext();
     const [isInWatched, setIsInWatched] = useState(false);
 
     useEffect(() => {

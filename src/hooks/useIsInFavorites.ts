@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Profile } from '../types';
+import { useProfileContext } from './context';
 
-const useIsInFavorites = (showId: number, profile: Profile | null) => {
+const useIsInFavorites = (showId: number) => {
+    const { profile } = useProfileContext();
     const [isInFavorites, setIsInFavorites] = useState(false);
 
     useEffect(() => {

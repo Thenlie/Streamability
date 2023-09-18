@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Profile } from '../types';
+import { useProfileContext } from './context';
 
-const useIsInQueue = (showId: number, profile: Profile | null) => {
+const useIsInQueue = (showId: number) => {
+    const { profile } = useProfileContext();
     const [isInQueue, setIsInQueue] = useState(false);
 
     useEffect(() => {

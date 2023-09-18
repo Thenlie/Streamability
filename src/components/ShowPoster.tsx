@@ -2,10 +2,21 @@ import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
-import { CheckCircle, Delete, Favorite } from '@mui/icons-material';
+import {
+    AddToQueue,
+    Cancel,
+    CheckCircle,
+    Delete,
+    Favorite,
+    HeartBroken,
+} from '@mui/icons-material';
 import { ProfileActions } from '../types';
+import { useIsInFavorites, useIsInQueue, useIsInWatched } from '../hooks';
+import IconButton from './IconButton';
 
 export const SHOW_POSTER_WIDTH = 180;
+const ICON_WIDTH = 40;
+const ICON_POS = -175;
 
 interface ShowPosterButtonProps {
     /**
@@ -49,8 +60,10 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     showFavoritesButton = false,
     showWatchedButton = false,
 }) => {
-    const ICON_WIDTH = 40;
-    const ICON_POS = -175;
+    const isInQueue = useIsInQueue(details.id);
+    const isInFavorites = useIsInFavorites(details.id);
+    const isInWatched = useIsInWatched(details.id);
+    const dbShowId = details.media_type + '-' + details.id;
 
     const calcIconThreePos = (): number => {
         if (showQueueButton && showFavoritesButton) return ICON_POS + ICON_WIDTH * 2;
@@ -69,24 +82,27 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                 <Tooltip title='Remove from Queue' placement='right-start' className='mt-2'>
                     <div
                         onClick={() =>
-                            profileActions.removeFromQueue(details.media_type + '-' + details.id)
+                            isInQueue
+                                ? profileActions.removeFromQueue(dbShowId)
+                                : profileActions.addToQueue(dbShowId)
                         }
                         className='cursor-pointer'
                     >
-                        <Delete
-                            titleAccess={`Remove ${details.title} from queue`}
-                            color='error'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: visible ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: ICON_POS,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
+                        {isInQueue ? (
+                            <IconButton
+                                Icon={Delete}
+                                titleAccess={`Remove ${details.title} from queue`}
+                                visible={visible}
+                                position={ICON_POS}
+                            />
+                        ) : (
+                            <IconButton
+                                Icon={AddToQueue}
+                                titleAccess={`Add ${details.title} to queue`}
+                                visible={visible}
+                                position={ICON_POS}
+                            />
+                        )}
                     </div>
                 </Tooltip>
             )}
@@ -94,26 +110,27 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                 <Tooltip title='Add to Favorites' placement='right-start' className='mt-2'>
                     <div
                         onClick={() =>
-                            profileActions.removeFromFavorites(
-                                details.media_type + '-' + details.id
-                            )
+                            isInFavorites
+                                ? profileActions.removeFromFavorites(dbShowId)
+                                : profileActions.addToFavorites(dbShowId)
                         }
                         className='cursor-pointer'
                     >
-                        <Favorite
-                            titleAccess={`Add ${details.title} to favorites`}
-                            color='error'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: visible ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: icon_two_pos,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
+                        {isInFavorites ? (
+                            <IconButton
+                                Icon={HeartBroken}
+                                titleAccess={`Remove ${details.title} from queue`}
+                                visible={visible}
+                                position={icon_two_pos}
+                            />
+                        ) : (
+                            <IconButton
+                                Icon={Favorite}
+                                titleAccess={`Add ${details.title} to queue`}
+                                visible={visible}
+                                position={icon_two_pos}
+                            />
+                        )}
                     </div>
                 </Tooltip>
             )}
@@ -121,24 +138,27 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                 <Tooltip title='Mark as Watched' placement='right-start' className='mt-2'>
                     <div
                         onClick={() =>
-                            profileActions.removeFromWatched(details.media_type + '-' + details.id)
+                            isInWatched
+                                ? profileActions.removeFromWatched(dbShowId)
+                                : profileActions.addToWatched(dbShowId)
                         }
                         className='cursor-pointer'
                     >
-                        <CheckCircle
-                            titleAccess={`Mark ${details.title} as watched`}
-                            color='success'
-                            fontSize='large'
-                            className='bg-transprimary rounded-full p-[2px]'
-                            sx={{
-                                display: visible ? 'block' : 'none',
-                                position: 'relative',
-                                top: 0,
-                                right: icon_three_pos,
-                                marginLeft: -4.4,
-                                zIndex: 1,
-                            }}
-                        />
+                        {isInQueue ? (
+                            <IconButton
+                                Icon={Cancel}
+                                titleAccess={`Remove ${details.title} from watched`}
+                                visible={visible}
+                                position={icon_three_pos}
+                            />
+                        ) : (
+                            <IconButton
+                                Icon={CheckCircle}
+                                titleAccess={`Add ${details.title} to watched`}
+                                visible={visible}
+                                position={icon_three_pos}
+                            />
+                        )}
                     </div>
                 </Tooltip>
             )}
