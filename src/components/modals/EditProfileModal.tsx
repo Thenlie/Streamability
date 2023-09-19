@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     updateProfileUsername,
     setProfileAdultFlag,
@@ -86,6 +86,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         }
     };
 
+    const DropDownItems: JSX.Element[] = useMemo(() => {
+        return COUNTRIES.map((item, i) => (
+            <MenuItem key={i} value={item.country}>
+                {item.country}
+            </MenuItem>
+        ));
+    }, [COUNTRIES]);
+
     return (
         <>
             <Button title='Edit Profile' startIcon={<Edit />} onClick={handleOpen} />
@@ -154,11 +162,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
                                 defaultValue={country}
                             >
-                                {COUNTRIES.map((item, i) => (
-                                    <MenuItem key={i} value={item.country}>
-                                        {item.country}
-                                    </MenuItem>
-                                ))}
+                                {DropDownItems}
                             </Select>
                         </FormControl>
                         <Typography>Current Country: {profile?.country}</Typography>
