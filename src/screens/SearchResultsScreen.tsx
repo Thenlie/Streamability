@@ -154,11 +154,7 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
     }
 
     if (showDetails && showDetails.length === 0) {
-        return (
-            <>
-                <EmptySearchResults query={query} />
-            </>
-        );
+        return <EmptySearchResults query={query} />;
     }
 
     return (
