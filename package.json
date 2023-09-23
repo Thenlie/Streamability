@@ -55,7 +55,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-storybook": "^0.6.13",
     "jsdom": "^22.1.0",
-    "postcss": "^8.4.24",
+    "postcss": "^8.4.30",
     "prettier": "^3.0.3",
     "storybook": "^7.2.1",
     "storybook-addon-react-router-v6": "^2.0.2",
