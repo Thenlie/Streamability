@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useProfileContext } from './context';
 
-const useIsInQueue = (showId: number) => {
+/**
+ * Custom hook that returns whether or not a give show
+ * is in a users queue.
+ * @param showId | TMDB id of the show
+ * @returns {boolean}
+ */
+const useIsInQueue = (showId: number): boolean => {
     const { profile } = useProfileContext();
     const [isInQueue, setIsInQueue] = useState(false);
 

@@ -28,9 +28,9 @@ const ProfileButtonSection: React.FC = (): JSX.Element | null => {
     const id = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
     const { profile, setProfile } = useProfileContext();
-    const isInQueue = useIsInQueue(id, profile);
-    const isInFavorites = useIsInFavorites(id, profile);
-    const isInWatched = useIsInWatched(id, profile);
+    const isInQueue = useIsInQueue(id);
+    const isInFavorites = useIsInFavorites(id);
+    const isInWatched = useIsInWatched(id);
     const [queueLoading, setQueueLoading] = useState(false);
     const [favoritesLoading, setFavoritesLoading] = useState(false);
     const [watchedLoading, setWatchedLoading] = useState(false);

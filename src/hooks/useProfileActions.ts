@@ -1,6 +1,7 @@
 import { useProfileContext } from './context';
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { ProfileActions } from '../types';
+import { useEffect, useState } from 'react';
 
 /**
  * Custom hook that returns an object containing all
@@ -9,6 +10,7 @@ import { ProfileActions } from '../types';
  */
 const useProfileActions = (): ProfileActions | undefined => {
     const { profile, setProfile } = useProfileContext();
+    const [profileActions, setProfileActions] = useState<ProfileActions | undefined>(undefined);
 
     if (!profile) return undefined;
 
@@ -31,7 +33,7 @@ const useProfileActions = (): ProfileActions | undefined => {
     };
 
     const addToFavorites = async (showId: string) => {
-        const res = await removeFromProfileArray(profile.id, showId, 'favorites');
+        const res = await addToProfileArray(profile.id, showId, 'favorites');
         if (!res) return;
         setProfile(res);
     };
@@ -43,19 +45,21 @@ const useProfileActions = (): ProfileActions | undefined => {
     };
 
     const addToWatched = async (showId: string) => {
-        const res = await removeFromProfileArray(profile.id, showId, 'watched');
+        const res = await addToProfileArray(profile.id, showId, 'watched');
         if (!res) return;
         setProfile(res);
     };
 
-    const profileActions = {
-        removeFromQueue,
-        removeFromFavorites,
-        removeFromWatched,
-        addToQueue,
-        addToFavorites,
-        addToWatched,
-    };
+    useEffect(() => {
+        setProfileActions({
+            removeFromQueue,
+            removeFromFavorites,
+            removeFromWatched,
+            addToQueue,
+            addToFavorites,
+            addToWatched,
+        });
+    }, [profile]);
 
     return profileActions;
 };

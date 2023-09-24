@@ -1,6 +1,6 @@
 import { ShowData } from '../types';
 import { Link } from 'react-router-dom';
-import { CardMedia, Tooltip } from '@mui/material';
+import { CardMedia } from '@mui/material';
 import React, { useState } from 'react';
 import {
     AddToQueue,
@@ -48,9 +48,6 @@ interface ShowPosterButtonProps {
 /**
  * Buttons that perform profile actions such as adding to
  * or removing from the profile arrays.
- *
- * @todo update icons based on "in profile" status
- * @todo update tooltip position
  */
 const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     visible,
@@ -79,88 +76,88 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     return (
         <>
             {showQueueButton && (
-                <Tooltip title='Remove from Queue' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            isInQueue
-                                ? profileActions.removeFromQueue(dbShowId)
-                                : profileActions.addToQueue(dbShowId)
-                        }
-                        className='cursor-pointer'
-                    >
-                        {isInQueue ? (
-                            <IconButton
-                                Icon={Delete}
-                                titleAccess={`Remove ${details.title} from queue`}
-                                visible={visible}
-                                position={ICON_POS}
-                            />
-                        ) : (
-                            <IconButton
-                                Icon={AddToQueue}
-                                titleAccess={`Add ${details.title} to queue`}
-                                visible={visible}
-                                position={ICON_POS}
-                            />
-                        )}
-                    </div>
-                </Tooltip>
+                <div
+                    onClick={() =>
+                        isInQueue
+                            ? profileActions.removeFromQueue(dbShowId)
+                            : profileActions.addToQueue(dbShowId)
+                    }
+                    className='cursor-pointer'
+                >
+                    {isInQueue ? (
+                        <IconButton
+                            Icon={Delete}
+                            titleAccess={`Remove ${details.title} from queue`}
+                            visible={visible}
+                            position={ICON_POS}
+                            color='error'
+                        />
+                    ) : (
+                        <IconButton
+                            Icon={AddToQueue}
+                            titleAccess={`Add ${details.title} to queue`}
+                            visible={visible}
+                            position={ICON_POS}
+                            color='success'
+                        />
+                    )}
+                </div>
             )}
             {showFavoritesButton && (
-                <Tooltip title='Add to Favorites' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            isInFavorites
-                                ? profileActions.removeFromFavorites(dbShowId)
-                                : profileActions.addToFavorites(dbShowId)
-                        }
-                        className='cursor-pointer'
-                    >
-                        {isInFavorites ? (
-                            <IconButton
-                                Icon={HeartBroken}
-                                titleAccess={`Remove ${details.title} from queue`}
-                                visible={visible}
-                                position={icon_two_pos}
-                            />
-                        ) : (
-                            <IconButton
-                                Icon={Favorite}
-                                titleAccess={`Add ${details.title} to queue`}
-                                visible={visible}
-                                position={icon_two_pos}
-                            />
-                        )}
-                    </div>
-                </Tooltip>
+                <div
+                    onClick={() =>
+                        isInFavorites
+                            ? profileActions.removeFromFavorites(dbShowId)
+                            : profileActions.addToFavorites(dbShowId)
+                    }
+                    className='cursor-pointer'
+                >
+                    {isInFavorites ? (
+                        <IconButton
+                            Icon={HeartBroken}
+                            titleAccess={`Remove ${details.title} from favorites`}
+                            visible={visible}
+                            position={icon_two_pos}
+                            color='error'
+                        />
+                    ) : (
+                        <IconButton
+                            Icon={Favorite}
+                            titleAccess={`Add ${details.title} to favorites`}
+                            visible={visible}
+                            position={icon_two_pos}
+                            color='error'
+                        />
+                    )}
+                </div>
             )}
             {showWatchedButton && (
-                <Tooltip title='Mark as Watched' placement='right-start' className='mt-2'>
-                    <div
-                        onClick={() =>
-                            isInWatched
-                                ? profileActions.removeFromWatched(dbShowId)
-                                : profileActions.addToWatched(dbShowId)
-                        }
-                        className='cursor-pointer'
-                    >
-                        {isInQueue ? (
-                            <IconButton
-                                Icon={Cancel}
-                                titleAccess={`Remove ${details.title} from watched`}
-                                visible={visible}
-                                position={icon_three_pos}
-                            />
-                        ) : (
-                            <IconButton
-                                Icon={CheckCircle}
-                                titleAccess={`Add ${details.title} to watched`}
-                                visible={visible}
-                                position={icon_three_pos}
-                            />
-                        )}
-                    </div>
-                </Tooltip>
+                <div
+                    onClick={() =>
+                        isInWatched
+                            ? profileActions.removeFromWatched(dbShowId)
+                            : profileActions.addToWatched(dbShowId)
+                    }
+                    className='cursor-pointer'
+                >
+                    {isInWatched ? (
+                        <IconButton
+                            Icon={Cancel}
+                            titleAccess={`Remove ${details.title} from watched`}
+                            visible={visible}
+                            position={icon_three_pos}
+                            color='error'
+                        />
+                    ) : (
+                        <IconButton
+                            Icon={CheckCircle}
+                            titleAccess={`Add ${details.title} to watched`}
+                            visible={visible}
+                            position={icon_three_pos}
+                            color='success'
+                        />
+                    )}
+                </div>
             )}
         </>
     );

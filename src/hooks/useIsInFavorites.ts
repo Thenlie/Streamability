@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useProfileContext } from './context';
 
-const useIsInFavorites = (showId: number) => {
+/**
+ * Custom hook that returns whether or not a give show
+ * is in a users favorites.
+ * @param showId | TMDB id of the show
+ * @returns {boolean}
+ */
+const useIsInFavorites = (showId: number): boolean => {
     const { profile } = useProfileContext();
     const [isInFavorites, setIsInFavorites] = useState(false);
 

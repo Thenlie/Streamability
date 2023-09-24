@@ -39,7 +39,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
     profile,
     setProfile,
 }): JSX.Element => {
-    const isInQueue = useIsInQueue(details.id, profile);
+    const isInQueue = useIsInQueue(details.id);
 
     /**
      * Handle card being added to or removed from
