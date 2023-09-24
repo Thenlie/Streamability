@@ -56,6 +56,9 @@ export type ProfileActions = {
     addToFavorites: (showId: string) => Promise<void>;
     removeFromWatched: (showId: string) => Promise<void>;
     addToWatched: (showId: string) => Promise<void>;
+    queueLoading: boolean;
+    favoritesLoading: boolean;
+    watchedLoading: boolean;
 };
 
 export type ProfileArrayCols = 'queue' | 'favorites' | 'watched';

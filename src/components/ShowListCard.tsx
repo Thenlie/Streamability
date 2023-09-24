@@ -3,7 +3,7 @@ import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
-import { useIsInQueue } from '../hooks';
+import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 
 export interface ShowListCardProps {
@@ -39,7 +39,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
     profile,
     setProfile,
 }): JSX.Element => {
-    const isInQueue = useIsInQueue(details.id);
+    const { isInQueue } = useIsInProfileArray(details.id, profile);
 
     /**
      * Handle card being added to or removed from

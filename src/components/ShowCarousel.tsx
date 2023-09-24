@@ -6,7 +6,7 @@ import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
 import { Typography } from '@mui/material';
-import { ProfileActions } from '../types';
+import { Profile, ProfileActions } from '../types';
 
 interface ShowCarouselProps {
     /**
@@ -23,6 +23,10 @@ interface ShowCarouselProps {
      * in the carousel
      */
     fallbackText?: string;
+    /**
+     * User profile if logged in, otherwise `null`
+     */
+    profile?: Profile | null;
     /**
      * Functions to alter profile arrays
      */
@@ -68,15 +72,22 @@ export function getCarouselSteps(windowSize: WindowSize): number {
  */
 const CarouselChildren: React.FC<{
     data: ShowData[];
+    profile?: Profile | null;
     profileActions?: ProfileActions;
     showQueueButton?: boolean;
     showFavoritesButton?: boolean;
     showWatchedButton?: boolean;
-}> = ({ data, ...rest }): JSX.Element => {
+}> = ({ data, profile = null, ...rest }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster key={i} details={item} showType={item.media_type} {...rest} />
+                <ShowPoster
+                    key={i}
+                    details={item}
+                    showType={item.media_type}
+                    profile={profile}
+                    {...rest}
+                />
             ))}
         </div>
     );

@@ -1,4 +1,4 @@
-import { ShowData } from '../types';
+import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia } from '@mui/material';
 import React, { useState } from 'react';
@@ -11,7 +11,7 @@ import {
     HeartBroken,
 } from '@mui/icons-material';
 import { ProfileActions } from '../types';
-import { useIsInFavorites, useIsInQueue, useIsInWatched } from '../hooks';
+import { useIsInProfileArray } from '../hooks';
 import IconButton from './IconButton';
 
 export const SHOW_POSTER_WIDTH = 180;
@@ -27,6 +27,10 @@ interface ShowPosterButtonProps {
      * Movie or TV show metadata
      */
     details: ShowData;
+    /**
+     * User profile if logged in, otherwise `null`
+     */
+    profile?: Profile | null;
     /**
      * Functions to alter profile arrays
      */
@@ -52,14 +56,16 @@ interface ShowPosterButtonProps {
 const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     visible,
     details,
+    profile,
     profileActions,
     showQueueButton = false,
     showFavoritesButton = false,
     showWatchedButton = false,
 }) => {
-    const isInQueue = useIsInQueue(details.id);
-    const isInFavorites = useIsInFavorites(details.id);
-    const isInWatched = useIsInWatched(details.id);
+    const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(
+        details.id,
+        profile || null
+    );
     const dbShowId = details.media_type + '-' + details.id;
 
     const calcIconThreePos = (): number => {
@@ -71,7 +77,7 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     const icon_two_pos = showQueueButton ? ICON_POS + ICON_WIDTH : ICON_POS;
     const icon_three_pos = calcIconThreePos();
 
-    if (!profileActions) return <></>;
+    if (!profile || !profileActions) return;
 
     return (
         <>
@@ -172,6 +178,10 @@ interface ShowPosterProps {
      * Either 'movie' or 'tv'
      */
     showType: string;
+    /**
+     * User profile if logged in, otherwise `null`
+     */
+    profile: Profile | null;
     /**
      * Functions to alter profile arrays
      */

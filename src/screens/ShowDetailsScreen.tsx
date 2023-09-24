@@ -8,11 +8,11 @@ import {
     getTvDetails,
     getTvRecommendations,
 } from '../helpers';
-import { ProfileArrayCols, ShowData } from '../types';
+import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button } from '../components';
 import { Tooltip, Typography } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
-import { useIsInQueue, useIsInWatched, useIsInFavorites, useProfileContext } from '../hooks';
+import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import {
     AddToQueue,
     Cancel,
@@ -21,50 +21,33 @@ import {
     HeartBroken,
     RemoveFromQueue,
 } from '@mui/icons-material';
-import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 
-const ProfileButtonSection: React.FC = (): JSX.Element | null => {
-    const location: Location = useLocation();
-    const id = parseInt(location.pathname.split('/')[3]);
-    const showType = location.pathname.split('/')[2];
+/**
+ * Buttons to alter the show in a logged in users profile.
+ * Will not render when not logged in.
+ */
+const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
+    showId,
+    showType,
+}) => {
+    const dbShowId = showType + '-' + showId;
     const { profile, setProfile } = useProfileContext();
-    const isInQueue = useIsInQueue(id);
-    const isInFavorites = useIsInFavorites(id);
-    const isInWatched = useIsInWatched(id);
-    const [queueLoading, setQueueLoading] = useState(false);
-    const [favoritesLoading, setFavoritesLoading] = useState(false);
-    const [watchedLoading, setWatchedLoading] = useState(false);
+    const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(showId, profile);
+    const profileActions = useProfileActions(profile, setProfile);
 
-    const handleLoading = (col: ProfileArrayCols, loading: boolean) => {
-        switch (col) {
-            case 'queue':
-                setQueueLoading(loading);
-                break;
-            case 'favorites':
-                setFavoritesLoading(loading);
-                break;
-            case 'watched':
-                setWatchedLoading(loading);
-                break;
-        }
-    };
+    if (!profile || !profileActions) return;
 
-    const clickHandler = async (col: ProfileArrayCols, type: 'add' | 'remove') => {
-        if (!profile) return;
-        handleLoading(col, true);
-        if (type === 'add') {
-            const res = await addToProfileArray(profile?.id, showType + '-' + id, col);
-            if (!res) return;
-            setProfile(res);
-        } else {
-            const res = await removeFromProfileArray(profile?.id, showType + '-' + id, col);
-            if (!res) return;
-            setProfile(res);
-        }
-        handleLoading(col, false);
-    };
-
-    if (!profile) return null;
+    const {
+        removeFromQueue,
+        addToQueue,
+        removeFromFavorites,
+        addToFavorites,
+        removeFromWatched,
+        addToWatched,
+        queueLoading,
+        favoritesLoading,
+        watchedLoading,
+    } = profileActions;
 
     return (
         <div className='flex flex-col sm:flex-row items-center justify-center'>
@@ -74,7 +57,9 @@ const ProfileButtonSection: React.FC = (): JSX.Element | null => {
                         title='Queue'
                         color={isInQueue ? 'error' : 'success'}
                         loading={queueLoading}
-                        onClick={() => clickHandler('queue', isInQueue ? 'remove' : 'add')}
+                        onClick={() =>
+                            isInQueue ? removeFromQueue(dbShowId) : addToQueue(dbShowId)
+                        }
                         startIcon={isInQueue ? <RemoveFromQueue /> : <AddToQueue />}
                         sx={{ minWidth: 185 }}
                     />
@@ -86,7 +71,9 @@ const ProfileButtonSection: React.FC = (): JSX.Element | null => {
                         title='Favorite'
                         color={isInFavorites ? 'error' : 'success'}
                         loading={favoritesLoading}
-                        onClick={() => clickHandler('favorites', isInFavorites ? 'remove' : 'add')}
+                        onClick={() =>
+                            isInQueue ? removeFromFavorites(dbShowId) : addToFavorites(dbShowId)
+                        }
                         startIcon={isInFavorites ? <HeartBroken /> : <Favorite />}
                         sx={{ minWidth: 185 }}
                     />
@@ -98,7 +85,9 @@ const ProfileButtonSection: React.FC = (): JSX.Element | null => {
                         title='Watched'
                         color={isInWatched ? 'error' : 'success'}
                         loading={watchedLoading}
-                        onClick={() => clickHandler('watched', isInWatched ? 'remove' : 'add')}
+                        onClick={() =>
+                            isInQueue ? removeFromWatched(dbShowId) : addToWatched(dbShowId)
+                        }
                         startIcon={isInWatched ? <Cancel /> : <CheckCircle />}
                         sx={{ minWidth: 185 }}
                     />
@@ -111,33 +100,33 @@ const ProfileButtonSection: React.FC = (): JSX.Element | null => {
 /**
  * Screen to show more details of a specific show
  * Rendered after user clicks on show card
- *
- * @returns {JSX.Element}
  */
-const ShowDetailsScreen: React.FC = (): JSX.Element => {
+const ShowDetailsScreen: React.FC = () => {
     const location: Location = useLocation();
-    const id = parseInt(location.pathname.split('/')[3]);
+    const showId = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
+    const { profile } = useProfileContext();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const fallbackText = 'Sorry, we could not find any recommendations based on this title.';
+    const carouselFallbackText =
+        'Sorry, we could not find any recommendations based on this title.';
 
     useEffect(() => {
         const handler = async () => {
             setLoading(true);
             if (showType === 'movie') {
-                const movieDetails = await getMovieDetails(id);
+                const movieDetails = await getMovieDetails(showId);
                 setDetails(movieDetails);
-                const recommendation = await getMovieRecommendations(id);
+                const recommendation = await getMovieRecommendations(showId);
                 if (recommendation) setRecommendation(recommendation);
             } else {
-                const tvDetails = await getTvDetails(id);
+                const tvDetails = await getTvDetails(showId);
                 setDetails(tvDetails);
-                const recommendation = await getTvRecommendations(id);
+                const recommendation = await getTvRecommendations(showId);
                 if (recommendation) setRecommendation(recommendation);
             }
             setLoading(false);
@@ -201,11 +190,15 @@ const ShowDetailsScreen: React.FC = (): JSX.Element => {
                     <div className='bg-primary rounded-md my-3 p-2'>
                         <Providers id={details.id} showType={showType} />
                     </div>
-                    <ProfileButtonSection />
+                    <ProfileButtonSection showId={showId} showType={showType} />
                 </div>
             </section>
             <section className='pb-6'>
-                <ShowCarousel data={recommendations} fallbackText={fallbackText} />
+                <ShowCarousel
+                    data={recommendations}
+                    fallbackText={carouselFallbackText}
+                    profile={profile}
+                />
             </section>
         </>
     );

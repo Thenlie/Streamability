@@ -1,53 +1,71 @@
-import { useProfileContext } from './context';
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
-import { ProfileActions } from '../types';
+import { Profile, ProfileActions } from '../types';
 import { useEffect, useState } from 'react';
 
 /**
- * Custom hook that returns an object containing all
- * the possible profile actions such as adding to and
- * removing from all profile arrays
+ * A custom hook that returns an object containing all
+ * the possible profile actions. These include adding to
+ * and removing from all profile arrays and loading states
+ * for each of those actions.
+ * Returns `undefined` when not logged in.
  */
-const useProfileActions = (): ProfileActions | undefined => {
-    const { profile, setProfile } = useProfileContext();
+const useProfileActions = (
+    profile: Profile | null,
+    setProfile: React.Dispatch<React.SetStateAction<Profile | null>>
+): ProfileActions | undefined => {
     const [profileActions, setProfileActions] = useState<ProfileActions | undefined>(undefined);
+    const [queueLoading, setQueueLoading] = useState(false);
+    const [favoritesLoading, setFavoritesLoading] = useState(false);
+    const [watchedLoading, setWatchedLoading] = useState(false);
 
-    if (!profile) return undefined;
+    if (!profile) return;
 
     const removeFromQueue = async (showId: string) => {
+        setQueueLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'queue');
         if (!res) return;
         setProfile(res);
+        setQueueLoading(false);
     };
 
     const addToQueue = async (showId: string) => {
+        setQueueLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'queue');
         if (!res) return;
         setProfile(res);
+        setQueueLoading(false);
     };
 
     const removeFromFavorites = async (showId: string) => {
+        setFavoritesLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'favorites');
         if (!res) return;
         setProfile(res);
+        setFavoritesLoading(false);
     };
 
     const addToFavorites = async (showId: string) => {
+        setFavoritesLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'favorites');
         if (!res) return;
         setProfile(res);
+        setFavoritesLoading(false);
     };
 
     const removeFromWatched = async (showId: string) => {
+        setWatchedLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'watched');
         if (!res) return;
         setProfile(res);
+        setWatchedLoading(false);
     };
 
     const addToWatched = async (showId: string) => {
+        setWatchedLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'watched');
         if (!res) return;
         setProfile(res);
+        setWatchedLoading(false);
     };
 
     useEffect(() => {
@@ -58,8 +76,11 @@ const useProfileActions = (): ProfileActions | undefined => {
             addToQueue,
             addToFavorites,
             addToWatched,
+            queueLoading,
+            favoritesLoading,
+            watchedLoading,
         });
-    }, [profile]);
+    }, [profile, queueLoading, favoritesLoading, watchedLoading]);
 
     return profileActions;
 };

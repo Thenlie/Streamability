@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
 import { Button, CardActions, CardMedia, Typography } from '@mui/material';
 import Rating from './Rating';
-import { useIsInQueue } from '../hooks';
+import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 
 export const SHOW_CARD_WIDTH = 360;
@@ -42,7 +42,7 @@ const ShowCard: React.FC<ShowCardProps> = ({
     profile,
     setProfile,
 }): JSX.Element => {
-    const isInQueue = useIsInQueue(details.id);
+    const { isInQueue } = useIsInProfileArray(details.id, profile);
 
     /**
      * Handle card being added to or removed from

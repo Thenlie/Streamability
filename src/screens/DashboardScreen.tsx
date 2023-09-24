@@ -21,7 +21,7 @@ const LOG = new Logger('DashboardScreen');
 const DashboardScreen: React.FC = (): JSX.Element => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const profileActions = useProfileActions();
+    const profileActions = useProfileActions(profile, setProfile);
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -152,6 +152,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <ShowCarousel
                         data={queue}
                         fallbackText={fallbackText}
+                        profile={profile}
                         profileActions={profileActions}
                         showQueueButton
                         showFavoritesButton

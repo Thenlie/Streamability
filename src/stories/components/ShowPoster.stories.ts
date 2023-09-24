@@ -11,6 +11,9 @@ const profileActionsMock: ProfileActions = {
     addToFavorites: async () => {},
     removeFromWatched: async () => {},
     addToWatched: async () => {},
+    queueLoading: false,
+    favoritesLoading: false,
+    watchedLoading: false,
 };
 
 const meta = {
@@ -30,6 +33,7 @@ export const Primary: Story = {
     args: {
         details: MOVIE_DATA[0],
         showType: 'movie',
+        profile: null,
         profileActions: profileActionsMock,
         showQueueButton: false,
         showFavoritesButton: false,
