@@ -18,9 +18,8 @@ interface IconButtonProps {
      */
     visible?: boolean;
     /**
-     * The relative right position of the icon
+     * The color of the button
      */
-    position?: number;
     color:
         | 'disabled'
         | 'action'
@@ -36,13 +35,7 @@ interface IconButtonProps {
 /**
  * Generic icon button. Does not contain any text, just an icon.
  */
-const IconButton: React.FC<IconButtonProps> = ({
-    Icon,
-    titleAccess,
-    visible = true,
-    position = -175,
-    color,
-}) => {
+const IconButton: React.FC<IconButtonProps> = ({ Icon, titleAccess, visible = true, color }) => {
     return (
         <>
             <Icon
@@ -52,11 +45,6 @@ const IconButton: React.FC<IconButtonProps> = ({
                 className='bg-transprimary rounded-full p-[2px]'
                 sx={{
                     display: visible ? 'block' : 'none',
-                    position: 'relative',
-                    top: 5,
-                    right: position,
-                    marginLeft: -4.4,
-                    zIndex: 1,
                 }}
             />
         </>

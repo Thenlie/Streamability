@@ -1,7 +1,7 @@
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AddToQueue,
     Cancel,
@@ -15,8 +15,6 @@ import { useIsInProfileArray } from '../hooks';
 import IconButton from './IconButton';
 
 export const SHOW_POSTER_WIDTH = 180;
-const ICON_WIDTH = 40;
-const ICON_POS = -175;
 
 interface ShowPosterButtonProps {
     /**
@@ -62,25 +60,30 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     showFavoritesButton = false,
     showWatchedButton = false,
 }) => {
+    const [numOfIcons, setNumOfIcons] = useState(0);
     const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(
         details.id,
         profile || null
     );
     const dbShowId = details.media_type + '-' + details.id;
 
-    const calcIconThreePos = (): number => {
-        if (showQueueButton && showFavoritesButton) return ICON_POS + ICON_WIDTH * 2;
-        else if (showQueueButton || showFavoritesButton) return ICON_POS + ICON_WIDTH;
-        else return ICON_POS;
-    };
-
-    const icon_two_pos = showQueueButton ? ICON_POS + ICON_WIDTH : ICON_POS;
-    const icon_three_pos = calcIconThreePos();
-
     if (!profile || !profileActions) return;
 
+    useEffect(() => {
+        let num = 0;
+        if (showQueueButton) num++;
+        if (showFavoritesButton) num++;
+        if (showWatchedButton) num++;
+        setNumOfIcons(num);
+    }, [showQueueButton, showFavoritesButton, showWatchedButton]);
+
     return (
-        <>
+        <div
+            id='button-container'
+            className={`absolute flex z-10 m-2 ${numOfIcons === 1 && 'ml-[140px]'} ${
+                numOfIcons === 2 && 'ml-[105px]'
+            } ${numOfIcons === 3 && 'ml-[70px]'}`}
+        >
             {showQueueButton && (
                 <div
                     onClick={() =>
@@ -95,7 +98,6 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={Delete}
                             titleAccess={`Remove ${details.title} from queue`}
                             visible={visible}
-                            position={ICON_POS}
                             color='error'
                         />
                     ) : (
@@ -103,7 +105,6 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={AddToQueue}
                             titleAccess={`Add ${details.title} to queue`}
                             visible={visible}
-                            position={ICON_POS}
                             color='success'
                         />
                     )}
@@ -123,7 +124,6 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={HeartBroken}
                             titleAccess={`Remove ${details.title} from favorites`}
                             visible={visible}
-                            position={icon_two_pos}
                             color='error'
                         />
                     ) : (
@@ -131,7 +131,6 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={Favorite}
                             titleAccess={`Add ${details.title} to favorites`}
                             visible={visible}
-                            position={icon_two_pos}
                             color='error'
                         />
                     )}
@@ -151,7 +150,6 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={Cancel}
                             titleAccess={`Remove ${details.title} from watched`}
                             visible={visible}
-                            position={icon_three_pos}
                             color='error'
                         />
                     ) : (
@@ -159,13 +157,12 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             Icon={CheckCircle}
                             titleAccess={`Add ${details.title} to watched`}
                             visible={visible}
-                            position={icon_three_pos}
                             color='success'
                         />
                     )}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
