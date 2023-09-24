@@ -6,9 +6,9 @@ import {
     AddToQueue,
     Cancel,
     CheckCircle,
-    Delete,
     Favorite,
     HeartBroken,
+    RemoveFromQueue,
 } from '@mui/icons-material';
 import { ProfileActions } from '../types';
 import { useIsInProfileArray } from '../hooks';
@@ -93,21 +93,16 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                     }
                     className='cursor-pointer'
                 >
-                    {isInQueue ? (
-                        <IconButton
-                            Icon={Delete}
-                            titleAccess={`Remove ${details.title} from queue`}
-                            visible={visible}
-                            color='error'
-                        />
-                    ) : (
-                        <IconButton
-                            Icon={AddToQueue}
-                            titleAccess={`Add ${details.title} to queue`}
-                            visible={visible}
-                            color='success'
-                        />
-                    )}
+                    <IconButton
+                        Icon={isInQueue ? RemoveFromQueue : AddToQueue}
+                        titleAccess={
+                            isInQueue
+                                ? `Remove ${details.title} from queue`
+                                : `Add ${details.title} to queue`
+                        }
+                        visible={visible}
+                        color={isInQueue ? 'error' : 'success'}
+                    />
                 </div>
             )}
             {showFavoritesButton && (
@@ -119,21 +114,16 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                     }
                     className='cursor-pointer'
                 >
-                    {isInFavorites ? (
-                        <IconButton
-                            Icon={HeartBroken}
-                            titleAccess={`Remove ${details.title} from favorites`}
-                            visible={visible}
-                            color='error'
-                        />
-                    ) : (
-                        <IconButton
-                            Icon={Favorite}
-                            titleAccess={`Add ${details.title} to favorites`}
-                            visible={visible}
-                            color='error'
-                        />
-                    )}
+                    <IconButton
+                        Icon={isInFavorites ? HeartBroken : Favorite}
+                        titleAccess={
+                            isInFavorites
+                                ? `Remove ${details.title} from favorites`
+                                : `Add ${details.title} to favorites`
+                        }
+                        visible={visible}
+                        color='error'
+                    />
                 </div>
             )}
             {showWatchedButton && (
@@ -145,21 +135,16 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                     }
                     className='cursor-pointer'
                 >
-                    {isInWatched ? (
-                        <IconButton
-                            Icon={Cancel}
-                            titleAccess={`Remove ${details.title} from watched`}
-                            visible={visible}
-                            color='error'
-                        />
-                    ) : (
-                        <IconButton
-                            Icon={CheckCircle}
-                            titleAccess={`Add ${details.title} to watched`}
-                            visible={visible}
-                            color='success'
-                        />
-                    )}
+                    <IconButton
+                        Icon={isInWatched ? Cancel : CheckCircle}
+                        titleAccess={
+                            isInWatched
+                                ? `Remove ${details.title} from watched`
+                                : `Add ${details.title} to watched`
+                        }
+                        visible={visible}
+                        color={isInWatched ? 'error' : 'success'}
+                    />
                 </div>
             )}
         </div>
