@@ -16,8 +16,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        titleAccess: 'Submit',
+        titleAccess: 'Confirm',
         color: 'success',
         Icon: CheckCircle,
+        tooltip: 'Confirm',
     },
 };

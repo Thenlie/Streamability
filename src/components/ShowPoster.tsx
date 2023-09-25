@@ -1,7 +1,7 @@
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { CardMedia } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     AddToQueue,
     Cancel,
@@ -67,85 +67,87 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     );
     const dbShowId = details.media_type + '-' + details.id;
 
-    if (!profile || !profileActions) return;
-
+    // Get number of visible icons
     useEffect(() => {
-        let num = 0;
-        if (showQueueButton) num++;
-        if (showFavoritesButton) num++;
-        if (showWatchedButton) num++;
-        setNumOfIcons(num);
+        let n = 0;
+        if (showQueueButton) n++;
+        if (showFavoritesButton) n++;
+        if (showWatchedButton) n++;
+        setNumOfIcons(n);
     }, [showQueueButton, showFavoritesButton, showWatchedButton]);
+
+    const queueCallback = useCallback(() => {
+        isInQueue
+            ? profileActions?.removeFromQueue(dbShowId)
+            : profileActions?.addToQueue(dbShowId);
+    }, [isInQueue]);
+
+    const favoritesCallback = useCallback(() => {
+        isInFavorites
+            ? profileActions?.removeFromFavorites(dbShowId)
+            : profileActions?.addToFavorites(dbShowId);
+    }, [isInFavorites]);
+
+    const watchedCallback = useCallback(() => {
+        isInWatched
+            ? profileActions?.removeFromWatched(dbShowId)
+            : profileActions?.addToWatched(dbShowId);
+    }, [isInWatched]);
+
+    if (!profile || !profileActions || numOfIcons === 0) return;
+
+    const { queueLoading, favoritesLoading, watchedLoading } = profileActions;
 
     return (
         <div
             id='button-container'
-            className={`absolute flex z-10 m-2 ${numOfIcons === 1 && 'ml-[140px]'} ${
-                numOfIcons === 2 && 'ml-[105px]'
-            } ${numOfIcons === 3 && 'ml-[70px]'}`}
+            className={`absolute z-10 m-2
+                ${visible ? 'flex' : 'hidden'}
+                ${numOfIcons === 1 && 'ml-[137px]'}
+                ${numOfIcons === 2 && 'ml-[100px]'}
+                ${numOfIcons === 3 && 'ml-[62px]'}`}
         >
             {showQueueButton && (
-                <div
-                    onClick={() =>
+                <IconButton
+                    Icon={isInQueue ? RemoveFromQueue : AddToQueue}
+                    titleAccess={
                         isInQueue
-                            ? profileActions.removeFromQueue(dbShowId)
-                            : profileActions.addToQueue(dbShowId)
+                            ? `Remove ${details.title} from queue`
+                            : `Add ${details.title} to queue`
                     }
-                    className='cursor-pointer'
-                >
-                    <IconButton
-                        Icon={isInQueue ? RemoveFromQueue : AddToQueue}
-                        titleAccess={
-                            isInQueue
-                                ? `Remove ${details.title} from queue`
-                                : `Add ${details.title} to queue`
-                        }
-                        visible={visible}
-                        color={isInQueue ? 'error' : 'success'}
-                    />
-                </div>
+                    color={isInQueue ? 'error' : 'success'}
+                    tooltip={isInQueue ? 'Remove from queue' : 'Add to queue'}
+                    onClick={queueCallback}
+                    loading={queueLoading}
+                />
             )}
             {showFavoritesButton && (
-                <div
-                    onClick={() =>
+                <IconButton
+                    Icon={isInFavorites ? HeartBroken : Favorite}
+                    titleAccess={
                         isInFavorites
-                            ? profileActions.removeFromFavorites(dbShowId)
-                            : profileActions.addToFavorites(dbShowId)
+                            ? `Remove ${details.title} from favorites`
+                            : `Add ${details.title} to favorites`
                     }
-                    className='cursor-pointer'
-                >
-                    <IconButton
-                        Icon={isInFavorites ? HeartBroken : Favorite}
-                        titleAccess={
-                            isInFavorites
-                                ? `Remove ${details.title} from favorites`
-                                : `Add ${details.title} to favorites`
-                        }
-                        visible={visible}
-                        color='error'
-                    />
-                </div>
+                    color='error'
+                    tooltip={isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
+                    onClick={favoritesCallback}
+                    loading={favoritesLoading}
+                />
             )}
             {showWatchedButton && (
-                <div
-                    onClick={() =>
+                <IconButton
+                    Icon={isInWatched ? Cancel : CheckCircle}
+                    titleAccess={
                         isInWatched
-                            ? profileActions.removeFromWatched(dbShowId)
-                            : profileActions.addToWatched(dbShowId)
+                            ? `Remove ${details.title} from watched`
+                            : `Add ${details.title} to watched`
                     }
-                    className='cursor-pointer'
-                >
-                    <IconButton
-                        Icon={isInWatched ? Cancel : CheckCircle}
-                        titleAccess={
-                            isInWatched
-                                ? `Remove ${details.title} from watched`
-                                : `Add ${details.title} to watched`
-                        }
-                        visible={visible}
-                        color={isInWatched ? 'error' : 'success'}
-                    />
-                </div>
+                    color={isInWatched ? 'error' : 'success'}
+                    tooltip={isInWatched ? 'Remove from watched' : 'Add to watched'}
+                    onClick={watchedCallback}
+                    loading={watchedLoading}
+                />
             )}
         </div>
     );
@@ -156,10 +158,6 @@ interface ShowPosterProps {
      * Movie or TV show metadata
      */
     details: ShowData;
-    /**
-     * Either 'movie' or 'tv'
-     */
-    showType: string;
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -186,7 +184,7 @@ interface ShowPosterProps {
  * A show card that only shows the poster image, no text or other content.
  * Used in the Show Carousel.
  */
-const ShowPoster: React.FC<ShowPosterProps> = ({ details, showType, ...rest }): JSX.Element => {
+const ShowPoster: React.FC<ShowPosterProps> = ({ details, ...rest }): JSX.Element => {
     const [hover, setHover] = useState(false);
 
     const hoverHandler = (hovering: boolean) => {
@@ -202,7 +200,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({ details, showType, ...rest }): 
         >
             <ShowPosterButtons visible={hover} details={details} {...rest} />
             <Link
-                to={`/details/${showType}/${details.id}`}
+                to={`/details/${details.media_type}/${details.id}`}
                 state={details}
                 data-testid='show-details-link'
             >

@@ -81,13 +81,7 @@ const CarouselChildren: React.FC<{
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster
-                    key={i}
-                    details={item}
-                    showType={item.media_type}
-                    profile={profile}
-                    {...rest}
-                />
+                <ShowPoster key={i} details={item} profile={profile} {...rest} />
             ))}
         </div>
     );

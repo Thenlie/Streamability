@@ -1,22 +1,19 @@
-import { SvgIconTypeMap } from '@mui/material';
 import React from 'react';
+import { Fade, SvgIconTypeMap, SxProps, Theme, Tooltip } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { RotateRight } from '@mui/icons-material';
 
 interface IconButtonProps {
     /**
-     * Icon to be displayed as the button
+     * Icon displayed as the button
      */
     Icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
         muiName: string;
     };
     /**
-     * Note to be shown when hovering the button and using screen reader
+     * Text shown when hovering and using screen reader
      */
     titleAccess: string;
-    /**
-     * Whether the button is visible or not
-     */
-    visible?: boolean;
     /**
      * The color of the button
      */
@@ -30,24 +27,76 @@ interface IconButtonProps {
         | 'info'
         | 'success'
         | 'warning';
+    /**
+     * Text shown in the button tooltip
+     */
+    tooltip?: string;
+    /**
+     * If the tooltip should be shown, defaults to `true`
+     */
+    tooltipVisible?: boolean;
+    /**
+     * Displays the loading spinner when `true`, defaults to `false`
+     */
+    loading?: boolean;
+    /**
+     * Function run when button is clicked
+     */
+    onClick?: () => void;
+    /**
+     * Styles to override the defaults
+     */
+    sx?: SxProps<Theme>;
 }
 
 /**
  * Generic icon button. Does not contain any text, just an icon.
  */
-const IconButton: React.FC<IconButtonProps> = ({ Icon, titleAccess, visible = true, color }) => {
+const IconButton: React.FC<IconButtonProps> = ({
+    Icon,
+    titleAccess,
+    color,
+    tooltip,
+    tooltipVisible = true,
+    loading = false,
+    onClick,
+    sx,
+}) => {
     return (
-        <>
-            <Icon
-                titleAccess={titleAccess}
-                color={color}
-                fontSize='large'
-                className='bg-transprimary rounded-full p-[2px]'
-                sx={{
-                    display: visible ? 'block' : 'none',
-                }}
-            />
-        </>
+        <Tooltip
+            title={tooltipVisible ? tooltip : ''}
+            arrow
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 0 }}
+        >
+            {loading ? (
+                <RotateRight
+                    titleAccess={tooltipVisible ? '' : titleAccess}
+                    color='secondary'
+                    fontSize='large'
+                    className='bg-transprimary rounded-full p-[2px] animate-spin'
+                    sx={{
+                        '&:hover': `${!loading && { opacity: 0.8 }}`,
+                        margin: 0.2,
+                        ...sx,
+                    }}
+                />
+            ) : (
+                <div onClick={onClick} className='cursor-pointer'>
+                    <Icon
+                        titleAccess={tooltipVisible ? '' : titleAccess}
+                        color={color}
+                        fontSize='large'
+                        className='bg-transprimary rounded-full p-[2px]'
+                        sx={{
+                            '&:hover': { opacity: 0.8 },
+                            margin: 0.2,
+                            ...sx,
+                        }}
+                    />
+                </div>
+            )}
+        </Tooltip>
     );
 };
 
