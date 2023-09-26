@@ -134,7 +134,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     return (
         <>
-            <Button title='Edit Profile' startIcon={<Edit />} onClick={handleOpen} />
+            <Button title='Edit Profile' StartIcon={Edit} onClick={handleOpen} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -177,7 +177,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Typography>Current Username: {profile?.username}</Typography>
                         <Button
                             title='Change Username'
-                            startIcon={<Edit />}
+                            StartIcon={Edit}
                             sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
                         />
@@ -208,7 +208,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Button
                             title='Change Country'
                             sx={{ width: 250, mb: 2 }}
-                            startIcon={<Language />}
+                            StartIcon={Language}
                             onClick={changeCountry}
                         />
                         <Typography>
@@ -216,7 +216,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </Typography>
                         <Button
                             title='Toggle Adult Flag'
-                            startIcon={<NoAdultContent />}
+                            StartIcon={NoAdultContent}
                             sx={{ width: 250, mb: 2 }}
                             onClick={toggleAdultFlag}
                         />
@@ -224,7 +224,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             title='Close'
                             color='error'
                             sx={{ minWidth: 100 }}
-                            startIcon={<Close />}
+                            StartIcon={Close}
                             onClick={handleClose}
                         />
                     </div>

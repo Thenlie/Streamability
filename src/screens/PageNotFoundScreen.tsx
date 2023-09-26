@@ -31,8 +31,8 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
             <Typography variant='h4' data-testid='page-not-found-header' sx={{ paddingBottom: 6 }}>
                 Page Not Found!
             </Typography>
-            <Button title='Return home' startIcon={<Home />} onClick={() => navigate('/')} />
-            <Button title='Go back' startIcon={<ArrowBack />} onClick={() => navigate(-1)} />
+            <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
+            <Button title='Go back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
             <Snackbar isOpen isStatic severity='error' message={error.statusText} />
         </div>
     );

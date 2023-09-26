@@ -60,7 +60,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
                         onClick={() =>
                             isInQueue ? removeFromQueue(dbShowId) : addToQueue(dbShowId)
                         }
-                        startIcon={isInQueue ? <RemoveFromQueue /> : <AddToQueue />}
+                        StartIcon={isInQueue ? RemoveFromQueue : AddToQueue}
                         sx={{ minWidth: 185 }}
                     />
                 </div>
@@ -74,7 +74,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
                         onClick={() =>
                             isInQueue ? removeFromFavorites(dbShowId) : addToFavorites(dbShowId)
                         }
-                        startIcon={isInFavorites ? <HeartBroken /> : <Favorite />}
+                        StartIcon={isInFavorites ? HeartBroken : Favorite}
                         sx={{ minWidth: 185 }}
                     />
                 </div>
@@ -88,7 +88,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
                         onClick={() =>
                             isInQueue ? removeFromWatched(dbShowId) : addToWatched(dbShowId)
                         }
-                        startIcon={isInWatched ? <Cancel /> : <CheckCircle />}
+                        StartIcon={isInWatched ? Cancel : CheckCircle}
                         sx={{ minWidth: 185 }}
                     />
                 </div>

@@ -41,7 +41,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
             <Button
                 title='Delete Profile'
                 color='error'
-                startIcon={<WarningSharp />}
+                StartIcon={WarningSharp}
                 onClick={handleOpen}
             />
             <Modal
@@ -73,10 +73,10 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
                             title='Yes'
                             color='error'
                             loading={loading}
-                            startIcon={<Delete />}
+                            StartIcon={Delete}
                             onClick={deleteProfile}
                         />
-                        <Button title='No' startIcon={<ArrowBackIosNew />} onClick={handleClose} />
+                        <Button title='No' StartIcon={ArrowBackIosNew} onClick={handleClose} />
                     </div>
                 </Box>
             </Modal>
