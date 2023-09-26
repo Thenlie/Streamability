@@ -149,7 +149,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         transform: 'translate(-50%, -50%)',
                         borderRadius: 2,
                         width: {
-                            xs: 250,
+                            xs: 300,
                             sm: 500,
                         },
                         boxShadow: 24,

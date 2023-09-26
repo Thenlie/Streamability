@@ -25,6 +25,10 @@ export interface SnackbarProps {
      * Defaults to `false`
      */
     isStatic?: boolean;
+    /**
+     * Positioning of the snackbar, defaults to `bottom-center`
+     */
+    position?: { vertical: 'top' | 'bottom'; horizontal: 'center' | 'left' | 'right' };
 }
 
 const Snackbar: React.FC<SnackbarProps> = ({
@@ -33,6 +37,7 @@ const Snackbar: React.FC<SnackbarProps> = ({
     message,
     hash,
     isStatic = false,
+    position = { vertical: 'bottom', horizontal: 'center' },
 }) => {
     const [open, setOpen] = useState(isOpen);
 
@@ -54,9 +59,10 @@ const Snackbar: React.FC<SnackbarProps> = ({
             open={open}
             autoHideDuration={3000}
             onClose={handleClose}
-            className='w-full pr-12'
+            className='w-full'
+            anchorOrigin={{ vertical: position.vertical, horizontal: position.horizontal }}
         >
-            <Alert onClose={handleCloseClick} severity={severity} className='w-full'>
+            <Alert onClose={handleCloseClick} severity={severity} className='w-3/4'>
                 {message}
             </Alert>
         </SnackbarMUI>
