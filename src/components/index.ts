@@ -15,6 +15,7 @@ import Rating from './Rating';
 import Button from './Button';
 import EmptySearchResults from './EmptySearchResults';
 import IconButton from './IconButton';
+import Snackbar from './Snackbar';
 
 export {
     ShowCard,
@@ -31,6 +32,7 @@ export {
     Button,
     EmptySearchResults,
     IconButton,
+    Snackbar,
 };
 export * from './loaders';
 export * from './modals';
