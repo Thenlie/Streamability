@@ -3,31 +3,49 @@ import { Alert, Snackbar as SnackbarMUI } from '@mui/material';
 
 export interface SnackbarProps {
     /**
-     * If the snackbar is displayed or not
+     * If the snackbar is displayed
      */
     isOpen: boolean;
     /**
-     * WiLl determine the color and icon of the snackbar
+     * Determines the color and icon of the snackbar
      */
     severity: 'success' | 'info' | 'warning' | 'error';
     /**
-     * Text to display in the snackbar
+     * Text displayed in the snackbar
      */
     message: string;
     /**
-     * Value to re-trigger the snackbar on change
+     * Value to re-trigger the snackbar on change.
+     * This is needed when all other props are the same
+     * but you want to re-render the component
      */
     hash?: string;
+    /**
+     * When `true`, snackbar will not disappear automatically.
+     * Defaults to `false`
+     */
+    isStatic?: boolean;
 }
 
-const Snackbar: React.FC<SnackbarProps> = ({ isOpen, severity, message, hash }) => {
+const Snackbar: React.FC<SnackbarProps> = ({
+    isOpen,
+    severity,
+    message,
+    hash,
+    isStatic = false,
+}) => {
     const [open, setOpen] = useState(isOpen);
 
     useEffect(() => {
         setOpen(isOpen);
-    }, [isOpen, severity, message, hash]);
+    }, [isOpen, severity, message, hash, isStatic]);
 
     const handleClose = () => {
+        if (isStatic && isOpen) return;
+        setOpen(false);
+    };
+
+    const handleCloseClick = () => {
         setOpen(false);
     };
 
@@ -38,7 +56,7 @@ const Snackbar: React.FC<SnackbarProps> = ({ isOpen, severity, message, hash }) 
             onClose={handleClose}
             className='w-full pr-12'
         >
-            <Alert onClose={handleClose} severity={severity} className='w-full'>
+            <Alert onClose={handleCloseClick} severity={severity} className='w-full'>
                 {message}
             </Alert>
         </SnackbarMUI>

@@ -23,6 +23,7 @@ export const Success: Story = {
         isOpen: true,
         severity: 'success',
         message: 'This is a success message',
+        isStatic: true,
     },
 };
 
@@ -31,6 +32,7 @@ export const Error: Story = {
         isOpen: true,
         severity: 'error',
         message: 'This is an error message',
+        isStatic: true,
     },
 };
 
@@ -39,6 +41,7 @@ export const Info: Story = {
         isOpen: true,
         severity: 'info',
         message: 'This is an info message',
+        isStatic: true,
     },
 };
 
@@ -47,5 +50,6 @@ export const Warn: Story = {
         isOpen: true,
         severity: 'warning',
         message: 'This is a warning message',
+        isStatic: true,
     },
 };
