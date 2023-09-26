@@ -16,7 +16,7 @@ interface ButtonProps {
      */
     color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     /**
-     * Displays loading spinner when true, defaults to `false`
+     * Displays loading spinner when `true`, defaults to `false`
      */
     loading?: boolean;
     /**

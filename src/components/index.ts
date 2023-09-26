@@ -14,6 +14,7 @@ import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
 import EmptySearchResults from './EmptySearchResults';
+import IconButton from './IconButton';
 
 export {
     ShowCard,
@@ -29,6 +30,7 @@ export {
     Rating,
     Button,
     EmptySearchResults,
+    IconButton,
 };
 export * from './loaders';
 export * from './modals';

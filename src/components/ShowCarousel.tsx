@@ -6,6 +6,7 @@ import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
 import { Typography } from '@mui/material';
+import { Profile, ProfileActions } from '../types';
 
 interface ShowCarouselProps {
     /**
@@ -23,9 +24,25 @@ interface ShowCarouselProps {
      */
     fallbackText?: string;
     /**
-     * TODO:
+     * User profile if logged in, otherwise `null`
      */
-    removeFromQueue?: (showId: string) => Promise<void>;
+    profile?: Profile | null;
+    /**
+     * Functions to alter profile arrays
+     */
+    profileActions?: ProfileActions;
+    /**
+     * If the queue button on the show posters should be visible
+     */
+    showQueueButton?: boolean;
+    /**
+     * If the favorites button on the show posters should be visible
+     */
+    showFavoritesButton?: boolean;
+    /**
+     * If the watched button on the show posters should be visible
+     */
+    showWatchedButton?: boolean;
 }
 
 /**
@@ -49,23 +66,22 @@ export function getCarouselSteps(windowSize: WindowSize): number {
 }
 
 /**
- * Carousel component will utilize CarouselChildren to display nth ShowCards per carousel step.
+ * A group of Show Posters that will be rendered as a single page in the carousel
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
 const CarouselChildren: React.FC<{
     data: ShowData[];
-    removeFromQueue?: (showId: string) => Promise<void>;
-}> = ({ data, removeFromQueue }): JSX.Element => {
+    profile?: Profile | null;
+    profileActions?: ProfileActions;
+    showQueueButton?: boolean;
+    showFavoritesButton?: boolean;
+    showWatchedButton?: boolean;
+}> = ({ data, profile = null, ...rest }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster
-                    key={i}
-                    details={item}
-                    showType={item.media_type}
-                    removeFromQueue={removeFromQueue}
-                />
+                <ShowPoster key={i} details={item} profile={profile} {...rest} />
             ))}
         </div>
     );
@@ -81,7 +97,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     data,
     size,
     fallbackText,
-    removeFromQueue,
+    ...rest
 }): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
@@ -133,9 +149,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         if (data) {
             for (let i = 0; i < filteredArray.length; i += carouselSteps) {
                 const chunk = filteredArray.slice(i, i + carouselSteps);
-                arr.push(
-                    <CarouselChildren key={i} data={chunk} removeFromQueue={removeFromQueue} />
-                );
+                arr.push(<CarouselChildren key={i} data={chunk} {...rest} />);
             }
         }
         return arr;
