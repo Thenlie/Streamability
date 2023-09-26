@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Typography } from '@mui/material';
-import { ShowData } from '../types';
-import { getMovieTrending } from '../helpers';
 import ShowCarousel from './ShowCarousel';
+import useTrendingShows from '../hooks/useTrendingShows';
 
 interface EmptySearchResultsProps {
     /**
@@ -17,15 +16,7 @@ interface EmptySearchResultsProps {
  * @returns {JSX.Element} | Search Error
  */
 const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query }): JSX.Element => {
-    const [trending, setTrending] = useState<ShowData[] | null>(null);
-
-    useEffect(() => {
-        const handler = async () => {
-            const movies = await getMovieTrending();
-            setTrending(movies);
-        };
-        handler();
-    }, []);
+    const trending = useTrendingShows();
 
     return (
         <section className='flex flex-col m-auto text-left px-6'>

@@ -3,6 +3,7 @@ import useProfileActions from './useProfileActions';
 import useWindowSize from './useWindowSize';
 import useIsInProfileArray from './useIsInProfileArray';
 import useDebounceValue from './useDebounceValue';
+import useTrendingShows from './useTrendingShows';
 
 export {
     useProfileContext,
@@ -11,4 +12,5 @@ export {
     useIsInProfileArray,
     useWindowSize,
     useDebounceValue,
+    useTrendingShows,
 };
