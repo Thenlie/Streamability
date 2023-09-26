@@ -16,7 +16,7 @@ interface EmptySearchResultsProps {
  * @returns {JSX.Element} | Search Error
  */
 const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query }): JSX.Element => {
-    const trending = useTrendingShows();
+    const { trendingShows } = useTrendingShows();
 
     return (
         <section className='flex flex-col m-auto text-left px-6'>
@@ -34,9 +34,9 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query }): JSX.E
             <Typography fontFamily={'sunday-grapes'} sx={{ fontSize: 20, my: 6 }}>
                 THESE POPULAR SHOWS MIGHT INTEREST YOU
             </Typography>
-            {trending && (
+            {trendingShows && (
                 <div className='flex w-full justify-center items-center'>
-                    <ShowCarousel data={trending} />
+                    <ShowCarousel data={trendingShows} />
                 </div>
             )}
         </section>

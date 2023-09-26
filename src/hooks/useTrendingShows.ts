@@ -14,8 +14,10 @@ import { ShowData } from '../types';
  */
 const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => {
     const [trending, setTrending] = useState<ShowData[] | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         const handler = async () => {
             const movies = await getMovieTrending();
             const tv = await getTvTrending();
@@ -40,9 +42,10 @@ const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => 
             }
         };
         handler();
+        setLoading(false);
     }, [sortBy]);
 
-    return trending;
+    return { trendingShows: trending, loading };
 };
 
 export default useTrendingShows;

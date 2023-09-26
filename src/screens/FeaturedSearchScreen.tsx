@@ -9,7 +9,7 @@ import { useTrendingShows } from '../hooks';
  * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
  */
 const FeaturedSearchScreen: React.FC = (): JSX.Element => {
-    const trendingShows = useTrendingShows('release');
+    const { trendingShows } = useTrendingShows('release');
 
     return (
         <div className='mt-6 flex-1 flex flex-col justify-center'>
