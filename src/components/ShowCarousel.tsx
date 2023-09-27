@@ -1,11 +1,12 @@
 import Carousel from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
-import { WindowSize } from '../hooks/useWIndowSize';
+import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
-import { Typography } from '@mui/material';
+import { Typography as Typ } from '@mui/material';
+import { Profile, ProfileActions } from '../types';
 
 interface ShowCarouselProps {
     /**
@@ -22,6 +23,26 @@ interface ShowCarouselProps {
      * in the carousel
      */
     fallbackText?: string;
+    /**
+     * User profile if logged in, otherwise `null`
+     */
+    profile?: Profile | null;
+    /**
+     * Functions to alter profile arrays
+     */
+    profileActions?: ProfileActions;
+    /**
+     * If the queue button on the show posters should be visible
+     */
+    showQueueButton?: boolean;
+    /**
+     * If the favorites button on the show posters should be visible
+     */
+    showFavoritesButton?: boolean;
+    /**
+     * If the watched button on the show posters should be visible
+     */
+    showWatchedButton?: boolean;
 }
 
 /**
@@ -45,19 +66,26 @@ export function getCarouselSteps(windowSize: WindowSize): number {
 }
 
 /**
- * Carousel component will utilize CarouselChildren to display nth ShowCards per carousel step.
+ * A group of Show Posters that will be rendered as a single page in the carousel
  *
  * @returns {JSX.Element} | Collection of ShowCards
  */
-function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
+const CarouselChildren: React.FC<{
+    data: ShowData[];
+    profile?: Profile | null;
+    profileActions?: ProfileActions;
+    showQueueButton?: boolean;
+    showFavoritesButton?: boolean;
+    showWatchedButton?: boolean;
+}> = ({ data, profile = null, ...rest }): JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
-                <ShowPoster key={i} details={item} showType={item.media_type} />
+                <ShowPoster key={i} details={item} profile={profile} {...rest} />
             ))}
         </div>
     );
-}
+};
 
 /**
  * Show carousels will be used throughout the site to display collections of shows
@@ -65,7 +93,12 @@ function CarouselChildren({ data }: { data: ShowData[] }): JSX.Element {
  *
  * @returns {JSX.Element} | Carousel of movie cards
  */
-export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselProps): JSX.Element {
+const ShowCarousel: React.FC<ShowCarouselProps> = ({
+    data,
+    size,
+    fallbackText,
+    ...rest
+}): JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [loading, setLoading] = useState(true);
@@ -116,7 +149,7 @@ export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselP
         if (data) {
             for (let i = 0; i < filteredArray.length; i += carouselSteps) {
                 const chunk = filteredArray.slice(i, i + carouselSteps);
-                arr.push(<CarouselChildren key={i} data={chunk} />);
+                arr.push(<CarouselChildren key={i} data={chunk} {...rest} />);
             }
         }
         return arr;
@@ -150,14 +183,14 @@ export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselP
                             prevButtonClassName: 'hidden',
                         }}
                     >
-                        <Typography
+                        <Typ
                             variant='body1'
                             className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
                         >
                             {fallbackText
                                 ? fallbackText
                                 : 'Sorry, no shows to display at this time.'}
-                        </Typography>
+                        </Typ>
                     </Carousel>
                 </div>
             </section>
@@ -165,26 +198,26 @@ export default function ShowCarousel({ data, size, fallbackText }: ShowCarouselP
     }
 
     return (
-        <section className='pt-12'>
-            <div className={`w-[${carouselWidth}]`}>
-                <Carousel
-                    wrapAround
-                    className='bg-primary'
-                    style={{
-                        width: carouselWidth,
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                        borderRadius: '5px',
-                    }}
-                    defaultControlsConfig={{
-                        pagingDotsClassName: 'hidden',
-                        nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
-                        prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
-                    }}
-                >
-                    {handleDataSlice(data)}
-                </Carousel>
-            </div>
-        </section>
+        <div className={`w-[${carouselWidth}]`}>
+            <Carousel
+                wrapAround
+                className='bg-primary'
+                style={{
+                    width: carouselWidth,
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    borderRadius: '5px',
+                }}
+                defaultControlsConfig={{
+                    pagingDotsClassName: 'hidden',
+                    nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
+                    prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
+                }}
+            >
+                {handleDataSlice(data)}
+            </Carousel>
+        </div>
     );
-}
+};
+
+export default ShowCarousel;

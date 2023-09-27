@@ -1,14 +1,19 @@
 import { ErrorResponse } from '@remix-run/router';
-import { useRouteError } from 'react-router-dom';
-import { ErrorMessage } from '../components';
+import { useNavigate, useRouteError } from 'react-router-dom';
+import { Button, Snackbar } from '../components';
 import Logger from '../logger';
+import React from 'react';
+import { ArrowBack, Home } from '@mui/icons-material';
+import { Typography as Typ } from '@mui/material';
 
 const LOG = new Logger('PageNotFoundScreen');
 
 /**
  * @returns {JSX.Element} | 404 page
  */
-export default function PageNotFoundScreen(): JSX.Element {
+const PageNotFoundScreen: React.FC = (): JSX.Element => {
+    const navigate = useNavigate();
+
     /**
      * This hook returns anything thrown during an
      * action, loader, or rendering
@@ -23,8 +28,16 @@ export default function PageNotFoundScreen(): JSX.Element {
      */
     return (
         <div className='flex min-h-screen flex-col place-items-center justify-center'>
-            <h1 data-testid='page-not-found-header'>Page Not Found!</h1>
-            <ErrorMessage message={error.statusText} />
+            <Typ variant='h4' data-testid='page-not-found-header' sx={{ paddingBottom: 6 }}>
+                Page Not Found!
+            </Typ>
+            <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
+            <Button title='Go back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
+            {error.statusText && (
+                <Snackbar isOpen isStatic severity='error' message={error.statusText} />
+            )}
         </div>
     );
-}
+};
+
+export default PageNotFoundScreen;

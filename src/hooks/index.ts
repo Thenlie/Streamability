@@ -1,6 +1,16 @@
 import { useProfileContext, useSessionContext } from './context';
-import useWindowSize from './useWIndowSize';
-import useIsInQueue from './useIsInQueue';
+import useProfileActions from './useProfileActions';
+import useWindowSize from './useWindowSize';
+import useIsInProfileArray from './useIsInProfileArray';
 import useDebounceValue from './useDebounceValue';
+import useTrendingShows from './useTrendingShows';
 
-export { useProfileContext, useSessionContext, useIsInQueue, useWindowSize, useDebounceValue };
+export {
+    useProfileContext,
+    useProfileActions,
+    useSessionContext,
+    useIsInProfileArray,
+    useWindowSize,
+    useDebounceValue,
+    useTrendingShows,
+};

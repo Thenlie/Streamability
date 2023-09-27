@@ -2,9 +2,10 @@ import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles'
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
-import { Button, CardActions, CardMedia, Typography } from '@mui/material';
+import { Button, CardActions, CardMedia, Typography as Typ } from '@mui/material';
 import Rating from './Rating';
-import { useIsInQueue } from '../hooks';
+import { useIsInProfileArray } from '../hooks';
+import React from 'react';
 
 export const SHOW_CARD_WIDTH = 360;
 
@@ -35,13 +36,13 @@ export interface ShowCardProps {
  * @param props | returns details object passed from SearchResultScreen.tsx
  * @returns {JSX.Element} | Single show card
  */
-export default function ShowCard({
+const ShowCard: React.FC<ShowCardProps> = ({
     details,
     showType,
     profile,
     setProfile,
-}: ShowCardProps): JSX.Element {
-    const isInQueue = useIsInQueue(details.id, profile);
+}): JSX.Element => {
+    const { isInQueue } = useIsInProfileArray(details.id, profile);
 
     /**
      * Handle card being added to or removed from
@@ -91,7 +92,7 @@ export default function ShowCard({
             </Link>
             <div className='flex flex-col justify-between py-1 pl-2'>
                 <div>
-                    <Typography
+                    <Typ
                         variant='h5'
                         align='left'
                         sx={{
@@ -103,11 +104,11 @@ export default function ShowCard({
                         }}
                     >
                         {details.title}
-                    </Typography>
+                    </Typ>
                     {details.release_date && details.release_date.length === 10 && (
-                        <Typography align='left'>
+                        <Typ align='left'>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
-                        </Typography>
+                        </Typ>
                     )}
                 </div>
                 <div>
@@ -139,4 +140,6 @@ export default function ShowCard({
             </div>
         </div>
     );
-}
+};
+
+export default ShowCard;

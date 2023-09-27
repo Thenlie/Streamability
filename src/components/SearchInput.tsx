@@ -1,5 +1,6 @@
 import { Search } from '@mui/icons-material';
 import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material';
+import React from 'react';
 import { Form } from 'react-router-dom';
 
 /**
@@ -9,7 +10,7 @@ import { Form } from 'react-router-dom';
  *
  * @returns {JSX.Element} | the main search input component
  */
-export default function SearchInput(): JSX.Element {
+const SearchInput: React.FC = (): JSX.Element => {
     return (
         // TODO: #162 Use MUI ThemeProvider
         <Form method='get' action='/search'>
@@ -38,4 +39,6 @@ export default function SearchInput(): JSX.Element {
             </FormControl>
         </Form>
     );
-}
+};
+
+export default SearchInput;

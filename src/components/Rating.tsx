@@ -1,5 +1,6 @@
-import { Rating as RatingMUI, Typography } from '@mui/material';
+import { Rating as RatingMUI, Typography as Typ } from '@mui/material';
 import { pluralizeString } from '../helpers';
+import React from 'react';
 
 interface RatingProps {
     /**
@@ -21,7 +22,7 @@ interface RatingProps {
  * @param props | vote count and average rating
  * @returns {JSX.Element} | Stars with text below
  */
-export default function Rating({ vote_average, vote_count }: RatingProps): JSX.Element {
+const Rating: React.FC<RatingProps> = ({ vote_average, vote_count }): JSX.Element => {
     return (
         <div className='flex flex-col my-2'>
             <RatingMUI
@@ -30,9 +31,11 @@ export default function Rating({ vote_average, vote_count }: RatingProps): JSX.E
                 precision={0.5}
                 readOnly
             />
-            <Typography variant='body2' align='left' paddingLeft={0.6}>
+            <Typ variant='body2' align='left' paddingLeft={0.6}>
                 {vote_count} {pluralizeString(vote_count, 'rating')}
-            </Typography>
+            </Typ>
         </div>
     );
-}
+};
+
+export default Rating;

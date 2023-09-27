@@ -1,39 +1,48 @@
-import { useState } from 'react';
-import ErrorMessage from '../ErrorMessage';
-import { SUPABASE } from '../../helpers';
+import React, { useState, useMemo } from 'react';
+import { Button, Snackbar } from '../../components';
+import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import {
-    Button,
     InputAdornment,
     FilledInput,
     InputLabel,
     FormControl,
     IconButton,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
+import { SnackbarProps } from '../Snackbar';
 
 const LOG = new Logger('SignupForm');
 
 /**
- * Screen to handle Supabase sign up
+ * Form to handle user sign up
  *
  * @returns {JSX.Element}
  */
-export default function SignUpForm(): JSX.Element {
+const SignUpForm: React.FC = (): JSX.Element => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
+    const [country, setCountry] = useState('United States of America');
+    const [countryError, setCountryError] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
+        isOpen: false,
+        severity: 'success',
+        message: '',
+    });
 
     // redirect users that are logged in
     if (session) {
@@ -42,10 +51,12 @@ export default function SignUpForm(): JSX.Element {
 
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
-        setErrorMessage(msg);
-        setTimeout(() => {
-            setErrorMessage('');
-        }, 3000);
+        setSnackBarOptions({
+            isOpen: true,
+            severity: 'error',
+            message: msg,
+            hash: String(Math.random()),
+        });
     };
 
     // reset all error states
@@ -54,7 +65,6 @@ export default function SignUpForm(): JSX.Element {
         setUsernameError(false);
         setPasswordError(false);
         setConfirmPasswordError(false);
-        setErrorMessage('');
     };
 
     /**
@@ -77,6 +87,7 @@ export default function SignUpForm(): JSX.Element {
      * @returns {Promise<void>} | Does not redirect user
      */
     const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
+        setLoading(true);
         evt.preventDefault();
         clearErrors();
 
@@ -85,8 +96,10 @@ export default function SignUpForm(): JSX.Element {
         if (!username) setUsernameError(true);
         if (!password) setPasswordError(true);
         if (!confirmPassword) setConfirmPasswordError(true);
-        if (!email || !password || !confirmPassword || !username) {
+        if (!country) setCountryError(true);
+        if (!email || !password || !confirmPassword || !username || !country) {
             showError('All fields must be filled out');
+            setLoading(false);
             return;
         }
 
@@ -94,6 +107,7 @@ export default function SignUpForm(): JSX.Element {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
             return;
         }
 
@@ -101,6 +115,7 @@ export default function SignUpForm(): JSX.Element {
         if (password.length < 3) {
             showError('Password must be at least 6 characters');
             setPasswordError(true);
+            setLoading(false);
             return;
         }
 
@@ -109,6 +124,7 @@ export default function SignUpForm(): JSX.Element {
             setPasswordError(true);
             setConfirmPasswordError(true);
             showError('Passwords must match');
+            setLoading(false);
             return;
         }
 
@@ -119,6 +135,7 @@ export default function SignUpForm(): JSX.Element {
             options: {
                 data: {
                     username: username,
+                    country: country,
                 },
             },
         });
@@ -130,20 +147,32 @@ export default function SignUpForm(): JSX.Element {
             ) {
                 showError('Username unavailable');
                 setUsernameError(true);
+                setLoading(false);
                 return;
             }
             showError(error.message);
             LOG.error(error);
+            setLoading(false);
+            return;
         }
 
-        // onAuthStateChange function will be triggered
-        // User has not logged in yet but we still get some information back
-        // Check if 'confirmed_at' exists on user to see if they validated their email
+        /**
+         * After return a session will be created,
+         * redirecting the user to their dashboard
+         */
         return;
     };
 
+    const DropDownItems: JSX.Element[] = useMemo(() => {
+        return COUNTRIES.map((item, i) => (
+            <MenuItem key={i} value={item.country}>
+                {item.country}
+            </MenuItem>
+        ));
+    }, [COUNTRIES]);
+
     return (
-        <div aria-live='polite'>
+        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
             <h1 data-testid='signup-heading'>Signup</h1>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
@@ -178,6 +207,25 @@ export default function SignUpForm(): JSX.Element {
                         onChange={(e) => setUsername(e.target.value)}
                         onFocus={() => setUsernameError(false)}
                     />
+                </FormControl>
+                <FormControl sx={{ m: 0.5 }} variant='filled'>
+                    <InputLabel htmlFor='country-input' color='secondary' className='!text-text'>
+                        Country
+                    </InputLabel>
+                    <Select
+                        id='country-input'
+                        name='country'
+                        color='secondary'
+                        className='!text-text text-left'
+                        value={country}
+                        error={countryError}
+                        onChange={(e) => setCountry(e.target.value)}
+                        onFocus={() => setCountryError(false)}
+                        MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
+                        defaultValue={country}
+                    >
+                        {DropDownItems}
+                    </Select>
                 </FormControl>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
@@ -247,17 +295,11 @@ export default function SignUpForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <Button
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    color='secondary'
-                    sx={{ margin: '10px' }}
-                >
-                    Submit
-                </Button>
-                {errorMessage && <ErrorMessage message={errorMessage} />}
+                <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <Snackbar {...snackBarOptions} />
         </div>
     );
-}
+};
+
+export default SignUpForm;

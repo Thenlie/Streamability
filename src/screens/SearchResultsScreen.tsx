@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
     ShowCard,
     ShowCardProps,
@@ -7,10 +7,11 @@ import {
     ShowListCard,
     ShowListCardProps,
     ShowListCardLoader,
+    EmptySearchResults,
 } from '../components';
 import { ShowData } from '../types';
 import { useProfileContext, useWindowSize } from '../hooks';
-import { ToggleButton, Tooltip, Typography } from '@mui/material';
+import { ToggleButton, Tooltip, Typography as Typ } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
 import { getShowsByName } from '../helpers';
 
@@ -36,18 +37,23 @@ export async function loader({ request }: { request: Request }): Promise<string>
  *
  * @returns {JSX.Element}
  */
-export default function SearchResultsScreen(): JSX.Element {
+const SearchResultsScreen: React.FC = (): JSX.Element => {
     const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
     const windowSize = useWindowSize();
-    const [viewState, setViewState] = useState<'list' | 'grid'>('list');
+    const storageItem = localStorage.getItem('streamabilityView');
+    const initialView = storageItem === 'grid' ? 'grid' : 'list';
+    const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [showDetails, setShowDetails] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+
+    if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
     // default to grid view on mobile
     useEffect(() => {
         if (windowSize.width && windowSize.width < 750) {
             setViewState('grid');
+            localStorage.setItem('streamabilityView', 'grid');
         }
     }, [windowSize]);
 
@@ -63,6 +69,8 @@ export default function SearchResultsScreen(): JSX.Element {
 
     const handleViewToggle = useCallback(() => {
         setViewState((prev) => (prev === 'grid' ? 'list' : 'grid'));
+        const view = localStorage.getItem('streamabilityView');
+        localStorage.setItem('streamabilityView', view === 'grid' ? 'list' : 'grid');
     }, [setViewState]);
 
     /**
@@ -72,9 +80,9 @@ export default function SearchResultsScreen(): JSX.Element {
     const SearchResultHeader = useMemo((): JSX.Element => {
         return (
             <div className='flex justify-between align-middle w-full p-3'>
-                <Typography variant='h5' data-testid='search-results-heading'>
+                <Typ variant='h5' data-testid='search-results-heading'>
                     Search results for: {query}
-                </Typography>
+                </Typ>
                 <Tooltip title='toggle card view'>
                     <ToggleButton
                         sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
@@ -122,7 +130,7 @@ export default function SearchResultsScreen(): JSX.Element {
                 })}
             </div>
         );
-    }, [showDetails, viewState]);
+    }, [showDetails, viewState, profile]);
 
     if (loading) {
         return (
@@ -145,14 +153,8 @@ export default function SearchResultsScreen(): JSX.Element {
         );
     }
 
-    // TODO: #438 Handle this error better
-    if (!showDetails) {
-        return (
-            <>
-                {SearchResultHeader}
-                <Typography variant='h6'>Sorry! No show data...</Typography>
-            </>
-        );
+    if (showDetails && showDetails.length === 0) {
+        return <EmptySearchResults query={query} />;
     }
 
     return (
@@ -161,4 +163,6 @@ export default function SearchResultsScreen(): JSX.Element {
             {SearchResultCards}
         </>
     );
-}
+};
+
+export default SearchResultsScreen;

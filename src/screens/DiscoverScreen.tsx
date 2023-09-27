@@ -1,53 +1,25 @@
-import { useState, useEffect } from 'react';
-import { getMovieTrending, getTvTrending } from '../helpers';
-import { ShowData } from '../types';
 import { ShowCard } from '../components';
-import { useProfileContext } from '../hooks';
+import { useProfileContext, useTrendingShows } from '../hooks';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
     const { profile, setProfile } = useProfileContext();
-    const [movieTrending, setMovieTrending] = useState<ShowData[] | null>(null);
-    const [tvTrending, setTvTrending] = useState<ShowData[] | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    useEffect(() => {
-        const handler = async () => {
-            const movieData: ShowData[] | null = await getMovieTrending();
-            setMovieTrending(movieData);
-            const tvData: ShowData[] | null = await getTvTrending();
-            setTvTrending(tvData);
-            setLoading(false);
-        };
-        handler();
-    }, []);
+    const { trendingShows, loading } = useTrendingShows('alpha');
+
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div>
-            {movieTrending?.map(
-                // TODO: make showType dynamic
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6'>
+            {trendingShows?.map(
                 (item, i) =>
                     item && (
                         <ShowCard
                             key={i}
                             details={item}
-                            showType='movie'
-                            profile={profile}
-                            setProfile={setProfile}
-                        />
-                    )
-            )}
-            {tvTrending?.map(
-                // TODO: make showType dynamic
-                (item, i) =>
-                    item && (
-                        <ShowCard
-                            key={i}
-                            details={item}
-                            showType='tv'
+                            showType={item.media_type}
                             profile={profile}
                             setProfile={setProfile}
                         />

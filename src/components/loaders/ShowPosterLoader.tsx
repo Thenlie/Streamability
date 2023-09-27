@@ -1,3 +1,4 @@
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -14,7 +15,7 @@ interface ShowCardLoaderProps {
  * @param count | number of poster placeholders to be rendered
  * @returns {JSX.Element}
  */
-export default function ShowPosterLoader({ count }: ShowCardLoaderProps): JSX.Element {
+const ShowPosterLoader: React.FC<ShowCardLoaderProps> = ({ count }): JSX.Element => {
     return (
         <>
             {[...Array(count)].map((x, i) => (
@@ -24,4 +25,6 @@ export default function ShowPosterLoader({ count }: ShowCardLoaderProps): JSX.El
             ))}
         </>
     );
-}
+};
+
+export default ShowPosterLoader;

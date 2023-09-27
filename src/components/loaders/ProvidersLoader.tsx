@@ -1,3 +1,4 @@
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -14,7 +15,7 @@ interface ProvidersLoaderProps {
  * @param count | number placeholders to be rendered
  * @returns {JSX.Element}
  */
-export default function ProvidersLoader({ count }: ProvidersLoaderProps): JSX.Element {
+const ProvidersLoader: React.FC<ProvidersLoaderProps> = ({ count }): JSX.Element => {
     return (
         <div className='m-3 flex flex-wrap justify-center bg-primary rounded-sm p-1'>
             {[...Array(count)].map((x, i) => (
@@ -24,4 +25,6 @@ export default function ProvidersLoader({ count }: ProvidersLoaderProps): JSX.El
             ))}
         </div>
     );
-}
+};
+
+export default ProvidersLoader;

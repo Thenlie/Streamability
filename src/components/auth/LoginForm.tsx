@@ -1,43 +1,46 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../ErrorMessage';
+import { Button, Snackbar } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
-import {
-    Button,
-    InputAdornment,
-    FilledInput,
-    InputLabel,
-    FormControl,
-    IconButton,
-} from '@mui/material';
+import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
+import { SnackbarProps } from '../Snackbar';
 
 const LOG = new Logger('LoginForm');
 
 /**
+ * Form to handle user login.
+ *
  * @returns {JSX.Element}
  */
-export default function LoginForm(): JSX.Element {
+const LoginForm: React.FC = (): JSX.Element => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
+        isOpen: false,
+        severity: 'success',
+        message: '',
+    });
 
     if (session) {
-        return <Navigate to={'/dashboard'} />;
+        return <Navigate to={'/dashboard'} replace />;
     }
 
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
-        setErrorMessage(msg);
-        setTimeout(() => {
-            setErrorMessage('');
-        }, 3000);
+        setSnackBarOptions({
+            isOpen: true,
+            severity: 'error',
+            message: msg,
+            hash: String(Math.random()),
+        });
     };
 
     /**
@@ -49,6 +52,7 @@ export default function LoginForm(): JSX.Element {
      * @returns {Promise<void>} | Does not redirect user
      */
     async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
+        setLoading(true);
         evt.preventDefault();
 
         // Ensure both fields have input
@@ -56,6 +60,7 @@ export default function LoginForm(): JSX.Element {
             showError('All fields must be filled out');
             if (!email) setEmailError(true);
             if (!password) setPasswordError(true);
+            setLoading(false);
             return;
         }
 
@@ -63,6 +68,7 @@ export default function LoginForm(): JSX.Element {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
             return;
         }
 
@@ -73,9 +79,11 @@ export default function LoginForm(): JSX.Element {
         });
 
         if (error) {
-            // We could try to get the AuthApiError type and use 'cause' instead
+            // TODO: We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
             LOG.error(error);
+            setLoading(false);
+            return;
         }
 
         // onAuthStateChange function will be triggered
@@ -83,7 +91,7 @@ export default function LoginForm(): JSX.Element {
     }
 
     return (
-        <div aria-live='polite'>
+        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
             <h1 data-testid='login-heading'>Login</h1>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
@@ -131,17 +139,11 @@ export default function LoginForm(): JSX.Element {
                         }
                     />
                 </FormControl>
-                <Button
-                    variant='contained'
-                    size='large'
-                    type='submit'
-                    color='secondary'
-                    sx={{ margin: '10px' }}
-                >
-                    Submit
-                </Button>
-                {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
+                <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <Snackbar {...snackBarOptions} />
         </div>
     );
-}
+};
+
+export default LoginForm;
