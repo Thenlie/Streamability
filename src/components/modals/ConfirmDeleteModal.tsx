@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, Modal, Typography as Typ } from '@mui/material';
 import { Delete, ArrowBackIosNew, WarningSharp } from '@mui/icons-material';
 import Button from '../Button';
 
@@ -65,10 +65,10 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
                     }}
                 >
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
-                        <Typography variant='h6' align='center'>
+                        <Typ variant='h6' align='center'>
                             Are you sure you want to delete your profile?
-                        </Typography>
-                        <Typography mb={2}>⚠️ Warning! This action cannot be undone.</Typography>
+                        </Typ>
+                        <Typ mb={2}>⚠️ Warning! This action cannot be undone.</Typ>
                         <Button
                             title='Yes'
                             color='error'

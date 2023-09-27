@@ -1,4 +1,4 @@
-import { Rating as RatingMUI, Typography } from '@mui/material';
+import { Rating as RatingMUI, Typography as Typ } from '@mui/material';
 import { pluralizeString } from '../helpers';
 import React from 'react';
 
@@ -31,9 +31,9 @@ const Rating: React.FC<RatingProps> = ({ vote_average, vote_count }): JSX.Elemen
                 precision={0.5}
                 readOnly
             />
-            <Typography variant='body2' align='left' paddingLeft={0.6}>
+            <Typ variant='body2' align='left' paddingLeft={0.6}>
                 {vote_count} {pluralizeString(vote_count, 'rating')}
-            </Typography>
+            </Typ>
         </div>
     );
 };

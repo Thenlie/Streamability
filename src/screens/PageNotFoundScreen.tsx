@@ -4,7 +4,7 @@ import { Button, Snackbar } from '../components';
 import Logger from '../logger';
 import React from 'react';
 import { ArrowBack, Home } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { Typography as Typ } from '@mui/material';
 
 const LOG = new Logger('PageNotFoundScreen');
 
@@ -28,12 +28,14 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
      */
     return (
         <div className='flex min-h-screen flex-col place-items-center justify-center'>
-            <Typography variant='h4' data-testid='page-not-found-header' sx={{ paddingBottom: 6 }}>
+            <Typ variant='h4' data-testid='page-not-found-header' sx={{ paddingBottom: 6 }}>
                 Page Not Found!
-            </Typography>
+            </Typ>
             <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
             <Button title='Go back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
-            <Snackbar isOpen isStatic severity='error' message={error.statusText} />
+            {error.statusText && (
+                <Snackbar isOpen isStatic severity='error' message={error.statusText} />
+            )}
         </div>
     );
 };

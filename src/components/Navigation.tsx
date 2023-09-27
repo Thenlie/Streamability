@@ -12,7 +12,7 @@ import {
     Theme,
     Toolbar,
     Tooltip,
-    Typography,
+    Typography as Typ,
 } from '@mui/material';
 import {
     AccountCircle,
@@ -95,7 +95,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
             <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-primary px-8 py-3 flex-wrap'>
                 <Link to='/' className='!text-text flex items-center'>
                     <img src='/images/logo-transparent.png' className='w-16 inline'></img>
-                    <Typography
+                    <Typ
                         variant='h5'
                         sx={{
                             display: 'inline',
@@ -106,7 +106,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                         fontFamily={'sunday-grapes'}
                     >
                         STREAMABILITY
-                    </Typography>
+                    </Typ>
                 </Link>
 
                 <div className='flex items-center'>

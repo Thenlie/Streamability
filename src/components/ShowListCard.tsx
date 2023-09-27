@@ -2,7 +2,7 @@ import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles'
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
-import { Button, CardActions, CardMedia, Rating, Typography } from '@mui/material';
+import { Button, CardActions, CardMedia, Rating, Typography as Typ } from '@mui/material';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 
@@ -92,15 +92,15 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
             </Link>
             <div className='p-2 flex flex-col justify-between flex-1'>
                 <div>
-                    <Typography variant='h5' align='left' paddingLeft={1} noWrap width={500}>
+                    <Typ variant='h5' align='left' paddingLeft={1} noWrap width={500}>
                         {details.title}
-                    </Typography>
+                    </Typ>
                     {details.release_date && details.release_date.length === 10 && (
-                        <Typography align='left' style={{ opacity: 0.8 }} paddingLeft={1} noWrap>
+                        <Typ align='left' style={{ opacity: 0.8 }} paddingLeft={1} noWrap>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
-                        </Typography>
+                        </Typ>
                     )}
-                    <Typography
+                    <Typ
                         align='left'
                         paddingLeft={1}
                         fontSize={14}
@@ -113,7 +113,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
                         }}
                     >
                         {details.overview}
-                    </Typography>
+                    </Typ>
                 </div>
                 <div className='flex justify-between'>
                     <div style={{ textAlign: 'left', alignSelf: 'end' }}>
@@ -124,13 +124,13 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
                             style={{ paddingLeft: 4 }}
                             readOnly
                         />
-                        <Typography variant='body2' align='left' paddingLeft={1}>
+                        <Typ variant='body2' align='left' paddingLeft={1}>
                             {details.vote_average && details.vote_count
                                 ? details.vote_count +
                                   ' ' +
                                   pluralizeString(details.vote_count, 'rating')
                                 : 'No Ratings available'}
-                        </Typography>
+                        </Typ>
                     </div>
                     {profile && (
                         <CardActions

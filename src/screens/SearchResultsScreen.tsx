@@ -11,7 +11,7 @@ import {
 } from '../components';
 import { ShowData } from '../types';
 import { useProfileContext, useWindowSize } from '../hooks';
-import { ToggleButton, Tooltip, Typography } from '@mui/material';
+import { ToggleButton, Tooltip, Typography as Typ } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
 import { getShowsByName } from '../helpers';
 
@@ -80,9 +80,9 @@ const SearchResultsScreen: React.FC = (): JSX.Element => {
     const SearchResultHeader = useMemo((): JSX.Element => {
         return (
             <div className='flex justify-between align-middle w-full p-3'>
-                <Typography variant='h5' data-testid='search-results-heading'>
+                <Typ variant='h5' data-testid='search-results-heading'>
                     Search results for: {query}
-                </Typography>
+                </Typ>
                 <Tooltip title='toggle card view'>
                     <ToggleButton
                         sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}

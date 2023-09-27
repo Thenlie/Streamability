@@ -2,7 +2,7 @@ import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles'
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
-import { Button, CardActions, CardMedia, Typography } from '@mui/material';
+import { Button, CardActions, CardMedia, Typography as Typ } from '@mui/material';
 import Rating from './Rating';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
@@ -92,7 +92,7 @@ const ShowCard: React.FC<ShowCardProps> = ({
             </Link>
             <div className='flex flex-col justify-between py-1 pl-2'>
                 <div>
-                    <Typography
+                    <Typ
                         variant='h5'
                         align='left'
                         sx={{
@@ -104,11 +104,11 @@ const ShowCard: React.FC<ShowCardProps> = ({
                         }}
                     >
                         {details.title}
-                    </Typography>
+                    </Typ>
                     {details.release_date && details.release_date.length === 10 && (
-                        <Typography align='left'>
+                        <Typ align='left'>
                             {formatReleaseDate(details.release_date, DateSize.MEDIUM)}
-                        </Typography>
+                        </Typ>
                     )}
                 </div>
                 <div>
