@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSessionContext, useProfileContext, useProfileActions } from '../hooks';
 import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
 import { ShowData } from '../types';
 import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
@@ -94,48 +94,53 @@ const DashboardScreen: React.FC = (): JSX.Element => {
 
     return (
         <>
-            <Typography variant='h5' m={2}>
+            <Typ variant='h5' m={2}>
                 Welcome back {profile?.username}!
-            </Typography>
+            </Typ>
             <section className='m-6 flex flex-col flex-1'>
                 <div aria-live='polite' className='flex flex-col items-start justify-center m-2'>
-                    <div className='m-1'>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                Email:{' '}
-                            </Typography>
+                    <div className='text-left m-2'>
+                        <Typ fontWeight='bold' display='inline'>
+                            Email:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {session?.user.email}
-                        </Typography>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                Username:{' '}
-                            </Typography>
+                        </Typ>
+                        <br />
+                        <Typ fontWeight='bold' display='inline'>
+                            Username:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {profile?.username}
-                        </Typography>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                Country of Origin:{' '}
-                            </Typography>
+                        </Typ>
+                        <br />
+                        <Typ fontWeight='bold' display='inline'>
+                            Country of Origin:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {profile?.country}
-                        </Typography>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                In Queue:{' '}
-                            </Typography>
+                        </Typ>
+                        <br />
+                        <Typ fontWeight='bold' display='inline'>
+                            In Queue:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {profile?.queue?.length || 0}
-                        </Typography>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                Watched:{' '}
-                            </Typography>
+                        </Typ>
+                        <br />
+                        <Typ fontWeight='bold' display='inline'>
+                            Watched:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {profile?.watched?.length || 0}
-                        </Typography>
-                        <Typography align='left'>
-                            <Typography fontWeight={'bold'} display={'inline'}>
-                                Favorites:{' '}
-                            </Typography>
+                        </Typ>
+                        <br />
+                        <Typ fontWeight='bold' display='inline'>
+                            Favorites:{' '}
+                        </Typ>
+                        <Typ align='left' display='inline'>
                             {profile?.favorites?.length || 0}
-                        </Typography>
+                        </Typ>
                     </div>
 
                     <EditProfileModal session={session} profile={profile} setProfile={setProfile} />

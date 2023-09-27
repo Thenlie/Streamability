@@ -10,7 +10,7 @@ import {
     FormControl,
     InputLabel,
     Modal,
-    Typography,
+    Typography as Typ,
     Select,
     MenuItem,
 } from '@mui/material';
@@ -156,7 +156,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                     }}
                 >
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
-                        <Typography variant='h5'>Edit Profile</Typography>
+                        <Typ variant='h5'>Edit Profile</Typ>
                         <FormControl sx={{ m: 0.5 }} variant='filled'>
                             <InputLabel htmlFor='username' color='secondary' className='!text-text'>
                                 Change Username
@@ -174,7 +174,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                                 autoComplete='username'
                             />
                         </FormControl>
-                        <Typography>Current Username: {profile?.username}</Typography>
+                        <Typ>Current Username: {profile?.username}</Typ>
                         <Button
                             title='Change Username'
                             StartIcon={Edit}
@@ -204,16 +204,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                                 {DropDownItems}
                             </Select>
                         </FormControl>
-                        <Typography>Current Country: {profile?.country}</Typography>
+                        <Typ>Current Country: {profile?.country}</Typ>
                         <Button
                             title='Change Country'
                             sx={{ width: 250, mb: 2 }}
                             StartIcon={Language}
                             onClick={changeCountry}
                         />
-                        <Typography>
-                            Adult Content: {profile?.adult ? 'visible' : 'not visible'}
-                        </Typography>
+                        <Typ>Adult Content: {profile?.adult ? 'visible' : 'not visible'}</Typ>
                         <Button
                             title='Toggle Adult Flag'
                             StartIcon={NoAdultContent}

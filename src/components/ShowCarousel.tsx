@@ -5,7 +5,7 @@ import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
 import { ShowPosterLoader } from './loaders';
-import { Typography } from '@mui/material';
+import { Typography as Typ } from '@mui/material';
 import { Profile, ProfileActions } from '../types';
 
 interface ShowCarouselProps {
@@ -183,14 +183,14 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
                             prevButtonClassName: 'hidden',
                         }}
                     >
-                        <Typography
+                        <Typ
                             variant='body1'
                             className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
                         >
                             {fallbackText
                                 ? fallbackText
                                 : 'Sorry, no shows to display at this time.'}
-                        </Typography>
+                        </Typ>
                     </Carousel>
                 </div>
             </section>

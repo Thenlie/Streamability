@@ -10,7 +10,7 @@ import {
 } from '../helpers';
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button } from '../components';
-import { Tooltip, Typography } from '@mui/material';
+import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import {
@@ -72,7 +72,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
                         color={isInFavorites ? 'error' : 'success'}
                         loading={favoritesLoading}
                         onClick={() =>
-                            isInQueue ? removeFromFavorites(dbShowId) : addToFavorites(dbShowId)
+                            isInFavorites ? removeFromFavorites(dbShowId) : addToFavorites(dbShowId)
                         }
                         StartIcon={isInFavorites ? HeartBroken : Favorite}
                         sx={{ minWidth: 185 }}
@@ -86,7 +86,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
                         color={isInWatched ? 'error' : 'success'}
                         loading={watchedLoading}
                         onClick={() =>
-                            isInQueue ? removeFromWatched(dbShowId) : addToWatched(dbShowId)
+                            isInWatched ? removeFromWatched(dbShowId) : addToWatched(dbShowId)
                         }
                         StartIcon={isInWatched ? Cancel : CheckCircle}
                         sx={{ minWidth: 185 }}
@@ -158,24 +158,24 @@ const ShowDetailsScreen: React.FC = () => {
                 </div>
                 <div className='m-3 max-w-xl'>
                     <div>
-                        <Typography
+                        <Typ
                             variant='h3'
                             align='left'
                             className='max-w-lg'
                             data-testid='show-details-heading'
                         >
                             {details.title}
-                        </Typography>
+                        </Typ>
                         {details.release_date && details.release_date.length === 10 && (
-                            <Typography align='left' data-testid='details-release-date'>
+                            <Typ align='left' data-testid='details-release-date'>
                                 {formatReleaseDate(details.release_date, DateSize.LONG)}
-                            </Typography>
+                            </Typ>
                         )}
-                        <Typography align='left'>{details.age_rating}</Typography>
+                        <Typ align='left'>{details.age_rating}</Typ>
                         {details.runtime && (
-                            <Typography align='left' variant='body2'>
+                            <Typ align='left' variant='body2'>
                                 {details.runtime} minutes
-                            </Typography>
+                            </Typ>
                         )}
                     </div>
                     <Rating
@@ -183,9 +183,9 @@ const ShowDetailsScreen: React.FC = () => {
                         vote_count={details.vote_count || 0}
                     />
                     <div>
-                        <Typography align='left' className='py-3'>
+                        <Typ align='left' className='py-3'>
                             {details.overview}
-                        </Typography>
+                        </Typ>
                     </div>
                     <div className='bg-primary rounded-md my-3 p-2'>
                         <Providers id={details.id} showType={showType} />
