@@ -30,7 +30,7 @@ const LoginForm: React.FC = (): JSX.Element => {
     });
 
     if (session) {
-        return <Navigate to={'/dashboard'} />;
+        return <Navigate to={'/dashboard'} replace />;
     }
 
     // show error message for 3 seconds and then remove

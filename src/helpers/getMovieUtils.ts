@@ -132,7 +132,6 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
  * @returns {Promise<ShowData[] | null>} | Array of recommended movies
  */
 const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> => {
-    LOG.debug(id);
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY

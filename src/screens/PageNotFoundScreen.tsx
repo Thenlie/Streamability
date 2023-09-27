@@ -33,7 +33,9 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
             </Typ>
             <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
             <Button title='Go back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
-            <Snackbar isOpen isStatic severity='error' message={error.statusText} />
+            {error.statusText && (
+                <Snackbar isOpen isStatic severity='error' message={error.statusText} />
+            )}
         </div>
     );
 };

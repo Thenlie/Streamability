@@ -31,7 +31,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
 
     // If the user is not logged in, redirect to login
     if (!session || !profile) {
-        return <Navigate to={'/auth/login'} />;
+        return <Navigate to={'/auth/login'} replace />;
     }
 
     // On page load get the users watch queue
