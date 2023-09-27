@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button as ButtonMUI, SxProps, Theme } from '@mui/material';
+import { Button as ButtonMUI, SvgIconTypeMap, SxProps, Theme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 interface ButtonProps {
     /**
@@ -26,7 +27,9 @@ interface ButtonProps {
     /**
      * Icon displayed in front of button text
      */
-    startIcon?: React.ReactNode;
+    StartIcon?: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
+        muiName: string;
+    };
     /**
      * Function to be run when button is clicked
      */
@@ -46,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
     color = 'secondary',
     loading = false,
     disabled = false,
-    startIcon,
+    StartIcon,
     onClick,
     sx,
 }) => {
@@ -58,7 +61,7 @@ const Button: React.FC<ButtonProps> = ({
                 type={type}
                 color={color}
                 disabled={disabled || loading}
-                startIcon={!loading && startIcon}
+                startIcon={!loading && StartIcon && <StartIcon />}
                 onClick={onClick}
                 sx={{ margin: 0.5, minWidth: 210, minHeight: 45, ...sx }}
             >

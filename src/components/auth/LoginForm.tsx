@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ErrorMessage, Button } from '../../components';
+import { Button, Snackbar } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
+import { SnackbarProps } from '../Snackbar';
 
 const LOG = new Logger('LoginForm');
 
@@ -21,8 +22,12 @@ const LoginForm: React.FC = (): JSX.Element => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
+        isOpen: false,
+        severity: 'success',
+        message: '',
+    });
 
     if (session) {
         return <Navigate to={'/dashboard'} />;
@@ -30,10 +35,12 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
-        setErrorMessage(msg);
-        setTimeout(() => {
-            setErrorMessage('');
-        }, 3000);
+        setSnackBarOptions({
+            isOpen: true,
+            severity: 'error',
+            message: msg,
+            hash: String(Math.random()),
+        });
     };
 
     /**
@@ -72,7 +79,7 @@ const LoginForm: React.FC = (): JSX.Element => {
         });
 
         if (error) {
-            // We could try to get the AuthApiError type and use 'cause' instead
+            // TODO: We could try to get the AuthApiError type and use 'cause' instead
             showError(error.message);
             LOG.error(error);
             setLoading(false);
@@ -133,8 +140,8 @@ const LoginForm: React.FC = (): JSX.Element => {
                     />
                 </FormControl>
                 <Button title='Submit' type='submit' loading={loading} />
-                {errorMessage.length > 0 && <ErrorMessage message={errorMessage} />}
             </form>
+            <Snackbar {...snackBarOptions} />
         </div>
     );
 };

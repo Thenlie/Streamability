@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ErrorMessage, Button } from '../../components';
+import { Button, Snackbar } from '../../components';
 import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Navigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
+import { SnackbarProps } from '../Snackbar';
 
 const LOG = new Logger('SignupForm');
 
@@ -34,10 +35,14 @@ const SignUpForm: React.FC = (): JSX.Element => {
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
+        isOpen: false,
+        severity: 'success',
+        message: '',
+    });
 
     // redirect users that are logged in
     if (session) {
@@ -46,10 +51,12 @@ const SignUpForm: React.FC = (): JSX.Element => {
 
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
-        setErrorMessage(msg);
-        setTimeout(() => {
-            setErrorMessage('');
-        }, 3000);
+        setSnackBarOptions({
+            isOpen: true,
+            severity: 'error',
+            message: msg,
+            hash: String(Math.random()),
+        });
     };
 
     // reset all error states
@@ -58,7 +65,6 @@ const SignUpForm: React.FC = (): JSX.Element => {
         setUsernameError(false);
         setPasswordError(false);
         setConfirmPasswordError(false);
-        setErrorMessage('');
     };
 
     /**
@@ -133,6 +139,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                 },
             },
         });
+
         if (error) {
             if (
                 error.message ==
@@ -289,8 +296,8 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     />
                 </FormControl>
                 <Button title='Submit' type='submit' loading={loading} />
-                {errorMessage && <ErrorMessage message={errorMessage} />}
             </form>
+            <Snackbar {...snackBarOptions} />
         </div>
     );
 };

@@ -143,7 +143,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <Button
                         title='Logout'
                         loading={logoutLoading}
-                        startIcon={<Logout />}
+                        StartIcon={Logout}
                         onClick={handleLogout}
                     />
                     <ConfirmDeleteModal deleteProfile={deleteProfile} loading={deleteLoading} />
@@ -162,7 +162,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                         title='Clear Queue'
                         color='error'
                         disabled={!queue || queue.length === 0}
-                        startIcon={<Delete />}
+                        StartIcon={Delete}
                         onClick={clearQueue}
                     />
                 </div>

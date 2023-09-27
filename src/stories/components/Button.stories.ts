@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '../../components';
+import { Check, CloseSharp } from '@mui/icons-material';
 
 const meta = {
     title: 'Components/Button',
@@ -13,12 +14,34 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Text: Story = {
     args: {
-        title: 'Submit',
-        type: 'submit',
+        title: 'Click me!',
+        type: 'button',
         color: 'secondary',
         loading: false,
         disabled: false,
+    },
+};
+
+export const Submit: Story = {
+    args: {
+        title: 'Submit',
+        type: 'submit',
+        color: 'success',
+        loading: false,
+        disabled: false,
+        StartIcon: Check,
+    },
+};
+
+export const Close: Story = {
+    args: {
+        title: 'Close',
+        type: 'button',
+        color: 'error',
+        loading: false,
+        disabled: false,
+        StartIcon: CloseSharp,
     },
 };

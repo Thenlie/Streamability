@@ -8,13 +8,13 @@ import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
 import { LoginForm, SignUpForm } from './auth';
-import ErrorMessage from './ErrorMessage';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
 import EmptySearchResults from './EmptySearchResults';
 import IconButton from './IconButton';
+import Snackbar from './Snackbar';
 
 export {
     ShowCard,
@@ -24,13 +24,13 @@ export {
     SearchInput,
     LoginForm,
     SignUpForm,
-    ErrorMessage,
     Providers,
     Navigation,
     Rating,
     Button,
     EmptySearchResults,
     IconButton,
+    Snackbar,
 };
 export * from './loaders';
 export * from './modals';

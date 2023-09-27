@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconButton } from '../../components';
-import { CheckCircle } from '@mui/icons-material';
+import { Cancel, CheckCircle } from '@mui/icons-material';
 
 const meta = {
     title: 'Components/Icon Button',
@@ -14,11 +14,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Confirm: Story = {
     args: {
         titleAccess: 'Confirm',
         color: 'success',
         Icon: CheckCircle,
         tooltip: 'Confirm',
+    },
+};
+
+export const Deny: Story = {
+    args: {
+        titleAccess: 'Deny',
+        color: 'error',
+        Icon: Cancel,
+        tooltip: 'Deny',
     },
 };

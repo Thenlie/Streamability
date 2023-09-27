@@ -18,6 +18,7 @@ import { Close, Edit, Language, NoAdultContent } from '@mui/icons-material';
 import { Profile, Session } from '../../types';
 import Button from '../Button';
 import { COUNTRIES } from '../../helpers';
+import Snackbar, { SnackbarProps } from '../Snackbar';
 
 interface EditProfileModalProps {
     session: Session;
@@ -40,6 +41,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     setProfile,
 }): JSX.Element => {
     const [open, setOpen] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
+        isOpen: false,
+        severity: 'success',
+        message: '',
+    });
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
     const [country, setCountry] = useState('');
@@ -63,8 +69,21 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             const data = await updateProfileUsername(session.user.id, username);
             setProfile(data);
             setUsername('');
+            setSnackBarOptions({
+                isOpen: true,
+                severity: 'success',
+                message: 'Successfully updated username!',
+                hash: username,
+            });
         } else {
             setUsernameError(true);
+            setSnackBarOptions({
+                isOpen: true,
+                severity: 'error',
+                message:
+                    'Error updating username. Please check your network connection and try again.',
+                hash: username,
+            });
         }
     };
 
@@ -73,6 +92,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             const data = await setProfileAdultFlag(session.user.id, !isAdult);
             setProfile(data);
             setIsAdult(!isAdult);
+            setSnackBarOptions({
+                isOpen: true,
+                severity: 'success',
+                message: 'Successfully updated adult flag!',
+                hash: String(isAdult),
+            });
         }
     };
 
@@ -81,8 +106,21 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
             setCountry('');
+            setSnackBarOptions({
+                isOpen: true,
+                severity: 'success',
+                message: 'Successfully updated country!',
+                hash: country,
+            });
         } else {
             setCountryError(true);
+            setSnackBarOptions({
+                isOpen: true,
+                severity: 'error',
+                message:
+                    'Error updating country. Please check your network connection and try again.',
+                hash: country,
+            });
         }
     };
 
@@ -96,7 +134,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     return (
         <>
-            <Button title='Edit Profile' startIcon={<Edit />} onClick={handleOpen} />
+            <Button title='Edit Profile' StartIcon={Edit} onClick={handleOpen} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -111,7 +149,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         transform: 'translate(-50%, -50%)',
                         borderRadius: 2,
                         width: {
-                            xs: 250,
+                            xs: 300,
                             sm: 500,
                         },
                         boxShadow: 24,
@@ -133,12 +171,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                                 onFocus={() => setUsernameError(false)}
                                 inputProps={{ minLength: 3 }}
                                 sx={{ m: 0.5, width: 210 }}
+                                autoComplete='username'
                             />
                         </FormControl>
                         <Typography>Current Username: {profile?.username}</Typography>
                         <Button
                             title='Change Username'
-                            startIcon={<Edit />}
+                            StartIcon={Edit}
                             sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
                         />
@@ -169,7 +208,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Button
                             title='Change Country'
                             sx={{ width: 250, mb: 2 }}
-                            startIcon={<Language />}
+                            StartIcon={Language}
                             onClick={changeCountry}
                         />
                         <Typography>
@@ -177,7 +216,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         </Typography>
                         <Button
                             title='Toggle Adult Flag'
-                            startIcon={<NoAdultContent />}
+                            StartIcon={NoAdultContent}
                             sx={{ width: 250, mb: 2 }}
                             onClick={toggleAdultFlag}
                         />
@@ -185,12 +224,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             title='Close'
                             color='error'
                             sx={{ minWidth: 100 }}
-                            startIcon={<Close />}
+                            StartIcon={Close}
                             onClick={handleClose}
                         />
                     </div>
                 </Box>
             </Modal>
+            <Snackbar {...snackBarOptions} />
         </>
     );
 };
