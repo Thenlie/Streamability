@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest",
+    "compile": "tsc",
     "build": "tsc && vite build",
     "watch": "tsc --watch",
     "preview": "vite preview",
