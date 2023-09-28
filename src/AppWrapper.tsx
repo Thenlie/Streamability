@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './helpers';
 import type { Session, Profile } from './types';
-import { Navigation } from './components';
+import { Navigation, Footer } from './components';
 import { getProfileById } from './supabase/profiles';
 import { ThemeProvider } from '@mui/system';
 import { darkTheme, lightTheme } from './theme';
@@ -138,6 +138,7 @@ export default function AppWrapper(): JSX.Element {
                     <div className='flex flex-auto flex-col items-center text-center w-full'>
                         <Outlet context={{ session, setSession, profile, setProfile }} />
                     </div>
+                    <Footer />
                 </main>
             </SkeletonTheme>
         </ThemeProvider>
