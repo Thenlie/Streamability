@@ -1,42 +1,8 @@
 # Contributing 👥
 
-Streamability is very open to contributions! If you have a feature request, or bug report, please open an [issue](https://github.com/Thenlie/Streamability/issues) with the applicable tag. If you would like to simply create a feature, [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) the repository and add in your changes. Then submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) which will be reviewed and eventually merged if it meets all contribution requirements. 
+Streamability is very open to contributions! If you have a feature request or bug report, please open an [issue](https://github.com/Thenlie/Streamability/issues) with the applicable tag. If you would like to create a feature yourself, [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) the repository and add in your changes. Then submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) which will be reviewed and eventually merged if it meets all contribution requirements. You can find out more about these requirements in the [contribution guidelines](https://github.com/Thenlie/Streamability/blob/main/docs/contribution-guidelines.md).
 
-# Project Set Up 🏗️
-
-Use the steps below to clone the repository and get the project running on your local machine.
-
-1. Navigate to the develop branch of the repository and click the green "Code" button. Then copy the repository URL with the method of your choosing. We suggest SSH which can be setup by following [these docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
-
-2. Go to your terminal program of choice and navigate the the folder you want the project to live in. Then run the command below to clone the repository:
-
-```s
-git clone <repository_url>
-```
-
-![image](https://user-images.githubusercontent.com/41388783/199371149-b3154e01-59e6-45e7-8a96-319ef9f7552a.png)
-
-4. Now that the repository is cloned you can navigate into it with the command `cd <project_name>`.
-
-5. Once you are in the project you will need to install the node modules with the command:
-```s
-npm install
-```
-6. Finally, you need to run the set up command:
-```s
-npm run setup
-```
-This should be everything you need to move on to the usage instructions!
-
-# Usage 🧑‍💻
-
-To run the development server, use the command:
-```s
-npm run dev
-```
-This will build and run the application in watch mode automatically. This means as you work on the application, your browser will automatically update when you save the code.
-
-If you would like to see a deployed version of your work, push your branch to remote. Vercel will automatically deploy that branch in a test site. 
+---
 
 # Branching Strategy 🌲
 
@@ -50,6 +16,10 @@ Example:
 ```
 13-feat-show-card
 ```
+
+You should branch off of the `develop` branch, not `main` as this is where all PRs will point. Be sure your branch is up to date before submitting PRs by running `git rebase develop` while checked out to your branch. You can read more about this below.
+
+---
 
 # Git Workflow 🧬
 
@@ -98,10 +68,12 @@ If you would like to make commits without running the full test suite, you can d
 ```s
 git commit -m "msg" --no-verify
 ```
-You can also set an enviornment flag in you shell to do this. Here is a helpful script for quickly creating WIP commits:
+You can also set an environment flag in you shell to do this. Here is a helpful script for quickly creating WIP commits:
 ```s
 export NO_VERIFY=1 && git add -A && git commit -m "CI Skipped. --WIP--" && export NO_VERIFY=
 ```
+
+---
 
 # Code Quality 🧼
 
@@ -118,21 +90,26 @@ Run lint check and fix any errors it can:
 npm run lint-fix
 ```
 
+ES Lint will throw warnings for implicit use of the `any` type. This should be avoided whenever possible, but can also be ignored with an es-lint flag when absolutely necessary.
+
+Should you encounter an area where es-lint and prettier conflict, ignore prettier first.
+
 ## TypeScript
 
-The easiest way to check for typescript issues is to run the command `npm run watch`. This will run the TypeScript compiler in watch mode so errors and warning will automatically update on save. 
-
-ES Lint will throw warnings for implicit use of the `any` type. This should be avoided whenever possible, but can also be ignored with an es-lint flag.
+The easiest way to check for typescript issues is to run the command `npm run watch`. This will run the TypeScript compiler in watch mode so errors and warning will automatically update on save. If you would like to just run the compiler once, use `npm run compile`.
 
 TypeScript also has a standardized comment syntax that should be followed for primary components/functions.
 
 ## Logs
 
-Console logs should generally not be left in the code. If they do need to exist, please use an environment flag. 
-```ts
-import.meta.env.DEV
+Console logs may not be left in the code. If you need to log an error, or a debug log for some reason, you can use the [Logger](https://github.com/Thenlie/Streamability/blob/main/src/logger.ts) class. This will strip the logs from production builds. See the snippet below for an example of how to use the logger.
+
+```js
+const LOG = new Logger('ScreenName');
+
+LOG.error('my custom error message');
+LOG.debug('my custom debug message');
 ```
-> NOTE: Switch out `DEV` with `PROD` if you need something to only work in production
 
 # Testing 🧪
 
@@ -140,11 +117,15 @@ This project features a Vitest testing suite. All tests will need to pass in ord
 ```s
 npm test
 ```
+
 To run the tests in watch mode:
 ```s
 npm test -- -w
 ```
+
 To run a single test:
 ```s
 npm test <test-name>
 ```
+
+These tests will be run on each commit. See [work in progress commits](#work-in-progress-commits) if you would like to bypass this behavior.
