@@ -128,4 +128,4 @@ To run a single test:
 npm test <test-name>
 ```
 
-These tests will be run on each commit. See [#Work-in-Progress] if you would like to bypass this behavior.
+These tests will be run on each commit. See [work in progress commits](#work-in-progress-commits) if you would like to bypass this behavior.
