@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Button, Snackbar } from '../../components';
 import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {
     InputAdornment,
     FilledInput,
@@ -11,6 +11,7 @@ import {
     IconButton,
     Select,
     MenuItem,
+    Typography as Typ,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
@@ -297,6 +298,12 @@ const SignUpForm: React.FC = (): JSX.Element => {
                 </FormControl>
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <div className='mt-2'>
+                <Typ display='inline'>Already have an account? </Typ>
+                <Link to='/auth/login' className='underline hover:text-blue-500'>
+                    Login.
+                </Link>
+            </div>
             <Snackbar {...snackBarOptions} />
         </div>
     );

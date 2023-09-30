@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { Button, Snackbar } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Navigate } from 'react-router-dom';
-import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import { Link, Navigate } from 'react-router-dom';
+import {
+    InputAdornment,
+    FilledInput,
+    InputLabel,
+    FormControl,
+    IconButton,
+    Typography as Typ,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 import { SnackbarProps } from '../Snackbar';
@@ -141,6 +148,12 @@ const LoginForm: React.FC = (): JSX.Element => {
                 </FormControl>
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <div className='mt-2'>
+                <Typ display='inline'>Don&apos;t have an account? </Typ>
+                <Link to='/auth/signup' className='underline hover:text-blue-500'>
+                    Sign up.
+                </Link>
+            </div>
             <Snackbar {...snackBarOptions} />
         </div>
     );
