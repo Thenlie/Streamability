@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Location, useLocation } from 'react-router-dom';
+import { Link, Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
     getMovieRecommendations,
@@ -19,6 +19,7 @@ import {
     CheckCircle,
     Favorite,
     HeartBroken,
+    PersonAddAltRounded,
     RemoveFromQueue,
 } from '@mui/icons-material';
 
@@ -35,7 +36,20 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
     const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(showId, profile);
     const profileActions = useProfileActions(profile, setProfile);
 
-    if (!profile || !profileActions) return;
+    // If user is not logged in, display a sign up CTA
+    if (!profile || !profileActions) {
+        return (
+            <div className='flex items-center justify-center'>
+                <Link to='/auth/signup'>
+                    <Button
+                        title='Sign up to save & favorite shows!'
+                        color='secondary'
+                        StartIcon={PersonAddAltRounded}
+                    />
+                </Link>
+            </div>
+        );
+    }
 
     const {
         removeFromQueue,
@@ -146,9 +160,9 @@ const ShowDetailsScreen: React.FC = () => {
     return (
         <>
             <section className='m-6 mb-8 flex flex-col lg:flex-row'>
-                <div className='rounded-md m-3 w-[250px] lg:w-[300px] h-[400px] lg:h-[550px]'>
+                <div className='rounded-md m-3 w-[250px] lg:w-[330px] h-[400px] lg:h-[550px]'>
                     <img
-                        className='w-[250px] lg:w-[300px] h-[400px] lg:h-[550px] max-w-none rounded-md'
+                        className='w-[250px] lg:w-[330px] h-[400px] lg:h-[550px] max-w-none rounded-md'
                         src={
                             details.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
