@@ -48,9 +48,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     });
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
+    const [usernameLoading, setUsernameLoading] = useState(false);
     const [country, setCountry] = useState('');
     const [countryError, setCountryError] = useState(false);
-    const [isAdult, setIsAdult] = useState<boolean>(session.user.adult || false);
+    const [countryLoading, setCountryLoading] = useState(false);
+    const [isAdult, setIsAdult] = useState(session.user.adult || false);
+    const [isAdultLoading, setIsAdultLoading] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -66,6 +69,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const changeUsername = async () => {
         if (session && username.length > 2) {
+            setUsernameLoading(true);
             const data = await updateProfileUsername(session.user.id, username);
             setProfile(data);
             setUsername('');
@@ -75,6 +79,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated username!',
                 hash: username,
             });
+            setUsernameLoading(false);
         } else {
             setUsernameError(true);
             setSnackBarOptions({
@@ -89,6 +94,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const toggleAdultFlag = async () => {
         if (session) {
+            setIsAdultLoading(true);
             const data = await setProfileAdultFlag(session.user.id, !isAdult);
             setProfile(data);
             setIsAdult(!isAdult);
@@ -98,11 +104,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated adult flag!',
                 hash: String(isAdult),
             });
+            setIsAdultLoading(false);
         }
     };
 
     const changeCountry = async () => {
         if (session) {
+            setCountryLoading(true);
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
             setCountry('');
@@ -112,6 +120,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated country!',
                 hash: country,
             });
+            setCountryLoading(false);
         } else {
             setCountryError(true);
             setSnackBarOptions({
@@ -125,7 +134,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     };
 
     const DropDownItems: JSX.Element[] = useMemo(() => {
-        return COUNTRIES.map((item, i) => (
+        // Sort countries alphabetically before displaying
+        const sortedCountries = COUNTRIES.sort((a, b) => a.country.localeCompare(b.country));
+        return sortedCountries.map((item, i) => (
             <MenuItem key={i} value={item.country}>
                 {item.country}
             </MenuItem>
@@ -177,6 +188,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Typ>Current Username: {profile?.username}</Typ>
                         <Button
                             title='Change Username'
+                            loading={usernameLoading}
                             StartIcon={Edit}
                             sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
@@ -207,13 +219,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Typ>Current Country: {profile?.country}</Typ>
                         <Button
                             title='Change Country'
-                            sx={{ width: 250, mb: 2 }}
+                            loading={countryLoading}
                             StartIcon={Language}
+                            sx={{ width: 250, mb: 2 }}
                             onClick={changeCountry}
                         />
                         <Typ>Adult Content: {profile?.adult ? 'visible' : 'not visible'}</Typ>
                         <Button
                             title='Toggle Adult Flag'
+                            loading={isAdultLoading}
                             StartIcon={NoAdultContent}
                             sx={{ width: 250, mb: 2 }}
                             onClick={toggleAdultFlag}

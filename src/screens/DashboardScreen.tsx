@@ -25,6 +25,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
     const [queue, setQueue] = useState<ShowData[] | null>(null);
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [clearQueueLoading, setClearQueueLoading] = useState(false);
     const navigate = useNavigate();
 
     const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
@@ -77,8 +78,10 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      */
     const clearQueue = async () => {
         if (session) {
+            setClearQueueLoading(true);
             await removeProfileArray(session.user.id, 'queue');
             setQueue(null);
+            setClearQueueLoading(false);
         }
     };
 
@@ -167,6 +170,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                         title='Clear Queue'
                         color='error'
                         disabled={!queue || queue.length === 0}
+                        loading={clearQueueLoading}
                         StartIcon={Delete}
                         onClick={clearQueue}
                     />
