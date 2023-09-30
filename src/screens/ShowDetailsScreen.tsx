@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Location, useLocation } from 'react-router-dom';
+import { Link, Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
     getMovieRecommendations,
@@ -19,6 +19,7 @@ import {
     CheckCircle,
     Favorite,
     HeartBroken,
+    PersonAddAltRounded,
     RemoveFromQueue,
 } from '@mui/icons-material';
 
@@ -35,7 +36,20 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
     const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(showId, profile);
     const profileActions = useProfileActions(profile, setProfile);
 
-    if (!profile || !profileActions) return;
+    // If user is not logged in, display a sign up CTA
+    if (!profile || !profileActions) {
+        return (
+            <div className='flex items-center justify-center'>
+                <Link to='/auth/signup'>
+                    <Button
+                        title='Sign up to save & favorite shows!'
+                        color='secondary'
+                        StartIcon={PersonAddAltRounded}
+                    />
+                </Link>
+            </div>
+        );
+    }
 
     const {
         removeFromQueue,
