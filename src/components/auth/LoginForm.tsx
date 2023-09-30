@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { Button, Snackbar } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Navigate } from 'react-router-dom';
-import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import { Link, Navigate } from 'react-router-dom';
+import {
+    InputAdornment,
+    FilledInput,
+    InputLabel,
+    FormControl,
+    IconButton,
+    Typography as Typ,
+} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 import { SnackbarProps } from '../Snackbar';
@@ -92,7 +99,9 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <h1 data-testid='login-heading'>Login</h1>
+            <Typ data-testid='login-heading' variant='h4' sx={{ margin: 2 }}>
+                Login
+            </Typ>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
@@ -141,6 +150,12 @@ const LoginForm: React.FC = (): JSX.Element => {
                 </FormControl>
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <div className='mt-2'>
+                <Typ display='inline'>Don&apos;t have an account? </Typ>
+                <Link to='/auth/signup' className='underline hover:text-blue-500'>
+                    Sign up.
+                </Link>
+            </div>
             <Snackbar {...snackBarOptions} />
         </div>
     );
