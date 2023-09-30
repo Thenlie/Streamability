@@ -25,7 +25,7 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
         return null;
     }
     return data.results.map((show) => {
-        const obj = {
+        return {
             id: show.id,
             poster_path: show.poster_path,
             vote_average: show.vote_average,
@@ -33,18 +33,9 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
             overview: show.overview,
             media_type: show.media_type,
             genre_ids: show.genre_ids,
+            title: show.media_type === 'movie' ? (show as MovieData).title : (show as TvData).name,
+            release_date: show.media_type === 'movie' ? (show as MovieData).release_date : (show as TvData).first_air_date,
         };
-        return show.media_type === 'movie'
-            ? {
-                ...obj,
-                title: (show as MovieData).title,
-                release_date: (show as MovieData).release_date,
-            }
-            : {
-                ...obj,
-                title: (show as TvData).name,
-                release_date: (show as TvData).first_air_date,
-            };
     });
 };
 
