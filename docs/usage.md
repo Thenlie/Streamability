@@ -48,6 +48,8 @@ The storybook application should automatically open in your web browser. This wi
 
 See more in the [Storybook docs](https://github.com/Thenlie/Streamability/blob/main/docs/storybook.md).
 
+---
+
 # Troubleshooting 🛠️
 
 If you run into issues with an npm install, use the command:
