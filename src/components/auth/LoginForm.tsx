@@ -99,7 +99,9 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <h1 data-testid='login-heading'>Login</h1>
+            <Typ data-testid='login-heading' variant='h4' sx={{ margin: 2 }}>
+                Login
+            </Typ>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>

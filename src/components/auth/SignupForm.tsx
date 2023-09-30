@@ -174,7 +174,9 @@ const SignUpForm: React.FC = (): JSX.Element => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <h1 data-testid='signup-heading'>Signup</h1>
+            <Typ data-testid='signup-heading' variant='h4' sx={{ margin: 2 }}>
+                Sign Up
+            </Typ>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
