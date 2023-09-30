@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import Logger from '../logger';
-import { ShowData, ShowResults } from '../types';
+import { MovieData, ShowData, ShowResults, TvData } from '../types';
 
 const LOG = new Logger('getShowUtils');
 
@@ -16,6 +17,7 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
+        return null;
     }
     const data = (await response.json()) as ShowResults;
     if (!data.results) {
@@ -23,17 +25,26 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
         return null;
     }
     return data.results.map((show) => {
-        return {
+        const obj = {
             id: show.id,
             poster_path: show.poster_path,
-            title: show.title,
-            release_date: show.release_date,
             vote_average: show.vote_average,
             vote_count: show.vote_count,
             overview: show.overview,
             media_type: show.media_type,
             genre_ids: show.genre_ids,
         };
+        return show.media_type === 'movie'
+            ? {
+                ...obj,
+                title: (show as MovieData).title,
+                release_date: (show as MovieData).release_date,
+            }
+            : {
+                ...obj,
+                title: (show as TvData).name,
+                release_date: (show as TvData).first_air_date,
+            };
     });
 };
 

@@ -6,6 +6,7 @@ import { ShowGenre } from './show';
  */
 export interface TvData {
     id: number;
+    media_type: 'movie' | 'tv';
     backdrop_path?: string | null;
     genre_ids?: number[];
     original_language?: string;
