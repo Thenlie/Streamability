@@ -158,7 +158,11 @@ const SearchResultsScreen: React.FC = () => {
                             onClick={handleSortAlpha}
                         >
                             <SvgIcon>
-                                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    viewBox='0 0 24 24'
+                                    className='fill-text'
+                                >
                                     <title>sort-alphabetical-ascending</title>
                                     <path d='M19 17H22L18 21L14 17H17V3H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3M9 7H7V5H9Z' />
                                 </svg>
@@ -170,7 +174,11 @@ const SearchResultsScreen: React.FC = () => {
                             onClick={handleSortRevAlpha}
                         >
                             <SvgIcon>
-                                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    viewBox='0 0 24 24'
+                                    className='fill-text'
+                                >
                                     <title>sort-alphabetical-descending</title>
                                     <path d='M19 7H22L18 3L14 7H17V21H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3M9 7H7V5H9Z' />
                                 </svg>
@@ -182,7 +190,11 @@ const SearchResultsScreen: React.FC = () => {
                             onClick={handleRemoveSort}
                         >
                             <SvgIcon>
-                                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    viewBox='0 0 24 24'
+                                    className='fill-text'
+                                >
                                     <title>sort-variant-remove</title>
                                     <path d='M3 13H15V11H3M3 6V8H21V6M3 18H9V16H3V18M22.54 16.88L20.41 19L22.54 21.12L21.12 22.54L19 20.41L16.88 22.54L15.47 21.12L17.59 19L15.47 16.88L16.88 15.47L19 17.59L21.12 15.46L22.54 16.88' />
                                 </svg>
