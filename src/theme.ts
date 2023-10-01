@@ -32,13 +32,16 @@ export const lightTheme = createTheme({
             contrastText: '#fff',
         },
         secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
+            light: '#80d8ff',
+            main: '#40c4ff',
+            dark: '#00b0ff',
             contrastText: '#000',
         },
-        text: {
-            primary: '#000',
+        success: {
+            light: '#81c784',
+            main: '#4caf50',
+            dark: '#388e3c',
+            contrastText: '#fff',
         },
         error: {
             light: '#ef5350',
@@ -48,6 +51,9 @@ export const lightTheme = createTheme({
         },
         background: {
             default: '#000',
+        },
+        text: {
+            primary: '#000',
         },
         loader: {
             base: '#bbb',
@@ -66,13 +72,16 @@ export const darkTheme = createTheme({
             contrastText: '#fff',
         },
         secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
+            light: '#80d8ff',
+            main: '#40c4ff',
+            dark: '#00b0ff',
             contrastText: '#000',
         },
-        text: {
-            primary: '#fff',
+        success: {
+            light: '#81c784',
+            main: '#4caf50',
+            dark: '#388e3c',
+            contrastText: '#000',
         },
         error: {
             light: '#ef5350',
@@ -82,6 +91,9 @@ export const darkTheme = createTheme({
         },
         background: {
             default: '#000',
+        },
+        text: {
+            primary: '#fff',
         },
         loader: {
             base: '#555',

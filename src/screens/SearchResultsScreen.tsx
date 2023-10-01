@@ -1,20 +1,13 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import {
-    ShowCard,
-    ShowCardProps,
-    ShowCardLoader,
-    ShowListCard,
-    ShowListCardProps,
-    ShowListCardLoader,
-    EmptySearchResults,
-} from '../components';
+import { ShowCardLoader, ShowListCardLoader, EmptySearchResults } from '../components';
 import { ShowData } from '../types';
 import { useProfileContext, useWindowSize } from '../hooks';
 import { SvgIcon, ToggleButton, ToggleButtonGroup, Typography as Typ } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
 import { getShowsByName, sortShowsAlphaAsc, sortShowsAlphaDesc } from '../helpers';
 import Logger from '../logger';
+import SearchResultCards from '../components/SearchResultCards';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -36,50 +29,13 @@ export async function loader({ request }: { request: Request }): Promise<string>
 }
 
 /**
- * Loops over show details and creates an array of show cards
- * using the correct component based on the `viewState`
- */
-const SearchResultCards: React.FC<{ details: ShowData[] | null; viewState: 'grid' | 'list' }> = ({
-    details,
-    viewState,
-}) => {
-    const { profile, setProfile } = useProfileContext();
-
-    const CardComp: React.FC<ShowCardProps | ShowListCardProps> = (props) => {
-        return viewState === 'grid' ? <ShowCard {...props} /> : <ShowListCard {...props} />;
-    };
-
-    return (
-        <div
-            className={`${
-                viewState === 'grid'
-                    ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-                    : 'flex flex-wrap justify-center'
-            } pb-6
-            `}
-        >
-            {details?.map((item, i) => {
-                return (
-                    <CardComp
-                        key={i}
-                        details={item}
-                        showType={item.media_type}
-                        profile={profile}
-                        setProfile={setProfile}
-                    />
-                );
-            })}
-        </div>
-    );
-};
-
-/**
  * The page displayed after a user makes a search query.
  * A gallery of shows that are linked to detail pages.
  */
 const SearchResultsScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
     const windowSize = useWindowSize();
+    const { profile, setProfile } = useProfileContext();
     const storageItem = localStorage.getItem('streamabilityView');
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
@@ -254,7 +210,12 @@ const SearchResultsScreen: React.FC = () => {
     return (
         <>
             <SearchResultHeader />
-            <SearchResultCards details={showDetails} viewState={viewState} />
+            <SearchResultCards
+                details={showDetails}
+                viewState={viewState}
+                profile={profile}
+                setProfile={setProfile}
+            />
         </>
     );
 };
