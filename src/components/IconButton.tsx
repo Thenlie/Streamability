@@ -1,5 +1,12 @@
 import React from 'react';
-import { Fade, SvgIconTypeMap, SxProps, Theme, Tooltip } from '@mui/material';
+import {
+    Fade,
+    SimplePaletteColorOptions,
+    SvgIconTypeMap,
+    SxProps,
+    Theme,
+    Tooltip,
+} from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { RotateRight } from '@mui/icons-material';
 
@@ -15,18 +22,10 @@ interface IconButtonProps {
      */
     titleAccess: string;
     /**
-     * The color of the button
+     * The color of the button.
+     * `main` will be used for normal display, `dark` will be used on hover.
      */
-    color:
-        | 'disabled'
-        | 'action'
-        | 'inherit'
-        | 'primary'
-        | 'secondary'
-        | 'error'
-        | 'info'
-        | 'success'
-        | 'warning';
+    color: SimplePaletteColorOptions;
     /**
      * Text shown in the button tooltip
      */
@@ -51,6 +50,7 @@ interface IconButtonProps {
 
 /**
  * Generic icon button. Does not contain any text, just an icon.
+ * Can be conditionally wrapped in a tooltip to show text on hover.
  */
 const IconButton: React.FC<IconButtonProps> = ({
     Icon,
@@ -85,11 +85,11 @@ const IconButton: React.FC<IconButtonProps> = ({
                 <div onClick={onClick} className='cursor-pointer'>
                     <Icon
                         titleAccess={tooltipVisible ? '' : titleAccess}
-                        color={color}
                         fontSize='large'
                         className='bg-transprimary rounded-full p-[2px]'
                         sx={{
-                            '&:hover': { opacity: 0.8 },
+                            color: color.main,
+                            '&:hover': { color: color.dark },
                             margin: 0.2,
                             ...sx,
                         }}

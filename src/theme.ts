@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { SimplePaletteColorOptions, createTheme } from '@mui/material';
 
 declare module '@mui/material/styles' {
     interface Palette {
@@ -6,12 +6,14 @@ declare module '@mui/material/styles' {
             base: string;
             highlight: string;
         };
+        favorite: SimplePaletteColorOptions;
     }
     interface PaletteOptions {
         loader: {
             base: string;
             highlight: string;
         };
+        favorite: SimplePaletteColorOptions;
     }
     interface Theme {
         palette: PaletteOptions;
@@ -59,6 +61,12 @@ export const lightTheme = createTheme({
             base: '#bbb',
             highlight: '#444',
         },
+        favorite: {
+            light: '#f8bbd0',
+            main: '#f06292',
+            dark: '#e91e63',
+            contrastText: '#fff',
+        },
     },
 });
 
@@ -98,6 +106,12 @@ export const darkTheme = createTheme({
         loader: {
             base: '#555',
             highlight: '#222',
+        },
+        favorite: {
+            light: '#f8bbd0',
+            main: '#f06292',
+            dark: '#e91e63',
+            contrastText: '#fff',
         },
     },
 });
