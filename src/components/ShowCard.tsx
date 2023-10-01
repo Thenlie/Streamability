@@ -129,7 +129,6 @@ const ShowCard: React.FC<ShowCardProps> = ({
                                 sx={{ m: 1, fontSize: 12 }}
                                 variant='contained'
                                 size='small'
-                                color='secondary'
                                 onClick={() => queueHandler(!isInQueue, details?.id)}
                             >
                                 {isInQueue ? 'Remove from queue' : 'Add to queue'}

@@ -140,7 +140,6 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
                                 sx={{ m: 1, pl: 1 }}
                                 variant='contained'
                                 size='small'
-                                color='secondary'
                                 onClick={() => queueHandler(!isInQueue, details?.id)}
                             >
                                 {isInQueue ? 'Remove from queue' : 'Add to queue'}

@@ -13,7 +13,7 @@ interface ButtonProps {
      */
     type?: 'button' | 'submit' | 'reset';
     /**
-     * MUI color of button, defaults to `secondary`
+     * MUI color of button, defaults to `primary`
      */
     color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     /**
