@@ -15,7 +15,7 @@ const Footer: React.FC = (): JSX.Element => {
             <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-primary px-8 py-3 flex-wrap'>
                 {windowSize.width && (
                     <div className='flex items-center'>
-                        <Typ className='px-2'>Powered By</Typ>
+                        <Typ className='px-2 !text-text'>Powered By</Typ>
                         <Link to='https://www.themoviedb.org/' target='_blank'>
                             <img
                                 className='px-2'
@@ -48,7 +48,7 @@ const Footer: React.FC = (): JSX.Element => {
                         )}
                     </div>
                 )}
-                <div className='hidden sm:block'>
+                <div className='hidden sm:block !text-text'>
                     <Typ>
                         Want to contribute?{' '}
                         <Link
