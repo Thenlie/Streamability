@@ -46,7 +46,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
     title,
     type = 'button',
-    color = 'secondary',
+    color = 'primary',
     loading = false,
     disabled = false,
     StartIcon,

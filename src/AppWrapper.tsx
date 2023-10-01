@@ -125,13 +125,8 @@ export default function AppWrapper(): JSX.Element {
     return (
         <ThemeProvider theme={theme}>
             <SkeletonTheme
-                // We need to expect-error here because ts is unaware we have 'main' and 'light' in theme.ts
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                baseColor={theme.palette.primary.light}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                highlightColor={theme.palette.primary.main}
+                baseColor={theme.palette.loader.base}
+                highlightColor={theme.palette.loader.highlight}
             >
                 <main className='flex min-h-screen flex-col place-items-center'>
                     <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
