@@ -115,6 +115,7 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
         return {
             id: movie.id,
             poster_path: movie.poster_path,
+            banner_path: movie.backdrop_path,
             title: movie.title,
             release_date: movie.release_date,
             vote_average: movie.vote_average,
