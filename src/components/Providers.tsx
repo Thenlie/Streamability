@@ -58,7 +58,7 @@ const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
     return (
         <div
             id='provider-container'
-            className={`flex items-center bg-primary p-1 rounded-sm ${
+            className={`flex items-center bg-foreground p-1 rounded-sm ${
                 isOverflow ? 'overflow-x-scroll h-[90px]' : 'h-[70px]'
             }  overflow-y-hidden hidden-bg-scrollbar`}
         >

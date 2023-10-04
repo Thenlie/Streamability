@@ -170,7 +170,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             <section className='pt-12'>
                 <div style={{ width: carouselWidth }}>
                     <Carousel
-                        className='bg-primary'
+                        className='bg-foreground'
                         style={{
                             width: carouselWidth,
                             paddingTop: '10px',
@@ -201,7 +201,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         <div style={{ width: carouselWidth }}>
             <Carousel
                 wrapAround
-                className='bg-primary'
+                className='bg-foreground'
                 style={{
                     width: carouselWidth,
                     paddingTop: '10px',
