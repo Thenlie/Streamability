@@ -30,7 +30,10 @@ const FeaturedSearchScreen: React.FC = (): JSX.Element => {
                     height: 400,
                 }}
             >
-                <img src='/images/logo-transparent.png' className='w-60 mx-auto md:mx-0' />
+                <img
+                    src='/images/logo-transparent.png'
+                    className={`w-60 mx-auto ${bannerPath && 'md:mx-0'}`}
+                />
                 <Typ variant='h4' className='hidden md:block px-2 text-left text-white'>
                     Search for any movie or tv show to discover streaming providers and more!
                 </Typ>
