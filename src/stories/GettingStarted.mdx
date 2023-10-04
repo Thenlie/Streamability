@@ -63,6 +63,53 @@ export const RightArrow = () => <svg
   </div>
 </div>
 
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Creating New Stories
+
+    The easiest way to create a new story is to simply copy an existing story into a new file.
+    ```s
+    cp src/stories/components/ShowCard.stories.ts > src/stories/components/NewComponent.stories.ts
+    ```
+    From there, you can replace all instances of `ShowCard` with your new component. Be sure to update the name of the story as well. The location also might need to be updated as loaders and modals have their own directories.
+
+    This should get you 99% of the way there. Any other tweaks will be up to you!
+
+    ## Story Breakdown
+
+    Let's take a look at a simple story, the button.
+
+    ```js
+    import type { Meta, StoryObj } from '@storybook/react';
+    import { Button } from '../../components';
+    import { Check, CloseSharp } from '@mui/icons-material';
+
+    const meta = {
+        title: 'Components/Button',
+        component: Button,
+        tags: ['autodocs'],
+        parameters: {
+            layout: 'centered',
+        },
+    } satisfies Meta<typeof Button>;
+
+    export default meta;
+    type Story = StoryObj<typeof meta>;
+
+    export const Text: Story = {
+        args: {
+            title: 'Click me!',
+            type: 'button',
+            color: 'secondary',
+            loading: false,
+            disabled: false,
+        },
+    };
+    ```
+
+  </div>
+</div>
+
 <div className="sb-section sb-socials">
     <div className="sb-section-item">
       <img src={Github} alt="Github logo" className="sb-explore-image"/>
