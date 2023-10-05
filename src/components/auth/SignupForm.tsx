@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { Button, Snackbar } from '../../components';
+import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {
     InputAdornment,
-    FilledInput,
     InputLabel,
     FormControl,
     IconButton,
@@ -178,39 +177,27 @@ const SignUpForm: React.FC = (): JSX.Element => {
                 Sign Up
             </Typ>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
-                        Email
-                    </InputLabel>
-                    <FilledInput
-                        id='email-input'
-                        type='email'
-                        name='email'
-                        autoComplete='email'
-                        color='secondary'
-                        className='!text-text'
-                        value={email}
-                        error={emailError}
-                        onChange={(e) => setEmail(e.target.value)}
-                        onFocus={() => setEmailError(false)}
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='username-input' color='secondary' className='!text-text'>
-                        Username
-                    </InputLabel>
-                    <FilledInput
-                        id='username-input'
-                        type='username'
-                        name='username'
-                        color='secondary'
-                        className='!text-text'
-                        value={username}
-                        error={usernameError}
-                        onChange={(e) => setUsername(e.target.value)}
-                        onFocus={() => setUsernameError(false)}
-                    />
-                </FormControl>
+                <TextInput
+                    id='email-input'
+                    type='email'
+                    name='email'
+                    label='Email'
+                    autoComplete='email'
+                    value={email}
+                    error={emailError}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setEmailError(false)}
+                />
+                <TextInput
+                    id='username-input'
+                    type='username'
+                    name='username'
+                    label='Username'
+                    value={username}
+                    error={usernameError}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onFocus={() => setUsernameError(false)}
+                />
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
                     <InputLabel htmlFor='country-input' color='secondary' className='!text-text'>
                         Country
@@ -230,74 +217,58 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         {DropDownItems}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
-                        Password
-                    </InputLabel>
-                    <FilledInput
-                        id='password-input'
-                        name='password'
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        autoComplete='new-password'
-                        color='secondary'
-                        className='!text-text'
-                        value={password}
-                        error={passwordError}
-                        onChange={(e) => setPassword(e.target.value)}
-                        onFocus={() => setPasswordError(false)}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton
-                                    aria-label='toggle password visibility'
-                                    onClick={() => togglePasswordVisibility(false)}
-                                    edge='end'
-                                    sx={{ backgroundColor: 'none' }}
-                                >
-                                    {isPasswordVisible ? (
-                                        <VisibilityOff className='!text-text' />
-                                    ) : (
-                                        <Visibility className='!text-text' />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel
-                        htmlFor='confirm-password-input'
-                        color='secondary'
-                        className='!text-text'
-                    >
-                        Confirm Password
-                    </InputLabel>
-                    <FilledInput
-                        id='confirm-password-input'
-                        name='confirm-password'
-                        type={isConfirmPasswordVisible ? 'text' : 'password'}
-                        value={confirmPassword}
-                        error={confirmPasswordError}
-                        color='secondary'
-                        className='!text-text'
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        onFocus={() => setConfirmPasswordError(false)}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton
-                                    aria-label='toggle confirm password visibility'
-                                    onClick={() => togglePasswordVisibility(true)}
-                                    edge='end'
-                                >
-                                    {isConfirmPasswordVisible ? (
-                                        <VisibilityOff className='!text-text' />
-                                    ) : (
-                                        <Visibility className='!text-text' />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+                <TextInput
+                    id='password-input'
+                    name='password'
+                    type={isPasswordVisible ? 'text' : 'password'}
+                    label='Password'
+                    autoComplete='new-password'
+                    value={password}
+                    error={passwordError}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setPasswordError(false)}
+                    endAdornment={
+                        <InputAdornment position='end'>
+                            <IconButton
+                                aria-label='toggle password visibility'
+                                onClick={() => togglePasswordVisibility(false)}
+                                edge='end'
+                                sx={{ backgroundColor: 'none' }}
+                            >
+                                {isPasswordVisible ? (
+                                    <VisibilityOff className='!text-text' />
+                                ) : (
+                                    <Visibility className='!text-text' />
+                                )}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
+                <TextInput
+                    id='confirm-password-input'
+                    name='confirm-password'
+                    type={isConfirmPasswordVisible ? 'text' : 'password'}
+                    label='Confirm Password'
+                    value={confirmPassword}
+                    error={confirmPasswordError}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onFocus={() => setConfirmPasswordError(false)}
+                    endAdornment={
+                        <InputAdornment position='end'>
+                            <IconButton
+                                aria-label='toggle confirm password visibility'
+                                onClick={() => togglePasswordVisibility(true)}
+                                edge='end'
+                            >
+                                {isConfirmPasswordVisible ? (
+                                    <VisibilityOff className='!text-text' />
+                                ) : (
+                                    <Visibility className='!text-text' />
+                                )}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
             <div className='mt-2'>

@@ -6,7 +6,6 @@ import {
 } from '../../supabase/profiles';
 import {
     Box,
-    FilledInput,
     FormControl,
     InputLabel,
     Modal,
@@ -19,6 +18,7 @@ import { Profile, Session } from '../../types';
 import Button from '../Button';
 import { COUNTRIES } from '../../helpers';
 import Snackbar, { SnackbarProps } from '../Snackbar';
+import TextInput from '../TextInput';
 
 interface EditProfileModalProps {
     session: Session;
@@ -168,23 +168,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 >
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
                         <Typ variant='h5'>Edit Profile</Typ>
-                        <FormControl sx={{ m: 0.5 }} variant='filled'>
-                            <InputLabel htmlFor='username' color='secondary' className='!text-text'>
-                                Change Username
-                            </InputLabel>
-                            <FilledInput
-                                name='username'
-                                value={username}
-                                onChange={(e) => {
-                                    setUsername(e.target.value);
-                                }}
-                                error={usernameError}
-                                onFocus={() => setUsernameError(false)}
-                                inputProps={{ minLength: 3 }}
-                                sx={{ m: 0.5, width: 210 }}
-                                autoComplete='username'
-                            />
-                        </FormControl>
+                        <TextInput
+                            name='username'
+                            value={username}
+                            label='Change Username'
+                            autoComplete='username'
+                            error={usernameError}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                            }}
+                            onFocus={() => setUsernameError(false)}
+                            inputProps={{ minLength: 3 }}
+                            sx={{ m: 0.5, width: 210 }}
+                        />
                         <Typ>Current Username: {profile?.username}</Typ>
                         <Button
                             title='Change Username'
