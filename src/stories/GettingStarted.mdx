@@ -106,6 +106,21 @@ export const RightArrow = () => <svg
         },
     };
     ```
+    The majority of this code is boilerplate. We won't go into the specifics of it all here, but you can read more in depth in the official docs. The relevant parts to get started are: `meta` and `args`. Let's break each of those down a bit more.
+
+    ### Meta
+
+    This is an object defined by Storybook. To get started, you will just need to update the `title` and `component`.
+
+    - `title` The title is a string starting with the folder followed by a slash followed by the component name. Storybook will automatically order stories based on this name. The folder structure in the code is just for organization. Note that you will get an error in storybook if two stories have the same title, so make sure it is a unique name.
+
+    - `component` The component is simply the component you would like to render. Remember this is the actual component (imported from it's respective file) not a string.
+
+    ### Args
+
+    These are essentially the component props. You will need to update this object to match what you component accepts as props. Since we are using typescript, you will see errors in this object if you are using the wrong props, or missing required ones.
+
+    These arguments will automatically be editable in storybook when allowed. This behavior can be changed with a more advanced configuration.
 
   </div>
 </div>
