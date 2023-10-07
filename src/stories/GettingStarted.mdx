@@ -1,0 +1,237 @@
+import { Meta } from "@storybook/blocks";
+
+import Github from "./assets/github.svg";
+import Discord from "./assets/discord.svg";
+import Youtube from "./assets/youtube.svg";
+import Tutorials from "./assets/tutorials.svg";
+import Styling from "./assets/styling.png";
+import Context from "./assets/context.png";
+import Assets from "./assets/assets.png";
+import Docs from "./assets/docs.png";
+import Share from "./assets/share.png";
+import FigmaPlugin from "./assets/figma-plugin.png";
+import Testing from "./assets/testing.png";
+import Accessibility from "./assets/accessibility.png";
+import Theming from "./assets/theming.png";
+import AddonLibrary from "./assets/addon-library.png";
+
+import Install from './assets/install.png'
+import Running from './assets/running.png'
+
+export const RightArrow = () => <svg 
+    viewBox="0 0 14 14" 
+    width="8px" 
+    height="14px" 
+    style={{ 
+      marginLeft: '4px',
+      display: 'inline-block',
+      shapeRendering: 'inherit',
+      verticalAlign: 'middle',
+      fill: 'currentColor',
+      'path fill': 'currentColor'
+    }}
+>
+  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+</svg>
+
+<Meta title="Getting Started" />
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Streamability
+
+    The Streamability storybook app is a collection of custom components used in the project. Storybook provides a very nice UI to view the props of the component, see how the look and behave when rendered, and even update the props live with buttons and switches. Running storybook and making new stories is really simple. This document will document how to do both.
+  </div>
+</div>
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Running Storybook
+
+    Before trying to run storybook, ensure you have installed npm dependencies with the command `npm install`. Once that is complete, simply run the command `npm run storybook` to build and launch the storybook application. Your browser should open a new window automatically with the app. If it does not, you can find the port in the terminal on which the app is running. That's it!
+  </div>
+
+  <div className="sb-section">
+    <div className="sb-features-grid">
+      <div className="sb-grid-item">
+        <img src={Install} alt="A terminal window showing the install and run commands" />
+      </div>
+      <div className="sb-grid-item">
+        <img height='409px' src={Running} alt="A browser window showing a Storybook app running" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Creating New Stories
+
+    The easiest way to create a new story is to simply copy an existing story into a new file.
+    ```s
+    cp src/stories/components/ShowCard.stories.ts > src/stories/components/NewComponent.stories.ts
+    ```
+    From there, you can replace all instances of `ShowCard` with your new component. Be sure to update the name of the story as well. The location also might need to be updated as loaders and modals have their own directories.
+
+    This should get you 99% of the way there. Any other tweaks will be up to you!
+
+    ## Story Breakdown
+
+    Let's take a look at a simple story, the button.
+
+    ```js
+    import type { Meta, StoryObj } from '@storybook/react';
+    import { Button } from '../../components';
+    import { Check, CloseSharp } from '@mui/icons-material';
+
+    const meta = {
+        title: 'Components/Button',
+        component: Button,
+        tags: ['autodocs'],
+        parameters: {
+            layout: 'centered',
+        },
+    } satisfies Meta<typeof Button>;
+
+    export default meta;
+    type Story = StoryObj<typeof meta>;
+
+    export const Text: Story = {
+        args: {
+            title: 'Click me!',
+            type: 'button',
+            color: 'secondary',
+            loading: false,
+            disabled: false,
+        },
+    };
+    ```
+    The majority of this code is boilerplate. We won't go into the specifics of it all here, but you can read more in depth in the official docs. The relevant parts to get started are: `meta` and `args`. Let's break each of those down a bit more.
+
+    ### Meta
+
+    This is an object defined by Storybook. To get started, you will just need to update the `title` and `component`.
+
+    - `title` The title is a string starting with the folder followed by a slash followed by the component name. Storybook will automatically order stories based on this name. The folder structure in the code is just for organization. Note that you will get an error in storybook if two stories have the same title, so make sure it is a unique name.
+
+    - `component` The component is simply the component you would like to render. Remember this is the actual component (imported from it's respective file) not a string.
+
+    ### Args
+
+    These are essentially the component props. You will need to update this object to match what you component accepts as props. Since we are using typescript, you will see errors in this object if you are using the wrong props, or missing required ones.
+
+    These arguments will automatically be editable in storybook when allowed. This behavior can be changed with a more advanced configuration.
+
+  </div>
+</div>
+
+<div className="sb-section sb-socials">
+    <div className="sb-section-item">
+      <img src={Github} alt="Github logo" className="sb-explore-image"/>
+      Contribute to the project!
+
+      <a
+        href="https://github.com/Thenlie/Streamability"
+        target="_blank"
+      >Star on GitHub<RightArrow /></a>
+    </div>
+    <div className="sb-section-item">
+      <img src={Discord} alt="Discord logo" className="sb-explore-image"/>
+      <div>
+        Get help from other contributors.
+
+        <a
+          href="https://discord.gg/eWz3JfZgB9"
+          target="_blank"
+        >Join Discord server<RightArrow /></a>
+      </div>
+    </div>
+    <div className="sb-section-item">
+      <img src={Tutorials} alt="A book" className="sb-explore-image"/>
+      <p>Follow guided walkthroughs</p>
+
+      <a
+          href="https://storybook.js.org/tutorials/"
+          target="_blank"
+        >Discover tutorials<RightArrow /></a>
+    </div>
+</div>
+
+<style>
+  {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+  .sb-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  img {
+    object-fit: cover;
+  }
+
+  .sb-section-title {
+    margin-bottom: 32px;
+  }
+
+  .sb-section a:not(h1 a, h2 a, h3 a) {
+    font-size: 14px;
+  }
+
+  .sb-section-item, .sb-grid-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sb-section-item-heading {
+    padding-top: 20px !important;
+    padding-bottom: 5px !important;
+    margin: 0 !important;
+  }
+
+  .sb-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px 20px;
+  }
+
+  .sb-socials {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .sb-socials p {
+    margin-bottom: 10px;
+  }
+
+  .sb-explore-image {
+    max-height: 32px;
+    align-self: flex-start;
+  }
+
+  @media screen and (max-width: 800px) {
+    .sb-addon-img {
+      left: 300px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .sb-section {
+      flex-direction: column;
+    }
+
+    .sb-features-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .sb-socials {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  `}
+</style>
