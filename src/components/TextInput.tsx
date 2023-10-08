@@ -14,7 +14,7 @@ interface TextInputProps {
      */
     id?: string;
     /**
-     * HTML input element type, defaults to text
+     * HTML input element type, defaults to `text`
      */
     type?: 'text' | 'username' | 'email' | 'password' | 'search' | 'url';
     /**
@@ -24,13 +24,13 @@ interface TextInputProps {
     /**
      * Label to display in the input field
      */
-    label?: string;
+    label: string;
     /**
      * HTML autocomplete attribute
      */
     autoComplete?: string;
     /**
-     * Controls variant of MUI Input component, defaults to filled
+     * Controls variant of MUI Input component, defaults to `filled`
      */
     variant?: 'filled' | 'outlined';
     /**
@@ -64,7 +64,7 @@ interface TextInputProps {
     /**
      * Provides an accessible label to the element
      */
-    'aria-label'?: string;
+    ariaLabel?: string;
     /**
      * Attributes applied to the input element
      */
@@ -82,41 +82,22 @@ const TextInput: React.FC<TextInputProps> = ({
     label,
     autoComplete,
     variant = 'filled',
-    color = 'secondary',
+    color = 'primary',
     value,
     error,
     required,
     onChange,
     onFocus,
     endAdornment,
-    'aria-label': ariaLabel,
+    ariaLabel,
     inputProps,
     sx,
 }) => {
-    const renderFilledInput = (
-        <>
-            <FilledInputMUI
-                id={id}
-                type={type}
-                name={name}
-                autoComplete={autoComplete}
-                color={color}
-                className='!text-text'
-                value={value}
-                error={error}
-                required={required}
-                onChange={onChange}
-                onFocus={onFocus}
-                endAdornment={endAdornment}
-                aria-label={ariaLabel}
-                inputProps={{ ...inputProps }}
-            />
-        </>
-    );
+    const InputVariant = variant === 'filled' ? FilledInputMUI : InputMUI;
 
     const renderInput = (
         <>
-            <InputMUI
+            <InputVariant
                 id={id}
                 type={type}
                 name={name}
@@ -140,7 +121,7 @@ const TextInput: React.FC<TextInputProps> = ({
             <InputLabelMUI htmlFor={id ? id : name} color={color} className='!text-text'>
                 {label}
             </InputLabelMUI>
-            {variant === 'filled' ? renderFilledInput : renderInput}
+            {renderInput}
         </FormControlMUI>
     );
 };

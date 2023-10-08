@@ -172,6 +172,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             name='username'
                             value={username}
                             label='Change Username'
+                            color='secondary'
                             autoComplete='username'
                             error={usernameError}
                             onChange={(e) => {

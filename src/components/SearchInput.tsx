@@ -19,8 +19,9 @@ const SearchInput: React.FC = (): JSX.Element => {
                 type='text'
                 name='q'
                 label='Search'
+                color='secondary'
                 variant='outlined'
-                aria-label='search'
+                ariaLabel='search'
                 inputProps={{
                     'data-testid': 'search-input',
                 }}

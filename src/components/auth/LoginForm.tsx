@@ -101,6 +101,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                     type='email'
                     name='email'
                     label='Email'
+                    color='secondary'
                     autoComplete='email'
                     value={email}
                     error={emailError}
@@ -112,6 +113,7 @@ const LoginForm: React.FC = (): JSX.Element => {
                     name='password'
                     type={isPasswordVisible ? 'text' : 'password'}
                     label='Password'
+                    color='secondary'
                     autoComplete='new-password'
                     value={password}
                     error={passwordError}

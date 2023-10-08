@@ -182,6 +182,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     type='email'
                     name='email'
                     label='Email'
+                    color='secondary'
                     autoComplete='email'
                     value={email}
                     error={emailError}
@@ -193,6 +194,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     type='username'
                     name='username'
                     label='Username'
+                    color='secondary'
                     value={username}
                     error={usernameError}
                     onChange={(e) => setUsername(e.target.value)}
@@ -222,6 +224,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     name='password'
                     type={isPasswordVisible ? 'text' : 'password'}
                     label='Password'
+                    color='secondary'
                     autoComplete='new-password'
                     value={password}
                     error={passwordError}
@@ -249,6 +252,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     name='confirm-password'
                     type={isConfirmPasswordVisible ? 'text' : 'password'}
                     label='Confirm Password'
+                    color='secondary'
                     value={confirmPassword}
                     error={confirmPasswordError}
                     onChange={(e) => setConfirmPassword(e.target.value)}
