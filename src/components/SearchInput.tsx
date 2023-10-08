@@ -1,7 +1,8 @@
 import { Search } from '@mui/icons-material';
-import { FormControl, IconButton, Input, InputAdornment, InputLabel } from '@mui/material';
+import { IconButton, InputAdornment } from '@mui/material';
 import React from 'react';
 import { Form } from 'react-router-dom';
+import TextInput from '../components/TextInput';
 
 /**
  * Currently using a react router form,
@@ -14,29 +15,25 @@ const SearchInput: React.FC = (): JSX.Element => {
     return (
         // TODO: #162 Use MUI ThemeProvider
         <Form method='get' action='/search'>
-            <FormControl variant='filled'>
-                <InputLabel htmlFor='q' color='secondary' className='!text-text'>
-                    Search
-                </InputLabel>
-                <Input
-                    type='text'
-                    name='q'
-                    color='secondary'
-                    className='!text-text'
-                    aria-label='search'
-                    inputProps={{
-                        'data-testid': 'search-input',
-                    }}
-                    required
-                    endAdornment={
-                        <InputAdornment aria-label='submit search' position='end'>
-                            <IconButton type='submit' data-testid='search-button'>
-                                <Search className='!text-text' />
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-            </FormControl>
+            <TextInput
+                type='text'
+                name='q'
+                label='Search'
+                color='secondary'
+                variant='outlined'
+                ariaLabel='search'
+                inputProps={{
+                    'data-testid': 'search-input',
+                }}
+                required
+                endAdornment={
+                    <InputAdornment aria-label='submit search' position='end'>
+                        <IconButton type='submit' data-testid='search-button'>
+                            <Search className='!text-text' />
+                        </IconButton>
+                    </InputAdornment>
+                }
+            />
         </Form>
     );
 };
