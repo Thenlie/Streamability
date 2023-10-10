@@ -1,6 +1,7 @@
 ### TODOs
 | Filename | line # | TODO |
 |:------|:------:|:------|
+| [src/index.css](src/index.css#L9) | 9 | Create light mode theme. Reference #135 |
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L88) | 88 | Error handling if any |
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L93) | 93 | #162 Use MUI ThemeProvider |
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L243) | 243 | Add a transition when search is expanded or collapsed |

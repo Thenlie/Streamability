@@ -17,8 +17,8 @@
     "build-storybook": "storybook build",
     "clean": "./scripts/clean.sh",
     "postclean": "npm install",
-    "todo": "leasot 'src/**/*.tsx' 'src/**/*.ts' 'src/**/*.js'",
-    "todo-ci": "leasot -x --reporter markdown 'src/**/*.tsx' 'src/**/*.ts' 'src/**/*.js' > TODO.md"
+    "todo": "leasot -S 'src/**/*'",
+    "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
