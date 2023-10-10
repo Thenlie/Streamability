@@ -38,6 +38,10 @@ interface TextInputProps {
      */
     color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     /**
+     * Override the default text color
+     */
+    textOverrideColor?: 'white' | 'black';
+    /**
      * Value of controlled input
      */
     value?: string;
@@ -83,6 +87,7 @@ const TextInput: React.FC<TextInputProps> = ({
     autoComplete,
     variant = 'filled',
     color = 'primary',
+    textOverrideColor,
     value,
     error,
     required,
@@ -103,7 +108,6 @@ const TextInput: React.FC<TextInputProps> = ({
                 name={name}
                 autoComplete={autoComplete}
                 color={color}
-                className='!text-text'
                 value={value}
                 error={error}
                 required={required}
@@ -112,13 +116,19 @@ const TextInput: React.FC<TextInputProps> = ({
                 endAdornment={endAdornment}
                 aria-label={ariaLabel}
                 inputProps={{ ...inputProps }}
+                sx={{
+                    color: textOverrideColor,
+                    borderBottomColor: textOverrideColor,
+                    ':before': { borderBottomColor: textOverrideColor },
+                    '&:not(.Mui-disabled):hover::before': { borderBottomColor: textOverrideColor },
+                }}
             />
         </>
     );
 
     return (
         <FormControlMUI sx={{ m: 0.5, ...sx }} variant='filled'>
-            <InputLabelMUI htmlFor={id ? id : name} color={color} className='!text-text'>
+            <InputLabelMUI htmlFor={id ? id : name} color={color} sx={{ color: textOverrideColor }}>
                 {label}
             </InputLabelMUI>
             {renderInput}

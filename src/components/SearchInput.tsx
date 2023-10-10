@@ -25,22 +25,21 @@ const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element
                 name='q'
                 label='Search'
                 color='primary'
+                textOverrideColor={colorOverride}
                 variant='outlined'
                 ariaLabel='search'
                 inputProps={{
                     'data-testid': 'search-input',
                 }}
                 required
-                sx={{
-                    color: colorOverride,
-                    borderBottomColor: colorOverride,
-                    ':before': { borderBottomColor: colorOverride },
-                    '&:not(.Mui-disabled):hover::before': { borderBottomColor: colorOverride },
-                }}
                 endAdornment={
                     <InputAdornment aria-label='submit search' position='end'>
-                        <IconButton type='submit' data-testid='search-button'>
-                            <Search className='!text-text' />
+                        <IconButton
+                            type='submit'
+                            data-testid='search-button'
+                            sx={{ color: colorOverride }}
+                        >
+                            <Search />
                         </IconButton>
                     </InputAdornment>
                 }
