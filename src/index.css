@@ -5,9 +5,6 @@
 
 @layer base {
   :root {
-    /*
-    TODO: Create light mode theme. Reference #135
-    */
     --color-background: 220 220 220;
     --color-foreground: 184 184 184;
     --color-primary: 184 184 184;
