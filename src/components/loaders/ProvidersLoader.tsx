@@ -17,7 +17,7 @@ interface ProvidersLoaderProps {
  */
 const ProvidersLoader: React.FC<ProvidersLoaderProps> = ({ count }): JSX.Element => {
     return (
-        <div className='m-3 flex flex-wrap justify-center bg-primary rounded-sm p-1'>
+        <div className='m-3 flex flex-wrap justify-center bg-foreground rounded-sm p-1'>
             {[...Array(count)].map((x, i) => (
                 <div key={i}>
                     <Skeleton width={64} height={64} className='m-1' />

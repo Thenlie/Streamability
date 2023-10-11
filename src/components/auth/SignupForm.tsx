@@ -201,13 +201,13 @@ const SignUpForm: React.FC = (): JSX.Element => {
                     onFocus={() => setUsernameError(false)}
                 />
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='country-input' color='secondary' className='!text-text'>
+                    <InputLabel htmlFor='country-input' color='primary' className='!text-text'>
                         Country
                     </InputLabel>
                     <Select
                         id='country-input'
                         name='country'
-                        color='secondary'
+                        color='primary'
                         className='!text-text text-left'
                         value={country}
                         error={countryError}

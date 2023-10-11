@@ -8,35 +8,18 @@
     /*
     TODO: Create light mode theme. Reference #135
     */
-    --color-background: 220 220 220; /* #dcdcdc */
-    --color-foreground: 255 255 255; /* white */
-    --color-primary: 184 184 184; /* #b8b8b8 */
-    --color-text: 0 0 0; /* black */
-    /* --color-text-light: ; */
-    /* --color-text-lighter: ; */
-    --color-highlight: 151 71 255; /* #9747ff */
-    --color-hlhover: 105 49 178; /* #6931b2 */
+    --color-background: 220 220 220;
+    --color-foreground: 184 184 184;
+    --color-primary: 184 184 184;
+    --color-text: 0 0 0;
   }
 
   :root[class='dark'] {
-    --color-background: 36 36 36; /* #242424 */
-    --color-foreground: 78 78 78; /* #4e4e4e */
-    --color-primary: 63 63 63; /* #3f3f3f */
-    --color-text: 255 255 255; /* white */
-    /* --color-text-light: ; */
-    /* --color-text-lighter: ; */
+    --color-background: 36 36 36;
+    --color-foreground: 63 63 63;
+    --color-primary: 63 63 63;
+    --color-text: 255 255 255;
   }
-}
-
-@layer components {
-  .btn {
-    @apply bg-highlight py-2 px-4 rounded hover:bg-hlhover
-  }
-}
-
-@font-face {
-  font-family: 'sunday-grapes';
-  src: url('/fonts/Sunday\ Grapes.ttf');
 }
 
 input:-webkit-autofill,

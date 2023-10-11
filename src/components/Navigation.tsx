@@ -92,7 +92,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
     return (
         // TODO: #162 Use MUI ThemeProvider
         <AppBar position='static'>
-            <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-primary px-8 py-3 flex-wrap'>
+            <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-foreground px-8 py-3 flex-wrap'>
                 <Link to='/' className='!text-text flex items-center'>
                     <img src='/images/logo-transparent.png' className='w-16 inline'></img>
                     <Typ
@@ -103,9 +103,8 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             letterSpacing: 2.5,
                             fontSize: { xs: 20, sm: 24, md: 36 },
                         }}
-                        fontFamily={'sunday-grapes'}
                     >
-                        STREAMABILITY
+                        Streamability
                     </Typ>
                 </Link>
 
@@ -242,7 +241,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
             </Toolbar>
             {/* TODO: Add a transition when search is expanded or collapsed */}
             {expandedSearch && (
-                <div className='flex items-center justify-center bg-primary px-8 py-3'>
+                <div className='flex items-center justify-center bg-foreground px-8 py-3'>
                     <SearchInput />
                 </div>
             )}

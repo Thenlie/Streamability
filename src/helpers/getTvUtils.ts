@@ -107,6 +107,7 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
         return {
             id: tv.id,
             poster_path: tv.poster_path,
+            banner_path: tv.backdrop_path,
             title: tv.original_name,
             release_date: tv.first_air_date,
             vote_average: tv.vote_average,

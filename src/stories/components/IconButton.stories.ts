@@ -17,7 +17,12 @@ type Story = StoryObj<typeof meta>;
 export const Confirm: Story = {
     args: {
         titleAccess: 'Confirm',
-        color: 'success',
+        color: {
+            light: '#81c784',
+            main: '#4caf50',
+            dark: '#388e3c',
+            contrastText: '#fff',
+        },
         Icon: CheckCircle,
         tooltip: 'Confirm',
     },
@@ -26,7 +31,12 @@ export const Confirm: Story = {
 export const Deny: Story = {
     args: {
         titleAccess: 'Deny',
-        color: 'error',
+        color: {
+            light: '#ef5350',
+            main: '#e53935',
+            dark: '#b71c1c',
+            contrastText: '#fff',
+        },
         Icon: Cancel,
         tooltip: 'Deny',
     },
