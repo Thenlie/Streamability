@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { SearchInput } from '../../components';
 import { showCardRoutes } from '../routes';
 
-// TODO: Re-enable tests when UI stable #427
+// TODO: #427 Re-enable tests when UI stable
 describe.skip('Component Test Suite', () => {
     it('renders the search input component', async () => {
         // create a new data router for the test

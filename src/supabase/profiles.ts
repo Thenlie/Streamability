@@ -236,7 +236,7 @@ export const setProfileAdultFlag = async (
  */
 export const setProfileCountry = async (id: string, country: string): Promise<Profile | null> => {
     try {
-        // TODO: Ensure country code is valid
+        // TODO: #587 Ensure country code is valid
         const { data, error } = await SUPABASE.from('profiles')
             .update({ country: country })
             .eq('id', id)
