@@ -28,7 +28,7 @@ vi.doMock('../../helpers/getTvUtils', () => {
     };
 });
 
-// TODO: Re-enable tests when UI stable #427
+// TODO: #427 Re-enable tests when UI stable
 describe.skip('Movie Screen Test Suite', async () => {
     // set up variables to be used on each test
     let user: UserEvent;

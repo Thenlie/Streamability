@@ -11,20 +11,18 @@ module.exports = {
                 primary: 'rgb(var(--color-primary))',
                 transprimary: 'rgb(var(--color-primary) / 0.5)',
                 text: 'rgb(var(--color-text))',
-                highlight: 'rgb(var(--color-highlight))',
-                hlhover: 'rgb(var(--color-hlhover))',
             },
             fontFamily: {
                 sans: ['Inter', 'Avenir', 'Helvetica', ...defaultTheme.fontFamily.sans],
             },
         },
         screens: {
-            'sm': '640px',
-            'md': '768px',
-            'lg': '1024px',
-            'xl': '1350px',
+            sm: '640px',
+            md: '768px',
+            lg: '1024px',
+            xl: '1350px',
             '2xl': '1536px',
-        }
+        },
     },
     plugins: [],
 };

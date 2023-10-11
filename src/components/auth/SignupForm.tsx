@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { Button, Snackbar } from '../../components';
+import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE, COUNTRIES } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {
     InputAdornment,
-    FilledInput,
     InputLabel,
     FormControl,
     IconButton,
     Select,
     MenuItem,
+    Typography as Typ,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
@@ -173,49 +173,41 @@ const SignUpForm: React.FC = (): JSX.Element => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <h1 data-testid='signup-heading'>Signup</h1>
+            <Typ data-testid='signup-heading' variant='h4' sx={{ margin: 2 }}>
+                Sign Up
+            </Typ>
             <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
+                <TextInput
+                    id='email-input'
+                    type='email'
+                    name='email'
+                    label='Email'
+                    color='secondary'
+                    autoComplete='email'
+                    value={email}
+                    error={emailError}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setEmailError(false)}
+                />
+                <TextInput
+                    id='username-input'
+                    type='username'
+                    name='username'
+                    label='Username'
+                    color='secondary'
+                    value={username}
+                    error={usernameError}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onFocus={() => setUsernameError(false)}
+                />
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
-                        Email
-                    </InputLabel>
-                    <FilledInput
-                        id='email-input'
-                        type='email'
-                        name='email'
-                        autoComplete='email'
-                        color='secondary'
-                        className='!text-text'
-                        value={email}
-                        error={emailError}
-                        onChange={(e) => setEmail(e.target.value)}
-                        onFocus={() => setEmailError(false)}
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='username-input' color='secondary' className='!text-text'>
-                        Username
-                    </InputLabel>
-                    <FilledInput
-                        id='username-input'
-                        type='username'
-                        name='username'
-                        color='secondary'
-                        className='!text-text'
-                        value={username}
-                        error={usernameError}
-                        onChange={(e) => setUsername(e.target.value)}
-                        onFocus={() => setUsernameError(false)}
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='country-input' color='secondary' className='!text-text'>
+                    <InputLabel htmlFor='country-input' color='primary' className='!text-text'>
                         Country
                     </InputLabel>
                     <Select
                         id='country-input'
                         name='country'
-                        color='secondary'
+                        color='primary'
                         className='!text-text text-left'
                         value={country}
                         error={countryError}
@@ -227,76 +219,68 @@ const SignUpForm: React.FC = (): JSX.Element => {
                         {DropDownItems}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
-                        Password
-                    </InputLabel>
-                    <FilledInput
-                        id='password-input'
-                        name='password'
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        autoComplete='new-password'
-                        color='secondary'
-                        className='!text-text'
-                        value={password}
-                        error={passwordError}
-                        onChange={(e) => setPassword(e.target.value)}
-                        onFocus={() => setPasswordError(false)}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton
-                                    aria-label='toggle password visibility'
-                                    onClick={() => togglePasswordVisibility(false)}
-                                    edge='end'
-                                    sx={{ backgroundColor: 'none' }}
-                                >
-                                    {isPasswordVisible ? (
-                                        <VisibilityOff className='!text-text' />
-                                    ) : (
-                                        <Visibility className='!text-text' />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel
-                        htmlFor='confirm-password-input'
-                        color='secondary'
-                        className='!text-text'
-                    >
-                        Confirm Password
-                    </InputLabel>
-                    <FilledInput
-                        id='confirm-password-input'
-                        name='confirm-password'
-                        type={isConfirmPasswordVisible ? 'text' : 'password'}
-                        value={confirmPassword}
-                        error={confirmPasswordError}
-                        color='secondary'
-                        className='!text-text'
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        onFocus={() => setConfirmPasswordError(false)}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton
-                                    aria-label='toggle confirm password visibility'
-                                    onClick={() => togglePasswordVisibility(true)}
-                                    edge='end'
-                                >
-                                    {isConfirmPasswordVisible ? (
-                                        <VisibilityOff className='!text-text' />
-                                    ) : (
-                                        <Visibility className='!text-text' />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+                <TextInput
+                    id='password-input'
+                    name='password'
+                    type={isPasswordVisible ? 'text' : 'password'}
+                    label='Password'
+                    color='secondary'
+                    autoComplete='new-password'
+                    value={password}
+                    error={passwordError}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setPasswordError(false)}
+                    endAdornment={
+                        <InputAdornment position='end'>
+                            <IconButton
+                                aria-label='toggle password visibility'
+                                onClick={() => togglePasswordVisibility(false)}
+                                edge='end'
+                                sx={{ backgroundColor: 'none' }}
+                            >
+                                {isPasswordVisible ? (
+                                    <VisibilityOff className='!text-text' />
+                                ) : (
+                                    <Visibility className='!text-text' />
+                                )}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
+                <TextInput
+                    id='confirm-password-input'
+                    name='confirm-password'
+                    type={isConfirmPasswordVisible ? 'text' : 'password'}
+                    label='Confirm Password'
+                    color='secondary'
+                    value={confirmPassword}
+                    error={confirmPasswordError}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onFocus={() => setConfirmPasswordError(false)}
+                    endAdornment={
+                        <InputAdornment position='end'>
+                            <IconButton
+                                aria-label='toggle confirm password visibility'
+                                onClick={() => togglePasswordVisibility(true)}
+                                edge='end'
+                            >
+                                {isConfirmPasswordVisible ? (
+                                    <VisibilityOff className='!text-text' />
+                                ) : (
+                                    <Visibility className='!text-text' />
+                                )}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <div className='mt-2'>
+                <Typ display='inline'>Already have an account? </Typ>
+                <Link to='/auth/login' className='underline hover:text-blue-500'>
+                    Login.
+                </Link>
+            </div>
             <Snackbar {...snackBarOptions} />
         </div>
     );

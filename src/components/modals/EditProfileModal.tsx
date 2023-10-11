@@ -6,7 +6,6 @@ import {
 } from '../../supabase/profiles';
 import {
     Box,
-    FilledInput,
     FormControl,
     InputLabel,
     Modal,
@@ -19,6 +18,7 @@ import { Profile, Session } from '../../types';
 import Button from '../Button';
 import { COUNTRIES } from '../../helpers';
 import Snackbar, { SnackbarProps } from '../Snackbar';
+import TextInput from '../TextInput';
 
 interface EditProfileModalProps {
     session: Session;
@@ -48,9 +48,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     });
     const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState(false);
+    const [usernameLoading, setUsernameLoading] = useState(false);
     const [country, setCountry] = useState('');
     const [countryError, setCountryError] = useState(false);
-    const [isAdult, setIsAdult] = useState<boolean>(session.user.adult || false);
+    const [countryLoading, setCountryLoading] = useState(false);
+    const [isAdult, setIsAdult] = useState(session.user.adult || false);
+    const [isAdultLoading, setIsAdultLoading] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -66,6 +69,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const changeUsername = async () => {
         if (session && username.length > 2) {
+            setUsernameLoading(true);
             const data = await updateProfileUsername(session.user.id, username);
             setProfile(data);
             setUsername('');
@@ -75,6 +79,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated username!',
                 hash: username,
             });
+            setUsernameLoading(false);
         } else {
             setUsernameError(true);
             setSnackBarOptions({
@@ -89,6 +94,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
     const toggleAdultFlag = async () => {
         if (session) {
+            setIsAdultLoading(true);
             const data = await setProfileAdultFlag(session.user.id, !isAdult);
             setProfile(data);
             setIsAdult(!isAdult);
@@ -98,11 +104,13 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated adult flag!',
                 hash: String(isAdult),
             });
+            setIsAdultLoading(false);
         }
     };
 
     const changeCountry = async () => {
-        if (session) {
+        if (session && country) {
+            setCountryLoading(true);
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
             setCountry('');
@@ -112,20 +120,24 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 message: 'Successfully updated country!',
                 hash: country,
             });
+            setCountryLoading(false);
         } else {
             setCountryError(true);
             setSnackBarOptions({
                 isOpen: true,
                 severity: 'error',
-                message:
-                    'Error updating country. Please check your network connection and try again.',
+                message: country
+                    ? 'Error updating country. Please check your network connection and try again.'
+                    : 'Please select a country.',
                 hash: country,
             });
         }
     };
 
     const DropDownItems: JSX.Element[] = useMemo(() => {
-        return COUNTRIES.map((item, i) => (
+        // Sort countries alphabetically before displaying
+        const sortedCountries = COUNTRIES.sort((a, b) => a.country.localeCompare(b.country));
+        return sortedCountries.map((item, i) => (
             <MenuItem key={i} value={item.country}>
                 {item.country}
             </MenuItem>
@@ -157,26 +169,24 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 >
                     <div className='flex flex-col items-center bg-background p-4 rounded-md'>
                         <Typ variant='h5'>Edit Profile</Typ>
-                        <FormControl sx={{ m: 0.5 }} variant='filled'>
-                            <InputLabel htmlFor='username' color='secondary' className='!text-text'>
-                                Change Username
-                            </InputLabel>
-                            <FilledInput
-                                name='username'
-                                value={username}
-                                onChange={(e) => {
-                                    setUsername(e.target.value);
-                                }}
-                                error={usernameError}
-                                onFocus={() => setUsernameError(false)}
-                                inputProps={{ minLength: 3 }}
-                                sx={{ m: 0.5, width: 210 }}
-                                autoComplete='username'
-                            />
-                        </FormControl>
+                        <TextInput
+                            name='username'
+                            value={username}
+                            label='Change Username'
+                            color='secondary'
+                            autoComplete='username'
+                            error={usernameError}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                            }}
+                            onFocus={() => setUsernameError(false)}
+                            inputProps={{ minLength: 3 }}
+                            sx={{ m: 0.5, width: 210 }}
+                        />
                         <Typ>Current Username: {profile?.username}</Typ>
                         <Button
                             title='Change Username'
+                            loading={usernameLoading}
                             StartIcon={Edit}
                             sx={{ width: 250, mb: 2 }}
                             onClick={changeUsername}
@@ -207,13 +217,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         <Typ>Current Country: {profile?.country}</Typ>
                         <Button
                             title='Change Country'
-                            sx={{ width: 250, mb: 2 }}
+                            loading={countryLoading}
                             StartIcon={Language}
+                            sx={{ width: 250, mb: 2 }}
                             onClick={changeCountry}
                         />
                         <Typ>Adult Content: {profile?.adult ? 'visible' : 'not visible'}</Typ>
                         <Button
                             title='Toggle Adult Flag'
+                            loading={isAdultLoading}
                             StartIcon={NoAdultContent}
                             sx={{ width: 250, mb: 2 }}
                             onClick={toggleAdultFlag}

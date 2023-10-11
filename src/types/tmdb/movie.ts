@@ -5,10 +5,11 @@ import { ShowGenre } from './show';
  * https://developer.themoviedb.org/reference/search-movie
  */
 export interface MovieData {
+    id: number;
+    media_type: 'movie' | 'tv';
     adult: boolean;
     backdrop_path: string | null;
     genre_ids?: number[];
-    id: number;
     original_language: string;
     original_title: string;
     overview: string;

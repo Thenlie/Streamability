@@ -1,3 +1,6 @@
+import { MovieData } from './movie';
+import { TvData } from './tv';
+
 /**
  * Object containing genre as string and TMDB genre id
  * https://developer.themoviedb.org/reference/genre-movie-list
@@ -93,6 +96,7 @@ export interface ShowData {
     id: number;
     overview?: string;
     poster_path?: string | null;
+    banner_path?: string | null;
     release_date?: string;
     age_rating?: string | null;
     runtime?: number;
@@ -117,7 +121,7 @@ export interface ShowData {
  */
 export interface ShowResults {
     page?: number;
-    results?: ShowData[];
+    results?: Array<MovieData | TvData>;
     total_pages?: number;
     total_results?: number;
 }

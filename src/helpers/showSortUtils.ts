@@ -76,15 +76,7 @@ const sortShowsByReleaseDateDesc = (showData: ShowData[]): ShowData[] => {
  * @returns | array of sorted shows
  */
 const sortShowsAlphaAsc = (showData: ShowData[]): ShowData[] => {
-    showData.sort((a, b) => {
-        if (a.title < b.title) {
-            return -1;
-        }
-        if (a.title > b.title) {
-            return 1;
-        }
-        return 0;
-    });
+    showData.sort((a, b) => a.title.localeCompare(b.title));
     return showData;
 };
 
@@ -94,15 +86,7 @@ const sortShowsAlphaAsc = (showData: ShowData[]): ShowData[] => {
  * @returns | array of sorted shows
  */
 const sortShowsAlphaDesc = (showData: ShowData[]): ShowData[] => {
-    showData.sort((a, b) => {
-        if (b.title < a.title) {
-            return -1;
-        }
-        if (b.title > a.title) {
-            return 1;
-        }
-        return 0;
-    });
+    showData.sort((a, b) => b.title.localeCompare(a.title));
     return showData;
 };
 

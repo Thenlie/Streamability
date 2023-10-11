@@ -13,7 +13,7 @@ interface ButtonProps {
      */
     type?: 'button' | 'submit' | 'reset';
     /**
-     * MUI color of button, defaults to `secondary`
+     * MUI color of button, defaults to `primary`
      */
     color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     /**
@@ -46,7 +46,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
     title,
     type = 'button',
-    color = 'secondary',
+    color = 'primary',
     loading = false,
     disabled = false,
     StartIcon,
@@ -63,6 +63,7 @@ const Button: React.FC<ButtonProps> = ({
                 disabled={disabled || loading}
                 startIcon={!loading && StartIcon && <StartIcon />}
                 onClick={onClick}
+                className='!p-0'
                 sx={{ margin: 0.5, minWidth: 210, minHeight: 45, ...sx }}
             >
                 {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : title}

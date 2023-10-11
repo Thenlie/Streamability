@@ -15,6 +15,8 @@ import Button from './Button';
 import EmptySearchResults from './EmptySearchResults';
 import IconButton from './IconButton';
 import Snackbar from './Snackbar';
+import Footer from './Footer';
+import TextInput from './TextInput';
 
 export {
     ShowCard,
@@ -31,6 +33,8 @@ export {
     EmptySearchResults,
     IconButton,
     Snackbar,
+    Footer,
+    TextInput,
 };
 export * from './loaders';
 export * from './modals';

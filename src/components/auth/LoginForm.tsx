@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Snackbar } from '../../components';
+import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Navigate } from 'react-router-dom';
-import { InputAdornment, FilledInput, InputLabel, FormControl, IconButton } from '@mui/material';
+import { Link, Navigate } from 'react-router-dom';
+import { InputAdornment, IconButton, Typography as Typ } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
 import { SnackbarProps } from '../Snackbar';
@@ -92,55 +92,53 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <h1 data-testid='login-heading'>Login</h1>
+            <Typ data-testid='login-heading' variant='h4' sx={{ margin: 2 }}>
+                Login
+            </Typ>
             <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='email-input' color='secondary' className='!text-text'>
-                        Email
-                    </InputLabel>
-                    <FilledInput
-                        id='email-input'
-                        type='email'
-                        name='email'
-                        autoComplete='email'
-                        color='secondary'
-                        className='!text-text'
-                        value={email}
-                        error={emailError}
-                        onChange={(e) => setEmail(e.target.value)}
-                        onFocus={() => setEmailError(false)}
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='password-input' color='secondary' className='!text-text'>
-                        Password
-                    </InputLabel>
-                    <FilledInput
-                        id='password-input'
-                        name='password'
-                        type={isPasswordVisible ? 'text' : 'password'}
-                        autoComplete='new-password'
-                        value={password}
-                        error={passwordError}
-                        color='secondary'
-                        className='!text-text'
-                        onChange={(e) => setPassword(e.target.value)}
-                        onFocus={() => setPasswordError(false)}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <IconButton
-                                    aria-label='toggle password visibility'
-                                    onClick={() => setIsPasswordVisible((prev) => !prev)}
-                                    edge='end'
-                                >
-                                    {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+                <TextInput
+                    id='email-input'
+                    type='email'
+                    name='email'
+                    label='Email'
+                    color='secondary'
+                    autoComplete='email'
+                    value={email}
+                    error={emailError}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setEmailError(false)}
+                />
+                <TextInput
+                    id='password-input'
+                    name='password'
+                    type={isPasswordVisible ? 'text' : 'password'}
+                    label='Password'
+                    color='secondary'
+                    autoComplete='new-password'
+                    value={password}
+                    error={passwordError}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setPasswordError(false)}
+                    endAdornment={
+                        <InputAdornment position='end'>
+                            <IconButton
+                                aria-label='toggle password visibility'
+                                onClick={() => setIsPasswordVisible((prev) => !prev)}
+                                edge='end'
+                            >
+                                {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                />
                 <Button title='Submit' type='submit' loading={loading} />
             </form>
+            <div className='mt-2'>
+                <Typ display='inline'>Don&apos;t have an account? </Typ>
+                <Link to='/auth/signup' className='underline hover:text-blue-500'>
+                    Sign up.
+                </Link>
+            </div>
             <Snackbar {...snackBarOptions} />
         </div>
     );

@@ -13,9 +13,11 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18
     - name: Install modules
       run: npm ci
+    - name: Run typescript compiler
+      run: npm run compile
     - name: Run ESLint
       run: npx eslint . --ext .ts,.tsx
     - name: Create .env

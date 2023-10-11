@@ -158,7 +158,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     if (loading) {
         return (
             <section className='pt-12'>
-                <div className={`w-[${carouselWidth}] flex justify-center`}>
+                <div className='flex justify-center' style={{ width: carouselWidth }}>
                     <ShowPosterLoader count={getCarouselSteps(windowSize)} />
                 </div>
             </section>
@@ -168,9 +168,9 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     if (!data || data.length === 0) {
         return (
             <section className='pt-12'>
-                <div className={`w-[${carouselWidth}]`}>
+                <div style={{ width: carouselWidth }}>
                     <Carousel
-                        className='bg-primary'
+                        className='bg-foreground'
                         style={{
                             width: carouselWidth,
                             paddingTop: '10px',
@@ -198,10 +198,10 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     }
 
     return (
-        <div className={`w-[${carouselWidth}]`}>
+        <div style={{ width: carouselWidth }}>
             <Carousel
                 wrapAround
-                className='bg-primary'
+                className='bg-foreground'
                 style={{
                     width: carouselWidth,
                     paddingTop: '10px',
