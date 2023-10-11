@@ -109,7 +109,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     };
 
     const changeCountry = async () => {
-        if (session) {
+        if (session && country) {
             setCountryLoading(true);
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
@@ -126,8 +126,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             setSnackBarOptions({
                 isOpen: true,
                 severity: 'error',
-                message:
-                    'Error updating country. Please check your network connection and try again.',
+                message: country
+                    ? 'Error updating country. Please check your network connection and try again.'
+                    : 'Please select a country.',
                 hash: country,
             });
         }

@@ -1,6 +1,6 @@
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
-import { CardMedia } from '@mui/material';
+import { CardMedia, SimplePaletteColorOptions, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
     AddToQueue,
@@ -60,6 +60,7 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     showFavoritesButton = false,
     showWatchedButton = false,
 }) => {
+    const theme = useTheme();
     const [numOfIcons, setNumOfIcons] = useState(0);
     const { isInQueue, isInFavorites, isInWatched } = useIsInProfileArray(
         details.id,
@@ -115,7 +116,11 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             ? `Remove ${details.title} from queue`
                             : `Add ${details.title} to queue`
                     }
-                    color={isInQueue ? 'error' : 'success'}
+                    color={
+                        isInQueue
+                            ? (theme.palette.error as SimplePaletteColorOptions)
+                            : (theme.palette.success as SimplePaletteColorOptions)
+                    }
                     tooltip={isInQueue ? 'Remove from queue' : 'Add to queue'}
                     onClick={queueCallback}
                     loading={queueLoading}
@@ -129,7 +134,7 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             ? `Remove ${details.title} from favorites`
                             : `Add ${details.title} to favorites`
                     }
-                    color='error'
+                    color={theme.palette.favorite}
                     tooltip={isInFavorites ? 'Remove from favorites' : 'Add to favorites'}
                     onClick={favoritesCallback}
                     loading={favoritesLoading}
@@ -143,7 +148,11 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
                             ? `Remove ${details.title} from watched`
                             : `Add ${details.title} to watched`
                     }
-                    color={isInWatched ? 'error' : 'success'}
+                    color={
+                        isInWatched
+                            ? (theme.palette.error as SimplePaletteColorOptions)
+                            : (theme.palette.success as SimplePaletteColorOptions)
+                    }
                     tooltip={isInWatched ? 'Remove from watched' : 'Add to watched'}
                     onClick={watchedCallback}
                     loading={watchedLoading}

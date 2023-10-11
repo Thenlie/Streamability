@@ -2,9 +2,11 @@ import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles'
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
-import { Button, CardActions, CardMedia, Rating, Typography as Typ } from '@mui/material';
+import { CardActions, CardMedia, Rating, Typography as Typ } from '@mui/material';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
+import Button from './Button';
+import { AddToQueue, RemoveFromQueue } from '@mui/icons-material';
 
 export interface ShowListCardProps {
     /**
@@ -137,14 +139,12 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
                             sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}
                         >
                             <Button
-                                sx={{ m: 1, pl: 1 }}
-                                variant='contained'
-                                size='small'
-                                color='secondary'
+                                color={isInQueue ? 'error' : 'success'}
+                                StartIcon={isInQueue ? RemoveFromQueue : AddToQueue}
                                 onClick={() => queueHandler(!isInQueue, details?.id)}
-                            >
-                                {isInQueue ? 'Remove from queue' : 'Add to queue'}
-                            </Button>
+                                title={isInQueue ? 'Remove from queue' : 'Add to queue'}
+                                sx={{ margin: 0, pl: 1, minHeight: 35, height: 35, width: 250 }}
+                            />
                         </CardActions>
                     )}
                 </div>

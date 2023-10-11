@@ -5,10 +5,16 @@ import { useWindowSize } from '../hooks';
 const Footer: React.FC = (): JSX.Element => {
     const windowSize = useWindowSize();
     return (
-        <footer className='w-full bottom-0 bg-primary px-4 py-2 flex justify-center sm:justify-between items-center drop-shadow-[0_-3px_3px_rgba(0,0,0,.25)] '>
+        <footer
+            className='w-full flex flex-col sm:flex-row items-center justify-between bg-foreground px-8 py-6 flex-wrap'
+            style={{
+                boxShadow:
+                    '0px -2px 4px -1px rgba(0,0,0,0.2),0px -4px 5px 0px rgba(0,0,0,0.14),0px -1px 10px 0px rgba(0,0,0,0.12)',
+            }}
+        >
             {windowSize.width && (
                 <div className='flex items-center'>
-                    <Typ className='px-2'>Powered By</Typ>
+                    <Typ className='px-2 !text-text'>Powered By</Typ>
                     <Link to='https://www.themoviedb.org/' target='_blank'>
                         <img
                             className='px-2'
@@ -41,7 +47,7 @@ const Footer: React.FC = (): JSX.Element => {
                     )}
                 </div>
             )}
-            <div className='hidden sm:block'>
+            <div className='hidden sm:block !text-text'>
                 <Typ>
                     Want to contribute?{' '}
                     <Link

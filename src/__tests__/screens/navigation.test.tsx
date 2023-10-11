@@ -7,7 +7,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import { goHome, openMenu } from '../helpers/navigation';
 
-// TODO: Re-enable tests when UI stable #427
+// TODO: #427 Re-enable tests when UI stable
 describe.skip('Navigation Test Suite', async () => {
     // set up variables to be used on each test
     let user: UserEvent;

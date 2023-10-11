@@ -16,7 +16,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "clean": "./scripts/clean.sh",
-    "postclean": "npm install"
+    "postclean": "npm install",
+    "todo": "leasot -S 'src/**/*'",
+    "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -58,6 +60,7 @@
     "eslint-plugin-storybook": "^0.6.13",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.31",
+    "leasot": "^13.3.0",
     "prettier": "^3.0.3",
     "storybook": "^7.2.1",
     "storybook-addon-react-router-v6": "^2.0.2",

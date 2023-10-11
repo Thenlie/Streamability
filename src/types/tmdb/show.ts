@@ -96,6 +96,7 @@ export interface ShowData {
     id: number;
     overview?: string;
     poster_path?: string | null;
+    banner_path?: string | null;
     release_date?: string;
     age_rating?: string | null;
     runtime?: number;
