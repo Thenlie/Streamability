@@ -7,6 +7,7 @@ import {
     filterShowsByAvgRatingAbove,
     filterShowsByGenre,
 } from '../helpers';
+import { discoverMovies } from '../helpers/getMovieUtils';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
@@ -25,16 +26,21 @@ export default function DiscoverScreen(): JSX.Element {
     // TV
 
     useEffect(() => {
-        if (trendingShows) {
-            const avgRatingAbove: ShowData[] = filterShowsByAvgRatingAbove(trendingShows, 4);
-            setHighestRated(avgRatingAbove);
-            // const newlyAdded: showData[] = filterShowsByReleaseAfter()
-            const showsByComedy: ShowData[] = filterShowsByGenre(trendingShows, 35);
-            setComedy(showsByComedy);
+        const handler = async () => {
+            if (trendingShows) {
+                const avgRatingAbove: ShowData[] = filterShowsByAvgRatingAbove(trendingShows, 4);
+                setHighestRated(avgRatingAbove);
+                // const newlyAdded: showData[] = filterShowsByReleaseAfter()
+                const showsByComedy: ShowData[] = filterShowsByGenre(trendingShows, 35);
+                setComedy(showsByComedy);
+            }
+
+            const discover = await discoverMovies();
+            console.log(discover);
         }
+        handler();
     }, []);
 
-    console.log(trendingShows);
 
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
@@ -52,3 +58,5 @@ export default function DiscoverScreen(): JSX.Element {
         </div>
     );
 }
+
+// comment to push test
