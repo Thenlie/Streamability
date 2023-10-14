@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useSessionContext } from '../hooks';
+import { useSessionContext } from '../../hooks';
 import React from 'react';
 
 /**

@@ -1,8 +1,8 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { ProfileArrayCols } from '../types';
-import { useGetProfileArray, useProfileActions, useProfileContext } from '../hooks';
-import { Button, ShowPoster } from '../components';
-import { DashboardGalleryLoader } from './loaders';
+import { ProfileArrayCols } from '../../types';
+import { useGetProfileArray, useProfileActions, useProfileContext } from '../../hooks';
+import { Button, ShowPoster } from '../../components';
+import { DashboardGalleryLoader } from '../loaders';
 import { Typography as Typ } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 

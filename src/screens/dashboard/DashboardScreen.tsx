@@ -4,14 +4,14 @@ import {
     useProfileContext,
     useProfileActions,
     useGetProfileArray,
-} from '../hooks';
-import { deleteProfileById, clearProfileArray } from '../supabase/profiles';
+} from '../../hooks';
+import { deleteProfileById, clearProfileArray } from '../../supabase/profiles';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
-import { ProfileArrayCols, ShowData } from '../types';
-import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
-import { SUPABASE } from '../helpers';
+import { ProfileArrayCols, ShowData } from '../../types';
+import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../../components';
+import { SUPABASE } from '../../helpers';
 
 interface DashboardCarouselProps {
     data: ShowData[] | null;

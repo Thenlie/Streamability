@@ -17,7 +17,7 @@ import {
     DashboardLayout,
 } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
-import { loader as dashGalleryLoader } from './screens/DashboardGalleryScreen';
+import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
 
 /**
  * Create the 'root route' and serve the entire app to it

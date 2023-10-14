@@ -3,28 +3,19 @@
  * Be sure to add any new screens to this file
  * You will also need to add the new route to main.tsx
  */
-import FeaturedSearchScreen from './FeaturedSearchScreen';
-import SearchResultsScreen from './SearchResultsScreen';
-import PageNotFoundScreen from './PageNotFoundScreen';
-import DashboardLayout from './DashboardLayout';
-import DashboardScreen from './DashboardScreen';
-import DashboardGalleryScreen from './DashboardGalleryScreen';
-import ShowDetailsScreen from './ShowDetailsScreen';
-import AuthLayout from './AuthLayout';
-import LoginScreen from './LoginScreen';
-import SignUpScreen from './SignUpScreen';
 import DiscoverScreen from './DiscoverScreen';
+import FeaturedSearchScreen from './FeaturedSearchScreen';
+import PageNotFoundScreen from './PageNotFoundScreen';
+import SearchResultsScreen from './SearchResultsScreen';
+import ShowDetailsScreen from './ShowDetailsScreen';
+
+export * from './auth';
+export * from './dashboard';
 
 export {
-    FeaturedSearchScreen,
-    SearchResultsScreen,
-    PageNotFoundScreen,
-    DashboardLayout,
-    DashboardScreen,
-    DashboardGalleryScreen,
-    ShowDetailsScreen,
-    AuthLayout,
-    LoginScreen,
-    SignUpScreen,
     DiscoverScreen,
+    FeaturedSearchScreen,
+    PageNotFoundScreen,
+    SearchResultsScreen,
+    ShowDetailsScreen,
 };

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Button, Snackbar, TextInput } from '../components';
-import { SUPABASE, COUNTRIES } from '../helpers';
-import { useSessionContext } from '../hooks';
+import { Button, Snackbar, TextInput } from '../../components';
+import { SUPABASE, COUNTRIES } from '../../helpers';
+import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {
     InputAdornment,
@@ -13,8 +13,8 @@ import {
     Typography as Typ,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import Logger from '../logger';
-import { SnackbarProps } from '../components/Snackbar';
+import Logger from '../../logger';
+import { SnackbarProps } from '../../components/Snackbar';
 
 const LOG = new Logger('SignUpForm');
 
