@@ -88,14 +88,19 @@ export const deleteProfileById = async (id: string): Promise<void> => {
  * @param id | uuid users profile being queried
  * @returns {Promise<number[] | null>}
  */
-export const getProfileQueue = async (id: string): Promise<string[] | null> => {
+export const getProfileArray = async (
+    profileId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
+): Promise<string[] | null> => {
     try {
-        const { data, error } = await SUPABASE.from('profiles').select('queue').eq('id', id);
+        const { data, error } = await SUPABASE.from('profiles')
+            .select(whichCol)
+            .eq('id', profileId);
 
         if (error) {
             LOG.error(error);
         } else if (data) {
-            return data[0].queue;
+            return Object.values(data[0])[0];
         }
     } catch (error) {
         LOG.error(error as string);
@@ -112,15 +117,15 @@ export const getProfileQueue = async (id: string): Promise<string[] | null> => {
  * @returns {Promise<Profile | null>}
  */
 export const addToProfileArray = async (
-    profile_id: string,
-    show_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+    profileId: string,
+    showId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('add_item', {
-            profile_id,
-            show_id,
-            which_col,
+            profile_id: profileId,
+            show_id: showId,
+            which_col: whichCol,
         })
             .select()
             .single();
@@ -145,15 +150,15 @@ export const addToProfileArray = async (
  * @returns {Promise<Profile | null>}
  */
 export const removeFromProfileArray = async (
-    profile_id: string,
-    show_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+    profileId: string,
+    showId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_item', {
-            profile_id,
-            show_id,
-            which_col,
+            profile_id: profileId,
+            show_id: showId,
+            which_col: whichCol,
         })
             .select()
             .single();
@@ -173,17 +178,17 @@ export const removeFromProfileArray = async (
  * Removes all shows from a users queue, watched, or favorites
  *
  * @param id | uuid of user being updated
- * @param which_col | profiles column to delete
+ * @param whichCol | profiles column to delete
  * @returns {Promise<Profile | null>}
  */
-export const removeProfileArray = async (
-    profile_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+export const clearProfileArray = async (
+    profileId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_all', {
-            profile_id,
-            which_col,
+            profile_id: profileId,
+            which_col: whichCol,
         })
             .select()
             .single();

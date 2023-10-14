@@ -1,61 +1,112 @@
-import React, { useEffect, useState } from 'react';
-import { useSessionContext, useProfileContext, useProfileActions } from '../hooks';
-import { deleteProfileById, getProfileQueue, removeProfileArray } from '../supabase/profiles';
+import React, { useState } from 'react';
+import {
+    useSessionContext,
+    useProfileContext,
+    useProfileActions,
+    useGetProfileArray,
+} from '../hooks';
+import { deleteProfileById, clearProfileArray } from '../supabase/profiles';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
-import { ShowData } from '../types';
+import { ProfileArrayCols, ShowData } from '../types';
 import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
-import { SUPABASE, getMovieDetails, getTvDetails } from '../helpers';
-import Logger from '../logger';
+import { SUPABASE } from '../helpers';
 
-const LOG = new Logger('DashboardScreen');
+interface DashboardCarouselProps {
+    data: ShowData[] | null;
+    whichCol: ProfileArrayCols;
+    label: string;
+    fallbackText: string;
+    showPosterButtons?: {
+        showQueueButton?: boolean;
+        showFavoritesButton?: boolean;
+        showWatchedButton?: boolean;
+    };
+    clearButtonTitle: string;
+}
+
+/**
+ * Carousels displayed on the Dashboard screen which will
+ * contain a users queue, favorites and watched list.
+ */
+export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
+    data,
+    whichCol,
+    label,
+    fallbackText,
+    showPosterButtons,
+    clearButtonTitle,
+}) => {
+    const { profile, setProfile } = useProfileContext();
+    const profileActions = useProfileActions(profile, setProfile);
+    const [loading, setLoading] = useState(false);
+
+    /**
+     * Remove all shows from the users watch queue.
+     * Sets the loading flag before and after the operation.
+     */
+    const emptyProfileArray = async (whichCol: ProfileArrayCols) => {
+        if (!profile) return;
+        setLoading(true);
+        const res = await clearProfileArray(profile.id, whichCol);
+        if (res) setProfile(res);
+        setLoading(false);
+    };
+
+    return (
+        <div className='m-2'>
+            <Typ variant='h6' align='left'>
+                {label}
+            </Typ>
+            <ShowCarousel
+                data={data}
+                fallbackText={fallbackText}
+                profile={profile}
+                profileActions={profileActions}
+                showQueueButton={showPosterButtons?.showQueueButton || false}
+                showFavoritesButton={showPosterButtons?.showFavoritesButton || false}
+                showWatchedButton={showPosterButtons?.showWatchedButton || false}
+            />
+            <Button
+                title={clearButtonTitle}
+                color='error'
+                disabled={!data || data.length === 0}
+                loading={loading}
+                StartIcon={Delete}
+                onClick={() => emptyProfileArray(whichCol)}
+            />
+        </div>
+    );
+};
 
 /**
  * A logged in users profile screen. This is used to display
  * users personal information, queue, favorites and anything
  * else related directly to a user.
- *
- * @returns {JSX.Element} | A single users profile page
  */
-const DashboardScreen: React.FC = (): JSX.Element => {
+const DashboardScreen: React.FC = () => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const profileActions = useProfileActions(profile, setProfile);
-    const [queue, setQueue] = useState<ShowData[] | null>(null);
+    const queue = useGetProfileArray('queue');
+    const favorites = useGetProfileArray('favorites');
+    const watched = useGetProfileArray('watched');
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const [clearQueueLoading, setClearQueueLoading] = useState(false);
     const navigate = useNavigate();
 
-    const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
+    const queueFallbackText =
+        'Your queue is empty! Add shows to your watch queue to view them here.';
+    const favoritesFallbackText =
+        // eslint-disable-next-line prettier/prettier
+        'You don\'t have any favorites! Favorite shows to view them here.';
+    const watchedFallbackText =
+        'Your watched list is empty! Add shows to your watched list to view them here.';
 
     // If the user is not logged in, redirect to login
     if (!session || !profile) {
         return <Navigate to={'/auth/login'} replace />;
     }
-
-    // On page load get the users watch queue
-    useEffect(() => {
-        const handler = async () => {
-            if (!session) return;
-            const queue = await getProfileQueue(session.user.id);
-            if (!queue) return;
-            const arr: ShowData[] = [];
-            for (let i = 0; i < queue.length; i++) {
-                if (queue[i].includes('tv-')) {
-                    const tvShow = await getTvDetails(parseInt(queue[i].slice(3)));
-                    arr.push(tvShow);
-                } else {
-                    const movie = await getMovieDetails(parseInt(queue[i].slice(6)));
-                    arr.push(movie);
-                }
-            }
-            setQueue(arr);
-            LOG.debug(String(queue));
-        };
-        handler();
-    }, [session, profile]);
 
     /**
      * Delete profile row and auth entry.
@@ -63,31 +114,16 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      * the util does not have access to the hook
      */
     const deleteProfile = async () => {
-        if (session) {
-            setDeleteLoading(true);
-            await deleteProfileById(session.user.id);
-            setProfile(null);
-            setSession(null);
-            navigate('/');
-        }
+        setDeleteLoading(true);
+        await deleteProfileById(session.user.id);
+        setProfile(null);
+        setSession(null);
+        navigate('/');
     };
 
     /**
-     * Remove all shows from the users watch queue.
-     * Displayed below the queue carousel.
-     */
-    const clearQueue = async () => {
-        if (session) {
-            setClearQueueLoading(true);
-            await removeProfileArray(session.user.id, 'queue');
-            setQueue(null);
-            setClearQueueLoading(false);
-        }
-    };
-
-    /**
-     * Logout current user. When logged out user
-     * is redirected to login page.
+     * Logout current user.
+     * When logged out, user is redirected to login page.
      */
     const handleLogout = async () => {
         setLogoutLoading(true);
@@ -156,25 +192,30 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     />
                     <ConfirmDeleteModal deleteProfile={deleteProfile} loading={deleteLoading} />
                 </div>
-                <div>
-                    <ShowCarousel
-                        data={queue}
-                        fallbackText={fallbackText}
-                        profile={profile}
-                        profileActions={profileActions}
-                        showQueueButton
-                        showFavoritesButton
-                        showWatchedButton
-                    />
-                    <Button
-                        title='Clear Queue'
-                        color='error'
-                        disabled={!queue || queue.length === 0}
-                        loading={clearQueueLoading}
-                        StartIcon={Delete}
-                        onClick={clearQueue}
-                    />
-                </div>
+                <DashboardCarousel
+                    data={queue}
+                    whichCol='queue'
+                    label='Watch Queue'
+                    fallbackText={queueFallbackText}
+                    showPosterButtons={{ showQueueButton: true }}
+                    clearButtonTitle='Clear Queue'
+                />
+                <DashboardCarousel
+                    data={favorites}
+                    whichCol='favorites'
+                    label='Favorites'
+                    fallbackText={favoritesFallbackText}
+                    showPosterButtons={{ showFavoritesButton: true }}
+                    clearButtonTitle='Clear Favorites'
+                />
+                <DashboardCarousel
+                    data={watched}
+                    whichCol='watched'
+                    label='Watched List'
+                    fallbackText={watchedFallbackText}
+                    showPosterButtons={{ showWatchedButton: true }}
+                    clearButtonTitle='Clear Watched'
+                />
             </section>
         </>
     );
