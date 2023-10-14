@@ -2,7 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { ProfileArrayCols } from '../types';
 import { useGetProfileArray, useProfileActions, useProfileContext } from '../hooks';
 import { ShowPoster } from '../components';
-import { ShowDetailsLoader } from './loaders';
+import { DashboardGalleryLoader } from './loaders';
 import { Typography as Typ } from '@mui/material';
 
 export async function loader({ request }: { request: Request }): Promise<string> {
@@ -21,15 +21,16 @@ const DashboardGalleryScreen: React.FC = () => {
     const path: ProfileArrayCols = useLoaderData() as ProfileArrayCols;
     const data = useGetProfileArray(path);
 
-    // TODO: Create new loader
-    if (!profile) return <ShowDetailsLoader />;
+    // TODO: If profile does not return after a few seconds,
+    // we should assume the user is not logged in and redirect to an auth page
+    if (!profile) return <DashboardGalleryLoader />;
 
     return (
         <div className='m-4'>
             <Typ variant='h5'>
                 {profile.username}&apos;s {path}{' '}
             </Typ>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-6'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-6'>
                 {data?.map(
                     (item, i) =>
                         item && (
