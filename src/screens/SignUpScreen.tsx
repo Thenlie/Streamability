@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE, COUNTRIES } from '../../helpers';
-import { useSessionContext } from '../../hooks';
+import { Button, Snackbar, TextInput } from '../components';
+import { SUPABASE, COUNTRIES } from '../helpers';
+import { useSessionContext } from '../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {
     InputAdornment,
@@ -13,17 +13,17 @@ import {
     Typography as Typ,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import Logger from '../../logger';
-import { SnackbarProps } from '../Snackbar';
+import Logger from '../logger';
+import { SnackbarProps } from '../components/Snackbar';
 
-const LOG = new Logger('SignupForm');
+const LOG = new Logger('SignUpForm');
 
 /**
- * Form to handle user sign up
- *
- * @returns {JSX.Element}
+ * Form to handle user sign up.
+ * Wil redirect to dashboard if already logged in
+ * or upon sign up completion.
  */
-const SignUpForm: React.FC = (): JSX.Element => {
+const SignUpScreen: React.FC = () => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -286,4 +286,4 @@ const SignUpForm: React.FC = (): JSX.Element => {
     );
 };
 
-export default SignUpForm;
+export default SignUpScreen;

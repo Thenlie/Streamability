@@ -8,7 +8,9 @@ import {
     SearchResultsScreen,
     PageNotFoundScreen,
     DashboardScreen,
-    AuthScreen,
+    AuthLayout,
+    LoginScreen,
+    SignUpScreen,
     ShowDetailsScreen,
     DiscoverScreen,
     DashboardGalleryScreen,
@@ -16,7 +18,6 @@ import {
 } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/DashboardGalleryScreen';
-import { LoginForm, SignUpForm } from './components';
 
 /**
  * Create the 'root route' and serve the entire app to it
@@ -34,15 +35,15 @@ const router = createBrowserRouter([
             },
             {
                 path: 'auth',
-                element: <AuthScreen />,
+                element: <AuthLayout />,
                 children: [
                     {
                         path: 'login',
-                        element: <LoginForm />,
+                        element: <LoginScreen />,
                     },
                     {
                         path: 'signup',
-                        element: <SignUpForm />,
+                        element: <SignUpScreen />,
                     },
                 ],
             },

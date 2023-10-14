@@ -1,7 +1,9 @@
 import AppWrapper from '../AppWrapper';
-import { LoginForm, ShowCard, SignUpForm } from '../components';
+import { ShowCard } from '../components';
 import {
-    AuthScreen,
+    AuthLayout,
+    LoginScreen,
+    SignUpScreen,
     DashboardScreen,
     FeaturedSearchScreen,
     PageNotFoundScreen,
@@ -30,15 +32,15 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'auth',
-                element: <AuthScreen />,
+                element: <AuthLayout />,
                 children: [
                     {
                         path: 'login',
-                        element: <LoginForm />,
+                        element: <LoginScreen />,
                     },
                     {
                         path: 'signup',
-                        element: <SignUpForm />,
+                        element: <SignUpScreen />,
                     },
                 ],
             },

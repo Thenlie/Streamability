@@ -10,7 +10,9 @@ import DashboardLayout from './DashboardLayout';
 import DashboardScreen from './DashboardScreen';
 import DashboardGalleryScreen from './DashboardGalleryScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
-import AuthScreen from './AuthScreen';
+import AuthLayout from './AuthLayout';
+import LoginScreen from './LoginScreen';
+import SignUpScreen from './SignUpScreen';
 import DiscoverScreen from './DiscoverScreen';
 
 export {
@@ -21,6 +23,8 @@ export {
     DashboardScreen,
     DashboardGalleryScreen,
     ShowDetailsScreen,
-    AuthScreen,
+    AuthLayout,
+    LoginScreen,
+    SignUpScreen,
     DiscoverScreen,
 };
