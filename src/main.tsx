@@ -11,8 +11,11 @@ import {
     AuthScreen,
     ShowDetailsScreen,
     DiscoverScreen,
+    DashboardGalleryScreen,
+    DashboardLayout,
 } from './screens';
 import { loader as searchLoader } from './screens/SearchResultsScreen';
+import { loader as dashGalleryLoader } from './screens/DashboardGalleryScreen';
 import { LoginForm, SignUpForm } from './components';
 
 /**
@@ -45,7 +48,28 @@ const router = createBrowserRouter([
             },
             {
                 path: 'dashboard',
-                element: <DashboardScreen />,
+                element: <DashboardLayout />,
+                children: [
+                    {
+                        path: '',
+                        element: <DashboardScreen />,
+                    },
+                    {
+                        path: 'queue',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                    {
+                        path: 'favorites',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                    {
+                        path: 'watched',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                ],
             },
             {
                 path: 'search',

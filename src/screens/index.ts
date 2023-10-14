@@ -6,7 +6,9 @@
 import FeaturedSearchScreen from './FeaturedSearchScreen';
 import SearchResultsScreen from './SearchResultsScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
+import DashboardLayout from './DashboardLayout';
 import DashboardScreen from './DashboardScreen';
+import DashboardGalleryScreen from './DashboardGalleryScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
 import AuthScreen from './AuthScreen';
 import DiscoverScreen from './DiscoverScreen';
@@ -15,7 +17,9 @@ export {
     FeaturedSearchScreen,
     SearchResultsScreen,
     PageNotFoundScreen,
+    DashboardLayout,
     DashboardScreen,
+    DashboardGalleryScreen,
     ShowDetailsScreen,
     AuthScreen,
     DiscoverScreen,
