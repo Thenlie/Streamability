@@ -38,19 +38,24 @@ const DashboardGalleryScreen: React.FC = () => {
                 onClick={() => navigate('/dashboard')}
             />
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-6'>
-                {data?.map(
-                    (item, i) =>
-                        item && (
-                            <ShowPoster
-                                key={i}
-                                details={item}
-                                profile={profile}
-                                profileActions={profileActions}
-                                showQueueButton={path === 'queue'}
-                                showFavoritesButton={path === 'favorites'}
-                                showWatchedButton={path === 'watched'}
-                            />
-                        )
+                {data ? (
+                    data.map(
+                        (item, i) =>
+                            item && (
+                                <ShowPoster
+                                    key={i}
+                                    details={item}
+                                    profile={profile}
+                                    profileActions={profileActions}
+                                    showQueueButton={path === 'queue'}
+                                    showFavoritesButton={path === 'favorites'}
+                                    showWatchedButton={path === 'watched'}
+                                />
+                            )
+                    )
+                ) : (
+                    // TODO: #610 Create empty state
+                    <Typ>Add shows to your {path} to view them here!</Typ>
                 )}
             </div>
         </div>

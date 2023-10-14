@@ -5,7 +5,8 @@
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L88) | 88 | Error handling if any |
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L93) | 93 | #162 Use MUI ThemeProvider |
 | [src/components/Navigation.tsx](src/components/Navigation.tsx#L242) | 242 | Add a transition when search is expanded or collapsed |
-| [src/screens/DashboardGalleryScreen.tsx](src/screens/DashboardGalleryScreen.tsx#L24) | 24 | If profile does not return after a few seconds, |
+| [src/screens/DashboardGalleryScreen.tsx](src/screens/DashboardGalleryScreen.tsx#L26) | 26 | If profile does not return after a few seconds, |
+| [src/screens/DashboardGalleryScreen.tsx](src/screens/DashboardGalleryScreen.tsx#L57) | 57 | #610 Create empty state |
 | [src/screens/DiscoverScreen.tsx](src/screens/DiscoverScreen.tsx#L11) | 11 | #194 Make skeleton loading screen |
 | [src/screens/LoginScreen.tsx](src/screens/LoginScreen.tsx#L82) | 82 | We could try to get the AuthApiError type and use 'cause' instead |
 | [src/screens/PageNotFoundScreen.tsx](src/screens/PageNotFoundScreen.tsx#L25) | 25 | Implement better error handling |
