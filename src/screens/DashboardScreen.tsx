@@ -15,6 +15,8 @@ import { SUPABASE } from '../helpers';
 
 interface DashboardCarouselProps {
     data: ShowData[] | null;
+    whichCol: ProfileArrayCols;
+    label: string;
     fallbackText: string;
     showPosterButtons?: {
         showQueueButton?: boolean;
@@ -22,8 +24,6 @@ interface DashboardCarouselProps {
         showWatchedButton?: boolean;
     };
     clearButtonTitle: string;
-    loading: boolean;
-    onClick: () => void;
 }
 
 /**
@@ -32,19 +32,32 @@ interface DashboardCarouselProps {
  */
 export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
     data,
+    whichCol,
+    label,
     fallbackText,
     showPosterButtons,
     clearButtonTitle,
-    loading,
-    onClick,
 }) => {
     const { profile, setProfile } = useProfileContext();
     const profileActions = useProfileActions(profile, setProfile);
+    const [loading, setLoading] = useState(false);
+
+    /**
+     * Remove all shows from the users watch queue.
+     * Sets the loading flag before and after the operation.
+     */
+    const emptyProfileArray = async (whichCol: ProfileArrayCols) => {
+        if (!profile) return;
+        setLoading(true);
+        const res = await clearProfileArray(profile.id, whichCol);
+        if (res) setProfile(res);
+        setLoading(false);
+    };
 
     return (
         <div className='m-2'>
             <Typ variant='h6' align='left'>
-                Watched Shows
+                {label}
             </Typ>
             <ShowCarousel
                 data={data}
@@ -61,7 +74,7 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
                 disabled={!data || data.length === 0}
                 loading={loading}
                 StartIcon={Delete}
-                onClick={onClick}
+                onClick={() => emptyProfileArray(whichCol)}
             />
         </div>
     );
@@ -80,9 +93,6 @@ const DashboardScreen: React.FC = () => {
     const watched = useGetProfileArray('watched');
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const [clearQueueLoading, setClearQueueLoading] = useState(false);
-    const [clearFavoritesLoading, setClearFavoritesLoading] = useState(false);
-    const [clearWatchedLoading, setClearWatchedLoading] = useState(false);
     const navigate = useNavigate();
 
     const queueFallbackText =
@@ -109,23 +119,6 @@ const DashboardScreen: React.FC = () => {
         setProfile(null);
         setSession(null);
         navigate('/');
-    };
-
-    /**
-     * Remove all shows from the users watch queue.
-     * Sets the loading flag before and after the operation.
-     */
-    const emptyProfileArray = async (whichCol: ProfileArrayCols) => {
-        if (whichCol === 'queue') setClearQueueLoading(true);
-        if (whichCol === 'favorites') setClearFavoritesLoading(true);
-        if (whichCol === 'watched') setClearWatchedLoading(true);
-
-        const res = await clearProfileArray(session.user.id, whichCol);
-        if (res) setProfile(res);
-
-        if (whichCol === 'queue') setClearQueueLoading(false);
-        if (whichCol === 'favorites') setClearFavoritesLoading(false);
-        if (whichCol === 'watched') setClearWatchedLoading(false);
     };
 
     /**
@@ -201,27 +194,27 @@ const DashboardScreen: React.FC = () => {
                 </div>
                 <DashboardCarousel
                     data={queue}
+                    whichCol='queue'
+                    label='Watch Queue'
                     fallbackText={queueFallbackText}
                     showPosterButtons={{ showQueueButton: true }}
                     clearButtonTitle='Clear Queue'
-                    loading={clearQueueLoading}
-                    onClick={() => emptyProfileArray('queue')}
                 />
                 <DashboardCarousel
                     data={favorites}
+                    whichCol='favorites'
+                    label='Favorites'
                     fallbackText={favoritesFallbackText}
                     showPosterButtons={{ showFavoritesButton: true }}
                     clearButtonTitle='Clear Favorites'
-                    loading={clearFavoritesLoading}
-                    onClick={() => emptyProfileArray('favorites')}
                 />
                 <DashboardCarousel
                     data={watched}
+                    whichCol='watched'
+                    label='Watched List'
                     fallbackText={watchedFallbackText}
                     showPosterButtons={{ showWatchedButton: true }}
                     clearButtonTitle='Clear Watched'
-                    loading={clearWatchedLoading}
-                    onClick={() => emptyProfileArray('watched')}
                 />
             </section>
         </>
