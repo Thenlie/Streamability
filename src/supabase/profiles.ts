@@ -117,15 +117,15 @@ export const getProfileArray = async (
  * @returns {Promise<Profile | null>}
  */
 export const addToProfileArray = async (
-    profile_id: string,
-    show_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+    profileId: string,
+    showId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('add_item', {
-            profile_id,
-            show_id,
-            which_col,
+            profile_id: profileId,
+            show_id: showId,
+            which_col: whichCol,
         })
             .select()
             .single();
@@ -150,15 +150,15 @@ export const addToProfileArray = async (
  * @returns {Promise<Profile | null>}
  */
 export const removeFromProfileArray = async (
-    profile_id: string,
-    show_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+    profileId: string,
+    showId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_item', {
-            profile_id,
-            show_id,
-            which_col,
+            profile_id: profileId,
+            show_id: showId,
+            which_col: whichCol,
         })
             .select()
             .single();
@@ -178,17 +178,17 @@ export const removeFromProfileArray = async (
  * Removes all shows from a users queue, watched, or favorites
  *
  * @param id | uuid of user being updated
- * @param which_col | profiles column to delete
+ * @param whichCol | profiles column to delete
  * @returns {Promise<Profile | null>}
  */
 export const clearProfileArray = async (
-    profile_id: string,
-    which_col: 'queue' | 'watched' | 'favorites'
+    profileId: string,
+    whichCol: 'queue' | 'watched' | 'favorites'
 ): Promise<Profile | null> => {
     try {
         const { data, error } = await SUPABASE.rpc('remove_all', {
-            profile_id,
-            which_col,
+            profile_id: profileId,
+            which_col: whichCol,
         })
             .select()
             .single();
