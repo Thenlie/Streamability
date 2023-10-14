@@ -19,6 +19,7 @@ import { ShowData } from '../types';
 /**
  * Routes to be used in screen unit tests
  * Currently simulating the entire app
+ * TODO: #427 Import routes from main.tsx instead of using this
  */
 export const routes: RouteObject[] = [
     {
