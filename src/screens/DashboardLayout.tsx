@@ -4,6 +4,7 @@ import React from 'react';
 
 /**
  * Wrapper for all dashboard screens
+ * DashboardScreen, DashboardGalleryScreen
  */
 const DashboardLayout: React.FC = () => {
     const { session, setSession } = useSessionContext();

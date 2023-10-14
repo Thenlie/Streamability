@@ -5,10 +5,8 @@ import React from 'react';
 /**
  * Wrapper for all authentication components
  * LoginForm, SignUpForm
- *
- * @returns {JSX.Element}
  */
-const AuthLayout: React.FC = (): JSX.Element => {
+const AuthLayout: React.FC = () => {
     const { session } = useSessionContext();
 
     return (
