@@ -28,9 +28,17 @@ const DashboardScreen: React.FC = (): JSX.Element => {
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [clearQueueLoading, setClearQueueLoading] = useState(false);
+    const [clearFavoritesLoading, setClearFavoritesLoading] = useState(false);
+    const [clearWatchedLoading, setClearWatchedLoading] = useState(false);
     const navigate = useNavigate();
 
-    const fallbackText = 'Your queue is empty! Add shows to your watch queue to view them here.';
+    const queueFallbackText =
+        'Your queue is empty! Add shows to your watch queue to view them here.';
+    const favoritesFallbackText =
+        // eslint-disable-next-line prettier/prettier
+        'You don\'t have any favorites! Favorite shows to view them here.';
+    const watchedFallbackText =
+        'Your watched list is empty! Add shows to your watched list to view them here.';
 
     // If the user is not logged in, redirect to login
     if (!session || !profile) {
@@ -122,12 +130,18 @@ const DashboardScreen: React.FC = (): JSX.Element => {
      * Remove all shows from the users watch queue.
      * Displayed below the queue carousel.
      */
-    const clearQueue = async () => {
+    const emptyProfileArray = async (whichCol: 'queue' | 'favorites' | 'watched') => {
         if (session) {
-            setClearQueueLoading(true);
-            await clearProfileArray(session.user.id, 'queue');
-            setQueue(null);
-            setClearQueueLoading(false);
+            if (whichCol === 'queue') setClearQueueLoading(true);
+            if (whichCol === 'favorites') setClearFavoritesLoading(true);
+            if (whichCol === 'watched') setClearWatchedLoading(true);
+            await clearProfileArray(session.user.id, whichCol);
+            if (whichCol === 'queue') setQueue(null);
+            if (whichCol === 'favorites') setFavorites(null);
+            if (whichCol === 'watched') setWatched(null);
+            if (whichCol === 'queue') setClearQueueLoading(false);
+            if (whichCol === 'favorites') setClearFavoritesLoading(false);
+            if (whichCol === 'watched') setClearWatchedLoading(false);
         }
     };
 
@@ -208,7 +222,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     </Typ>
                     <ShowCarousel
                         data={queue}
-                        fallbackText={fallbackText}
+                        fallbackText={queueFallbackText}
                         profile={profile}
                         profileActions={profileActions}
                         showQueueButton
@@ -219,7 +233,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                         disabled={!queue || queue.length === 0}
                         loading={clearQueueLoading}
                         StartIcon={Delete}
-                        onClick={clearQueue}
+                        onClick={() => emptyProfileArray('queue')}
                     />
                 </div>
                 <div className='m-2'>
@@ -228,7 +242,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     </Typ>
                     <ShowCarousel
                         data={favorites}
-                        fallbackText={fallbackText}
+                        fallbackText={favoritesFallbackText}
                         profile={profile}
                         profileActions={profileActions}
                         showFavoritesButton
@@ -236,10 +250,10 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <Button
                         title='Clear Favorites'
                         color='error'
-                        disabled={!queue || queue.length === 0}
-                        loading={clearQueueLoading}
+                        disabled={!favorites || favorites.length === 0}
+                        loading={clearFavoritesLoading}
                         StartIcon={Delete}
-                        onClick={clearQueue}
+                        onClick={() => emptyProfileArray('favorites')}
                     />
                 </div>
                 <div className='m-2'>
@@ -248,7 +262,7 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     </Typ>
                     <ShowCarousel
                         data={watched}
-                        fallbackText={fallbackText}
+                        fallbackText={watchedFallbackText}
                         profile={profile}
                         profileActions={profileActions}
                         showWatchedButton
@@ -256,10 +270,10 @@ const DashboardScreen: React.FC = (): JSX.Element => {
                     <Button
                         title='Clear Watched'
                         color='error'
-                        disabled={!queue || queue.length === 0}
-                        loading={clearQueueLoading}
+                        disabled={!watched || watched.length === 0}
+                        loading={clearWatchedLoading}
                         StartIcon={Delete}
-                        onClick={clearQueue}
+                        onClick={() => emptyProfileArray('watched')}
                     />
                 </div>
             </section>
