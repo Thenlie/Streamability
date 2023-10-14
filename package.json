@@ -24,7 +24,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.1",
-    "@mui/material": "^5.14.0",
+    "@mui/material": "^5.14.13",
     "@remix-run/web-fetch": "^4.3.4",
     "@supabase/supabase-js": "^2.38.0",
     "nuka-carousel": "^6.0.3",
