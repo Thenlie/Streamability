@@ -3,10 +3,7 @@ import { useProfileContext, useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
 import { ShowCarousel } from '../components';
 import { ShowData } from '../types/tmdb';
-import {
-    filterShowsByAvgRatingAbove,
-    filterShowsByGenre,
-} from '../helpers';
+import { filterShowsByAvgRatingAbove, filterShowsByGenre } from '../helpers';
 import { discoverMovies } from '../helpers/getMovieUtils';
 /**
  * Requests trending movies, passing data to ShowCard components.
@@ -35,12 +32,21 @@ export default function DiscoverScreen(): JSX.Element {
                 setComedy(showsByComedy);
             }
 
-            const discover = await discoverMovies();
+            const discover = await discoverMovies(
+                false,
+                false,
+                1,
+                '14',
+                'popularity.desc',
+                undefined,
+                8,
+                undefined,
+                '2023-01-01'
+            );
             console.log(discover);
-        }
+        };
         handler();
     }, []);
-
 
     // TODO: #194 Make skeleton loading screen
     if (loading) return <p>Loading...</p>;
@@ -58,5 +64,3 @@ export default function DiscoverScreen(): JSX.Element {
         </div>
     );
 }
-
-// comment to push test
