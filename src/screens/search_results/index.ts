@@ -1,5 +1,6 @@
 import EmptySearchResults from './EmptySearchResults';
+import SearchResultsCards from './SearchResultsCards';
 import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsScreen from './SearchResultsScreen';
 
-export { EmptySearchResults, SearchResultsHeader, SearchResultsScreen };
+export { EmptySearchResults, SearchResultsCards, SearchResultsHeader, SearchResultsScreen };

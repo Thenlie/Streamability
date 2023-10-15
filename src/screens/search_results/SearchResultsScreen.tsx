@@ -5,7 +5,7 @@ import { ShowData } from '../../types';
 import { useProfileContext, useWindowSize } from '../../hooks';
 import { getShowsByName } from '../../helpers';
 import Logger from '../../logger';
-import SearchResultCards from '../../components/SearchResultCards';
+import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
 import SearchResultsHeader from './SearchResultsHeader';
 

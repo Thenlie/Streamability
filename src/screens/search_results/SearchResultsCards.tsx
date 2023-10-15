@@ -1,9 +1,9 @@
 import React from 'react';
-import ShowCard, { ShowCardProps } from './ShowCard';
-import ShowListCard, { ShowListCardProps } from './ShowListCard';
-import { Profile, ShowData } from '../types';
+import ShowCard, { ShowCardProps } from '../../components/ShowCard';
+import ShowListCard, { ShowListCardProps } from '../../components/ShowListCard';
+import { Profile, ShowData } from '../../types';
 
-interface SearchResultCardsProps {
+interface SearchResultsCardsProps {
     details: ShowData[] | null;
     viewState: 'grid' | 'list';
     /**
@@ -20,7 +20,7 @@ interface SearchResultCardsProps {
  * Loops over show details and creates an array of show cards
  * using the correct component based on the `viewState`
  */
-const SearchResultCards: React.FC<SearchResultCardsProps> = ({
+const SearchResultsCards: React.FC<SearchResultsCardsProps> = ({
     details,
     viewState,
     profile,
@@ -54,4 +54,4 @@ const SearchResultCards: React.FC<SearchResultCardsProps> = ({
     );
 };
 
-export default SearchResultCards;
+export default SearchResultsCards;

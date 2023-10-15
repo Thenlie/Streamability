@@ -10,6 +10,6 @@ import ShowDetailsScreen from './ShowDetailsScreen';
 
 export * from './auth';
 export * from './dashboard';
-export * from './search_results';
 
+export { SearchResultsScreen } from './search_results';
 export { DiscoverScreen, FeaturedSearchScreen, PageNotFoundScreen, ShowDetailsScreen };
