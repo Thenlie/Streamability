@@ -79,18 +79,7 @@ const SearchResultsScreen: React.FC = () => {
     }, [showDetails.data, showDetails.hash, viewState]);
 
     if (loading) {
-        return (
-            <>
-                <SearchResultsHeader
-                    query={query}
-                    viewState={viewState}
-                    setViewState={setViewState}
-                    showDetails={showDetails}
-                    setShowDetails={setShowDetails}
-                />
-                <SearchResultsLoader windowSize={windowSize} viewState={viewState} />
-            </>
-        );
+        return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
     }
 
     if (showDetails.data && showDetails.data.length === 0) {

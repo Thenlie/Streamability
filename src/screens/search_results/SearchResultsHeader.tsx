@@ -16,19 +16,23 @@ interface SearchResultsHeaderProps {
     /**
      * Current state of users view
      */
-    viewState: 'list' | 'grid';
+    viewState?: 'list' | 'grid';
     /**
      * Function to set the react state of the view
      */
-    setViewState: Dispatch<SetStateAction<'list' | 'grid'>>;
+    setViewState?: Dispatch<SetStateAction<'list' | 'grid'>>;
     /**
      * Data of shows returned from the requested search
      */
-    showDetails: { data: ShowData[] | null; hash: number };
+    showDetails?: { data: ShowData[] | null; hash: number };
     /**
      * Function to set the react state of the show data
      */
-    setShowDetails: Dispatch<SetStateAction<{ data: ShowData[] | null; hash: number }>>;
+    setShowDetails?: Dispatch<SetStateAction<{ data: ShowData[] | null; hash: number }>>;
+    /**
+     * All controls are disabled when `true`, defaults to `false`
+     */
+    disableControls?: boolean;
 }
 
 /**
@@ -41,24 +45,25 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     setViewState,
     showDetails,
     setShowDetails,
+    disableControls = false,
 }) => {
     const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
     const windowSize = useWindowSize();
 
     const handleViewToggle = (view: 'grid' | 'list') => {
-        setViewState(view);
+        setViewState?.(view);
         localStorage.setItem('streamabilityView', view);
     };
 
     const handleSortAlpha = () => {
-        const sortedShows = sortShowsAlphaAsc(showDetails.data || []);
-        setShowDetails({ data: sortedShows, hash: Math.random() });
+        const sortedShows = sortShowsAlphaAsc(showDetails?.data || []);
+        setShowDetails?.({ data: sortedShows, hash: Math.random() });
         setSortState('alpha');
     };
 
     const handleSortRevAlpha = () => {
-        const sortedShows = sortShowsAlphaDesc(showDetails.data || []);
-        setShowDetails({ data: sortedShows, hash: Math.random() });
+        const sortedShows = sortShowsAlphaDesc(showDetails?.data || []);
+        setShowDetails?.({ data: sortedShows, hash: Math.random() });
         setSortState('rev');
     };
 
@@ -68,7 +73,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
             LOG.error('Unable to un-sort shows!');
             return;
         }
-        setShowDetails({ data: JSON.parse(unsortedShows), hash: Math.random() });
+        setShowDetails?.({ data: JSON.parse(unsortedShows), hash: Math.random() });
         setSortState('none');
     };
 
@@ -83,6 +88,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         value='alpha'
                         aria-label='sort results alphabetically'
                         onClick={handleSortAlpha}
+                        disabled={disableControls}
                     >
                         <SvgIcon>
                             <svg
@@ -90,7 +96,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                                 viewBox='0 0 24 24'
                                 className='fill-text'
                             >
-                                <title>sort-alphabetical-ascending</title>
+                                <title>Sort alphabetical ascending</title>
                                 <path d='M19 17H22L18 21L14 17H17V3H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3M9 7H7V5H9Z' />
                             </svg>
                         </SvgIcon>
@@ -99,6 +105,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         value='rev'
                         aria-label='sort results reverse alphabetically'
                         onClick={handleSortRevAlpha}
+                        disabled={disableControls}
                     >
                         <SvgIcon>
                             <svg
@@ -106,19 +113,24 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                                 viewBox='0 0 24 24'
                                 className='fill-text'
                             >
-                                <title>sort-alphabetical-descending</title>
+                                <title>Sort alphabetical descending</title>
                                 <path d='M19 7H22L18 3L14 7H17V21H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3M9 7H7V5H9Z' />
                             </svg>
                         </SvgIcon>
                     </ToggleButton>
-                    <ToggleButton value='none' aria-label='Remove sort' onClick={handleRemoveSort}>
+                    <ToggleButton
+                        value='none'
+                        aria-label='Remove sort'
+                        onClick={handleRemoveSort}
+                        disabled={disableControls}
+                    >
                         <SvgIcon>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 24 24'
                                 className='fill-text'
                             >
-                                <title>sort-variant-remove</title>
+                                <title>Remove sort</title>
                                 <path d='M3 13H15V11H3M3 6V8H21V6M3 18H9V16H3V18M22.54 16.88L20.41 19L22.54 21.12L21.12 22.54L19 20.41L16.88 22.54L15.47 21.12L17.59 19L15.47 16.88L16.88 15.47L19 17.59L21.12 15.46L22.54 16.88' />
                             </svg>
                         </SvgIcon>
@@ -128,11 +140,13 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     value={viewState}
                     exclusive
                     sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
+                    disabled={disableControls}
                 >
                     <ToggleButton
                         value='grid'
                         aria-label='switch to grid view'
                         onClick={() => handleViewToggle('grid')}
+                        disabled={disableControls}
                     >
                         <ViewModule />
                     </ToggleButton>
@@ -140,6 +154,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         value='list'
                         aria-label='switch to list view'
                         onClick={() => handleViewToggle('list')}
+                        disabled={disableControls}
                     >
                         <ViewList />
                     </ToggleButton>
