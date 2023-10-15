@@ -1,13 +1,14 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { ShowCardLoader, ShowListCardLoader, EmptySearchResults } from '../components';
-import { ShowData } from '../types';
-import { useProfileContext, useWindowSize } from '../hooks';
+import { EmptySearchResults } from '../../components';
+import { ShowData } from '../../types';
+import { useProfileContext, useWindowSize } from '../../hooks';
 import { SvgIcon, ToggleButton, ToggleButtonGroup, Typography as Typ } from '@mui/material';
 import { ViewList, ViewModule } from '@mui/icons-material';
-import { getShowsByName, sortShowsAlphaAsc, sortShowsAlphaDesc } from '../helpers';
-import Logger from '../logger';
-import SearchResultCards from '../components/SearchResultCards';
+import { getShowsByName, sortShowsAlphaAsc, sortShowsAlphaDesc } from '../../helpers';
+import Logger from '../../logger';
+import SearchResultCards from '../../components/SearchResultCards';
+import { SearchResultsLoader } from '../loaders';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -184,27 +185,16 @@ const SearchResultsScreen: React.FC = () => {
 
     if (loading) {
         return (
-            <>
-                <SearchResultHeader />
-                <div
-                    className={
-                        viewState === 'grid'
-                            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-                            : 'flex flex-wrap justify-center'
-                    }
-                >
-                    {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
-                        <ShowCardLoader count={10} />
-                    ) : (
-                        <ShowListCardLoader count={10} />
-                    )}
-                </div>
-            </>
+            <SearchResultsLoader
+                header={<SearchResultHeader />}
+                windowSize={windowSize}
+                viewState={viewState}
+            />
         );
     }
 
     if (showDetails && showDetails.length === 0) {
-        return <EmptySearchResults query={query} />;
+        return <EmptySearchResults query={query} header={<SearchResultHeader />} />;
     }
 
     return (

@@ -10,7 +10,7 @@ import {
     SearchResultsScreen,
     ShowDetailsScreen,
 } from '../screens';
-import { loader as searchLoader } from '../screens/SearchResultsScreen';
+import { loader as searchLoader } from '../screens/search_results/SearchResultsScreen';
 import 'react-router-dom';
 import { RouteObject } from 'react-router-dom';
 import sampleMovieData from './screens/assets/movieData.json';

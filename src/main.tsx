@@ -16,7 +16,7 @@ import {
     DashboardGalleryScreen,
     DashboardLayout,
 } from './screens';
-import { loader as searchLoader } from './screens/SearchResultsScreen';
+import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
 
 /**

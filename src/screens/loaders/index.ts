@@ -1,4 +1,5 @@
-import ShowDetailsLoader from './ShowDetailsLoader';
 import DashboardGalleryLoader from './DashboardGalleryLoader';
+import SearchResultsLoader from './SearchResultsLoader';
+import ShowDetailsLoader from './ShowDetailsLoader';
 
-export { ShowDetailsLoader, DashboardGalleryLoader };
+export { DashboardGalleryLoader, SearchResultsLoader, ShowDetailsLoader };
