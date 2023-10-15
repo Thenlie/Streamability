@@ -83,20 +83,7 @@ const SearchResultsScreen: React.FC = () => {
     }
 
     if (showDetails.data && showDetails.data.length === 0) {
-        return (
-            <EmptySearchResults
-                query={query}
-                header={
-                    <SearchResultsHeader
-                        query={query}
-                        viewState={viewState}
-                        setViewState={setViewState}
-                        showDetails={showDetails}
-                        setShowDetails={setShowDetails}
-                    />
-                }
-            />
-        );
+        return <EmptySearchResults query={query} viewState={viewState} />;
     }
 
     return (

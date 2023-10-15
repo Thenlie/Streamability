@@ -5,6 +5,7 @@ import useTrendingShows from '../../hooks/useTrendingShows';
 import Button from '../../components/Button';
 import { Home } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import SearchResultsHeader from './SearchResultsHeader';
 
 interface EmptySearchResultsProps {
     /**
@@ -12,23 +13,21 @@ interface EmptySearchResultsProps {
      */
     query: string;
     /**
-     * Search results screen header
+     * Current state of users view
      */
-    header: JSX.Element;
+    viewState: 'list' | 'grid';
 }
 
 /**
  * Rendered when MDB returns no results for a search.
- *
- * @returns {JSX.Element} | Search Error
  */
-const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, header }): JSX.Element => {
+const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewState }) => {
     const navigate = useNavigate();
     const { trendingShows } = useTrendingShows();
 
     return (
         <>
-            {header}
+            <SearchResultsHeader query={query} viewState={viewState} disableControls />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
                     <img src='/images/no-search-results.png' className='mb-5 w-64 inline'></img>
