@@ -40,7 +40,7 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
     if (!profile || !profileActions) {
         return (
             <div className='flex items-center justify-center'>
-                <Link to='/auth/signup'>
+                <Link to='/signup'>
                     <Button
                         title='Sign up to save & favorite shows!'
                         color='secondary'
