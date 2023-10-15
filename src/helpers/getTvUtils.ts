@@ -152,4 +152,73 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
     return recommendations;
 };
 
-export { getTvByName, getTvDetails, getTvTrending, getTvProviders, getTvRecommendations };
+/**
+ * Returns movies based on parameters provided
+ * @param include_adult
+ * @param include_video
+ * @param pages
+ * @param with_genres | String of genre IDs, seperated by commas
+ * @param sort_by | defaults to 'popularity.desc'
+ * @param vote_averageLte
+ * @param vote_averageGte
+ * @param vote_count
+ * @param release_dateGte | Greater or Equal To YYYY-MM-DD
+ * @param release_dateLte | Less or Equal To YYYY-MM-DD
+ * @returns {Promise<ShowData[] | null>} | Array of discovered movies
+ */
+const discoverTv = async (
+    include_adult: boolean, // Implement Profile adult flag
+    pages: number,
+    with_genres?: string,
+    sort_by?:
+        | 'popularity.asc'
+        | 'popularity.desc'
+        | 'revenue.asc'
+        | 'primary_release_date.asc'
+        | 'primary_release_date.desc'
+        | 'vote_average.asc'
+        | 'vote_average.desc',
+    vote_average_lte?: number,
+    vote_average_gte?: number,
+    vote_count_gte?: number,
+    vote_count_lte?: number,
+    release_date_gte?: string,
+    release_date_lte?: string,
+    with_watch_providers?: string
+): Promise<ShowData[] | null> => {
+    let url = `https://api.themoviedb.org/3/discover/tv?api_key=${
+        import.meta.env.VITE_MOVIEDB_KEY
+    }&include_adult=${include_adult}&language=en-US&page=${pages}&region=us`;
+
+    if (sort_by) url += `&sort_by=${sort_by}`;
+    if (vote_average_lte) url += `&vote_average.lte=${vote_average_lte}`;
+    if (vote_average_gte) url += `&vote_average.gte=${vote_average_gte}`;
+    if (vote_count_gte) url += `&vote_count.gte=${vote_average_gte}`
+    if (vote_count_lte) url += `&vote_count.lte=${vote_average_lte}`
+    if (release_date_gte) url += `&release_date.gte=${release_date_gte}`;
+    if (release_date_lte) url += `&release_date.lte=${release_date_lte}`;
+    if (with_genres) url += `&with_genres=${with_genres}`;
+    if (with_watch_providers) url += `&with_watch_providers=${with_watch_providers}`
+
+    console.log(url);
+
+    const response = await fetch(url);
+
+    const data = (await response.json()) as TvResults;
+    if (!data.results || data.results.length < 1) return null;
+    return data.results.map((rec) => {
+        return {
+            id: rec.id,
+            overview: rec.overview,
+            poster_path: rec.poster_path,
+            release_date: rec.first_air_date,
+            title: rec.name,
+            vote_average: rec.vote_average,
+            vote_count: rec.vote_count,
+            media_type: 'tv',
+            genre_ids: rec.genre_ids,
+        };
+    });
+};
+
+export { getTvByName, getTvDetails, getTvTrending, getTvProviders, getTvRecommendations, discoverTv };
