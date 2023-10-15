@@ -54,4 +54,4 @@ const SearchResultCards: React.FC<SearchResultCardsProps> = ({
     );
 };
 
-export default React.memo(SearchResultCards);
+export default SearchResultCards;

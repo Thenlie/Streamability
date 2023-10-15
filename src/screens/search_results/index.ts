@@ -1,4 +1,5 @@
-import SearchResultsScreen from './SearchResultsScreen';
 import EmptySearchResults from './EmptySearchResults';
+import SearchResultsHeader from './SearchResultsHeader';
+import SearchResultsScreen from './SearchResultsScreen';
 
-export { SearchResultsScreen, EmptySearchResults };
+export { EmptySearchResults, SearchResultsHeader, SearchResultsScreen };
