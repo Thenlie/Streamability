@@ -200,6 +200,7 @@ const discoverMovies = async (
     if (vote_average_gte) url += `&vote_average.gte=${vote_average_gte}`;
     if (release_date_gte) url += `&release_date.gte=${release_date_gte}`;
     if (release_date_lte) url += `&release_date.lte=${release_date_lte}`;
+    if (vote_count) url += `&vote_count=${vote_count}`
     if (with_genres) url += `&with_genres=${with_genres}`;
 
     console.log(url);
