@@ -128,7 +128,7 @@ const DashboardScreen: React.FC = () => {
 
     // If the user is not logged in, redirect to login
     if (!session || !profile) {
-        return <Navigate to={'/auth/login'} replace />;
+        return <Navigate to={'/login'} replace />;
     }
 
     /**

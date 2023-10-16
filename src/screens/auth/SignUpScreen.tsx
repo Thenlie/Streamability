@@ -277,7 +277,7 @@ const SignUpScreen: React.FC = () => {
             </form>
             <div className='mt-2'>
                 <Typ display='inline'>Already have an account? </Typ>
-                <Link to='/auth/login' className='underline hover:text-blue-500'>
+                <Link to='/login' className='underline hover:text-blue-500'>
                     Login.
                 </Link>
             </div>

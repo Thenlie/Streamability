@@ -34,7 +34,6 @@ const router = createBrowserRouter([
                 element: <FeaturedSearchScreen />,
             },
             {
-                path: 'auth',
                 element: <AuthLayout />,
                 children: [
                     {
