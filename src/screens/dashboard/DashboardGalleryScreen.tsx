@@ -25,7 +25,7 @@ const DashboardGalleryScreen: React.FC = () => {
 
     // TODO: If profile does not return after a few seconds,
     // we should assume the user is not logged in and redirect to an auth page
-    if (!profile) return <DashboardGalleryLoader />;
+    if (!profile) return <DashboardGalleryLoader path={path} />;
 
     return (
         <div className='m-4'>

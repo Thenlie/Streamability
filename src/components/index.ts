@@ -11,7 +11,7 @@ import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
-import EmptySearchResults from './EmptySearchResults';
+import EmptySearchResults from '../screens/search_results/EmptySearchResults';
 import IconButton from './IconButton';
 import Snackbar from './Snackbar';
 import Footer from './Footer';

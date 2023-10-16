@@ -14,15 +14,33 @@ import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../.
 import { SUPABASE } from '../../helpers';
 
 interface DashboardCarouselProps {
+    /**
+     * Show data to display in the carousel
+     */
     data: ShowData[] | null;
+    /**
+     * Which profile array the data is coming from
+     */
     whichCol: ProfileArrayCols;
+    /**
+     * Text that will be shown above the carousel
+     */
     label: string;
+    /**
+     * Text shown in the carousel when data is `null`
+     */
     fallbackText: string;
+    /**
+     * A list of booleans indicating which post buttons to show
+     */
     showPosterButtons?: {
         showQueueButton?: boolean;
         showFavoritesButton?: boolean;
         showWatchedButton?: boolean;
     };
+    /**
+     * Text shown in the button that clears the profile array
+     */
     clearButtonTitle: string;
 }
 

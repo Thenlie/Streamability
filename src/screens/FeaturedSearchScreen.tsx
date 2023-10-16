@@ -4,12 +4,10 @@ import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
 
 /**
- * This is currently just a minimal sample file to get the directory structure of the project set up
- * The contents of this page and its components should be updated, along with this comment :)
- *
- * @returns {JSX.Element} | 'not logged in' search screen, the landing page of the app
+ * The landing page of the application which shows a show banner,
+ * a search input, and trending shows in a carousel.
  */
-const FeaturedSearchScreen: React.FC = (): JSX.Element => {
+const FeaturedSearchScreen: React.FC = () => {
     const { trendingShows } = useTrendingShows('release');
     const [bannerPath, setBannerPath] = useState<string | null>(null);
 

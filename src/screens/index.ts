@@ -6,16 +6,10 @@
 import DiscoverScreen from './DiscoverScreen';
 import FeaturedSearchScreen from './FeaturedSearchScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
-import SearchResultsScreen from './SearchResultsScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
 
 export * from './auth';
 export * from './dashboard';
 
-export {
-    DiscoverScreen,
-    FeaturedSearchScreen,
-    PageNotFoundScreen,
-    SearchResultsScreen,
-    ShowDetailsScreen,
-};
+export { SearchResultsScreen } from './search_results';
+export { DiscoverScreen, FeaturedSearchScreen, PageNotFoundScreen, ShowDetailsScreen };
