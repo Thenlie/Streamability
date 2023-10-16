@@ -11,33 +11,28 @@ import { discoverMovies, discoverTv } from '../helpers';
  */
 export default function DiscoverScreen(): JSX.Element {
     const { profile, setProfile } = useProfileContext();
-    // const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
-
-    // Shows
     const { trendingShows, loading } = useTrendingShows('alpha');
+
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
-    const [comedy, setComedy] = useState<ShowData[] | null>(null);
-
-    // Movies
-
-    // TV
+    const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const handler = async () => {
-            if (trendingShows) {
-                const avgRatingAbove: ShowData[] = filterShowsByAvgRatingAbove(trendingShows, 4);
-                setHighestRated(avgRatingAbove);
-                // const newlyAdded: showData[] = filterShowsByReleaseAfter()
-                const showsByComedy: ShowData[] = filterShowsByGenre(trendingShows, 35);
-                setComedy(showsByComedy);
-            }
 
-            const highRatedMovies: ShowData[] | null = await discoverMovies(false, false, 1, undefined, 'popularity.desc', undefined, 7.0, 2000, undefined, undefined, undefined);
-            const highRatedTv: ShowData[] | null = await discoverTv(false, 1, undefined, 'popularity.desc', undefined, 7.0, 2000);
+            // Highest Rated
+            const highRatedMovies: ShowData[] | null = await discoverMovies(false, false, 1, undefined, 'popularity.desc', undefined, 8.0, 2000, undefined, undefined, undefined);
+            const highRatedTv: ShowData[] | null = await discoverTv(false, 1, undefined, 'popularity.desc', undefined, 8.0, 2000);
             const highRatedShows: ShowData[] = [];
             if (highRatedMovies && highRatedTv) highRatedShows.push(...highRatedMovies, ...highRatedTv);
             setHighestRated(highRatedShows);
-            console.log(highestRated);
+
+            // Newly Added
+            // TODO: #613
+            const newlyAddedMovies: ShowData[] | null = await discoverMovies(false, false, 1, undefined, 'popularity.desc', undefined, undefined, 2000, undefined, '2023-01-01', undefined)
+            const newlyAddedTv: ShowData[] | null = await discoverTv(false, 1, undefined, 'popularity.desc', undefined, undefined, 2000, undefined, '2023-01-01')
+            const newlyAddedShows: ShowData[] = [];
+            if (newlyAddedMovies && newlyAddedTv) newlyAddedShows.push(...newlyAddedMovies, ...newlyAddedTv);
+            setNewlyAdded(newlyAddedShows);
             
             
         };
@@ -57,6 +52,10 @@ export default function DiscoverScreen(): JSX.Element {
             <div>
                 <Typ>Highest Rated Shows</Typ>
                 <ShowCarousel data={highestRated} />
+            </div>
+            <div>
+                <Typ>Newly Added Shows</Typ>
+                <ShowCarousel data={newlyAdded} />
             </div>
         </div>
     );
