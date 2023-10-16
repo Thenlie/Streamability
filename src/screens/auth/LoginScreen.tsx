@@ -6,16 +6,16 @@ import { Link, Navigate } from 'react-router-dom';
 import { InputAdornment, IconButton, Typography as Typ } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
-import { SnackbarProps } from '../Snackbar';
+import { SnackbarProps } from '../../components/Snackbar';
 
 const LOG = new Logger('LoginForm');
 
 /**
  * Form to handle user login.
- *
- * @returns {JSX.Element}
+ * Will redirect to dashboard if already logged in
+ * or upon login completion.
  */
-const LoginForm: React.FC = (): JSX.Element => {
+const LoginScreen: React.FC = () => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -144,4 +144,4 @@ const LoginForm: React.FC = (): JSX.Element => {
     );
 };
 
-export default LoginForm;
+export default LoginScreen;

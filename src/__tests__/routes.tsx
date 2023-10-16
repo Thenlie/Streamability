@@ -1,7 +1,9 @@
 import AppWrapper from '../AppWrapper';
-import { LoginForm, ShowCard, SignUpForm } from '../components';
+import { ShowCard } from '../components';
 import {
-    AuthScreen,
+    AuthLayout,
+    LoginScreen,
+    SignUpScreen,
     DashboardScreen,
     FeaturedSearchScreen,
     PageNotFoundScreen,
@@ -17,6 +19,7 @@ import { ShowData } from '../types';
 /**
  * Routes to be used in screen unit tests
  * Currently simulating the entire app
+ * TODO: #427 Import routes from main.tsx instead of using this
  */
 export const routes: RouteObject[] = [
     {
@@ -30,15 +33,15 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'auth',
-                element: <AuthScreen />,
+                element: <AuthLayout />,
                 children: [
                     {
                         path: 'login',
-                        element: <LoginForm />,
+                        element: <LoginScreen />,
                     },
                     {
                         path: 'signup',
-                        element: <SignUpForm />,
+                        element: <SignUpScreen />,
                     },
                 ],
             },

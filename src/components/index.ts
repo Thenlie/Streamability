@@ -7,7 +7,6 @@ import ShowListCard, { ShowListCardProps } from './ShowListCard';
 import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
-import { LoginForm, SignUpForm } from './auth';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
@@ -24,8 +23,6 @@ export {
     ShowPoster,
     ShowCarousel,
     SearchInput,
-    LoginForm,
-    SignUpForm,
     Providers,
     Navigation,
     Rating,

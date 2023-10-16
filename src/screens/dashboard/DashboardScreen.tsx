@@ -4,14 +4,14 @@ import {
     useProfileContext,
     useProfileActions,
     useGetProfileArray,
-} from '../hooks';
-import { deleteProfileById, clearProfileArray } from '../supabase/profiles';
-import { Navigate, useNavigate } from 'react-router-dom';
+} from '../../hooks';
+import { deleteProfileById, clearProfileArray } from '../../supabase/profiles';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
-import { ProfileArrayCols, ShowData } from '../types';
-import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../components';
-import { SUPABASE } from '../helpers';
+import { ProfileArrayCols, ShowData } from '../../types';
+import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../../components';
+import { SUPABASE } from '../../helpers';
 
 interface DashboardCarouselProps {
     data: ShowData[] | null;
@@ -56,9 +56,14 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
 
     return (
         <div className='m-2'>
-            <Typ variant='h6' align='left'>
-                {label}
-            </Typ>
+            <div className='flex justify-between items-center p-2'>
+                <Typ variant='h6' align='left'>
+                    {label}
+                </Typ>
+                <Link className='underline hover:text-blue-500' to={whichCol}>
+                    View All
+                </Link>
+            </div>
             <ShowCarousel
                 data={data}
                 fallbackText={fallbackText}
