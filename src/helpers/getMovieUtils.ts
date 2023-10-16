@@ -163,14 +163,15 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
  * @param include_adult
  * @param include_video
  * @param pages
- * @param with_genres | String of genre IDs, seperated by commas
+ * @param with_genres | String of genre IDs, can be a comma (AND) or pipe (OR) separated query
  * @param sort_by | defaults to 'popularity.desc'
- * @param vote_averageLte
- * @param vote_averageGte
- * @param vote_count
- * @param release_dateGte | Greater or Equal To YYYY-MM-DD
- * @param release_dateLte | Less or Equal To YYYY-MM-DD
- * @returns {Promise<ShowData[] | null>} | Array of discovered movies
+ * @param vote_average_lte
+ * @param vote_average_gte
+ * @param vote_count_gte
+ * @param vote_count_lte
+ * @param release_date_gte | Greater or Equal To YYYY-MM-DD
+ * @param release_date_lte | Less or Equal To YYYY-MM-DD
+ * @returns {Promise<ShowData[] | null>} | Array of discovered Tv
  */
 const discoverMovies = async (
     include_adult: boolean, // Implement Profile adult flag
@@ -187,7 +188,8 @@ const discoverMovies = async (
         | 'vote_average.desc',
     vote_average_lte?: number,
     vote_average_gte?: number,
-    vote_count?: number,
+    vote_count_gte?: number,
+    vote_count_lte?: number,
     release_date_gte?: string,
     release_date_lte?: string
 ): Promise<ShowData[] | null> => {
@@ -200,10 +202,9 @@ const discoverMovies = async (
     if (vote_average_gte) url += `&vote_average.gte=${vote_average_gte}`;
     if (release_date_gte) url += `&release_date.gte=${release_date_gte}`;
     if (release_date_lte) url += `&release_date.lte=${release_date_lte}`;
-    if (vote_count) url += `&vote_count=${vote_count}`
+    if (vote_count_gte) url += `&vote_count.gte=${vote_count_gte}`
+    if (vote_count_lte) url += `&vote_count.lte=${vote_count_lte}`
     if (with_genres) url += `&with_genres=${with_genres}`;
-
-    console.log(url);
 
     const response = await fetch(url);
 
