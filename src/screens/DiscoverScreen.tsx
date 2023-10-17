@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useProfileContext, useTrendingShows } from '../hooks';
+import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
 import { ShowCarousel } from '../components';
 import { ShowData } from '../types/tmdb';
@@ -9,13 +9,12 @@ import { discoverMovies, discoverTv } from '../helpers';
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
-    const { profile, setProfile } = useProfileContext();
     const { trendingShows, loading } = useTrendingShows('alpha');
-
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
     const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
     const [actionAdventure, setActionAdventure] = useState<ShowData[] | null>(null);
     const [comedy, setComedy] = useState<ShowData[] | null>(null);
+    const [horror, setHorror] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const handler = async () => {
@@ -79,26 +78,89 @@ export default function DiscoverScreen(): JSX.Element {
             if (newlyAddedMovies && newlyAddedTv)
                 newlyAddedShows.push(...newlyAddedMovies, ...newlyAddedTv);
             setNewlyAdded(newlyAddedShows);
-            
-            // Action & Adventure
-            const actionAdventureMovies = await discoverMovies(false, false, 1, '28,12', 'popularity.desc', undefined, 5.0, 2000, undefined, undefined, undefined)
 
-            const actionAdventureTv = await discoverTv(false, 1, '10759', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined);
+            // Action & Adventure
+            const actionAdventureMovies = await discoverMovies(
+                false,
+                false,
+                1,
+                '28,12',
+                'popularity.desc',
+                undefined,
+                5.0,
+                2000,
+                undefined,
+                undefined,
+                undefined
+            );
+
+            const actionAdventureTv = await discoverTv(
+                false,
+                1,
+                '10759',
+                'popularity.desc',
+                undefined,
+                5.0,
+                2500,
+                undefined,
+                undefined,
+                undefined
+            );
 
             const actionAdventureShows: ShowData[] = [];
 
-            if (actionAdventureMovies && actionAdventureTv) actionAdventureShows.push(...actionAdventureMovies, ...actionAdventureTv)
+            if (actionAdventureMovies && actionAdventureTv)
+                actionAdventureShows.push(...actionAdventureMovies, ...actionAdventureTv);
             setActionAdventure(actionAdventureShows);
 
-            const comedyMovies = await discoverMovies(false, false, 1, '35', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined);
-            const comedyTv = await discoverTv(false, 1, '35', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined, undefined);
+            // Comedy
+            const comedyMovies = await discoverMovies(
+                false,
+                false,
+                1,
+                '35',
+                'popularity.desc',
+                undefined,
+                5.0,
+                2500,
+                undefined,
+                undefined,
+                undefined
+            );
+            const comedyTv = await discoverTv(
+                false,
+                1,
+                '35',
+                'popularity.desc',
+                undefined,
+                5.0,
+                2500,
+                undefined,
+                undefined,
+                undefined,
+                undefined
+            );
 
             const comedyShows: ShowData[] = [];
 
-            if (comedyMovies && comedyTv) comedyShows.push(...comedyMovies, ...comedyTv)
+            if (comedyMovies && comedyTv) comedyShows.push(...comedyMovies, ...comedyTv);
             setComedy(comedyShows);
 
-
+            // Horror (Only Movie)
+            const HorrorMovies = await discoverMovies(
+                false,
+                false,
+                1,
+                '27',
+                'popularity.desc',
+                undefined,
+                5.0,
+                2500,
+                undefined,
+                undefined,
+                undefined
+            );
+            setHorror(HorrorMovies);
         };
         handler();
     }, []);
@@ -133,8 +195,12 @@ export default function DiscoverScreen(): JSX.Element {
                     <Typ variant='h5'>Comedy</Typ>
                     <ShowCarousel data={comedy} />
                 </div>
-            </div>
 
+                <div className='flex flex-col items-start my-6'>
+                    <Typ variant='h5'>Horror</Typ>
+                    <ShowCarousel data={horror} />
+                </div>
+            </div>
         </div>
     );
 }
