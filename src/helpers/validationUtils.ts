@@ -11,4 +11,14 @@ const validateCountryCode = (country: string): boolean => {
     return !!COUNTRIES.find((c) => c.abbrev === country);
 };
 
-export { validateCountryCode };
+/**
+ * Returns `true` when the provided country is valid
+ * and supported, otherwise returns `false`.
+ * @param country | country name
+ * @returns {boolean}
+ */
+const validateCountry = (country: string): boolean => {
+    return !!COUNTRIES.find((c) => c.country === country);
+};
+
+export { validateCountryCode, validateCountry };
