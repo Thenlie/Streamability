@@ -15,6 +15,7 @@ export default function DiscoverScreen(): JSX.Element {
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
     const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
     const [actionAdventure, setActionAdventure] = useState<ShowData[] | null>(null);
+    const [comedy, setComedy] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const handler = async () => {
@@ -42,6 +43,7 @@ export default function DiscoverScreen(): JSX.Element {
                 2000
             );
             const highRatedShows: ShowData[] = [];
+
             if (highRatedMovies && highRatedTv)
                 highRatedShows.push(...highRatedMovies, ...highRatedTv);
             setHighestRated(highRatedShows);
@@ -73,16 +75,30 @@ export default function DiscoverScreen(): JSX.Element {
                 '2023-01-01'
             );
             const newlyAddedShows: ShowData[] = [];
+
             if (newlyAddedMovies && newlyAddedTv)
                 newlyAddedShows.push(...newlyAddedMovies, ...newlyAddedTv);
             setNewlyAdded(newlyAddedShows);
-
+            
+            // Action & Adventure
             const actionAdventureMovies = await discoverMovies(false, false, 1, '28,12', 'popularity.desc', undefined, 5.0, 2000, undefined, undefined, undefined)
+
             const actionAdventureTv = await discoverTv(false, 1, '10759', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined);
-            console.log(actionAdventureMovies, actionAdventureTv);
+
             const actionAdventureShows: ShowData[] = [];
+
             if (actionAdventureMovies && actionAdventureTv) actionAdventureShows.push(...actionAdventureMovies, ...actionAdventureTv)
             setActionAdventure(actionAdventureShows);
+
+            const comedyMovies = await discoverMovies(false, false, 1, '35', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined);
+            const comedyTv = await discoverTv(false, 1, '35', 'popularity.desc', undefined, 5.0, 2500, undefined, undefined, undefined, undefined);
+
+            const comedyShows: ShowData[] = [];
+
+            if (comedyMovies && comedyTv) comedyShows.push(...comedyMovies, ...comedyTv)
+            setComedy(comedyShows);
+
+
         };
         handler();
     }, []);
@@ -108,9 +124,14 @@ export default function DiscoverScreen(): JSX.Element {
 
             <div>
                 <Typ variant='h4'>Browse by Genre</Typ>
-                <div className='flex flex-col items-start'>
+                <div className='flex flex-col items-start my-6'>
                     <Typ variant='h5'>Action & Adventure</Typ>
                     <ShowCarousel data={actionAdventure} />
+                </div>
+
+                <div className='flex flex-col items-start my-6'>
+                    <Typ variant='h5'>Comedy</Typ>
+                    <ShowCarousel data={comedy} />
                 </div>
             </div>
 
