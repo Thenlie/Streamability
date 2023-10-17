@@ -16,7 +16,7 @@ import {
 import { Close, Edit, Language, NoAdultContent } from '@mui/icons-material';
 import { Profile, Session } from '../../types';
 import Button from '../Button';
-import { COUNTRIES } from '../../helpers';
+import { COUNTRIES, validateCountry } from '../../helpers';
 import Snackbar, { SnackbarProps } from '../Snackbar';
 import TextInput from '../TextInput';
 
@@ -109,7 +109,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     };
 
     const changeCountry = async () => {
-        if (session && country) {
+        if (session && country && validateCountry(country)) {
             setCountryLoading(true);
             const data = await setProfileCountry(session.user.id, country);
             setProfile(data);
@@ -127,7 +127,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 isOpen: true,
                 severity: 'error',
                 message: country
-                    ? 'Error updating country. Please check your network connection and try again.'
+                    ? 'Please select a valid country from the provided list.'
                     : 'Please select a country.',
                 hash: country,
             });

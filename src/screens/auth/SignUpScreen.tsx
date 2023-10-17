@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE, COUNTRIES } from '../../helpers';
+import { SUPABASE, COUNTRIES, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {
@@ -107,6 +107,14 @@ const SignUpScreen: React.FC = () => {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
+            return;
+        }
+
+        // Ensure country is valid
+        if (!validateCountry(country)) {
+            showError('Must select a valid country');
+            setCountryError(true);
             setLoading(false);
             return;
         }
