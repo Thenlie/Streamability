@@ -1,5 +1,5 @@
 import Logger from '../logger';
-import { ShowData, TvDetailsData, TvResults, ShowProviders } from '../types';
+import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv } from '../types';
 
 const LOG = new Logger('getTvUtils');
 
@@ -153,7 +153,7 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
 };
 
 /**
- * Returns movies based on parameters provided
+ * Returns Tv Shows based on parameters provided
  * @param include_adult
  * @param pages
  * @param with_genres | String of genre IDs, can be a comma (AND) or pipe (OR) separated query
@@ -162,44 +162,25 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
  * @param vote_average_gte
  * @param vote_count_gte
  * @param vote_count_lte
- * @param release_date_gte | Greater or Equal To YYYY-MM-DD
- * @param release_date_lte | Less or Equal To YYYY-MM-DD
+ * @param first_air_date_gte | Greater or Equal To YYYY-MM-DD
+ * @param first_air_date_lte | Less or Equal To YYYY-MM-DD
  * @param with_watch_providers |
- * @returns {Promise<ShowData[] | null>} | Array of discovered movies
+ * @returns {Promise<ShowData[] | null>} | Array of discovered Tv
  */
-const discoverTv = async (
-    include_adult: boolean, // Implement Profile adult flag
-    pages: number,
-    with_genres?: string,
-    sort_by?:
-        | 'popularity.asc'
-        | 'popularity.desc'
-        | 'revenue.asc'
-        | 'primary_release_date.asc'
-        | 'primary_release_date.desc'
-        | 'vote_average.asc'
-        | 'vote_average.desc',
-    vote_average_lte?: number,
-    vote_average_gte?: number,
-    vote_count_gte?: number,
-    vote_count_lte?: number,
-    release_date_gte?: string,
-    release_date_lte?: string,
-    with_watch_providers?: string
-): Promise<ShowData[] | null> => {
+const getDiscoverTv = async (params: DiscoverTv): Promise<ShowData[] | null> => {
     let url = `https://api.themoviedb.org/3/discover/tv?api_key=${
         import.meta.env.VITE_MOVIEDB_KEY
-    }&include_adult=${include_adult}&language=en-US&page=${pages}&region=us`;
+    }&include_adult=${params.include_adult}&language=en-US&page=${params.pages}&region=us`;
 
-    if (sort_by) url += `&sort_by=${sort_by}`;
-    if (vote_average_lte) url += `&vote_average.lte=${vote_average_lte}`;
-    if (vote_average_gte) url += `&vote_average.gte=${vote_average_gte}`;
-    if (vote_count_gte) url += `&vote_count.gte=${vote_count_gte}`;
-    if (vote_count_lte) url += `&vote_count.lte=${vote_count_lte}`;
-    if (release_date_gte) url += `&release_date.gte=${release_date_gte}`;
-    if (release_date_lte) url += `&release_date.lte=${release_date_lte}`;
-    if (with_genres) url += `&with_genres=${with_genres}`;
-    if (with_watch_providers) url += `&with_watch_providers=${with_watch_providers}`;
+    if (params.with_genres) url += `&with_genres=${params.with_genres}`;
+    if (params.sort_by) url += `&sort_by=${params.sort_by}`;
+    if (params.vote_average_lte) url += `&vote_average.lte=${params.vote_average_lte}`;
+    if (params.vote_average_gte) url += `&vote_average.gte=${params.vote_average_gte}`;
+    if (params.vote_count_gte) url += `&vote_count.gte=${params.vote_count_gte}`;
+    if (params.vote_count_lte) url += `&vote_count.lte=${params.vote_count_lte}`;
+    if (params.first_air_date_gte) url += `&release_date.gte=${params.first_air_date_gte}`;
+    if (params.first_air_date_lte) url += `&release_date.lte=${params.first_air_date_lte}`;
+    if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`;
 
     const response = await fetch(url);
 
@@ -226,5 +207,5 @@ export {
     getTvTrending,
     getTvProviders,
     getTvRecommendations,
-    discoverTv,
+    getDiscoverTv,
 };
