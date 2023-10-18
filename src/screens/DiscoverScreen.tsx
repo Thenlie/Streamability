@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
 import { ShowCarousel } from '../components';
-import { ShowData } from '../types/tmdb';
-import { discoverMovies, discoverTv } from '../helpers';
+import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
+import { getDiscoverMovies, getDiscoverTv } from '../helpers';
 /**
  * Requests trending movies, passing data to ShowCard components.
  * @returns {JSX.Element}
@@ -17,152 +17,137 @@ export default function DiscoverScreen(): JSX.Element {
     const [horror, setHorror] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
-        const handler = async () => {
-            // Highest Rated
-            const highRatedMovies: ShowData[] | null = await discoverMovies(
-                false,
-                false,
-                1,
-                undefined,
-                'popularity.desc',
-                undefined,
-                8.0,
-                2000,
-                undefined,
-                undefined,
-                undefined
-            );
-            const highRatedTv: ShowData[] | null = await discoverTv(
-                false,
-                1,
-                undefined,
-                'popularity.desc',
-                undefined,
-                8.0,
-                2000
-            );
+        const highRatedHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                sort_by: 'popularity.desc',
+                vote_average_gte: 8.0,
+                vote_count_gte: 2000,
+            };
+            const highRatedMovies: ShowData[] | null = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                sort_by: 'popularity.desc',
+                vote_average_gte: 8.0,
+                vote_count_gte: 2000,
+            };
+            const highRatedTv: ShowData[] | null = await getDiscoverTv(tvParams);
+
             const highRatedShows: ShowData[] = [];
 
             if (highRatedMovies && highRatedTv)
                 highRatedShows.push(...highRatedMovies, ...highRatedTv);
             setHighestRated(highRatedShows);
+        };
 
-            // Newly Added
+        const newlyAddedHandler = async () => {
             // TODO: #613
-            const newlyAddedMovies: ShowData[] | null = await discoverMovies(
-                false,
-                false,
-                1,
-                undefined,
-                'popularity.desc',
-                undefined,
-                undefined,
-                2000,
-                undefined,
-                '2023-01-01',
-                undefined
-            );
-            const newlyAddedTv: ShowData[] | null = await discoverTv(
-                false,
-                1,
-                undefined,
-                'popularity.desc',
-                undefined,
-                undefined,
-                2000,
-                undefined,
-                '2023-01-01'
-            );
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                sort_by: 'popularity.desc',
+                vote_count_gte: 2000,
+                release_date_gte: '2023-01-01',
+            };
+            const newlyAddedMovies: ShowData[] | null = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                sort_by: 'popularity.desc',
+                vote_count_gte: 2000,
+                first_air_date_gte: '2023-01-01',
+            };
+            const newlyAddedTv: ShowData[] | null = await getDiscoverTv(tvParams);
+
             const newlyAddedShows: ShowData[] = [];
 
             if (newlyAddedMovies && newlyAddedTv)
                 newlyAddedShows.push(...newlyAddedMovies, ...newlyAddedTv);
             setNewlyAdded(newlyAddedShows);
+        };
 
-            // Action & Adventure
-            const actionAdventureMovies = await discoverMovies(
-                false,
-                false,
-                1,
-                '28,12',
-                'popularity.desc',
-                undefined,
-                5.0,
-                2000,
-                undefined,
-                undefined,
-                undefined
-            );
+        const actionAdventureHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                with_genres: '28,12',
+                sort_by: 'popularity.desc',
+                vote_average_gte: 5.0,
+                vote_count_gte: 2000,
+            };
+            const actionAdventureMovies = await getDiscoverMovies(movieParams);
 
-            const actionAdventureTv = await discoverTv(
-                false,
-                1,
-                '10759',
-                'popularity.desc',
-                undefined,
-                5.0,
-                2500,
-                undefined,
-                undefined,
-                undefined
-            );
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                with_genres: '10759',
+                sort_by: 'popularity.desc',
+                vote_average_gte: 5.0,
+                vote_count_gte: 2500,
+            };
+            const actionAdventureTv = await getDiscoverTv(tvParams);
 
             const actionAdventureShows: ShowData[] = [];
 
             if (actionAdventureMovies && actionAdventureTv)
                 actionAdventureShows.push(...actionAdventureMovies, ...actionAdventureTv);
             setActionAdventure(actionAdventureShows);
+        };
 
-            // Comedy
-            const comedyMovies = await discoverMovies(
-                false,
-                false,
-                1,
-                '35',
-                'popularity.desc',
-                undefined,
-                5.0,
-                2500,
-                undefined,
-                undefined,
-                undefined
-            );
-            const comedyTv = await discoverTv(
-                false,
-                1,
-                '35',
-                'popularity.desc',
-                undefined,
-                5.0,
-                2500,
-                undefined,
-                undefined,
-                undefined,
-                undefined
-            );
+        const comedyHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                with_genres: '35',
+                sort_by: 'popularity.desc',
+                vote_average_gte: 5.0,
+                vote_count_gte: 2500,
+            };
+            const comedyMovies = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                with_genres: '35',
+                sort_by: 'popularity.desc',
+                vote_average_gte: 5.0,
+                vote_count_gte: 2500,
+            };
+            const comedyTv = await getDiscoverTv(tvParams);
 
             const comedyShows: ShowData[] = [];
 
             if (comedyMovies && comedyTv) comedyShows.push(...comedyMovies, ...comedyTv);
             setComedy(comedyShows);
+        };
 
-            // Horror (Only Movie)
-            const HorrorMovies = await discoverMovies(
-                false,
-                false,
-                1,
-                '27',
-                'popularity.desc',
-                undefined,
-                5.0,
-                2500,
-                undefined,
-                undefined,
-                undefined
-            );
+        const HorrorHandler = async () => {
+            // Only Movie
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                with_genres: '27',
+                sort_by: 'popularity.desc',
+                vote_average_gte: 5.0,
+                vote_count_gte: 2500,
+            };
+            const HorrorMovies = await getDiscoverMovies(movieParams);
             setHorror(HorrorMovies);
         };
-        handler();
+        highRatedHandler();
+        newlyAddedHandler();
+        actionAdventureHandler();
+        comedyHandler();
+        HorrorHandler();
     }, []);
 
     // TODO: #194 Make skeleton loading screen

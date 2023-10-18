@@ -1,5 +1,5 @@
 import Logger from '../logger';
-import { MovieResults, MovieDetailsData, ShowProviders, ShowData } from '../types';
+import { MovieResults, MovieDetailsData, ShowProviders, ShowData, DiscoverMovie } from '../types';
 import { MOVIE_RATINGS } from './constants';
 
 const LOG = new Logger('getMovieUtils');
@@ -171,40 +171,21 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
  * @param vote_count_lte
  * @param release_date_gte | Greater or Equal To YYYY-MM-DD
  * @param release_date_lte | Less or Equal To YYYY-MM-DD
- * @returns {Promise<ShowData[] | null>} | Array of discovered Tv
+ * @returns {Promise<ShowData[] | null>} | Array of discovered movies
  */
-const discoverMovies = async (
-    include_adult: boolean, // Implement Profile adult flag
-    include_video: boolean, // TODO: Trailer? or omit
-    pages: number,
-    with_genres?: string,
-    sort_by?:
-        | 'popularity.asc'
-        | 'popularity.desc'
-        | 'revenue.asc'
-        | 'primary_release_date.asc'
-        | 'primary_release_date.desc'
-        | 'vote_average.asc'
-        | 'vote_average.desc',
-    vote_average_lte?: number,
-    vote_average_gte?: number,
-    vote_count_gte?: number,
-    vote_count_lte?: number,
-    release_date_gte?: string,
-    release_date_lte?: string
-): Promise<ShowData[] | null> => {
+const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | null> => {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${
         import.meta.env.VITE_MOVIEDB_KEY
-    }&include_adult=${include_adult}&language=en-US&page=${pages}&region=us`;
+    }&include_adult=${params.include_adult}&language=en-US&page=${params.pages}&region=us`;
 
-    if (sort_by) url += `&sort_by=${sort_by}`;
-    if (vote_average_lte) url += `&vote_average.lte=${vote_average_lte}`;
-    if (vote_average_gte) url += `&vote_average.gte=${vote_average_gte}`;
-    if (release_date_gte) url += `&release_date.gte=${release_date_gte}`;
-    if (release_date_lte) url += `&release_date.lte=${release_date_lte}`;
-    if (vote_count_gte) url += `&vote_count.gte=${vote_count_gte}`;
-    if (vote_count_lte) url += `&vote_count.lte=${vote_count_lte}`;
-    if (with_genres) url += `&with_genres=${with_genres}`;
+    if (params.with_genres) url += `&with_genres=${params.with_genres}`;
+    if (params.sort_by) url += `&sort_by=${params.sort_by}`;
+    if (params.vote_average_lte) url += `&vote_average.lte=${params.vote_average_lte}`;
+    if (params.vote_average_gte) url += `&vote_average.gte=${params.vote_average_gte}`;
+    if (params.vote_count_gte) url += `&vote_count.gte=${params.vote_count_gte}`;
+    if (params.vote_count_lte) url += `&vote_count.lte=${params.vote_count_lte}`;
+    if (params.release_date_gte) url += `&release_date.gte=${params.release_date_gte}`;
+    if (params.release_date_lte) url += `&release_date.lte=${params.release_date_lte}`;
 
     const response = await fetch(url);
 
@@ -231,5 +212,5 @@ export {
     getMovieProviders,
     getMovieTrending,
     getMovieRecommendations,
-    discoverMovies,
+    getDiscoverMovies,
 };
