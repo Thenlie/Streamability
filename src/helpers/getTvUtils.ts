@@ -164,7 +164,8 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
  * @param vote_count_lte
  * @param first_air_date_gte | Greater or Equal To YYYY-MM-DD
  * @param first_air_date_lte | Less or Equal To YYYY-MM-DD
- * @param with_watch_providers |
+ * @param with_watch_providers | String of Provider IDs, can be a comma (AND) or pipe (OR) separated query
+ * @param watch_region
  * @returns {Promise<ShowData[] | null>} | Array of discovered Tv
  */
 const getDiscoverTv = async (params: DiscoverTv): Promise<ShowData[] | null> => {
@@ -181,22 +182,23 @@ const getDiscoverTv = async (params: DiscoverTv): Promise<ShowData[] | null> => 
     if (params.first_air_date_gte) url += `&release_date.gte=${params.first_air_date_gte}`;
     if (params.first_air_date_lte) url += `&release_date.lte=${params.first_air_date_lte}`;
     if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`;
+    if (params.watch_region) url += `&watch_region=${params.watch_region}`;
 
     const response = await fetch(url);
 
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
-    return data.results.map((rec) => {
+    return data.results.map((tv) => {
         return {
-            id: rec.id,
-            overview: rec.overview,
-            poster_path: rec.poster_path,
-            release_date: rec.first_air_date,
-            title: rec.name,
-            vote_average: rec.vote_average,
-            vote_count: rec.vote_count,
+            id: tv.id,
+            overview: tv.overview,
+            poster_path: tv.poster_path,
+            release_date: tv.first_air_date,
+            title: tv.name,
+            vote_average: tv.vote_average,
+            vote_count: tv.vote_count,
             media_type: 'tv',
-            genre_ids: rec.genre_ids,
+            genre_ids: tv.genre_ids,
         };
     });
 };

@@ -16,6 +16,8 @@ export default function DiscoverScreen(): JSX.Element {
     const [comedy, setComedy] = useState<ShowData[] | null>(null);
     const [horror, setHorror] = useState<ShowData[] | null>(null);
     const [popularNetflix, setPopularNetflix] = useState<ShowData[] | null>(null);
+    const [popularPrime, setPopularPrime] = useState<ShowData[] | null>(null);
+    const [popularHulu, setPopularHulu] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const highRatedHandler = async () => {
@@ -144,12 +146,99 @@ export default function DiscoverScreen(): JSX.Element {
             const HorrorMovies = await getDiscoverMovies(movieParams);
             setHorror(HorrorMovies);
         };
-        
+
+        const netflixHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '8',
+            };
+            const netflixMovies = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '8',
+            };
+            const netflixTv = await getDiscoverTv(tvParams);
+
+            const netflixShows: ShowData[] = [];
+
+            if (netflixMovies && netflixTv) netflixShows.push(...netflixMovies, ...netflixTv);
+            setPopularNetflix(netflixShows);
+        };
+
+        const primeHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '9',
+            };
+            const primeMovies = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '9',
+            };
+            const primeTv = await getDiscoverTv(tvParams);
+
+            const primeShows: ShowData[] = [];
+
+            if (primeMovies && primeTv) primeShows.push(...primeMovies, ...primeTv);
+            setPopularPrime(primeShows);
+        };
+
+        const huluHandler = async () => {
+            const movieParams: DiscoverMovie = {
+                include_adult: false,
+                include_video: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '15',
+            };
+            const huluMovies = await getDiscoverMovies(movieParams);
+
+            const tvParams: DiscoverTv = {
+                include_adult: false,
+                pages: 1,
+                vote_average_gte: 7.5,
+                vote_count_gte: 2500,
+                watch_region: 'US',
+                with_watch_providers: '15',
+            };
+            const huluTv = await getDiscoverTv(tvParams);
+
+            const huluShows: ShowData[] = [];
+
+            if (huluMovies && huluTv) huluShows.push(...huluMovies, ...huluTv);
+            setPopularHulu(huluShows);
+        };
+
         highRatedHandler();
         newlyAddedHandler();
         actionAdventureHandler();
         comedyHandler();
         HorrorHandler();
+        netflixHandler();
+        primeHandler();
+        huluHandler();
     }, []);
 
     // TODO: #194 Make skeleton loading screen
@@ -157,35 +246,55 @@ export default function DiscoverScreen(): JSX.Element {
 
     return (
         <div className=''>
-            <div className='w-full flex flex-col justify-start items-start my-6'>
-                <Typ variant='h6'>Discover Trending</Typ>
-                <ShowCarousel data={trendingShows} />
-            </div>
+            <div>
+                <div className='w-full flex flex-col justify-start items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h6'>Discover Trending</Typ>
+                    <ShowCarousel data={trendingShows} />
+                </div>
 
-            <div className='w-full flex flex-col justify-start items-start my-6'>
-                <Typ variant='h6'>Highest Rated Shows</Typ>
-                <ShowCarousel data={highestRated} />
-            </div>
-            <div className='w-full flex flex-col justify-start items-start my-6'>
-                <Typ variant='h6'>Newly Added Shows</Typ>
-                <ShowCarousel data={newlyAdded} />
+                <div className='w-full flex flex-col justify-start items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h6'>Highest Rated Shows</Typ>
+                    <ShowCarousel data={highestRated} />
+                </div>
+                <div className='w-full flex flex-col justify-start items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h6'>Newly Added Shows</Typ>
+                    <ShowCarousel data={newlyAdded} />
+                </div>
             </div>
 
             <div>
-                <Typ variant='h4'>Browse by Genre</Typ>
+                <Typ sx={{marginY: 8}} variant='h4'>Browse by Genre</Typ>
                 <div className='flex flex-col items-start my-6'>
-                    <Typ variant='h5'>Action & Adventure</Typ>
+                    <Typ sx={{marginY: 1}} variant='h5'>Action & Adventure</Typ>
                     <ShowCarousel data={actionAdventure} />
                 </div>
 
                 <div className='flex flex-col items-start my-6'>
-                    <Typ variant='h5'>Comedy</Typ>
+                    <Typ sx={{marginY: 1}} variant='h5'>Comedy</Typ>
                     <ShowCarousel data={comedy} />
                 </div>
 
                 <div className='flex flex-col items-start my-6'>
-                    <Typ variant='h5'>Horror</Typ>
+                    <Typ sx={{marginY: 1}} variant='h5'>Horror</Typ>
                     <ShowCarousel data={horror} />
+                </div>
+            </div>
+
+            <div>
+                <Typ sx={{marginY: 8}} variant='h4'>Browse by Platforms</Typ>
+                <div className='flex flex-col items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Netflix</Typ>
+                    <ShowCarousel data={popularNetflix} />
+                </div>
+
+                <div className='flex flex-col items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Prime</Typ>
+                    <ShowCarousel data={popularPrime} />
+                </div>
+
+                <div className='flex flex-col items-start my-6'>
+                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Hulu</Typ>
+                    <ShowCarousel data={popularHulu} />
                 </div>
             </div>
         </div>

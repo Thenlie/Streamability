@@ -1,0 +1,130 @@
+diff --git a/src/helpers/getMovieUtils.ts b/src/helpers/getMovieUtils.ts
+index 9fa468f..bbe343f 100644
+--- a/src/helpers/getMovieUtils.ts
++++ b/src/helpers/getMovieUtils.ts
+@@ -195,17 +195,17 @@ const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | nu
+ 
+     const data = (await response.json()) as MovieResults;
+     if (!data.results || data.results.length < 1) return null;
+-    return data.results.map((rec) => {
++    return data.results.map((movie) => {
+         return {
+-            id: rec.id,
+-            overview: rec.overview,
+-            poster_path: rec.poster_path,
+-            release_date: rec.release_date,
+-            title: rec.title,
+-            vote_average: rec.vote_average,
+-            vote_count: rec.vote_count,
++            id: movie.id,
++            overview: movie.overview,
++            poster_path: movie.poster_path,
++            release_date: movie.release_date,
++            title: movie.title,
++            vote_average: movie.vote_average,
++            vote_count: movie.vote_count,
+             media_type: 'movie',
+-            genre_ids: rec.genre_ids,
++            genre_ids: movie.genre_ids,
+         };
+     });
+ };
+diff --git a/src/helpers/getTvUtils.ts b/src/helpers/getTvUtils.ts
+index a6445d6..d92bf5b 100644
+--- a/src/helpers/getTvUtils.ts
++++ b/src/helpers/getTvUtils.ts
+@@ -188,17 +188,17 @@ const getDiscoverTv = async (params: DiscoverTv): Promise<ShowData[] | null> =>
+ 
+     const data = (await response.json()) as TvResults;
+     if (!data.results || data.results.length < 1) return null;
+-    return data.results.map((rec) => {
++    return data.results.map((tv) => {
+         return {
+-            id: rec.id,
+-            overview: rec.overview,
+-            poster_path: rec.poster_path,
+-            release_date: rec.first_air_date,
+-            title: rec.name,
+-            vote_average: rec.vote_average,
+-            vote_count: rec.vote_count,
++            id: tv.id,
++            overview: tv.overview,
++            poster_path: tv.poster_path,
++            release_date: tv.first_air_date,
++            title: tv.name,
++            vote_average: tv.vote_average,
++            vote_count: tv.vote_count,
+             media_type: 'tv',
+-            genre_ids: rec.genre_ids,
++            genre_ids: tv.genre_ids,
+         };
+     });
+ };
+diff --git a/src/screens/DiscoverScreen.tsx b/src/screens/DiscoverScreen.tsx
+index 650b69f..a431679 100644
+--- a/src/screens/DiscoverScreen.tsx
++++ b/src/screens/DiscoverScreen.tsx
+@@ -248,52 +248,52 @@ export default function DiscoverScreen(): JSX.Element {
+         <div className=''>
+             <div>
+                 <div className='w-full flex flex-col justify-start items-start my-6'>
+-                    <Typ variant='h6'>Discover Trending</Typ>
++                    <Typ sx={{marginY: 1}} variant='h6'>Discover Trending</Typ>
+                     <ShowCarousel data={trendingShows} />
+                 </div>
+ 
+                 <div className='w-full flex flex-col justify-start items-start my-6'>
+-                    <Typ variant='h6'>Highest Rated Shows</Typ>
++                    <Typ sx={{marginY: 1}} variant='h6'>Highest Rated Shows</Typ>
+                     <ShowCarousel data={highestRated} />
+                 </div>
+                 <div className='w-full flex flex-col justify-start items-start my-6'>
+-                    <Typ variant='h6'>Newly Added Shows</Typ>
++                    <Typ sx={{marginY: 1}} variant='h6'>Newly Added Shows</Typ>
+                     <ShowCarousel data={newlyAdded} />
+                 </div>
+             </div>
+ 
+             <div>
+-                <Typ variant='h4'>Browse by Genre</Typ>
++                <Typ sx={{marginY: 8}} variant='h4'>Browse by Genre</Typ>
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Action & Adventure</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Action & Adventure</Typ>
+                     <ShowCarousel data={actionAdventure} />
+                 </div>
+ 
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Comedy</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Comedy</Typ>
+                     <ShowCarousel data={comedy} />
+                 </div>
+ 
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Horror</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Horror</Typ>
+                     <ShowCarousel data={horror} />
+                 </div>
+             </div>
+ 
+             <div>
+-                <Typ variant='h4'>Browse by Platforms</Typ>
++                <Typ sx={{marginY: 8}} variant='h4'>Browse by Platforms</Typ>
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Popular on Netflix</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Netflix</Typ>
+                     <ShowCarousel data={popularNetflix} />
+                 </div>
+ 
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Popular on Prime</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Prime</Typ>
+                     <ShowCarousel data={popularPrime} />
+                 </div>
+ 
+                 <div className='flex flex-col items-start my-6'>
+-                    <Typ variant='h5'>Popular on Hulu</Typ>
++                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Hulu</Typ>
+                     <ShowCarousel data={popularHulu} />
+                 </div>
+             </div>

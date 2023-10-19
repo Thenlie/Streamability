@@ -188,24 +188,24 @@ const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | nu
     if (params.vote_count_lte) url += `&vote_count.lte=${params.vote_count_lte}`;
     if (params.release_date_gte) url += `&release_date.gte=${params.release_date_gte}`;
     if (params.release_date_lte) url += `&release_date.lte=${params.release_date_lte}`;
-    if (params.watch_region) url += `&watch_region=${params.watch_region}`
-    if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`
+    if (params.watch_region) url += `&watch_region=${params.watch_region}`;
+    if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`;
 
     const response = await fetch(url);
 
     const data = (await response.json()) as MovieResults;
     if (!data.results || data.results.length < 1) return null;
-    return data.results.map((rec) => {
+    return data.results.map((movie) => {
         return {
-            id: rec.id,
-            overview: rec.overview,
-            poster_path: rec.poster_path,
-            release_date: rec.release_date,
-            title: rec.title,
-            vote_average: rec.vote_average,
-            vote_count: rec.vote_count,
+            id: movie.id,
+            overview: movie.overview,
+            poster_path: movie.poster_path,
+            release_date: movie.release_date,
+            title: movie.title,
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
             media_type: 'movie',
-            genre_ids: rec.genre_ids
+            genre_ids: movie.genre_ids,
         };
     });
 };
