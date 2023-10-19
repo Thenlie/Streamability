@@ -125,4 +125,6 @@ export interface DiscoverMovie {
     vote_count_lte?: number;
     release_date_gte?: string;
     release_date_lte?: string;
+    watch_region?: string;
+    with_watch_providers?: string;
 }

@@ -171,6 +171,8 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
  * @param vote_count_lte
  * @param release_date_gte | Greater or Equal To YYYY-MM-DD
  * @param release_date_lte | Less or Equal To YYYY-MM-DD
+ * @param watch_region
+ * @param with_watch_providers
  * @returns {Promise<ShowData[] | null>} | Array of discovered movies
  */
 const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | null> => {
@@ -186,6 +188,8 @@ const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | nu
     if (params.vote_count_lte) url += `&vote_count.lte=${params.vote_count_lte}`;
     if (params.release_date_gte) url += `&release_date.gte=${params.release_date_gte}`;
     if (params.release_date_lte) url += `&release_date.lte=${params.release_date_lte}`;
+    if (params.watch_region) url += `&watch_region=${params.watch_region}`
+    if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`
 
     const response = await fetch(url);
 
@@ -201,7 +205,7 @@ const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | nu
             vote_average: rec.vote_average,
             vote_count: rec.vote_count,
             media_type: 'movie',
-            genre_ids: rec.genre_ids,
+            genre_ids: rec.genre_ids
         };
     });
 };

@@ -15,6 +15,7 @@ export default function DiscoverScreen(): JSX.Element {
     const [actionAdventure, setActionAdventure] = useState<ShowData[] | null>(null);
     const [comedy, setComedy] = useState<ShowData[] | null>(null);
     const [horror, setHorror] = useState<ShowData[] | null>(null);
+    const [popularNetflix, setPopularNetflix] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         const highRatedHandler = async () => {
@@ -143,6 +144,7 @@ export default function DiscoverScreen(): JSX.Element {
             const HorrorMovies = await getDiscoverMovies(movieParams);
             setHorror(HorrorMovies);
         };
+        
         highRatedHandler();
         newlyAddedHandler();
         actionAdventureHandler();

@@ -149,4 +149,5 @@ export interface DiscoverTv {
     first_air_date_gte?: string;
     first_air_date_lte?: string;
     with_watch_providers?: string;
+    watch_region?: string;
 }
