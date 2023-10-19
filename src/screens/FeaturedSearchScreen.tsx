@@ -14,7 +14,8 @@ const FeaturedSearchScreen: React.FC = () => {
             <Banner
                 data={trendingShows}
                 title={'Search for any movie or tv show to discover streaming providers and more!'}
-                renderSearchInput={true}
+                renderSearchInput
+                renderLogo
             />
             <div className='my-12 mx-auto'>
                 <ShowCarousel data={trendingShows} />
