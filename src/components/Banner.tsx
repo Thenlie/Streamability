@@ -16,14 +16,17 @@ interface BannerProps {
      * If true, renders SearchInput component below title
      */
     renderSearchInput?: boolean;
+    /**
+     * If true, renders Streamability logo
+     */
+    renderLogo?: boolean;
 }
 
 /**
  * Image Banner with title and optional search input
  * @returns {JSX.Element} | Banner
  */
-/* eslint-disable react/prop-types */
-const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput }) => {
+const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput, renderLogo }) => {
     const [bannerPath, setBannerPath] = useState<string | null>(null);
     useEffect(() => {
         if (data) {
@@ -34,16 +37,20 @@ const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput }) => {
     }, [data]);
     return (
         <div
-            className='p-4 rounded-b-lg w-full lg:w-3/4 bg-no-repeat bg-cover bg-top mx-auto'
+            className={`p-4 lg:rounded-b-lg w-full lg:w-3/4 bg-no-repeat bg-cover bg-top mx-auto ${
+                !renderLogo && 'flex flex-col justify-center items-center'
+            }`}
             style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bannerPath})`,
                 height: 400,
             }}
         >
-            <img
-                src='/images/logo-transparent.png'
-                className={`w-60 mx-auto ${bannerPath && 'md:mx-0'}`}
-            />
+            {renderLogo && (
+                <img
+                    src='/images/logo-transparent.png'
+                    className={`w-60 mx-auto ${bannerPath && 'md:mx-0'}`}
+                />
+            )}
             <Typ variant='h4' className='hidden md:block px-2 text-left text-white'>
                 {title}
             </Typ>

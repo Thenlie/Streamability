@@ -28,6 +28,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 10138,
         poster_path: '/6WBeq4fCfn7AN0o21W9qNcRF2l9.jpg',
+        banner_path: '/7lmBufEG7P7Y1HClYK3gCxYrkgS',
         title: 'Iron Man 2',
         release_date: '2010-05-07',
         vote_average: 6.8,
@@ -39,6 +40,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 1726,
         poster_path: '/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
+        banner_path: '/cyecB7godJ6kNHGONFjUyVN9OX5.jpg',
         title: 'Iron Man',
         release_date: '2008-04-30',
         vote_average: 7.6,
@@ -50,6 +52,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 68721,
         poster_path: '/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg',
+        banner_path: '/tKa1gmGKAUVYnflYcadipeL3d9h.jpg',
         title: 'Iron Man 3',
         release_date: '2013-04-18',
         vote_average: 6.9,
@@ -61,6 +64,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 13647,
         poster_path: '/eebNTSRa5Hh5skPKGdGJIJpo9Ls.jpg',
+        banner_path: '/oUi2pvNbHCUiEFSqawp5dJdQNMK.jpg',
         title: 'The Invincible Iron Man',
         release_date: '2007-01-23',
         vote_average: 6.1,
@@ -72,6 +76,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 230896,
         poster_path: '/e7F2ZNA7wMneoSKGonLKjDmjFEd.jpg',
+        banner_path: '/ryaZmqEnsRaeKUanGFHmPCFDs9M.jpg',
         title: 'Iron Man & Hulk: Heroes United',
         release_date: '2013-12-03',
         vote_average: 5.7,
@@ -83,6 +88,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 284274,
         poster_path: '/CX7eRlaxFXiW3UGQBdQUoSVZRi.jpg',
+        banner_path: '/hGvAIrlWqXOnctvyVlX8RzKLgKz.jpg',
         title: 'Iron Man & Captain America: Heroes United',
         release_date: '2014-07-29',
         vote_average: 6.3,
@@ -94,6 +100,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 448341,
         poster_path: '/81zROb3C2MnOE67AwgAdWWfy4gK.jpg',
+        banner_path: '/32hQccqSJqenEBZjOQ2OzneeVmV.jpg',
         title: 'I Am Iron Man',
         release_date: '2008-09-30',
         vote_average: 7.3,
@@ -105,6 +112,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 512127,
         poster_path: '/7sk9MyHMuipgIo5m6v6biCNXPHv.jpg',
+        banner_path: '/6wbGeAw3dCuHtTTcLF4KM1n4ysu.jpg',
         title: 'The Invincible Iron Man',
         release_date: '2008-09-30',
         vote_average: 6.5,
@@ -116,6 +124,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 194310,
         poster_path: '/l66ZkItJmi4er0I0mGe4mksjfB.jpg',
+        banner_path: '/hkBkmIxfKD4nFYgk7jaXPWGf4Rt.jpg',
         title: 'Iron Man',
         release_date: '1931-04-29',
         vote_average: 4.8,
@@ -127,6 +136,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 635802,
         poster_path: '/wAmSMgyxCwjSxhqExSYmstMQPH.jpg',
+        banner_path: '/ub8wdPp4jDAwqJFjsRwAYmDw5l5.jpg',
         title: 'Elon Musk: The Real Life Iron Man',
         release_date: '2018-12-04',
         vote_average: 5.5,
@@ -138,6 +148,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 69592,
         poster_path: '/eJh3B7ekyN97e0PXUeumwVdFVP4.jpg',
+        banner_path: '/ga2YZp5sysUrRu1luxq1rZUKucc.jpg',
         title: 'Iron Man',
         release_date: '1951-09-20',
         vote_average: 3.7,
@@ -149,6 +160,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 928743,
         poster_path: '/cv1C3Bpvb2zUaO1deWosihfmgHV.jpg',
+        banner_path: '/3qip09WgTU9P6CqkROH5LkgLdeR.jpg',
         title: 'The Iron Man',
         release_date: '1973-01-19',
         vote_average: 0,
@@ -160,6 +172,7 @@ const MOVIE_DATA_ARRAY: ShowData[] = [
     {
         id: 951647,
         poster_path: '/A6aK12Ysdez1SRnGakxodg0SuQ5.jpg',
+        banner_path: null,
         title: 'Iron Man',
         release_date: '2020-01-01',
         vote_average: 0,
