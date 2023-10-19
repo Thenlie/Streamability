@@ -1,0 +1,55 @@
+import { useState, useEffect } from 'react';
+import { ShowData } from '../types';
+import { Typography as Typ } from '@mui/material';
+import SearchInput from './SearchInput';
+
+interface BannerProps {
+    /**
+     * Array of data to randomly choose an image
+     */
+    data: ShowData[] | null;
+    /**
+     * Title that is displayed on the banner
+     */
+    title: string;
+    /**
+     * If true, renders SearchInput component below title
+     */
+    renderSearchInput?: boolean;
+}
+
+/**
+ * Image Banner with title and optional search input
+ * @returns {JSX.Element} | Banner
+ */
+/* eslint-disable react/prop-types */
+const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput }) => {
+    const [bannerPath, setBannerPath] = useState<string | null>(null);
+    useEffect(() => {
+        if (data) {
+            const rand = Math.floor((Math.random() * data.length) / 2);
+            const path = `https://image.tmdb.org/t/p/original${data?.[rand]?.banner_path}` || null;
+            setBannerPath(path);
+        }
+    }, [data]);
+    return (
+        <div
+            className='p-4 rounded-b-lg w-full lg:w-3/4 bg-no-repeat bg-cover bg-top mx-auto'
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bannerPath})`,
+                height: 400,
+            }}
+        >
+            <img
+                src='/images/logo-transparent.png'
+                className={`w-60 mx-auto ${bannerPath && 'md:mx-0'}`}
+            />
+            <Typ variant='h4' className='hidden md:block px-2 text-left text-white'>
+                {title}
+            </Typ>
+            {renderSearchInput && <SearchInput colorOverride='white' />}
+        </div>
+    );
+};
+
+export default Banner;
