@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
-import { ShowCarousel } from '../components';
+import { ShowCarousel, Banner } from '../components';
 import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
 import { getDiscoverMovies, getDiscoverTv } from '../helpers';
 /**
- * Requests trending movies, passing data to ShowCard components.
+ * Requests a variety of filtered shows, rendering carousels
  * @returns {JSX.Element}
  */
 export default function DiscoverScreen(): JSX.Element {
@@ -245,55 +245,74 @@ export default function DiscoverScreen(): JSX.Element {
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div className=''>
-            <div>
-                <div className='w-full flex flex-col justify-start items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h6'>Discover Trending</Typ>
+        <div className='w-full'>
+            <div className='my-12 flex flex-col items-center'>
+                <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h6'>
+                        Discover Trending
+                    </Typ>
                     <ShowCarousel data={trendingShows} />
                 </div>
 
-                <div className='w-full flex flex-col justify-start items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h6'>Highest Rated Shows</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h6'>
+                        Highest Rated Shows
+                    </Typ>
                     <ShowCarousel data={highestRated} />
                 </div>
-                <div className='w-full flex flex-col justify-start items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h6'>Newly Added Shows</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h6'>
+                        Newly Added Shows
+                    </Typ>
                     <ShowCarousel data={newlyAdded} />
                 </div>
             </div>
 
-            <div>
-                <Typ sx={{marginY: 8}} variant='h4'>Browse by Genre</Typ>
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Action & Adventure</Typ>
+            <div className='my-12 flex flex-col items-center'>
+                <Banner data={actionAdventure} title={'Genres'} />
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Action & Adventure
+                    </Typ>
                     <ShowCarousel data={actionAdventure} />
                 </div>
 
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Comedy</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Comedy
+                    </Typ>
                     <ShowCarousel data={comedy} />
                 </div>
 
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Horror</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Horror
+                    </Typ>
                     <ShowCarousel data={horror} />
                 </div>
             </div>
 
-            <div>
-                <Typ sx={{marginY: 8}} variant='h4'>Browse by Platforms</Typ>
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Netflix</Typ>
+            <div className='my-12 flex flex-col items-center'>
+                <Banner data={popularNetflix} title={'Platforms'} />
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Popular on Netflix
+                    </Typ>
                     <ShowCarousel data={popularNetflix} />
                 </div>
 
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Prime</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Popular on Prime
+                    </Typ>
                     <ShowCarousel data={popularPrime} />
                 </div>
 
-                <div className='flex flex-col items-start my-6'>
-                    <Typ sx={{marginY: 1}} variant='h5'>Popular on Hulu</Typ>
+                <div className='text-left my-6'>
+                    <Typ sx={{ marginY: 1 }} variant='h5'>
+                        Popular on Hulu
+                    </Typ>
                     <ShowCarousel data={popularHulu} />
                 </div>
             </div>

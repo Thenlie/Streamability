@@ -193,6 +193,7 @@ const getDiscoverTv = async (params: DiscoverTv): Promise<ShowData[] | null> => 
             id: tv.id,
             overview: tv.overview,
             poster_path: tv.poster_path,
+            banner_path: tv.backdrop_path,
             release_date: tv.first_air_date,
             title: tv.name,
             vote_average: tv.vote_average,

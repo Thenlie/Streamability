@@ -200,6 +200,7 @@ const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | nu
             id: movie.id,
             overview: movie.overview,
             poster_path: movie.poster_path,
+            banner_path: movie.backdrop_path,
             release_date: movie.release_date,
             title: movie.title,
             vote_average: movie.vote_average,
