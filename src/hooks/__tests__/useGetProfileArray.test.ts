@@ -1,10 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { getMovieDetails } from '../../helpers';
-import { MOVIE_DATA } from '../../__tests__/screens/assets';
 import useGetProfileArray from '../useGetProfileArray';
+import { getMovieDetails } from '../../helpers';
 import { useProfileContext, useSessionContext } from '../context';
-import { PROFILE1, PROFILE2, SESSION } from './constants';
+import { PROFILE1, PROFILE2, SESSION, SHOW_DATA } from './constants';
 import { ProfileArrayCols } from '../../types';
 import { getProfileArray } from '../../supabase/profiles';
 
@@ -38,7 +37,7 @@ vi.mock('../../supabase/profiles', async () => {
 
 describe('useGetProfileArray', () => {
     it('Returns null when profile array is empty', async () => {
-        vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DATA[0]);
+        vi.mocked(getMovieDetails).mockResolvedValue(SHOW_DATA);
         vi.mocked(useSessionContext).mockReturnValue({
             session: SESSION,
             setSession: () => {},
@@ -53,7 +52,7 @@ describe('useGetProfileArray', () => {
         await waitFor(() => expect(result.current).toBe(null));
     });
     it('Returns show array when profile array contains data', async () => {
-        vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DATA[0]);
+        vi.mocked(getMovieDetails).mockResolvedValue(SHOW_DATA);
         vi.mocked(useSessionContext).mockReturnValue({
             session: SESSION,
             setSession: () => {},

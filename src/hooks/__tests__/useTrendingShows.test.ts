@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useTrendingShows from '../useTrendingShows';
 import { getMovieTrending } from '../../helpers';
-import { MOVIE_DATA_ARRAY } from '../../__tests__/screens/assets';
+import { MOVIE_DATA_ARRAY } from './constants';
 
 const SORT_BY: Array<'rating' | 'release' | 'alpha'> = ['rating', 'release', 'alpha'];
 
