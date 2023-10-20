@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ShowPoster } from '../../components';
-import { MOVIE_DATA } from '../../__tests__/screens/assets';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { ShowPoster } from '../../components';
+import { MOVIE_DATA } from '../constants';
 import { ProfileActions } from '../../types';
 
 const profileActionsMock: ProfileActions = {
@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        details: MOVIE_DATA[0],
+        details: MOVIE_DATA,
         profile: null,
         profileActions: profileActionsMock,
         showQueueButton: false,

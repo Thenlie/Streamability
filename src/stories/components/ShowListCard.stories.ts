@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { withRouter } from 'storybook-addon-react-router-v6';
 import { ShowListCard } from '../../components';
 import { MOVIE_DATA, PROFILE } from '../constants';
-import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
     title: 'Components/Show List Card',
