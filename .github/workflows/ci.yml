@@ -1,9 +1,5 @@
 name: CI
-on: 
-  push:
-    branches: [ "main", "develop" ]
-  pull_request:
-    branches: [ "main", "develop" ]
+on:
   pull_request_target:
     types: [opened, synchronize, reopened]
   
