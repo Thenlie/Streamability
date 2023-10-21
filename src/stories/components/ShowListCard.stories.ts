@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { withRouter } from 'storybook-addon-react-router-v6';
+import { withRouter, reactRouterParameters } from 'storybook-addon-react-router-v6';
 import { ShowListCard } from '../../components';
 import { MOVIE_DATA, PROFILE } from '../constants';
 
@@ -9,6 +9,16 @@ const meta = {
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
+        reactRouter: reactRouterParameters({
+            location: {
+                path: '/details/movie/:id',
+                pathParams: { id: MOVIE_DATA.id },
+            },
+            routing: {
+                path: '/details/movie/:id',
+                handle: 'details',
+            },
+        }),
     },
     decorators: [withRouter],
 } satisfies Meta<typeof ShowListCard>;
