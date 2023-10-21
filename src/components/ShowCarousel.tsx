@@ -14,6 +14,10 @@ interface ShowCarouselProps {
      */
     data: ShowData[] | null;
     /**
+     * If data being passed in is still loading
+     */
+    dataLoading?: boolean;
+    /**
      * Number of ShowCards to display in 1 step.
      * If `undefined` this number will be based on screen size
      */
@@ -95,6 +99,7 @@ const CarouselChildren: React.FC<{
  */
 const ShowCarousel: React.FC<ShowCarouselProps> = ({
     data,
+    dataLoading = false,
     size,
     fallbackText,
     ...rest
@@ -155,7 +160,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         return arr;
     };
 
-    if (loading) {
+    if (loading || dataLoading) {
         return (
             <section className='pt-12'>
                 <div className='flex justify-center' style={{ width: carouselWidth }}>
