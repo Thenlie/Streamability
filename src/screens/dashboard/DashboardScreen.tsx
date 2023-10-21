@@ -19,6 +19,10 @@ interface DashboardCarouselProps {
      */
     data: ShowData[] | null;
     /**
+     * If data being passed in is still loading
+     */
+    dataLoading?: boolean;
+    /**
      * Which profile array the data is coming from
      */
     whichCol: ProfileArrayCols;
@@ -50,6 +54,7 @@ interface DashboardCarouselProps {
  */
 export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
     data,
+    dataLoading = false,
     whichCol,
     label,
     fallbackText,
@@ -84,6 +89,7 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
             </div>
             <ShowCarousel
                 data={data}
+                dataLoading={dataLoading}
                 fallbackText={fallbackText}
                 profile={profile}
                 profileActions={profileActions}
@@ -111,9 +117,9 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
 const DashboardScreen: React.FC = () => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
-    const queue = useGetProfileArray('queue');
-    const favorites = useGetProfileArray('favorites');
-    const watched = useGetProfileArray('watched');
+    const { data: queue, loading: queueLoading } = useGetProfileArray('queue');
+    const { data: favorites, loading: favoritesLoading } = useGetProfileArray('favorites');
+    const { data: watched, loading: watchedLoading } = useGetProfileArray('watched');
     const [logoutLoading, setLogoutLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
@@ -217,6 +223,7 @@ const DashboardScreen: React.FC = () => {
                 </div>
                 <DashboardCarousel
                     data={queue}
+                    dataLoading={queueLoading}
                     whichCol='queue'
                     label='Watch Queue'
                     fallbackText={queueFallbackText}
@@ -225,6 +232,7 @@ const DashboardScreen: React.FC = () => {
                 />
                 <DashboardCarousel
                     data={favorites}
+                    dataLoading={favoritesLoading}
                     whichCol='favorites'
                     label='Favorites'
                     fallbackText={favoritesFallbackText}
@@ -233,6 +241,7 @@ const DashboardScreen: React.FC = () => {
                 />
                 <DashboardCarousel
                     data={watched}
+                    dataLoading={watchedLoading}
                     whichCol='watched'
                     label='Watched List'
                     fallbackText={watchedFallbackText}

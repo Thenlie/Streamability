@@ -23,7 +23,7 @@ interface EmptySearchResultsProps {
  */
 const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewState }) => {
     const navigate = useNavigate();
-    const { trendingShows } = useTrendingShows();
+    const { trendingShows, loading } = useTrendingShows();
 
     return (
         <>
@@ -54,7 +54,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
                             These popular shows might interest you:
                         </Typ>
                         <div className='flex w-full justify-center items-center pb-6'>
-                            <ShowCarousel data={trendingShows} />
+                            <ShowCarousel data={trendingShows} dataLoading={loading} />
                         </div>
                     </>
                 )}

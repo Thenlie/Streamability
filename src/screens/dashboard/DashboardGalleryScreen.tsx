@@ -21,7 +21,7 @@ const DashboardGalleryScreen: React.FC = () => {
     const profileActions = useProfileActions(profile, setProfile);
     const navigate = useNavigate();
     const path: ProfileArrayCols = useLoaderData() as ProfileArrayCols;
-    const data = useGetProfileArray(path);
+    const { data } = useGetProfileArray(path);
 
     // TODO: If profile does not return after a few seconds,
     // we should assume the user is not logged in and redirect to an auth page
