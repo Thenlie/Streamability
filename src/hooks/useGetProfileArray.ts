@@ -10,10 +10,13 @@ import { useProfileContext, useSessionContext } from './context';
  * @param whichCol | The profile array to get
  * @returns {ShowData[] | null}
  */
-const useGetProfileArray = (whichCol: ProfileArrayCols): ShowData[] | null => {
+const useGetProfileArray = (
+    whichCol: ProfileArrayCols
+): { data: ShowData[] | null; loading: boolean } => {
     const { session } = useSessionContext();
     const { profile } = useProfileContext();
     const [data, setData] = useState<ShowData[] | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const handler = async () => {
@@ -33,9 +36,10 @@ const useGetProfileArray = (whichCol: ProfileArrayCols): ShowData[] | null => {
             setData(arr);
         };
         handler();
+        setLoading(false);
     }, [session, profile]);
 
-    return data;
+    return { data, loading };
 };
 
 export default useGetProfileArray;

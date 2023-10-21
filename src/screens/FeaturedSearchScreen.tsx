@@ -7,7 +7,7 @@ import { useTrendingShows } from '../hooks';
  * a search input, and trending shows in a carousel.
  */
 const FeaturedSearchScreen: React.FC = () => {
-    const { trendingShows } = useTrendingShows('release');
+    const { trendingShows, loading } = useTrendingShows('release');
 
     return (
         <div className='flex-1 flex flex-col w-full'>
@@ -18,7 +18,7 @@ const FeaturedSearchScreen: React.FC = () => {
                 renderLogo
             />
             <div className='my-12 mx-auto'>
-                <ShowCarousel data={trendingShows} />
+                <ShowCarousel data={trendingShows} dataLoading={loading} />
             </div>
         </div>
     );

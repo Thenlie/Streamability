@@ -1,5 +1,5 @@
 import React from 'react';
-import ShowCardLoader from './ShowCardLoader';
+import ShowPosterLoader from './ShowPosterLoader';
 
 interface ShowCarouselLoaderProps {
     /**
@@ -19,7 +19,7 @@ const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ count }): JSX.E
         <div className='m-3 flex justify-center'>
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='overflow-x-hidden'>
-                    <ShowCardLoader count={1} />
+                    <ShowPosterLoader count={1} />
                 </div>
             ))}
         </div>
