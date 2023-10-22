@@ -151,7 +151,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     };
 
     if (dataLoading) {
-        return <ShowCarouselLoader count={1} />;
+        return <ShowCarouselLoader />;
     }
 
     if (!data || data.length === 0) {
