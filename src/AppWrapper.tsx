@@ -79,6 +79,10 @@ export default function AppWrapper(): JSX.Element {
      * for any changes to the users status
      */
     useEffect(() => {
+        if (!SUPABASE) {
+            LOG.error('Supabase client was not created');
+            return;
+        }
         SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
             if (error) {
                 LOG.error(error);

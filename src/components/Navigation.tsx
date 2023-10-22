@@ -86,7 +86,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
 
     const logoutHandler = async () => {
         // TODO: Error handling if any
-        await SUPABASE.auth.signOut();
+        await SUPABASE?.auth.signOut();
     };
 
     return (
