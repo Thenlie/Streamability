@@ -107,9 +107,9 @@ export interface MovieDetailsData extends MovieData {
 }
 
 export interface DiscoverMovie {
-    include_adult: boolean;
-    include_video: boolean;
     pages: number;
+    include_adult?: boolean;
+    include_video?: boolean; // Unused
     with_genres?: string;
     sort_by?:
         | 'popularity.asc'
