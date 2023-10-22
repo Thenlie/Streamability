@@ -5,6 +5,7 @@ import { Button, ShowPoster } from '../../components';
 import { DashboardGalleryLoader } from '../loaders';
 import { Typography as Typ } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import DashboardEmptyGallery from './DashboardEmptyGallery';
 
 export async function loader({ request }: { request: Request }): Promise<string> {
     // get the end of the path from the URL
@@ -27,37 +28,45 @@ const DashboardGalleryScreen: React.FC = () => {
     // we should assume the user is not logged in and redirect to an auth page
     if (!profile) return <DashboardGalleryLoader path={path} />;
 
+    /**
+     * Return the page title based on the URL path
+     */
+    const getTitle = (path: ProfileArrayCols): string => {
+        switch (path) {
+            case 'queue':
+                return 'watch queue';
+            case 'favorites':
+                return 'favorites';
+            case 'watched':
+                return 'watched list';
+        }
+    };
+
     return (
         <div className='m-4'>
-            <Typ variant='h5' className='flex-1'>
-                {profile.username}&apos;s {path}{' '}
-            </Typ>
+            <Typ variant='h5'>{`${profile.username}'s ${getTitle(path)}`}</Typ>
             <Button
                 title='Dashboard'
                 StartIcon={ArrowBack}
                 onClick={() => navigate('/dashboard')}
             />
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-6'>
-                {data ? (
-                    data.map(
-                        (item, i) =>
-                            item && (
-                                <ShowPoster
-                                    key={i}
-                                    details={item}
-                                    profile={profile}
-                                    profileActions={profileActions}
-                                    showQueueButton={path === 'queue'}
-                                    showFavoritesButton={path === 'favorites'}
-                                    showWatchedButton={path === 'watched'}
-                                />
-                            )
-                    )
-                ) : (
-                    // TODO: #610 Create empty state
-                    <Typ>Add shows to your {path} to view them here!</Typ>
-                )}
-            </div>
+            {data && data.length > 0 ? (
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-6'>
+                    {data.map((item, i) => (
+                        <ShowPoster
+                            key={i}
+                            details={item}
+                            profile={profile}
+                            profileActions={profileActions}
+                            showQueueButton={path === 'queue'}
+                            showFavoritesButton={path === 'favorites'}
+                            showWatchedButton={path === 'watched'}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <DashboardEmptyGallery title={getTitle(path)} />
+            )}
         </div>
     );
 };
