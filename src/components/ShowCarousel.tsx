@@ -172,33 +172,29 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     if (!data || data.length === 0) {
         return (
-            <section className='pt-12'>
-                <div style={{ width: carouselWidth }}>
-                    <Carousel
-                        className='bg-foreground'
-                        style={{
-                            width: carouselWidth,
-                            paddingTop: '10px',
-                            paddingBottom: '10px',
-                            borderRadius: '5px',
-                        }}
-                        defaultControlsConfig={{
-                            pagingDotsClassName: 'hidden',
-                            nextButtonClassName: 'hidden',
-                            prevButtonClassName: 'hidden',
-                        }}
+            <div style={{ width: carouselWidth }}>
+                <Carousel
+                    className='bg-foreground'
+                    style={{
+                        width: carouselWidth,
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        borderRadius: '5px',
+                    }}
+                    defaultControlsConfig={{
+                        pagingDotsClassName: 'hidden',
+                        nextButtonClassName: 'hidden',
+                        prevButtonClassName: 'hidden',
+                    }}
+                >
+                    <Typ
+                        variant='body1'
+                        className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
                     >
-                        <Typ
-                            variant='body1'
-                            className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
-                        >
-                            {fallbackText
-                                ? fallbackText
-                                : 'Sorry, no shows to display at this time.'}
-                        </Typ>
-                    </Carousel>
-                </div>
-            </section>
+                        {fallbackText ? fallbackText : 'Sorry, no shows to display at this time.'}
+                    </Typ>
+                </Carousel>
+            </div>
         );
     }
 
