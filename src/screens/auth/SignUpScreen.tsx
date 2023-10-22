@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE, COUNTRIES, validateCountry } from '../../helpers';
+import { SUPABASE } from '../../supabase/supabaseClient';
+import { COUNTRIES, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {

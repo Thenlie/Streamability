@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { SUPABASE } from './helpers';
+import { SUPABASE } from './supabase/supabaseClient';
 import type { Session, Profile } from './types';
 import { Navigation, Footer } from './components';
 import { getProfileById } from './supabase/profiles';

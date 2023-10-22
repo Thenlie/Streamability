@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE } from '../../helpers';
+import { SUPABASE } from '../../supabase/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import { InputAdornment, IconButton, Typography as Typ } from '@mui/material';

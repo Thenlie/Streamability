@@ -11,7 +11,7 @@ import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
 import { ProfileArrayCols, ShowData } from '../../types';
 import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../../components';
-import { SUPABASE } from '../../helpers';
+import { SUPABASE } from '../../supabase/supabaseClient';
 
 interface DashboardCarouselProps {
     /**
