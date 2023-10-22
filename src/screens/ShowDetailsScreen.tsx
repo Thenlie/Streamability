@@ -42,9 +42,10 @@ const ProfileButtonSection: React.FC<{ showId: number; showType: string }> = ({
             <div className='flex items-center justify-center'>
                 <Link to='/signup'>
                     <Button
-                        title='Sign up to save & favorite shows!'
+                        title='Sign up to save shows!'
                         color='secondary'
                         StartIcon={PersonAddAltRounded}
+                        sx={{ width: 300 }}
                     />
                 </Link>
             </div>
