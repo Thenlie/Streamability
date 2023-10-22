@@ -17,6 +17,6 @@ type Story = StoryObj<typeof meta>;
 
 export const CarouselPlaceholder: Story = {
     args: {
-        count: 3,
+        count: 1,
     },
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
-import { ShowPosterLoader } from './loaders';
+import { ShowCarouselLoader } from './loaders';
 import { Typography as Typ } from '@mui/material';
 import { Profile, ProfileActions } from '../types';
 
@@ -71,8 +71,6 @@ export function getCarouselSteps(windowSize: WindowSize): number {
 
 /**
  * A group of Show Posters that will be rendered as a single page in the carousel
- *
- * @returns {JSX.Element} | Collection of ShowCards
  */
 const CarouselChildren: React.FC<{
     data: ShowData[];
@@ -94,8 +92,6 @@ const CarouselChildren: React.FC<{
 /**
  * Show carousels will be used throughout the site to display collections of shows
  * The scroll horizontally and contain any number of show cards
- *
- * @returns {JSX.Element} | Carousel of movie cards
  */
 const ShowCarousel: React.FC<ShowCarouselProps> = ({
     data,
@@ -143,8 +139,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     /**
      * Splits an array of shows into an array of CarouselChildren
-     *
-     * @param data Show
+     * @param data Array of shows
      * @returns {JSX.Element[]}
      */
     const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
@@ -161,13 +156,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     };
 
     if (loading || dataLoading) {
-        return (
-            <section className='pt-12'>
-                <div className='flex justify-center' style={{ width: carouselWidth }}>
-                    <ShowPosterLoader count={getCarouselSteps(windowSize)} />
-                </div>
-            </section>
-        );
+        return <ShowCarouselLoader count={1} />;
     }
 
     if (!data || data.length === 0) {
