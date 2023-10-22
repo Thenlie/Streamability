@@ -175,10 +175,13 @@ const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> =
  * @param with_watch_providers
  * @returns {Promise<ShowData[] | null>} | Array of discovered movies
  */
-const getDiscoverMovies = async (params: DiscoverMovie): Promise<ShowData[] | null> => {
+const getDiscoverMovies = async ({
+    include_adult = false,
+    ...params
+}: DiscoverMovie): Promise<ShowData[] | null> => {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${
         import.meta.env.VITE_MOVIEDB_KEY
-    }&include_adult=${params.include_adult}&language=en-US&page=${params.pages}&region=us`;
+    }&include_adult=${include_adult}&language=en-US&page=${params.pages}&region=us`;
 
     if (params.with_genres) url += `&with_genres=${params.with_genres}`;
     if (params.sort_by) url += `&sort_by=${params.sort_by}`;

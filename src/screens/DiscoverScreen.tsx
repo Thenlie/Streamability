@@ -8,7 +8,7 @@ import { getDiscoverMovies, getDiscoverTv } from '../helpers';
  * Requests a variety of filtered shows, rendering carousels
  * @returns {JSX.Element}
  */
-export default function DiscoverScreen(): JSX.Element {
+const DiscoverScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('alpha');
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
     const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
@@ -18,61 +18,51 @@ export default function DiscoverScreen(): JSX.Element {
     const [popularNetflix, setPopularNetflix] = useState<ShowData[] | null>(null);
     const [popularPrime, setPopularPrime] = useState<ShowData[] | null>(null);
     const [popularHulu, setPopularHulu] = useState<ShowData[] | null>(null);
+    // Loading states
+    const [highestRatedLoading, setHighestRatedLoading] = useState<boolean>(true);
+    const [newlyAddedLoading, setNewlyAddedLoading] = useState<boolean>(true);
+    const [actionAdventureLoading, setActionAdventureLoading] = useState<boolean>(true);
+    const [comedyLoading, setComedyLoading] = useState<boolean>(true);
+    const [horrorLoading, setHorrorLoading] = useState<boolean>(true);
+    const [popularNetflixLoading, setPopularNetflixLoading] = useState<boolean>(true);
+    const [popularPrimeLoading, setPopularPrimeLoading] = useState<boolean>(true);
+    const [popularHuluLoading, setPopularHuluLoading] = useState<boolean>(true);
+
+    const discoverHandler = async (
+        movieParams: DiscoverMovie,
+        tvParams: DiscoverTv,
+        setState: React.Dispatch<React.SetStateAction<ShowData[] | null>>,
+        setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    ) => {
+        const movies: ShowData[] | null = await getDiscoverMovies(movieParams);
+        const tv: ShowData[] | null = await getDiscoverTv(tvParams);
+        const shows: ShowData[] | null = [];
+
+        if (movies && tv) shows.push(...movies, ...tv);
+        setState(shows);
+        setLoading(false);
+    };
 
     useEffect(() => {
         const highRatedHandler = async () => {
-            const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
+            const params: DiscoverMovie | DiscoverTv = {
                 pages: 1,
                 sort_by: 'popularity.desc',
                 vote_average_gte: 8.0,
                 vote_count_gte: 2000,
             };
-            const highRatedMovies: ShowData[] | null = await getDiscoverMovies(movieParams);
-
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                sort_by: 'popularity.desc',
-                vote_average_gte: 8.0,
-                vote_count_gte: 2000,
-            };
-            const highRatedTv: ShowData[] | null = await getDiscoverTv(tvParams);
-
-            const highRatedShows: ShowData[] = [];
-
-            if (highRatedMovies && highRatedTv)
-                highRatedShows.push(...highRatedMovies, ...highRatedTv);
-            setHighestRated(highRatedShows);
+            discoverHandler(params, params, setHighestRated, setHighestRatedLoading);
         };
 
         const newlyAddedHandler = async () => {
-            // TODO: #613
-            const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
+            const params: DiscoverMovie | DiscoverTv = {
                 pages: 1,
                 sort_by: 'popularity.desc',
                 vote_count_gte: 2000,
+                // TODO: #613 Dynamic date range
                 release_date_gte: '2023-01-01',
             };
-            const newlyAddedMovies: ShowData[] | null = await getDiscoverMovies(movieParams);
-
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                sort_by: 'popularity.desc',
-                vote_count_gte: 2000,
-                first_air_date_gte: '2023-01-01',
-            };
-            const newlyAddedTv: ShowData[] | null = await getDiscoverTv(tvParams);
-
-            const newlyAddedShows: ShowData[] = [];
-
-            if (newlyAddedMovies && newlyAddedTv)
-                newlyAddedShows.push(...newlyAddedMovies, ...newlyAddedTv);
-            setNewlyAdded(newlyAddedShows);
+            discoverHandler(params, params, setNewlyAdded, setNewlyAddedLoading);
         };
 
         const actionAdventureHandler = async () => {
@@ -85,8 +75,6 @@ export default function DiscoverScreen(): JSX.Element {
                 vote_average_gte: 5.0,
                 vote_count_gte: 2000,
             };
-            const actionAdventureMovies = await getDiscoverMovies(movieParams);
-
             const tvParams: DiscoverTv = {
                 include_adult: false,
                 pages: 1,
@@ -95,17 +83,11 @@ export default function DiscoverScreen(): JSX.Element {
                 vote_average_gte: 5.0,
                 vote_count_gte: 2500,
             };
-            const actionAdventureTv = await getDiscoverTv(tvParams);
-
-            const actionAdventureShows: ShowData[] = [];
-
-            if (actionAdventureMovies && actionAdventureTv)
-                actionAdventureShows.push(...actionAdventureMovies, ...actionAdventureTv);
-            setActionAdventure(actionAdventureShows);
+            discoverHandler(movieParams, tvParams, setActionAdventure, setActionAdventureLoading);
         };
 
         const comedyHandler = async () => {
-            const movieParams: DiscoverMovie = {
+            const params: DiscoverMovie | DiscoverTv = {
                 include_adult: false,
                 include_video: false,
                 pages: 1,
@@ -114,29 +96,13 @@ export default function DiscoverScreen(): JSX.Element {
                 vote_average_gte: 5.0,
                 vote_count_gte: 2500,
             };
-            const comedyMovies = await getDiscoverMovies(movieParams);
 
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                with_genres: '35',
-                sort_by: 'popularity.desc',
-                vote_average_gte: 5.0,
-                vote_count_gte: 2500,
-            };
-            const comedyTv = await getDiscoverTv(tvParams);
-
-            const comedyShows: ShowData[] = [];
-
-            if (comedyMovies && comedyTv) comedyShows.push(...comedyMovies, ...comedyTv);
-            setComedy(comedyShows);
+            discoverHandler(params, params, setComedy, setComedyLoading);
         };
 
-        const HorrorHandler = async () => {
+        const horrorHandler = async () => {
             // Only Movie
             const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
                 pages: 1,
                 with_genres: '27',
                 sort_by: 'popularity.desc',
@@ -145,127 +111,73 @@ export default function DiscoverScreen(): JSX.Element {
             };
             const HorrorMovies = await getDiscoverMovies(movieParams);
             setHorror(HorrorMovies);
+            setHorrorLoading(false);
         };
 
         const netflixHandler = async () => {
-            const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
+            const params: DiscoverMovie | DiscoverTv = {
                 pages: 1,
                 vote_average_gte: 7.5,
                 vote_count_gte: 2500,
                 watch_region: 'US',
                 with_watch_providers: '8',
             };
-            const netflixMovies = await getDiscoverMovies(movieParams);
-
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                vote_average_gte: 7.5,
-                vote_count_gte: 2500,
-                watch_region: 'US',
-                with_watch_providers: '8',
-            };
-            const netflixTv = await getDiscoverTv(tvParams);
-
-            const netflixShows: ShowData[] = [];
-
-            if (netflixMovies && netflixTv) netflixShows.push(...netflixMovies, ...netflixTv);
-            setPopularNetflix(netflixShows);
+            discoverHandler(params, params, setPopularNetflix, setPopularNetflixLoading);
         };
 
         const primeHandler = async () => {
-            const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
+            const params: DiscoverMovie | DiscoverTv = {
                 pages: 1,
                 vote_average_gte: 7.5,
                 vote_count_gte: 2500,
                 watch_region: 'US',
                 with_watch_providers: '9',
             };
-            const primeMovies = await getDiscoverMovies(movieParams);
-
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                vote_average_gte: 7.5,
-                vote_count_gte: 2500,
-                watch_region: 'US',
-                with_watch_providers: '9',
-            };
-            const primeTv = await getDiscoverTv(tvParams);
-
-            const primeShows: ShowData[] = [];
-
-            if (primeMovies && primeTv) primeShows.push(...primeMovies, ...primeTv);
-            setPopularPrime(primeShows);
+            discoverHandler(params, params, setPopularPrime, setPopularPrimeLoading);
         };
 
         const huluHandler = async () => {
-            const movieParams: DiscoverMovie = {
-                include_adult: false,
-                include_video: false,
+            const params: DiscoverMovie | DiscoverTv = {
                 pages: 1,
                 vote_average_gte: 7.5,
                 vote_count_gte: 2500,
                 watch_region: 'US',
                 with_watch_providers: '15',
             };
-            const huluMovies = await getDiscoverMovies(movieParams);
-
-            const tvParams: DiscoverTv = {
-                include_adult: false,
-                pages: 1,
-                vote_average_gte: 7.5,
-                vote_count_gte: 2500,
-                watch_region: 'US',
-                with_watch_providers: '15',
-            };
-            const huluTv = await getDiscoverTv(tvParams);
-
-            const huluShows: ShowData[] = [];
-
-            if (huluMovies && huluTv) huluShows.push(...huluMovies, ...huluTv);
-            setPopularHulu(huluShows);
+            discoverHandler(params, params, setPopularHulu, setPopularHuluLoading);
         };
-
         highRatedHandler();
         newlyAddedHandler();
         actionAdventureHandler();
         comedyHandler();
-        HorrorHandler();
+        horrorHandler();
         netflixHandler();
         primeHandler();
         huluHandler();
     }, []);
 
-    // TODO: #194 Make skeleton loading screen
-    if (loading) return <p>Loading...</p>;
-
     return (
         <div className='w-full'>
-            <div className='my-12 flex flex-col items-center'>
+            <div className='mb-12 flex flex-col items-center'>
                 <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Discover Trending
+                        Trending
                     </Typ>
-                    <ShowCarousel data={trendingShows} />
+                    <ShowCarousel data={trendingShows} dataLoading={loading} />
                 </div>
 
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Highest Rated Shows
+                        Highest Rated
                     </Typ>
-                    <ShowCarousel data={highestRated} />
+                    <ShowCarousel data={highestRated} dataLoading={highestRatedLoading} />
                 </div>
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Newly Added Shows
+                        Newly Added
                     </Typ>
-                    <ShowCarousel data={newlyAdded} />
+                    <ShowCarousel data={newlyAdded} dataLoading={newlyAddedLoading} />
                 </div>
             </div>
 
@@ -275,21 +187,21 @@ export default function DiscoverScreen(): JSX.Element {
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Action & Adventure
                     </Typ>
-                    <ShowCarousel data={actionAdventure} />
+                    <ShowCarousel data={actionAdventure} dataLoading={actionAdventureLoading} />
                 </div>
 
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Comedy
                     </Typ>
-                    <ShowCarousel data={comedy} />
+                    <ShowCarousel data={comedy} dataLoading={comedyLoading} />
                 </div>
 
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Horror
                     </Typ>
-                    <ShowCarousel data={horror} />
+                    <ShowCarousel data={horror} dataLoading={horrorLoading} />
                 </div>
             </div>
 
@@ -299,23 +211,25 @@ export default function DiscoverScreen(): JSX.Element {
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Popular on Netflix
                     </Typ>
-                    <ShowCarousel data={popularNetflix} />
+                    <ShowCarousel data={popularNetflix} dataLoading={popularNetflixLoading} />
                 </div>
 
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Popular on Prime
                     </Typ>
-                    <ShowCarousel data={popularPrime} />
+                    <ShowCarousel data={popularPrime} dataLoading={popularPrimeLoading} />
                 </div>
 
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Popular on Hulu
                     </Typ>
-                    <ShowCarousel data={popularHulu} />
+                    <ShowCarousel data={popularHulu} dataLoading={popularHuluLoading} />
                 </div>
             </div>
         </div>
     );
-}
+};
+
+export default DiscoverScreen;

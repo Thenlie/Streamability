@@ -131,8 +131,8 @@ export interface TvDetailsData extends TvData {
 }
 
 export interface DiscoverTv {
-    include_adult: boolean;
     pages: number;
+    include_adult?: boolean;
     with_genres?: string;
     sort_by?:
         | 'popularity.asc'
