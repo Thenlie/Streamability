@@ -87,6 +87,10 @@ const SignUpScreen: React.FC = () => {
      * @returns {Promise<void>} | Does not redirect user
      */
     const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
+        if (!SUPABASE) {
+            LOG.error('Supabase client not found!');
+            return;
+        }
         setLoading(true);
         evt.preventDefault();
         clearErrors();

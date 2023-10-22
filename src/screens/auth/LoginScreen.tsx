@@ -52,6 +52,10 @@ const LoginScreen: React.FC = () => {
      * @returns {Promise<void>} | Does not redirect user
      */
     async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
+        if (!SUPABASE) {
+            LOG.error('Supabase client not found');
+            return;
+        }
         setLoading(true);
         evt.preventDefault();
 

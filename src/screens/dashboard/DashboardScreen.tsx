@@ -156,7 +156,7 @@ const DashboardScreen: React.FC = () => {
      */
     const handleLogout = async () => {
         setLogoutLoading(true);
-        await SUPABASE.auth.signOut();
+        await SUPABASE?.auth.signOut();
         setLogoutLoading(false);
     };
 
