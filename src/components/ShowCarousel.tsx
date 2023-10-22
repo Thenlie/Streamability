@@ -101,21 +101,15 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     ...rest
 }): JSX.Element => {
     const windowSize = useWindowSize();
+    const initialCarouselSteps = getCarouselSteps({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
-    const [loading, setLoading] = useState(true);
-    const [carouselSteps, setCarouselSteps] = useState<number>(
-        size || getCarouselSteps(windowSize)
-    );
+    const [carouselSteps, setCarouselSteps] = useState<number>(size || initialCarouselSteps);
     const [carouselWidth, setCarouselWidth] = useState<string>(
-        (SHOW_POSTER_WIDTH * (size || 1) + 100).toString() + 'px'
+        (SHOW_POSTER_WIDTH * (size || initialCarouselSteps) + 180).toString() + 'px'
     );
-
-    // Delay first render to allow windowSize to load
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
-    }, []);
 
     useEffect(() => {
         if (size) {
@@ -123,6 +117,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             setCarouselWidth((SHOW_POSTER_WIDTH * size + 100).toString() + 'px');
             return;
         }
+        if (debouncedWindowSize.width === null) return;
         if (debouncedWindowSize.width && debouncedWindowSize.width > 1536) {
             setCarouselWidth((SHOW_POSTER_WIDTH * 5 + 190).toString() + 'px');
         } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1350) {
@@ -155,7 +150,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         return arr;
     };
 
-    if (loading || dataLoading) {
+    if (dataLoading) {
         return <ShowCarouselLoader count={1} />;
     }
 
