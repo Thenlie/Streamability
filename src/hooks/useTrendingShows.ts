@@ -23,7 +23,10 @@ const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => 
             const tv = await getTvTrending();
             const shows: ShowData[] = [];
 
-            if (!movies && !tv) return;
+            if (!movies && !tv) {
+                setLoading(false);
+                return;
+            }
 
             if (!tv && movies) shows.push(...movies);
             else if (!movies && tv) shows.push(...tv);
@@ -41,11 +44,10 @@ const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => 
                     setTrending(sortShowsAlphaAsc(shows));
                     break;
             }
+            setLoading(false);
         };
         handler();
-        setLoading(false);
     }, [sortBy]);
-
     return { trendingShows: trending, loading };
 };
 

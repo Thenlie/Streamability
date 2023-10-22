@@ -20,9 +20,15 @@ const useGetProfileArray = (
 
     useEffect(() => {
         const handler = async () => {
-            if (!session || !profile) return;
+            if (!session || !profile) {
+                setLoading(false);
+                return;
+            }
             const array = await getProfileArray(profile.id, whichCol);
-            if (!array) return;
+            if (!array) {
+                setLoading(false);
+                return;
+            }
             const arr: ShowData[] = [];
             for (let i = 0; i < array.length; i++) {
                 if (array[i].includes('tv-')) {
@@ -34,9 +40,9 @@ const useGetProfileArray = (
                 }
             }
             setData(arr);
+            setLoading(false);
         };
         handler();
-        setLoading(false);
     }, [session, profile]);
 
     return { data, loading };

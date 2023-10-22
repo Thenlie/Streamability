@@ -49,7 +49,8 @@ describe('useGetProfileArray', () => {
         const { result } = renderHook(({ whichCol }) => useGetProfileArray(whichCol), {
             initialProps: { whichCol: WHICH_COL[0] },
         });
-        await waitFor(() => expect(result.current.data).toBe(null));
+        await waitFor(() => expect(result.current.loading).toBe(false));
+        expect(result.current.data).toBe(null);
     });
     it('Returns show array when profile array contains data', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(SHOW_DATA);
@@ -65,8 +66,9 @@ describe('useGetProfileArray', () => {
         const { result } = renderHook(({ whichCol }) => useGetProfileArray(whichCol), {
             initialProps: { whichCol: WHICH_COL[0] },
         });
-        await waitFor(() => expect(result.current.data?.[0].id).toBe(1726));
-        await waitFor(() => expect(result.current.data?.[0].title).toBe('Iron Man'));
-        await waitFor(() => expect(result.current.data?.[0].vote_average).toBe(7.631));
+        await waitFor(() => expect(result.current.loading).toBe(false));
+        expect(result.current.data?.[0].id).toBe(1726);
+        expect(result.current.data?.[0].title).toBe('Iron Man');
+        expect(result.current.data?.[0].vote_average).toBe(7.631);
     });
 });

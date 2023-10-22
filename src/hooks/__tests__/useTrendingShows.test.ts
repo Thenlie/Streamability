@@ -17,11 +17,11 @@ vi.mock('../../helpers', async () => {
 });
 
 describe('useTrendingShows', () => {
-    it('When unable to fetch, returns null', () => {
+    it('When unable to fetch, returns null', async () => {
         const { result } = renderHook(useTrendingShows);
         expect(result.current).toHaveProperty('loading');
         expect(result.current).toHaveProperty('trendingShows');
-        expect(result.current.loading).toBe(false);
+        await waitFor(() => expect(result.current.loading).toBe(false));
         expect(result.current.trendingShows).toBe(null);
     });
     describe('When able to fetch, returns an array of shows sorted by', () => {
@@ -33,11 +33,11 @@ describe('useTrendingShows', () => {
             await act(
                 async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
             );
-            await waitFor(() => expect(result.current).toHaveProperty('trendingShows'));
             await waitFor(() => expect(result.current.loading).toBe(false));
-            await waitFor(() => expect(result.current.trendingShows?.[0].id).toBe(1726));
-            await waitFor(() => expect(result.current.trendingShows?.[0].title).toBe('Iron Man'));
-            await waitFor(() => expect(result.current.trendingShows?.[0].media_type).toBe('movie'));
+            expect(result.current).toHaveProperty('trendingShows');
+            expect(result.current.trendingShows?.[0].id).toBe(1726);
+            expect(result.current.trendingShows?.[0].title).toBe('Iron Man');
+            expect(result.current.trendingShows?.[0].media_type).toBe('movie');
         });
         it('release', async () => {
             vi.mocked(getMovieTrending).mockResolvedValue(MOVIE_DATA_ARRAY);
@@ -47,11 +47,11 @@ describe('useTrendingShows', () => {
             await act(
                 async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
             );
-            await waitFor(() => expect(result.current).toHaveProperty('trendingShows'));
             await waitFor(() => expect(result.current.loading).toBe(false));
-            await waitFor(() => expect(result.current.trendingShows?.[0].id).toBe(951647));
-            await waitFor(() => expect(result.current.trendingShows?.[0].title).toBe('Iron Man'));
-            await waitFor(() => expect(result.current.trendingShows?.[0].media_type).toBe('movie'));
+            expect(result.current).toHaveProperty('trendingShows');
+            expect(result.current.trendingShows?.[0].id).toBe(951647);
+            expect(result.current.trendingShows?.[0].title).toBe('Iron Man');
+            expect(result.current.trendingShows?.[0].media_type).toBe('movie');
         });
         it('alpha', async () => {
             vi.mocked(getMovieTrending).mockResolvedValue(MOVIE_DATA_ARRAY);
@@ -61,13 +61,11 @@ describe('useTrendingShows', () => {
             await act(
                 async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
             );
-            await waitFor(() => expect(result.current).toHaveProperty('trendingShows'));
             await waitFor(() => expect(result.current.loading).toBe(false));
-            await waitFor(() => expect(result.current.trendingShows?.[0].id).toBe(37113));
-            await waitFor(() =>
-                expect(result.current.trendingShows?.[0].title).toBe(
-                    'David Knight: Iron Man of Enduro'
-                )
+            expect(result.current).toHaveProperty('trendingShows');
+            expect(result.current.trendingShows?.[0].id).toBe(37113);
+            expect(result.current.trendingShows?.[0].title).toBe(
+                'David Knight: Iron Man of Enduro'
             );
         });
     });
