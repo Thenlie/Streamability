@@ -1,27 +1,52 @@
 import React from 'react';
-import ShowCardLoader from './ShowCardLoader';
+import ShowPosterLoader from './ShowPosterLoader';
+import { getCarouselSteps } from '../ShowCarousel';
+import { SHOW_POSTER_WIDTH } from '../ShowPoster';
+import Carousel from 'nuka-carousel';
 
 interface ShowCarouselLoaderProps {
     /**
-     * Number of skeleton loaders to display
+     * Optional number of posters to render within the carousel.
+     * Defaults to a number based on the browser window width.
      */
-    count: number;
+    steps?: number;
 }
 
 /**
  * A skeleton loader of the ShowCarousel component. To be rendered while
  * main component is loading.
- * @param count | number of card loaders to be rendered
- * @returns {JSX.Element}
+ * @param steps | number of posters to render within the carousel
  */
-const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ count }): JSX.Element => {
+const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ steps }) => {
+    const initialCarouselSteps = getCarouselSteps({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+    const carouselWidth =
+        (SHOW_POSTER_WIDTH * (steps || initialCarouselSteps) + 180).toString() + 'px';
+
     return (
-        <div className='m-3 flex justify-center'>
-            {[...Array(count)].map((x, i) => (
-                <div key={i} className='overflow-x-hidden'>
-                    <ShowCardLoader count={1} />
+        <div style={{ width: carouselWidth }}>
+            <Carousel
+                className='bg-foreground'
+                style={{
+                    width: carouselWidth,
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    borderRadius: '5px',
+                }}
+                defaultControlsConfig={{
+                    pagingDotsClassName: 'hidden',
+                    nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
+                    prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
+                }}
+            >
+                <div className='flex justify-center'>
+                    {[...Array(initialCarouselSteps)].map((x, i) => (
+                        <ShowPosterLoader key={i} count={1} />
+                    ))}
                 </div>
-            ))}
+            </Carousel>
         </div>
     );
 };

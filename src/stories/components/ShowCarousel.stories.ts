@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ShowCarousel } from '../../components';
-import { MOVIE_DATA_ARRAY } from '../../__tests__/screens/assets';
-import { withRouter } from 'storybook-addon-react-router-v6';
+import { MOVIE_DATA_ARRAY } from '../constants';
+import { reactRouterParameters, withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
     title: 'Components/Show Carousel',
@@ -9,6 +9,16 @@ const meta = {
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
+        reactRouter: reactRouterParameters({
+            location: {
+                path: '/details/movie/:id',
+                pathParams: { id: MOVIE_DATA_ARRAY[0].id },
+            },
+            routing: {
+                path: '/details/movie/:id',
+                handle: 'details',
+            },
+        }),
     },
     decorators: [withRouter],
 } satisfies Meta<typeof ShowCarousel>;

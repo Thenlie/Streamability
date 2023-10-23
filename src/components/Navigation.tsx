@@ -1,4 +1,4 @@
-import { SUPABASE } from '../helpers';
+import { SUPABASE } from '../supabase/supabaseClient';
 import { Link } from 'react-router-dom';
 import { Session } from '../types';
 import React, { useState, useEffect, MouseEvent } from 'react';
@@ -86,7 +86,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
 
     const logoutHandler = async () => {
         // TODO: Error handling if any
-        await SUPABASE.auth.signOut();
+        await SUPABASE?.auth.signOut();
     };
 
     return (
@@ -183,7 +183,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                                         className='!p-2'
                                         onClick={() => toggleUserMenu(null, false)}
                                         component={Link}
-                                        to='/auth/login'
+                                        to='/login'
                                     >
                                         <ListItemIcon className='!text-text'>
                                             <Login className='mr-2' />
@@ -194,7 +194,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                                         className='!p-2'
                                         onClick={() => toggleUserMenu(null, false)}
                                         component={Link}
-                                        to='/auth/signup'
+                                        to='/signup'
                                     >
                                         <ListItemIcon className='!text-text'>
                                             <PersonAddAlt className='mr-2' />

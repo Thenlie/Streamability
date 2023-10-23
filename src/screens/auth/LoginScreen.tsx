@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE } from '../../helpers';
+import { SUPABASE } from '../../supabase/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import { InputAdornment, IconButton, Typography as Typ } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
-import { SnackbarProps } from '../Snackbar';
+import { SnackbarProps } from '../../components/Snackbar';
 
 const LOG = new Logger('LoginForm');
 
 /**
  * Form to handle user login.
- *
- * @returns {JSX.Element}
+ * Will redirect to dashboard if already logged in
+ * or upon login completion.
  */
-const LoginForm: React.FC = (): JSX.Element => {
+const LoginScreen: React.FC = () => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -52,6 +52,10 @@ const LoginForm: React.FC = (): JSX.Element => {
      * @returns {Promise<void>} | Does not redirect user
      */
     async function signInWithEmail(evt: React.SyntheticEvent): Promise<void> {
+        if (!SUPABASE) {
+            LOG.error('Supabase client not found');
+            return;
+        }
         setLoading(true);
         evt.preventDefault();
 
@@ -135,7 +139,7 @@ const LoginForm: React.FC = (): JSX.Element => {
             </form>
             <div className='mt-2'>
                 <Typ display='inline'>Don&apos;t have an account? </Typ>
-                <Link to='/auth/signup' className='underline hover:text-blue-500'>
+                <Link to='/signup' className='underline hover:text-blue-500'>
                     Sign up.
                 </Link>
             </div>
@@ -144,4 +148,4 @@ const LoginForm: React.FC = (): JSX.Element => {
     );
 };
 
-export default LoginForm;
+export default LoginScreen;

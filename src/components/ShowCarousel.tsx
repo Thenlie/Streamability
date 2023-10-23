@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
-import { ShowPosterLoader } from './loaders';
+import { ShowCarouselLoader } from './loaders';
 import { Typography as Typ } from '@mui/material';
 import { Profile, ProfileActions } from '../types';
 
@@ -13,6 +13,10 @@ interface ShowCarouselProps {
      * Array of data to populate show cards
      */
     data: ShowData[] | null;
+    /**
+     * If data being passed in is still loading
+     */
+    dataLoading?: boolean;
     /**
      * Number of ShowCards to display in 1 step.
      * If `undefined` this number will be based on screen size
@@ -67,8 +71,6 @@ export function getCarouselSteps(windowSize: WindowSize): number {
 
 /**
  * A group of Show Posters that will be rendered as a single page in the carousel
- *
- * @returns {JSX.Element} | Collection of ShowCards
  */
 const CarouselChildren: React.FC<{
     data: ShowData[];
@@ -90,31 +92,24 @@ const CarouselChildren: React.FC<{
 /**
  * Show carousels will be used throughout the site to display collections of shows
  * The scroll horizontally and contain any number of show cards
- *
- * @returns {JSX.Element} | Carousel of movie cards
  */
 const ShowCarousel: React.FC<ShowCarouselProps> = ({
     data,
+    dataLoading = false,
     size,
     fallbackText,
     ...rest
 }): JSX.Element => {
     const windowSize = useWindowSize();
+    const initialCarouselSteps = getCarouselSteps({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
-    const [loading, setLoading] = useState(true);
-    const [carouselSteps, setCarouselSteps] = useState<number>(
-        size || getCarouselSteps(windowSize)
-    );
+    const [carouselSteps, setCarouselSteps] = useState<number>(size || initialCarouselSteps);
     const [carouselWidth, setCarouselWidth] = useState<string>(
-        (SHOW_POSTER_WIDTH * (size || 1) + 100).toString() + 'px'
+        (SHOW_POSTER_WIDTH * (size || initialCarouselSteps) + 180).toString() + 'px'
     );
-
-    // Delay first render to allow windowSize to load
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
-    }, []);
 
     useEffect(() => {
         if (size) {
@@ -122,6 +117,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             setCarouselWidth((SHOW_POSTER_WIDTH * size + 100).toString() + 'px');
             return;
         }
+        if (debouncedWindowSize.width === null) return;
         if (debouncedWindowSize.width && debouncedWindowSize.width > 1536) {
             setCarouselWidth((SHOW_POSTER_WIDTH * 5 + 190).toString() + 'px');
         } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1350) {
@@ -138,8 +134,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     /**
      * Splits an array of shows into an array of CarouselChildren
-     *
-     * @param data Show
+     * @param data Array of shows
      * @returns {JSX.Element[]}
      */
     const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
@@ -155,45 +150,35 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         return arr;
     };
 
-    if (loading) {
-        return (
-            <section className='pt-12'>
-                <div className='flex justify-center' style={{ width: carouselWidth }}>
-                    <ShowPosterLoader count={getCarouselSteps(windowSize)} />
-                </div>
-            </section>
-        );
+    if (dataLoading) {
+        return <ShowCarouselLoader />;
     }
 
     if (!data || data.length === 0) {
         return (
-            <section className='pt-12'>
-                <div style={{ width: carouselWidth }}>
-                    <Carousel
-                        className='bg-foreground'
-                        style={{
-                            width: carouselWidth,
-                            paddingTop: '10px',
-                            paddingBottom: '10px',
-                            borderRadius: '5px',
-                        }}
-                        defaultControlsConfig={{
-                            pagingDotsClassName: 'hidden',
-                            nextButtonClassName: 'hidden',
-                            prevButtonClassName: 'hidden',
-                        }}
+            <div style={{ width: carouselWidth }}>
+                <Carousel
+                    className='bg-foreground'
+                    style={{
+                        width: carouselWidth,
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        borderRadius: '5px',
+                    }}
+                    defaultControlsConfig={{
+                        pagingDotsClassName: 'hidden',
+                        nextButtonClassName: 'hidden',
+                        prevButtonClassName: 'hidden',
+                    }}
+                >
+                    <Typ
+                        variant='body1'
+                        className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
                     >
-                        <Typ
-                            variant='body1'
-                            className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
-                        >
-                            {fallbackText
-                                ? fallbackText
-                                : 'Sorry, no shows to display at this time.'}
-                        </Typ>
-                    </Carousel>
-                </div>
-            </section>
+                        {fallbackText ? fallbackText : 'Sorry, no shows to display at this time.'}
+                    </Typ>
+                </Carousel>
+            </div>
         );
     }
 

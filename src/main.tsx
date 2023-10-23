@@ -8,12 +8,16 @@ import {
     SearchResultsScreen,
     PageNotFoundScreen,
     DashboardScreen,
-    AuthScreen,
+    AuthLayout,
+    LoginScreen,
+    SignUpScreen,
     ShowDetailsScreen,
     DiscoverScreen,
+    DashboardGalleryScreen,
+    DashboardLayout,
 } from './screens';
-import { loader as searchLoader } from './screens/SearchResultsScreen';
-import { LoginForm, SignUpForm } from './components';
+import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
+import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
 
 /**
  * Create the 'root route' and serve the entire app to it
@@ -30,22 +34,42 @@ const router = createBrowserRouter([
                 element: <FeaturedSearchScreen />,
             },
             {
-                path: 'auth',
-                element: <AuthScreen />,
+                element: <AuthLayout />,
                 children: [
                     {
                         path: 'login',
-                        element: <LoginForm />,
+                        element: <LoginScreen />,
                     },
                     {
                         path: 'signup',
-                        element: <SignUpForm />,
+                        element: <SignUpScreen />,
                     },
                 ],
             },
             {
                 path: 'dashboard',
-                element: <DashboardScreen />,
+                element: <DashboardLayout />,
+                children: [
+                    {
+                        path: '',
+                        element: <DashboardScreen />,
+                    },
+                    {
+                        path: 'queue',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                    {
+                        path: 'favorites',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                    {
+                        path: 'watched',
+                        element: <DashboardGalleryScreen />,
+                        loader: dashGalleryLoader,
+                    },
+                ],
             },
             {
                 path: 'search',

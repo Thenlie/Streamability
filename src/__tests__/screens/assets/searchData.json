@@ -4,6 +4,7 @@
         {
             "adult": false,
             "backdrop_path": "/7lmBufEG7P7Y1HClYK3gCxYrkgS.jpg",
+            "banner_path": "/7lmBufEG7P7Y1HClYK3gCxYrkgS",
             "genre_ids": [
                 12,
                 28,
@@ -24,6 +25,7 @@
         {
             "adult": false,
             "backdrop_path": "/cyecB7godJ6kNHGONFjUyVN9OX5.jpg",
+            "banner_path": "/cyecB7godJ6kNHGONFjUyVN9OX5.jpg",
             "genre_ids": [
                 28,
                 878,
@@ -44,6 +46,7 @@
         {
             "adult": false,
             "backdrop_path": "/tKa1gmGKAUVYnflYcadipeL3d9h.jpg",
+            "banner_path": "/tKa1gmGKAUVYnflYcadipeL3d9h.jpg",
             "genre_ids": [
                 28,
                 12,
@@ -64,6 +67,7 @@
         {
             "adult": false,
             "backdrop_path": "/oUi2pvNbHCUiEFSqawp5dJdQNMK.jpg",
+            "banner_path": "/oUi2pvNbHCUiEFSqawp5dJdQNMK.jpg",
             "genre_ids": [
                 28,
                 12,
@@ -86,6 +90,7 @@
         {
             "adult": false,
             "backdrop_path": "/ryaZmqEnsRaeKUanGFHmPCFDs9M.jpg",
+            "banner_path": "/ryaZmqEnsRaeKUanGFHmPCFDs9M.jpg",
             "genre_ids": [
                 28,
                 12,
@@ -107,6 +112,7 @@
         {
             "adult": false,
             "backdrop_path": "/hGvAIrlWqXOnctvyVlX8RzKLgKz.jpg",
+            "banner_path": "/hGvAIrlWqXOnctvyVlX8RzKLgKz.jpg",
             "genre_ids": [
                 12,
                 16,
@@ -127,6 +133,7 @@
         {
             "adult": false,
             "backdrop_path": "/32hQccqSJqenEBZjOQ2OzneeVmV.jpg",
+            "banner_path": "/32hQccqSJqenEBZjOQ2OzneeVmV.jpg",
             "genre_ids": [
                 99
             ],
@@ -145,6 +152,7 @@
         {
             "adult": false,
             "backdrop_path": "/6wbGeAw3dCuHtTTcLF4KM1n4ysu.jpg",
+            "banner_path": "/6wbGeAw3dCuHtTTcLF4KM1n4ysu.jpg",
             "genre_ids": [
                 99
             ],
@@ -163,6 +171,7 @@
         {
             "adult": false,
             "backdrop_path": "/ub8wdPp4jDAwqJFjsRwAYmDw5l5.jpg",
+            "banner_path": "/ub8wdPp4jDAwqJFjsRwAYmDw5l5.jpg",
             "genre_ids": [
                 99
             ],
@@ -181,6 +190,7 @@
         {
             "adult": false,
             "backdrop_path": "/hkBkmIxfKD4nFYgk7jaXPWGf4Rt.jpg",
+            "banner_path": "/hkBkmIxfKD4nFYgk7jaXPWGf4Rt.jpg",
             "genre_ids": [
                 18
             ],
@@ -199,6 +209,7 @@
         {
             "adult": false,
             "backdrop_path": "/ga2YZp5sysUrRu1luxq1rZUKucc.jpg",
+            "banner_path": "/ga2YZp5sysUrRu1luxq1rZUKucc.jpg",
             "genre_ids": [
                 18
             ],
@@ -217,6 +228,7 @@
         {
             "adult": false,
             "backdrop_path": "/3qip09WgTU9P6CqkROH5LkgLdeR.jpg",
+            "banner_path": "/3qip09WgTU9P6CqkROH5LkgLdeR.jpg",
             "genre_ids": [
                 28
             ],

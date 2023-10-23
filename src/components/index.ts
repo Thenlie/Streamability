@@ -7,16 +7,16 @@ import ShowListCard, { ShowListCardProps } from './ShowListCard';
 import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
-import { LoginForm, SignUpForm } from './auth';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
 import Button from './Button';
-import EmptySearchResults from './EmptySearchResults';
+import EmptySearchResults from '../screens/search_results/EmptySearchResults';
 import IconButton from './IconButton';
 import Snackbar from './Snackbar';
 import Footer from './Footer';
 import TextInput from './TextInput';
+import Banner from './Banner';
 
 export {
     ShowCard,
@@ -24,8 +24,6 @@ export {
     ShowPoster,
     ShowCarousel,
     SearchInput,
-    LoginForm,
-    SignUpForm,
     Providers,
     Navigation,
     Rating,
@@ -35,6 +33,7 @@ export {
     Snackbar,
     Footer,
     TextInput,
+    Banner,
 };
 export * from './loaders';
 export * from './modals';

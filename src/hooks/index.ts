@@ -4,6 +4,7 @@ import useWindowSize from './useWindowSize';
 import useIsInProfileArray from './useIsInProfileArray';
 import useDebounceValue from './useDebounceValue';
 import useTrendingShows from './useTrendingShows';
+import useGetProfileArray from './useGetProfileArray';
 
 export {
     useProfileContext,
@@ -13,4 +14,5 @@ export {
     useWindowSize,
     useDebounceValue,
     useTrendingShows,
+    useGetProfileArray,
 };

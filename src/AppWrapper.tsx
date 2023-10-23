@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { SUPABASE } from './helpers';
+import { SUPABASE } from './supabase/supabaseClient';
 import type { Session, Profile } from './types';
 import { Navigation, Footer } from './components';
 import { getProfileById } from './supabase/profiles';
@@ -79,6 +79,10 @@ export default function AppWrapper(): JSX.Element {
      * for any changes to the users status
      */
     useEffect(() => {
+        if (!SUPABASE) {
+            LOG.error('Supabase client was not created');
+            return;
+        }
         SUPABASE.auth.getSession().then(({ data: { session }, error }) => {
             if (error) {
                 LOG.error(error);

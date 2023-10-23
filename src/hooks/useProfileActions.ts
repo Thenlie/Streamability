@@ -18,9 +18,8 @@ const useProfileActions = (
     const [favoritesLoading, setFavoritesLoading] = useState(false);
     const [watchedLoading, setWatchedLoading] = useState(false);
 
-    if (!profile) return;
-
     const removeFromQueue = async (showId: string) => {
+        if (!profile) return;
         setQueueLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'queue');
         if (!res) return;
@@ -29,6 +28,7 @@ const useProfileActions = (
     };
 
     const addToQueue = async (showId: string) => {
+        if (!profile) return;
         setQueueLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'queue');
         if (!res) return;
@@ -37,6 +37,7 @@ const useProfileActions = (
     };
 
     const removeFromFavorites = async (showId: string) => {
+        if (!profile) return;
         setFavoritesLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'favorites');
         if (!res) return;
@@ -45,6 +46,7 @@ const useProfileActions = (
     };
 
     const addToFavorites = async (showId: string) => {
+        if (!profile) return;
         setFavoritesLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'favorites');
         if (!res) return;
@@ -53,6 +55,7 @@ const useProfileActions = (
     };
 
     const removeFromWatched = async (showId: string) => {
+        if (!profile) return;
         setWatchedLoading(true);
         const res = await removeFromProfileArray(profile.id, showId, 'watched');
         if (!res) return;
@@ -61,6 +64,7 @@ const useProfileActions = (
     };
 
     const addToWatched = async (showId: string) => {
+        if (!profile) return;
         setWatchedLoading(true);
         const res = await addToProfileArray(profile.id, showId, 'watched');
         if (!res) return;
@@ -69,6 +73,7 @@ const useProfileActions = (
     };
 
     useEffect(() => {
+        if (!profile) return;
         setProfileActions({
             removeFromQueue,
             removeFromFavorites,

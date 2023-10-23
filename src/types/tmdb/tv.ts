@@ -129,3 +129,25 @@ export interface TvDetailsData extends TvData {
         ];
     };
 }
+
+export interface DiscoverTv {
+    pages: number;
+    include_adult?: boolean;
+    with_genres?: string;
+    sort_by?:
+        | 'popularity.asc'
+        | 'popularity.desc'
+        | 'revenue.asc'
+        | 'primary_release_date.asc'
+        | 'primary_release_date.desc'
+        | 'vote_average.asc'
+        | 'vote_average.desc';
+    vote_average_lte?: number;
+    vote_average_gte?: number;
+    vote_count_gte?: number;
+    vote_count_lte?: number;
+    first_air_date_gte?: string;
+    first_air_date_lte?: string;
+    with_watch_providers?: string;
+    watch_region?: string;
+}

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { withRouter, reactRouterParameters } from 'storybook-addon-react-router-v6';
 import { ShowPoster } from '../../components';
-import { MOVIE_DATA } from '../../__tests__/screens/assets';
-import { withRouter } from 'storybook-addon-react-router-v6';
+import { MOVIE_DATA } from '../constants';
 import { ProfileActions } from '../../types';
 
 const profileActionsMock: ProfileActions = {
@@ -22,6 +22,16 @@ const meta = {
     tags: ['autodocs'],
     parameters: {
         layout: 'centered',
+        reactRouter: reactRouterParameters({
+            location: {
+                path: '/details/movie/:id',
+                pathParams: { id: MOVIE_DATA.id },
+            },
+            routing: {
+                path: '/details/movie/:id',
+                handle: 'details',
+            },
+        }),
     },
     decorators: [withRouter],
 } satisfies Meta<typeof ShowPoster>;
@@ -31,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        details: MOVIE_DATA[0],
+        details: MOVIE_DATA,
         profile: null,
         profileActions: profileActionsMock,
         showQueueButton: false,

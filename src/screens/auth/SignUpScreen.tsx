@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
-import { SUPABASE, COUNTRIES } from '../../helpers';
+import { SUPABASE } from '../../supabase/supabaseClient';
+import { COUNTRIES, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import {
@@ -14,16 +15,16 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logger from '../../logger';
-import { SnackbarProps } from '../Snackbar';
+import { SnackbarProps } from '../../components/Snackbar';
 
-const LOG = new Logger('SignupForm');
+const LOG = new Logger('SignUpForm');
 
 /**
- * Form to handle user sign up
- *
- * @returns {JSX.Element}
+ * Form to handle user sign up.
+ * Wil redirect to dashboard if already logged in
+ * or upon sign up completion.
  */
-const SignUpForm: React.FC = (): JSX.Element => {
+const SignUpScreen: React.FC = () => {
     const { session } = useSessionContext();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
@@ -87,6 +88,10 @@ const SignUpForm: React.FC = (): JSX.Element => {
      * @returns {Promise<void>} | Does not redirect user
      */
     const signUpHandler = async (evt: React.SyntheticEvent): Promise<void> => {
+        if (!SUPABASE) {
+            LOG.error('Supabase client not found!');
+            return;
+        }
         setLoading(true);
         evt.preventDefault();
         clearErrors();
@@ -107,6 +112,14 @@ const SignUpForm: React.FC = (): JSX.Element => {
         if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
+            setLoading(false);
+            return;
+        }
+
+        // Ensure country is valid
+        if (!validateCountry(country)) {
+            showError('Must select a valid country');
+            setCountryError(true);
             setLoading(false);
             return;
         }
@@ -277,7 +290,7 @@ const SignUpForm: React.FC = (): JSX.Element => {
             </form>
             <div className='mt-2'>
                 <Typ display='inline'>Already have an account? </Typ>
-                <Link to='/auth/login' className='underline hover:text-blue-500'>
+                <Link to='/login' className='underline hover:text-blue-500'>
                     Login.
                 </Link>
             </div>
@@ -286,4 +299,4 @@ const SignUpForm: React.FC = (): JSX.Element => {
     );
 };
 
-export default SignUpForm;
+export default SignUpScreen;

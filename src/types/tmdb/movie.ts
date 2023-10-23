@@ -105,3 +105,26 @@ export interface MovieDetailsData extends MovieData {
     status: string;
     tagline: string;
 }
+
+export interface DiscoverMovie {
+    pages: number;
+    include_adult?: boolean;
+    include_video?: boolean; // Unused
+    with_genres?: string;
+    sort_by?:
+        | 'popularity.asc'
+        | 'popularity.desc'
+        | 'revenue.asc'
+        | 'primary_release_date.asc'
+        | 'primary_release_date.desc'
+        | 'vote_average.asc'
+        | 'vote_average.desc';
+    vote_average_lte?: number;
+    vote_average_gte?: number;
+    vote_count_gte?: number;
+    vote_count_lte?: number;
+    release_date_gte?: string;
+    release_date_lte?: string;
+    watch_region?: string;
+    with_watch_providers?: string;
+}

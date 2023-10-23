@@ -18,11 +18,11 @@ interface ShowCardLoaderProps {
 const ShowPosterLoader: React.FC<ShowCardLoaderProps> = ({ count }): JSX.Element => {
     return (
         <>
-            {[...Array(count)].map((x, i) => (
-                <div key={i} className='flex w-[180px] mx-1 my-2'>
-                    <Skeleton width={175} height={270} className='mb-2 my-1' />
-                </div>
-            ))}
+            <div className='flex justify-center mx-1 my-2'>
+                {[...Array(count)].map((x, i) => (
+                    <Skeleton key={i} width={175} height={270} className='m-1' />
+                ))}
+            </div>
         </>
     );
 };
