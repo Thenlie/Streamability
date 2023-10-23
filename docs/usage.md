@@ -67,7 +67,9 @@ If you run into issues with an npm install, use the command:
 ```s
 npm run clean
 ```
-This will delete and reinstall all `node_modules`. If this does not work, you may also need to reset your npm cache using the command:
+This will delete and reinstall all `node_modules` as well as the npm cache.
+
+If you see the error `permission denied` when running one of the script files, use the command:
 ```s
-npm cache clean --force
+chmod +x ./scripts/file-name
 ```
