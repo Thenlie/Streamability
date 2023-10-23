@@ -18,10 +18,15 @@ git clone <repository_url>
 ```s
 npm install
 ```
-6. Finally, you need to run the set up command:
+
+6. Next, you need to run the set up command:
 ```s
 npm run setup
 ```
+This will ensure the projects git hooks run during the pre-commit step.
+
+7. Finally, you will need to install [docker](https://www.docker.com/) one your machine. This is used to run the local Supabase server.
+
 This should be everything you need to move on to the usage instructions!
 
 ---
@@ -35,6 +40,12 @@ To run the development server, use the command:
 npm run dev
 ```
 This will build and run the application in watch mode automatically. This means as you work on the application, your browser will automatically update when you save the code.
+
+You will also need to run a local Supabase instance. To do this, use the command:
+```s
+npm run db-start
+```
+This will start the local Supabase development server. From there, you will need to copy the anon-key and api url to the .env file. If you would like to have this step done automatically, you can run `npm run db-start-env` instead.
 
 If you would like to see a deployed version of your work, push your branch to remote. Vercel will automatically deploy that branch in a test site. 
 
@@ -56,7 +67,9 @@ If you run into issues with an npm install, use the command:
 ```s
 npm run clean
 ```
-This will delete and reinstall all `node_modules`. If this does not work, you may also need to reset your npm cache using the command:
+This will delete and reinstall all `node_modules` as well as the npm cache.
+
+If you see the error `permission denied` when running one of the script files, use the command:
 ```s
-npm cache clean --force
+chmod +x ./scripts/file-name
 ```

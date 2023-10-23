@@ -18,7 +18,11 @@
     "clean": "./scripts/clean.sh",
     "postclean": "npm install",
     "todo": "leasot -S 'src/**/*'",
-    "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md"
+    "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md",
+    "db-start": "npx supabase start",
+    "db-start-env": "./scripts/db-start.sh",
+    "db-stop": "npx supabase stop",
+    "db-reset": "npx supabase db reset"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -64,6 +68,7 @@
     "prettier": "^3.0.3",
     "storybook": "^7.5.0",
     "storybook-addon-react-router-v6": "^2.0.8",
+    "supabase": "^1.106.1",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.6",
     "vite": "^4.4.11",
