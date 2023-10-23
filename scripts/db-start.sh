@@ -1,6 +1,7 @@
 #!/bin/bash
-
-# npx supabase start | tee >(grep -e "API URL: " -e "anon key: " | sed "s/^.*: //" > .env)
+# Start the local supabase development server
+# Get the url and anon key from the CLI output
+# Write those keys to the local .env file
 
 echo "Starting supabase local development setup..."
 
