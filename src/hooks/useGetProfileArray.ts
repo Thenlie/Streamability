@@ -20,11 +20,10 @@ const useGetProfileArray = (
 
     useEffect(() => {
         const handler = async () => {
-            if (!session || !profile) {
-                setLoading(false);
+            if (!session) {
                 return;
             }
-            const array = await getProfileArray(profile.id, whichCol);
+            const array = await getProfileArray(session.user.id, whichCol);
             if (!array) {
                 setLoading(false);
                 return;

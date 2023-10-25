@@ -22,11 +22,11 @@ const DashboardGalleryScreen: React.FC = () => {
     const profileActions = useProfileActions(profile, setProfile);
     const navigate = useNavigate();
     const path: ProfileArrayCols = useLoaderData() as ProfileArrayCols;
-    const { data } = useGetProfileArray(path);
+    const { data, loading } = useGetProfileArray(path);
 
     // TODO: If profile does not return after a few seconds,
     // we should assume the user is not logged in and redirect to an auth page
-    if (!profile) return <DashboardGalleryLoader path={path} />;
+    if (!profile || loading) return <DashboardGalleryLoader path={path} />;
 
     /**
      * Return the page title based on the URL path

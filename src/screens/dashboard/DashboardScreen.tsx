@@ -133,7 +133,7 @@ const DashboardScreen: React.FC = () => {
         'Your watched list is empty! Add shows to your watched list to view them here.';
 
     // If the user is not logged in, redirect to login
-    if (!session || !profile) {
+    if (!session) {
         return <Navigate to={'/login'} replace />;
     }
 
@@ -159,6 +159,11 @@ const DashboardScreen: React.FC = () => {
         await SUPABASE?.auth.signOut();
         setLogoutLoading(false);
     };
+
+    // TODO: #665 Create skeleton loader component
+    if (!profile) {
+        return <Typ>Loading...</Typ>;
+    }
 
     return (
         <>
