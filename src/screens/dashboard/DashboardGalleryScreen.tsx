@@ -44,7 +44,7 @@ const DashboardGalleryScreen: React.FC = () => {
 
     return (
         <div className='m-4'>
-            <Typ variant='h5'>{`${profile.username}'s ${getTitle(path)}`}</Typ>
+            <Typ variant='h5' sx={{ padding: 2 }}>{`${profile.username}'s ${getTitle(path)}`}</Typ>
             <Button
                 title='Dashboard'
                 StartIcon={ArrowBack}
