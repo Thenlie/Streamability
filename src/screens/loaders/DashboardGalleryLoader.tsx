@@ -19,7 +19,7 @@ const DashboardGalleryLoader: React.FC<DashboardGalleryLoaderProps> = ({ path })
 
     return (
         <section className='m-4'>
-            <Typ variant='h5' className='flex-1'>
+            <Typ variant='h5' className='flex-1 p-4'>
                 {path}
             </Typ>
             <Button
@@ -28,7 +28,9 @@ const DashboardGalleryLoader: React.FC<DashboardGalleryLoaderProps> = ({ path })
                 onClick={() => navigate('/dashboard')}
             />
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-6'>
-                <ShowPosterLoader count={15} />
+                {[...Array(10)].map((x, i) => (
+                    <ShowPosterLoader key={i} count={1} />
+                ))}
             </div>
         </section>
     );
