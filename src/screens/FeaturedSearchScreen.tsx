@@ -1,6 +1,6 @@
 import React from 'react';
-import { ShowCarousel, Banner } from '../components';
-import { useTrendingShows } from '../hooks';
+import { ShowCarousel, Banner, Snackbar } from '../components';
+import { useTrendingShows, useNetworkStatus } from '../hooks';
 
 /**
  * The landing page of the application which shows a show banner,
@@ -8,6 +8,7 @@ import { useTrendingShows } from '../hooks';
  */
 const FeaturedSearchScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('release');
+    const isOnline = useNetworkStatus();
 
     return (
         <div className='flex-1 flex flex-col w-full'>
@@ -20,6 +21,12 @@ const FeaturedSearchScreen: React.FC = () => {
             <div className='my-12 mx-auto'>
                 <ShowCarousel data={trendingShows} dataLoading={loading} />
             </div>
+            <Snackbar
+                isOpen={!isOnline}
+                isStatic
+                severity='info'
+                message='You appear to be offline. Please check your network connection to make the most of Streamability'
+            />
         </div>
     );
 };

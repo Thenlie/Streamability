@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { useSessionContext } from '../../hooks';
+import { useNetworkStatus, useSessionContext } from '../../hooks';
 import React from 'react';
+import { Snackbar } from '../../components';
 
 /**
  * Wrapper for all authentication components
@@ -8,10 +9,17 @@ import React from 'react';
  */
 const AuthLayout: React.FC = () => {
     const { session } = useSessionContext();
+    const isOnline = useNetworkStatus();
 
     return (
         <>
             <Outlet context={{ session }} />
+            <Snackbar
+                isOpen={!isOnline}
+                isStatic
+                severity='info'
+                message='You appear to be offline. Please check your network connection to make the most of Streamability'
+            />
         </>
     );
 };

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { useProfileContext, useSessionContext } from '../../hooks';
+import { useNetworkStatus, useProfileContext, useSessionContext } from '../../hooks';
 import React from 'react';
+import { Snackbar } from '../../components';
 
 /**
  * Wrapper for all dashboard screens
@@ -9,10 +10,17 @@ import React from 'react';
 const DashboardLayout: React.FC = () => {
     const { session, setSession } = useSessionContext();
     const { profile, setProfile } = useProfileContext();
+    const isOnline = useNetworkStatus();
 
     return (
         <>
             <Outlet context={{ session, setSession, profile, setProfile }} />
+            <Snackbar
+                isOpen={!isOnline}
+                isStatic
+                severity='info'
+                message='You appear to be offline. Please check your network connection to make the most of Streamability'
+            />
         </>
     );
 };
