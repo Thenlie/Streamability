@@ -3,6 +3,7 @@ import ShowCardLoader from './ShowCardLoader';
 import ShowCarouselLoader from './ShowCarouselLoader';
 import ShowListCardLoader from './ShowListCardLoader';
 import ShowPosterLoader from './ShowPosterLoader';
+import BannerLoader from './BannerLoader';
 
 export {
     ProvidersLoader,
@@ -10,4 +11,5 @@ export {
     ShowCarouselLoader,
     ShowListCardLoader,
     ShowPosterLoader,
+    BannerLoader,
 };
