@@ -9,15 +9,10 @@ import {
     getTvRecommendations,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button, Snackbar } from '../components';
+import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
 import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
-import {
-    useProfileContext,
-    useIsInProfileArray,
-    useProfileActions,
-    useNetworkStatus,
-} from '../hooks';
+import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import {
     AddToQueue,
     Cancel,
@@ -126,7 +121,6 @@ const ShowDetailsScreen: React.FC = () => {
     const showId = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
     const { profile } = useProfileContext();
-    const isOnline = useNetworkStatus();
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
@@ -221,12 +215,7 @@ const ShowDetailsScreen: React.FC = () => {
                     profile={profile}
                 />
             </section>
-            <Snackbar
-                isOpen={!isOnline}
-                isStatic
-                severity='info'
-                message='You appear to be offline. Please check your network connection to make the most of Streamability'
-            />
+            <OfflineSnackbar />
         </>
     );
 };

@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
-import { EmptySearchResults, Snackbar } from '../../components';
+import { EmptySearchResults, OfflineSnackbar } from '../../components';
 import { ShowData } from '../../types';
-import { useNetworkStatus, useProfileContext, useWindowSize } from '../../hooks';
+import { useProfileContext, useWindowSize } from '../../hooks';
 import { getShowsByName } from '../../helpers';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
@@ -37,7 +37,6 @@ const SearchResultsScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
     const windowSize = useWindowSize();
     const { profile, setProfile } = useProfileContext();
-    const isOnline = useNetworkStatus();
     const storageItem = localStorage.getItem('streamabilityView');
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
@@ -97,12 +96,7 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setShowDetails}
             />
             {cards}
-            <Snackbar
-                isOpen={!isOnline}
-                isStatic
-                severity='info'
-                message='You appear to be offline. Please check your network connection to make the most of Streamability'
-            />
+            <OfflineSnackbar />
         </>
     );
 };

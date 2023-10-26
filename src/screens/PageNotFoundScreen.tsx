@@ -1,11 +1,10 @@
 import { ErrorResponse } from '@remix-run/router';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import { Button, Snackbar } from '../components';
+import { Button, OfflineSnackbar, Snackbar } from '../components';
 import Logger from '../logger';
 import React from 'react';
 import { ArrowBack, Home } from '@mui/icons-material';
 import { Typography as Typ } from '@mui/material';
-import { useNetworkStatus } from '../hooks';
 
 const LOG = new Logger('PageNotFoundScreen');
 
@@ -14,7 +13,6 @@ const LOG = new Logger('PageNotFoundScreen');
  */
 const PageNotFoundScreen: React.FC = (): JSX.Element => {
     const navigate = useNavigate();
-    const isOnline = useNetworkStatus();
 
     /**
      * This hook returns anything thrown during an
@@ -38,12 +36,7 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
             {error.statusText && (
                 <Snackbar isOpen isStatic severity='error' message={error.statusText} />
             )}
-            <Snackbar
-                isOpen={!isOnline}
-                isStatic
-                severity='info'
-                message='You appear to be offline. Please check your network connection to make the most of Streamability'
-            />
+            <OfflineSnackbar />
         </div>
     );
 };

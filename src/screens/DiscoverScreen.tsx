@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNetworkStatus, useTrendingShows } from '../hooks';
+import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
-import { ShowCarousel, Banner, Snackbar } from '../components';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
 import { getDiscoverMovies, getDiscoverTv } from '../helpers';
 /**
@@ -10,7 +10,6 @@ import { getDiscoverMovies, getDiscoverTv } from '../helpers';
  */
 const DiscoverScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('alpha');
-    const isOnline = useNetworkStatus();
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
     const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
     const [actionAdventure, setActionAdventure] = useState<ShowData[] | null>(null);
@@ -229,12 +228,7 @@ const DiscoverScreen: React.FC = () => {
                     <ShowCarousel data={popularHulu} dataLoading={popularHuluLoading} />
                 </div>
             </div>
-            <Snackbar
-                isOpen={!isOnline}
-                isStatic
-                severity='info'
-                message='You appear to be offline. Please check your network connection to make the most of Streamability'
-            />
+            <OfflineSnackbar />
         </div>
     );
 };
