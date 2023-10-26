@@ -14,17 +14,13 @@ export interface ShowListCardProps {
      */
     details: ShowData;
     /**
-     * Either 'movie' or 'tv'
-     */
-    showType: string;
-    /**
      * User profile if logged in, otherwise `null`
      */
     profile: Profile | null;
     /**
      * Profile setting function that accepts a `Profile` or `null`
      */
-    setProfile: (profile: Profile | null) => void;
+    setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
 }
 
 /**
@@ -37,7 +33,6 @@ export interface ShowListCardProps {
  */
 const ShowListCard: React.FC<ShowListCardProps> = ({
     details,
-    showType,
     profile,
     setProfile,
 }): JSX.Element => {
@@ -76,7 +71,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
             className='items-left m-1 flex w-[700px] rounded-md bg-foreground shadow-md'
         >
             <Link
-                to={`/details/${showType}/${details.id}`}
+                to={`/details/${details.media_type}/${details.id}`}
                 state={details}
                 data-testid='show-details-link'
             >
