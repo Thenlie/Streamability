@@ -13,7 +13,6 @@ const FeaturedSearchScreen: React.FC = () => {
         <div className='flex-1 flex flex-col w-full'>
             <Banner
                 data={trendingShows}
-                dataLoading={loading}
                 title={'Search for any movie or tv show to discover streaming providers and more!'}
                 renderSearchInput
                 renderLogo

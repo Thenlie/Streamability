@@ -10,10 +10,6 @@ interface BannerProps {
      */
     data: ShowData[] | null;
     /**
-     * If data being passed in is still loading
-     */
-    dataLoading?: boolean;
-    /**
      * Title that is displayed on the banner
      */
     title: string;
@@ -31,23 +27,19 @@ interface BannerProps {
  * Image Banner with title and optional search input
  * @returns {JSX.Element} | Banner
  */
-const Banner: React.FC<BannerProps> = ({
-    data,
-    dataLoading,
-    title,
-    renderSearchInput,
-    renderLogo,
-}) => {
+const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput, renderLogo }) => {
     const [bannerPath, setBannerPath] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
         if (data) {
             const rand = Math.floor((Math.random() * data.length) / 2);
             const path = `https://image.tmdb.org/t/p/original${data?.[rand]?.banner_path}` || null;
             setBannerPath(path);
+            setLoading(false);
         }
     }, [data]);
 
-    if (dataLoading) {
+    if (loading) {
         return <BannerLoader />;
     }
     return (
