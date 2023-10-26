@@ -159,11 +159,7 @@ const DiscoverScreen: React.FC = () => {
     return (
         <div className='w-full'>
             <div className='mb-12 flex flex-col items-center'>
-                <Banner
-                    data={trendingShows}
-                    dataLoading={loading}
-                    title={'Discover Our Popular Shows'}
-                />
+                <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h6'>
                         Trending
@@ -186,11 +182,7 @@ const DiscoverScreen: React.FC = () => {
             </div>
 
             <div className='my-12 flex flex-col items-center'>
-                <Banner
-                    data={actionAdventure}
-                    dataLoading={actionAdventureLoading}
-                    title={'Genres'}
-                />
+                <Banner data={actionAdventure} title={'Genres'} />
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Action & Adventure
@@ -214,11 +206,7 @@ const DiscoverScreen: React.FC = () => {
             </div>
 
             <div className='my-12 flex flex-col items-center'>
-                <Banner
-                    data={popularNetflix}
-                    dataLoading={popularNetflixLoading}
-                    title={'Platforms'}
-                />
+                <Banner data={popularNetflix} title={'Platforms'} />
                 <div className='text-left my-6'>
                     <Typ sx={{ marginY: 1 }} variant='h5'>
                         Popular on Netflix
