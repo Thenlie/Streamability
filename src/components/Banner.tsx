@@ -2,12 +2,17 @@ import { useState, useEffect } from 'react';
 import { ShowData } from '../types';
 import { Typography as Typ } from '@mui/material';
 import SearchInput from './SearchInput';
+import { BannerLoader } from './loaders';
 
 interface BannerProps {
     /**
      * Array of data to randomly choose an image
      */
     data: ShowData[] | null;
+    /**
+     * If data being passed in is still loading
+     */
+    dataLoading?: boolean;
     /**
      * Title that is displayed on the banner
      */
@@ -26,7 +31,13 @@ interface BannerProps {
  * Image Banner with title and optional search input
  * @returns {JSX.Element} | Banner
  */
-const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput, renderLogo }) => {
+const Banner: React.FC<BannerProps> = ({
+    data,
+    dataLoading,
+    title,
+    renderSearchInput,
+    renderLogo,
+}) => {
     const [bannerPath, setBannerPath] = useState<string | null>(null);
     useEffect(() => {
         if (data) {
@@ -35,6 +46,10 @@ const Banner: React.FC<BannerProps> = ({ data, title, renderSearchInput, renderL
             setBannerPath(path);
         }
     }, [data]);
+
+    if (dataLoading) {
+        return <BannerLoader />;
+    }
     return (
         <div
             className={`p-4 lg:rounded-b-lg w-full lg:w-3/4 bg-no-repeat bg-cover bg-top mx-auto ${
