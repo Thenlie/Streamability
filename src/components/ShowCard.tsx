@@ -4,6 +4,7 @@ import { Typography as Typ } from '@mui/material';
 import { useProfileActions } from '../hooks';
 import React from 'react';
 import ShowPoster from './ShowPoster';
+import { useNavigate } from 'react-router-dom';
 
 export const SHOW_CARD_WIDTH = 360;
 
@@ -32,6 +33,7 @@ export interface ShowCardProps {
  */
 const ShowCard: React.FC<ShowCardProps> = ({ details, profile, setProfile }): JSX.Element => {
     const profileActions = useProfileActions(profile, setProfile);
+    const navigate = useNavigate();
 
     return (
         <div
@@ -53,6 +55,8 @@ const ShowCard: React.FC<ShowCardProps> = ({ details, profile, setProfile }): JS
                     <Typ
                         variant='body1'
                         align='left'
+                        className='hover:text-blue-500 cursor-pointer'
+                        onClick={() => navigate(`/details/${details.media_type}/${details.id}`)}
                         sx={{
                             fontWeight: 'bold',
                             overflow: 'hidden',
