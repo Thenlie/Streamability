@@ -24,11 +24,15 @@ interface SearchResultsHeaderProps {
     /**
      * Data of shows returned from the requested search
      */
-    showDetails?: { data: ShowData[] | null; hash: number };
+    showDetails?: ShowData[] | null;
     /**
      * Function to set the react state of the show data
      */
-    setShowDetails?: Dispatch<SetStateAction<{ data: ShowData[] | null; hash: number }>>;
+    setShowDetails?: Dispatch<SetStateAction<ShowData[] | null>>;
+    /**
+     * Function to trigger a re-render in the search results screen
+     */
+    setHash?: Dispatch<SetStateAction<number>>;
     /**
      * All controls are disabled when `true`, defaults to `false`
      */
@@ -45,6 +49,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     setViewState,
     showDetails,
     setShowDetails,
+    setHash,
     disableControls = false,
 }) => {
     const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
@@ -53,18 +58,21 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     const handleViewToggle = (view: 'grid' | 'list') => {
         setViewState?.(view);
         localStorage.setItem('streamabilityView', view);
+        setHash?.(Math.random());
     };
 
     const handleSortAlpha = () => {
-        const sortedShows = sortShowsAlphaAsc(showDetails?.data || []);
-        setShowDetails?.({ data: sortedShows, hash: Math.random() });
+        const sortedShows = sortShowsAlphaAsc(showDetails || []);
+        setShowDetails?.(sortedShows);
         setSortState('alpha');
+        setHash?.(Math.random());
     };
 
     const handleSortRevAlpha = () => {
-        const sortedShows = sortShowsAlphaDesc(showDetails?.data || []);
-        setShowDetails?.({ data: sortedShows, hash: Math.random() });
+        const sortedShows = sortShowsAlphaDesc(showDetails || []);
+        setShowDetails?.(sortedShows);
         setSortState('rev');
+        setHash?.(Math.random());
     };
 
     const handleRemoveSort = () => {
@@ -73,8 +81,9 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
             LOG.error('Unable to un-sort shows!');
             return;
         }
-        setShowDetails?.({ data: JSON.parse(unsortedShows), hash: Math.random() });
+        setShowDetails?.(JSON.parse(unsortedShows));
         setSortState('none');
+        setHash?.(Math.random());
     };
 
     return (

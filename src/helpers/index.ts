@@ -7,3 +7,4 @@ export * from './showFilterUtils';
 export * from './showSortUtils';
 export * from './stringFormatUtils';
 export * from './validationUtils';
+export * from './showTypeUtils';
