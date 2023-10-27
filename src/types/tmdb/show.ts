@@ -98,6 +98,8 @@ export interface ShowData {
     poster_path?: string | null;
     banner_path?: string | null;
     release_date?: string;
+    end_date?: string | null;
+    next_air_date?: string | undefined;
     age_rating?: string | null;
     runtime?: number;
     title: string;
