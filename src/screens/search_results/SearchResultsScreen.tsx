@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
 import { ShowData } from '../../types';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
-import { getShowsByName } from '../../helpers';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
@@ -44,7 +43,6 @@ const SearchResultsScreen: React.FC = () => {
         data: null,
         hash: 0,
     });
-    const [pageLoading, setPageLoading] = useState<boolean>(false);
     const { data, loading: dataLoading, moreToFetch, refetch } = usePaginatedData({ query: query });
 
     LOG.debug(data + String(dataLoading) + String(moreToFetch));
@@ -70,7 +68,7 @@ const SearchResultsScreen: React.FC = () => {
         );
     }, [data, viewState]);
 
-    if (pageLoading) {
+    if (!data) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
     }
 

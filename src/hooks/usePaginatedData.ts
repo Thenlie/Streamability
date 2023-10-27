@@ -17,7 +17,7 @@ interface PaginatedDataProps {
 const usePaginatedData = ({ query }: PaginatedDataProps) => {
     const [data, setData] = useState<ShowData[] | null>(null);
     const [moreToFetch, setMoreToFetch] = useState<boolean>(true);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(1);
 
     const refetch = () => {
@@ -25,7 +25,7 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
             if (!moreToFetch) return;
 
             setLoading(true);
-            LOG.debug(page);
+            LOG.debug(page + ' ' + query);
             const response = await fetch(
                 `https://api.themoviedb.org/3/search/multi?api_key=${
                     import.meta.env.VITE_MOVIEDB_KEY
@@ -74,11 +74,15 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
     };
 
     useEffect(() => {
+        if (page === 1) refetch();
+    }, [page]);
+
+    useEffect(() => {
         setPage(1);
         setData(null);
         setMoreToFetch(true);
-        setLoading(false);
-        refetch();
+        setLoading(true);
+        if (page === 1) refetch();
     }, [query]);
 
     return { data, loading, moreToFetch, refetch };
