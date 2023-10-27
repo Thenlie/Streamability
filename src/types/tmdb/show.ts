@@ -15,10 +15,10 @@ export interface ShowGenre {
  * More detailed information about streaming providers
  */
 export interface ShowProviderInfo {
-    display_priority?: number;
-    logo_path?: string;
-    provider_id?: number;
-    provider_name?: string;
+    display_priority: number;
+    logo_path: string;
+    provider_id: number;
+    provider_name: string;
 }
 
 /**
@@ -103,14 +103,12 @@ export interface ShowData {
     title: string;
     vote_average?: number;
     vote_count?: number;
-    networks?: [
-        {
-            name: string;
-            id: number;
-            logo_path: string | null;
-            origin_country: string;
-        },
-    ];
+    providers?: {
+        name: string;
+        id: number;
+        logo_path: string | null;
+        origin_country: string;
+    }[];
     media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
 }

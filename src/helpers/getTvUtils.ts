@@ -1,6 +1,6 @@
 import Logger from '../logger';
 import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv } from '../types';
-import { convertResultsToShowType } from './showTypeUtils';
+import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getTvUtils');
 
@@ -32,34 +32,14 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates,content_ratings`
+        }&append_to_response=images,release_dates,content_ratings,watch/providers`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    const returnRating = (arr: TvDetailsData) => {
-        for (let i = 0; i < arr.content_ratings.results.length; i++) {
-            if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
-                return arr.content_ratings.results[i].rating;
-            }
-        }
-        return 'No rating available';
-    };
+
     const data = (await response.json()) as TvDetailsData;
-    return {
-        id: data.id,
-        poster_path: data.poster_path,
-        title: data.original_name,
-        release_date: data.first_air_date,
-        runtime: data.episode_run_time[0],
-        vote_average: data.vote_average,
-        vote_count: data.vote_count,
-        age_rating: returnRating(data),
-        overview: data.overview,
-        networks: data.networks,
-        media_type: 'tv',
-        genre_ids: data.genres.map((genre) => genre.id),
-    };
+    return convertDetailsToShowType(data, 'tv');
 };
 
 /**
@@ -156,6 +136,19 @@ const getDiscoverTv = async ({
     return convertResultsToShowType(data);
 };
 
+/**
+ * Return the age rating of a given TV show or 'No rating available'
+ * if the rating can not be found
+ */
+const getTvRating = (arr: TvDetailsData) => {
+    for (let i = 0; i < arr.content_ratings.results.length; i++) {
+        if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
+            return arr.content_ratings.results[i].rating;
+        }
+    }
+    return 'No rating available';
+};
+
 export {
     getTvByName,
     getTvDetails,
@@ -163,4 +156,5 @@ export {
     getTvProviders,
     getTvRecommendations,
     getDiscoverTv,
+    getTvRating,
 };

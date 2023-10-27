@@ -1,4 +1,4 @@
-import { ShowGenre } from './show';
+import { ShowGenre, ShowProviders } from './show';
 
 /**
  * Returned by TMDB as non-detailed info
@@ -63,6 +63,7 @@ export interface MovieDetailsData extends MovieData {
         posters: MovieImage[];
     };
     imdb_id: string;
+    media_type: 'movie';
     production_companies: [
         {
             id: number;
@@ -104,6 +105,7 @@ export interface MovieDetailsData extends MovieData {
     ];
     status: string;
     tagline: string;
+    'watch/providers': ShowProviders;
 }
 
 export interface DiscoverMovie {

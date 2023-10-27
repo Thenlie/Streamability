@@ -1,7 +1,7 @@
 import Logger from '../logger';
 import { MovieResults, MovieDetailsData, ShowProviders, ShowData, DiscoverMovie } from '../types';
 import { MOVIE_RATINGS } from './constants';
-import { convertResultsToShowType } from './showTypeUtils';
+import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getMovieUtils');
 /**
@@ -32,40 +32,13 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates`
+        }&append_to_response=images,release_dates,watch/providers&language=en-US`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
     }
     const data = (await response.json()) as MovieDetailsData;
-    const returnRating = (arr: MovieDetailsData) => {
-        let release_date, release_dates;
-        for (let i = 0; i < arr.release_dates.results.length; i++) {
-            if (arr.release_dates.results[i].iso_3166_1 === 'US') {
-                release_dates = arr.release_dates.results[i].release_dates;
-                break;
-            }
-        }
-        release_dates?.map((r) => {
-            if (r.certification in MOVIE_RATINGS) release_date = r.certification;
-        });
-
-        if (release_date) return release_date;
-        return 'No rating available';
-    };
-    return {
-        id: data.id,
-        poster_path: data.poster_path,
-        title: data.original_title,
-        release_date: data.release_date,
-        age_rating: returnRating(data),
-        runtime: data.runtime,
-        vote_average: data.vote_average,
-        vote_count: data.vote_count,
-        overview: data.overview,
-        media_type: 'movie',
-        genre_ids: data.genre_ids,
-    };
+    return convertDetailsToShowType(data, 'movie');
 };
 
 /**
@@ -165,6 +138,26 @@ const getDiscoverMovies = async ({
     return convertResultsToShowType(data);
 };
 
+/**
+ * Return the age rating of a given movie or 'No rating available'
+ * if the rating can not be found
+ */
+const getMovieRating = (arr: MovieDetailsData) => {
+    let release_date, release_dates;
+    for (let i = 0; i < arr.release_dates.results.length; i++) {
+        if (arr.release_dates.results[i].iso_3166_1 === 'US') {
+            release_dates = arr.release_dates.results[i].release_dates;
+            break;
+        }
+    }
+    release_dates?.map((r) => {
+        if (r.certification in MOVIE_RATINGS) release_date = r.certification;
+    });
+
+    if (release_date) return release_date;
+    return 'No rating available';
+};
+
 export {
     getMoviesByName,
     getMovieDetails,
@@ -172,4 +165,5 @@ export {
     getMovieTrending,
     getMovieRecommendations,
     getDiscoverMovies,
+    getMovieRating,
 };

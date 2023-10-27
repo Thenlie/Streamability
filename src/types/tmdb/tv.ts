@@ -1,4 +1,4 @@
-import { ShowGenre } from './show';
+import { ShowGenre, ShowProviders } from './show';
 
 /**
  * Returned by TMDB as non-detailed info
@@ -64,6 +64,7 @@ export interface TvDetailsData extends TvData {
         vote_average: number;
         vote_count: number;
     };
+    media_type: 'tv';
     next_episode_to_air: null;
     networks: [
         {
@@ -128,6 +129,7 @@ export interface TvDetailsData extends TvData {
             },
         ];
     };
+    'watch/providers': ShowProviders;
 }
 
 export interface DiscoverTv {

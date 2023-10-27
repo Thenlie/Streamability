@@ -1,4 +1,16 @@
-import { MovieData, MovieResults, ShowData, ShowResults, TvData, TvResults } from '../types';
+/* eslint-disable prettier/prettier */
+import {
+    MovieData,
+    MovieDetailsData,
+    MovieResults,
+    ShowData,
+    ShowResults,
+    TvData,
+    TvDetailsData,
+    TvResults,
+} from '../types';
+import { getMovieRating } from './getMovieUtils';
+import { getTvRating } from './getTvUtils';
 import { filterShowsByType } from './showFilterUtils';
 
 /**
@@ -11,26 +23,67 @@ const convertResultsToShowType = (
 ): ShowData[] | null => {
     if (!data || !data.results) return null;
 
-    const showData = data.results.map((movie) => {
+    const showData = data.results.map((show) => {
         return {
-            id: movie.id,
-            poster_path: movie.poster_path,
-            banner_path: movie.backdrop_path,
-            vote_average: movie.vote_average,
-            vote_count: movie.vote_count,
-            overview: movie.overview,
-            media_type: movie.media_type,
-            genre_ids: movie.genre_ids,
-            title:
-                movie.media_type === 'movie' ? (movie as MovieData).title : (movie as TvData).name,
+            id: show.id,
+            poster_path: show.poster_path,
+            banner_path: show.backdrop_path,
+            vote_average: show.vote_average,
+            vote_count: show.vote_count,
+            overview: show.overview,
+            media_type: show.media_type,
+            genre_ids: show.genre_ids,
+            title: show.media_type === 'movie' ? (show as MovieData).title : (show as TvData).name,
             release_date:
-                movie.media_type === 'movie'
-                    ? (movie as MovieData).release_date
-                    : (movie as TvData).first_air_date,
+                show.media_type === 'movie'
+                    ? (show as MovieData).release_date
+                    : (show as TvData).first_air_date,
         };
     });
 
     return filterShowsByType(showData, 'both');
 };
 
-export { convertResultsToShowType };
+/**
+ * Convert movie or tv details to the ShowData type.
+ * @param data | Details data being converted
+ * @returns {ShowData[] | null}
+ */
+const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaType: 'movie' | 'tv'): ShowData => {
+    return {
+        id: data.id,
+        poster_path: data.poster_path,
+        vote_average: data.vote_average,
+        vote_count: data.vote_count,
+        overview: data.overview,
+        media_type: mediaType,
+        genre_ids: data.genres.map((genre) => genre.id),
+        age_rating:
+            mediaType === 'movie'
+                ? getMovieRating(data as MovieDetailsData)
+                : getTvRating(data as TvDetailsData),
+        title:
+            mediaType === 'movie'
+                ? (data as MovieDetailsData).original_title
+                : (data as TvDetailsData).original_name,
+        release_date:
+            mediaType === 'movie'
+                ? (data as MovieDetailsData).release_date
+                : (data as TvDetailsData).first_air_date,
+        runtime:
+            mediaType === 'movie'
+                ? (data as MovieDetailsData).runtime
+                : (data as TvDetailsData).episode_run_time[0],
+        providers:
+            data['watch/providers'].results.US?.flatrate?.map((provider) => {
+                return {
+                    name: provider.provider_name,
+                    id: provider.provider_id,
+                    logo_path: provider.logo_path,
+                    origin_country: 'US'
+                };
+            })
+    };
+};
+
+export { convertResultsToShowType, convertDetailsToShowType };
