@@ -23,9 +23,8 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
     const refetch = () => {
         const fetchHandler = async () => {
             if (!moreToFetch) return;
-
             setLoading(true);
-            LOG.debug(page + ' ' + query);
+
             const response = await fetch(
                 `https://api.themoviedb.org/3/search/multi?api_key=${
                     import.meta.env.VITE_MOVIEDB_KEY
@@ -45,7 +44,7 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
                 return;
             }
 
-            const newData: ShowData[] = json.results.map((show) => {
+            const nextPage: ShowData[] = json.results.map((show) => {
                 return {
                     id: show.id,
                     poster_path: show.poster_path,
@@ -65,27 +64,39 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
                 };
             });
 
+            // Get previous pages from local storage if they exist and not on first page
+            const storageItem =
+                page !== 1 ? localStorage.getItem('streamabilityUnsortedResults') : null;
+            const cacheData = storageItem ? JSON.parse(storageItem) : null;
+            const newData = data ? [...data, ...nextPage] : nextPage;
+            localStorage.setItem(
+                'streamabilityUnsortedResults',
+                cacheData ? JSON.stringify([...cacheData, ...nextPage]) : JSON.stringify(nextPage)
+            );
+
             setMoreToFetch(json.total_pages > page);
             setPage((prev) => prev + 1);
-            data ? setData([...data, ...newData]) : setData(newData);
+            setData(newData);
             setLoading(false);
         };
         fetchHandler();
     };
 
+    // Manually trigger the fetch when getting the first page
     useEffect(() => {
         if (page === 1) refetch();
     }, [page]);
 
+    // Reset the state when the query changes
     useEffect(() => {
+        localStorage.setItem('streamabilityUnsortedResults', '');
         setPage(1);
         setData(null);
         setMoreToFetch(true);
         setLoading(true);
-        if (page === 1) refetch();
     }, [query]);
 
-    return { data, loading, moreToFetch, refetch };
+    return { data, setData, loading, moreToFetch, refetch };
 };
 
 export default usePaginatedData;

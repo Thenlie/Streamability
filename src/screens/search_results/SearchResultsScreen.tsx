@@ -1,7 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
-import { ShowData } from '../../types';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
@@ -39,13 +38,14 @@ const SearchResultsScreen: React.FC = () => {
     const storageItem = localStorage.getItem('streamabilityView');
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
-    const [showDetails, setShowDetails] = useState<{ data: ShowData[] | null; hash: number }>({
-        data: null,
-        hash: 0,
-    });
-    const { data, loading: dataLoading, moreToFetch, refetch } = usePaginatedData({ query: query });
-
-    LOG.debug(data + String(dataLoading) + String(moreToFetch));
+    const [hash, setHash] = useState<number>(1);
+    const {
+        data,
+        setData,
+        loading: dataLoading,
+        moreToFetch,
+        refetch,
+    } = usePaginatedData({ query: query });
 
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
@@ -66,7 +66,7 @@ const SearchResultsScreen: React.FC = () => {
                 setProfile={setProfile}
             />
         );
-    }, [data, viewState]);
+    }, [data, hash, viewState]);
 
     if (!data) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
@@ -82,8 +82,9 @@ const SearchResultsScreen: React.FC = () => {
                 query={query}
                 viewState={viewState}
                 setViewState={setViewState}
-                showDetails={showDetails}
-                setShowDetails={setShowDetails}
+                showDetails={data}
+                setShowDetails={setData}
+                setHash={setHash}
             />
             <Button
                 title='Refetch'
