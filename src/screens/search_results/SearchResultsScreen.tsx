@@ -86,13 +86,14 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setData}
                 setHash={setHash}
             />
+            {cards}
             <Button
                 title='Refetch'
                 loading={dataLoading}
                 onClick={refetch}
                 disabled={!moreToFetch}
+                sx={{ display: moreToFetch ? 'block' : 'none', marginBottom: 2 }}
             />
-            {cards}
             <OfflineSnackbar />
         </>
     );

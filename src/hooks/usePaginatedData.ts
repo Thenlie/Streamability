@@ -12,7 +12,9 @@ interface PaginatedDataProps {
 }
 
 /**
- * Custom hook to handle TMDB data pagination
+ * Custom hook to handle TMDB data pagination.
+ * Initially returns the first page of search results
+ * along with a function to fetch the next page.
  */
 const usePaginatedData = ({ query }: PaginatedDataProps) => {
     const [data, setData] = useState<ShowData[] | null>(null);
