@@ -65,7 +65,22 @@ export interface TvDetailsData extends TvData {
         vote_count: number;
     };
     media_type: 'tv';
-    next_episode_to_air: null;
+    next_episode_to_air: {
+        air_date: string;
+        episode_number: number;
+        episode_type: string;
+        id: number;
+        name: string;
+        overview: string;
+        production_code: string;
+        runtime: number | null;
+        season_number: number;
+        show_id: number;
+        still_path: string | null;
+        vote_average: number;
+        vote_count: number;
+    }
+    | undefined;
     networks: [
         {
             name: string;
@@ -138,13 +153,13 @@ export interface DiscoverTv {
     include_adult?: boolean;
     with_genres?: string;
     sort_by?:
-        | 'popularity.asc'
-        | 'popularity.desc'
-        | 'revenue.asc'
-        | 'primary_release_date.asc'
-        | 'primary_release_date.desc'
-        | 'vote_average.asc'
-        | 'vote_average.desc';
+    | 'popularity.asc'
+    | 'popularity.desc'
+    | 'revenue.asc'
+    | 'primary_release_date.asc'
+    | 'primary_release_date.desc'
+    | 'vote_average.asc'
+    | 'vote_average.desc';
     vote_average_lte?: number;
     vote_average_gte?: number;
     vote_count_gte?: number;
