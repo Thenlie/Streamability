@@ -14,6 +14,7 @@ import Button from './Button';
 import EmptySearchResults from '../screens/search_results/EmptySearchResults';
 import IconButton from './IconButton';
 import Snackbar from './Snackbar';
+import OfflineSnackbar from './OfflineSnackbar';
 import Footer from './Footer';
 import TextInput from './TextInput';
 import Banner from './Banner';
@@ -31,6 +32,7 @@ export {
     EmptySearchResults,
     IconButton,
     Snackbar,
+    OfflineSnackbar,
     Footer,
     TextInput,
     Banner,

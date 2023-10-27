@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShowCarousel, Banner } from '../components';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { useTrendingShows } from '../hooks';
 
 /**
@@ -20,6 +20,7 @@ const FeaturedSearchScreen: React.FC = () => {
             <div className='my-12 mx-auto'>
                 <ShowCarousel data={trendingShows} dataLoading={loading} />
             </div>
+            <OfflineSnackbar />
         </div>
     );
 };

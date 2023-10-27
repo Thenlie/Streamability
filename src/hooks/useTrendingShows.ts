@@ -40,7 +40,6 @@ const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => 
                     setTrending(sortShowsByReleaseDateDesc(shows));
                     break;
                 case 'alpha':
-                    // console.log(3, shows, sortShowsAlphaAsc(shows));
                     setTrending(sortShowsAlphaAsc(shows));
                     break;
             }

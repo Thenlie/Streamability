@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTrendingShows } from '../hooks';
 import { Typography as Typ } from '@mui/material';
-import { ShowCarousel, Banner } from '../components';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
 import { getDiscoverMovies, getDiscoverTv } from '../helpers';
 /**
@@ -228,6 +228,7 @@ const DiscoverScreen: React.FC = () => {
                     <ShowCarousel data={popularHulu} dataLoading={popularHuluLoading} />
                 </div>
             </div>
+            <OfflineSnackbar />
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import { ErrorResponse } from '@remix-run/router';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import { Button, Snackbar } from '../components';
+import { Button, OfflineSnackbar, Snackbar } from '../components';
 import Logger from '../logger';
 import React from 'react';
 import { ArrowBack, Home } from '@mui/icons-material';
@@ -36,6 +36,7 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
             {error.statusText && (
                 <Snackbar isOpen isStatic severity='error' message={error.statusText} />
             )}
+            <OfflineSnackbar />
         </div>
     );
 };

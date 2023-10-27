@@ -9,7 +9,7 @@ import {
     getTvRecommendations,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button } from '../components';
+import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
 import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
@@ -215,6 +215,7 @@ const ShowDetailsScreen: React.FC = () => {
                     profile={profile}
                 />
             </section>
+            <OfflineSnackbar />
         </>
     );
 };

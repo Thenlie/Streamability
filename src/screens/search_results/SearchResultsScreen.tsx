@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
-import { EmptySearchResults } from '../../components';
+import { EmptySearchResults, OfflineSnackbar } from '../../components';
 import { ShowData } from '../../types';
 import { useProfileContext, useWindowSize } from '../../hooks';
 import { getShowsByName } from '../../helpers';
@@ -96,6 +96,7 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setShowDetails}
             />
             {cards}
+            <OfflineSnackbar />
         </>
     );
 };
