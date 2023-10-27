@@ -1,5 +1,6 @@
 import Logger from '../logger';
 import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv } from '../types';
+import { convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getTvUtils');
 
@@ -19,19 +20,7 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            poster_path: tv.poster_path,
-            title: tv.name,
-            release_date: tv.first_air_date,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            overview: tv.overview,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -103,20 +92,7 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            poster_path: tv.poster_path,
-            banner_path: tv.backdrop_path,
-            title: tv.original_name,
-            release_date: tv.first_air_date,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            overview: tv.overview,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -135,21 +111,7 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
-    const recommendations: ShowData[] = [];
-    data.results.map((rec) =>
-        recommendations.push({
-            id: rec.id,
-            overview: rec.overview,
-            poster_path: rec.poster_path,
-            release_date: rec.first_air_date,
-            title: rec.name,
-            vote_average: rec.vote_average,
-            vote_count: rec.vote_count,
-            media_type: 'tv',
-            genre_ids: rec.genre_ids,
-        })
-    );
-    return recommendations;
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -191,20 +153,7 @@ const getDiscoverTv = async ({
 
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            overview: tv.overview,
-            poster_path: tv.poster_path,
-            banner_path: tv.backdrop_path,
-            release_date: tv.first_air_date,
-            title: tv.name,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    return convertResultsToShowType(data);
 };
 
 export {

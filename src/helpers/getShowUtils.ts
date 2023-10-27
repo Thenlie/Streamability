@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import Logger from '../logger';
-import { MovieData, ShowData, ShowResults, TvData } from '../types';
-import { filterShowsByType } from './showFilterUtils';
+import { ShowData, ShowResults } from '../types';
+import { convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getShowUtils');
 
@@ -27,21 +27,7 @@ const getShowsByName = async (query: string): Promise<ShowData[] | null> => {
         return null;
     }
 
-    const showData = data.results.map((show) => {
-        return {
-            id: show.id,
-            poster_path: show.poster_path,
-            vote_average: show.vote_average,
-            vote_count: show.vote_count,
-            overview: show.overview,
-            media_type: show.media_type,
-            genre_ids: show.genre_ids,
-            title: show.media_type === 'movie' ? (show as MovieData).title : (show as TvData).name,
-            release_date: show.media_type === 'movie' ? (show as MovieData).release_date : (show as TvData).first_air_date,
-        };
-    });
-
-    return filterShowsByType(showData, 'both');
+    return convertResultsToShowType(data);
 };
 
 export { getShowsByName };
