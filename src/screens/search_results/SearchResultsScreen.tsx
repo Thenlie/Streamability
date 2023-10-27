@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
-import { EmptySearchResults, OfflineSnackbar } from '../../components';
+import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
 import { ShowData } from '../../types';
-import { useProfileContext, useWindowSize } from '../../hooks';
+import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import { getShowsByName } from '../../helpers';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
@@ -44,7 +44,10 @@ const SearchResultsScreen: React.FC = () => {
         data: null,
         hash: 0,
     });
-    const [loading, setLoading] = useState<boolean>(true);
+    const [pageLoading, setPageLoading] = useState<boolean>(false);
+    const { data, loading: dataLoading, moreToFetch, refetch } = usePaginatedData({ query: query });
+
+    LOG.debug(data + String(dataLoading) + String(moreToFetch));
 
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
@@ -56,33 +59,22 @@ const SearchResultsScreen: React.FC = () => {
         }
     }, [windowSize]);
 
-    useEffect(() => {
-        setLoading(true);
-        const handler = async () => {
-            const showData: ShowData[] | null = await getShowsByName(query);
-            setShowDetails({ data: showData, hash: Math.random() });
-            localStorage.setItem('streamabilityUnsortedResults', JSON.stringify(showData));
-            setLoading(false);
-        };
-        handler();
-    }, [query]);
-
     const cards = useMemo(() => {
         return (
             <SearchResultCards
-                details={showDetails.data}
+                details={data}
                 viewState={viewState}
                 profile={profile}
                 setProfile={setProfile}
             />
         );
-    }, [showDetails.data, showDetails.hash, viewState]);
+    }, [data, viewState]);
 
-    if (loading) {
+    if (pageLoading) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
     }
 
-    if (showDetails.data && showDetails.data.length === 0) {
+    if (data && data.length === 0) {
         return <EmptySearchResults query={query} viewState={viewState} />;
     }
 
@@ -94,6 +86,12 @@ const SearchResultsScreen: React.FC = () => {
                 setViewState={setViewState}
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
+            />
+            <Button
+                title='Refetch'
+                loading={dataLoading}
+                onClick={refetch}
+                disabled={!moreToFetch}
             />
             {cards}
             <OfflineSnackbar />

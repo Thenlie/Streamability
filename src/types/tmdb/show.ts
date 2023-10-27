@@ -120,8 +120,8 @@ export interface ShowData {
  * https://developer.themoviedb.org/reference/search-multi
  */
 export interface ShowResults {
-    page?: number;
+    page: number;
     results?: Array<MovieData | TvData>;
-    total_pages?: number;
-    total_results?: number;
+    total_pages: number;
+    total_results: number;
 }
