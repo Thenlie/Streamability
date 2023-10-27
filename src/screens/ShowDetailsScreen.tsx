@@ -192,6 +192,9 @@ const ShowDetailsScreen: React.FC = () => {
                             {details.runtime && details.runtime > 0
                                 ? details.runtime + ' minutes'
                                 : 'No runtime available'}
+                            {showType === 'movie'
+                                ? `${details.runtime} minutes`
+                                : `${details.seasons?.length} seasons`}
                         </Typ>
                     </div>
                     <Rating

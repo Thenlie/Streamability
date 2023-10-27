@@ -90,7 +90,7 @@ export interface TvDetailsData extends TvData {
             name: string;
         },
     ];
-    seasons: [
+    seasons?: [
         {
             air_date: string;
             episode_count: number;
@@ -99,6 +99,7 @@ export interface TvDetailsData extends TvData {
             overview: string;
             poster_path: string;
             season_number: number;
+            vote_average: number;
         },
     ];
     spoken_languages: [
