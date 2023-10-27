@@ -88,7 +88,7 @@ const SearchResultsScreen: React.FC = () => {
             />
             {cards}
             <Button
-                title='Refetch'
+                title='Load More'
                 loading={dataLoading}
                 onClick={refetch}
                 disabled={!moreToFetch}
