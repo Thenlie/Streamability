@@ -27,6 +27,7 @@ describe('filterShowsByType', () => {
     it('properly filters shows based on a specified genre id', () => {
         expect(filterShowsByType(SHOW_DATA_ARRAY, 'movie').length).toBe(20);
         expect(filterShowsByType(SHOW_DATA_ARRAY, 'tv').length).toBe(11);
+        expect(filterShowsByType(SHOW_DATA_ARRAY, 'both').length).toBe(31);
     });
 });
 

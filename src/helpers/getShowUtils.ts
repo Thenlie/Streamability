@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import Logger from '../logger';
 import { MovieData, ShowData, ShowResults, TvData } from '../types';
+import { filterShowsByType } from './showFilterUtils';
 
 const LOG = new Logger('getShowUtils');
 
@@ -19,12 +20,14 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
         LOG.error('Fetch request failed with a status of ' + response.status);
         return null;
     }
+
     const data = (await response.json()) as ShowResults;
     if (!data.results) {
         LOG.error('No results found');
         return null;
     }
-    return data.results.map((show) => {
+
+    const showData = data.results.map((show) => {
         return {
             id: show.id,
             poster_path: show.poster_path,
@@ -37,6 +40,8 @@ const getShowsByName = async (name: string): Promise<ShowData[] | null> => {
             release_date: show.media_type === 'movie' ? (show as MovieData).release_date : (show as TvData).first_air_date,
         };
     });
+
+    return filterShowsByType(showData, 'both');
 };
 
 export { getShowsByName };

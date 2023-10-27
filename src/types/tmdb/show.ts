@@ -111,7 +111,7 @@ export interface ShowData {
             origin_country: string;
         },
     ];
-    media_type: 'movie' | 'tv';
+    media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
 }
 
