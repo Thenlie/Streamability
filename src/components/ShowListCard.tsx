@@ -1,6 +1,6 @@
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
 import { CardActions, CardMedia, Rating, Typography as Typ } from '@mui/material';
 import { useIsInProfileArray } from '../hooks';
@@ -14,17 +14,13 @@ export interface ShowListCardProps {
      */
     details: ShowData;
     /**
-     * Either 'movie' or 'tv'
-     */
-    showType: string;
-    /**
      * User profile if logged in, otherwise `null`
      */
     profile: Profile | null;
     /**
      * Profile setting function that accepts a `Profile` or `null`
      */
-    setProfile: (profile: Profile | null) => void;
+    setProfile: React.Dispatch<React.SetStateAction<Profile | null>>;
 }
 
 /**
@@ -37,11 +33,11 @@ export interface ShowListCardProps {
  */
 const ShowListCard: React.FC<ShowListCardProps> = ({
     details,
-    showType,
     profile,
     setProfile,
 }): JSX.Element => {
     const { isInQueue } = useIsInProfileArray(details.id, profile);
+    const navigate = useNavigate();
 
     /**
      * Handle card being added to or removed from
@@ -76,7 +72,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
             className='items-left m-1 flex w-[700px] rounded-md bg-foreground shadow-md'
         >
             <Link
-                to={`/details/${showType}/${details.id}`}
+                to={`/details/${details.media_type}/${details.id}`}
                 state={details}
                 data-testid='show-details-link'
             >
@@ -94,7 +90,15 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
             </Link>
             <div className='p-2 flex flex-col justify-between flex-1'>
                 <div>
-                    <Typ variant='h5' align='left' paddingLeft={1} noWrap width={500}>
+                    <Typ
+                        className='hover:text-blue-500 cursor-pointer'
+                        variant='h5'
+                        align='left'
+                        paddingLeft={1}
+                        noWrap
+                        width={500}
+                        onClick={() => navigate(`/details/${details.media_type}/${details.id}`)}
+                    >
                         {details.title}
                     </Typ>
                     {details.release_date && details.release_date.length === 10 && (
