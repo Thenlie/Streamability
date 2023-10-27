@@ -19,16 +19,26 @@ const filterShowsByGenre = (showData: ShowData[], genreId: number): ShowData[] =
 /**
  * Filters an array of shows based on a specified show type
  * @param showData | array of shows to be filtered
- * @param showType | movie or tv
+ * @param showType | movie, tv or both
  * @returns | array of shows that are a `showType`
  */
-const filterShowsByType = (showData: ShowData[], showType: 'movie' | 'tv'): ShowData[] => {
+const filterShowsByType = (showData: ShowData[], showType: 'movie' | 'tv' | 'both'): ShowData[] => {
     const filteredShows: ShowData[] = [];
-    showData.forEach((show) => {
-        if (show.media_type === showType) {
-            filteredShows.push(show);
-        }
-    });
+
+    if (showType === 'both') {
+        showData.forEach((show) => {
+            if (show.media_type === 'movie' || show.media_type === 'tv') {
+                filteredShows.push(show);
+            }
+        });
+    } else {
+        showData.forEach((show) => {
+            if (show.media_type === showType) {
+                filteredShows.push(show);
+            }
+        });
+    }
+
     return filteredShows;
 };
 
