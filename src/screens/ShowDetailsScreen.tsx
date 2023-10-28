@@ -255,6 +255,7 @@ const ShowDetailsScreen: React.FC = () => {
                     data={recommendations}
                     fallbackText={carouselFallbackText}
                     profile={profile}
+                    headerProps={{ title: 'Recommendations' }}
                 />
             </section>
             <OfflineSnackbar />
