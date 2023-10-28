@@ -149,6 +149,33 @@ const ShowDetailsScreen: React.FC = () => {
         handler();
     }, [location]);
 
+    /**
+     * Displays runtime if movie, seasons if TV and their edge cases
+     */
+    const handleRuntimes = (): JSX.Element | null => {
+        let str;
+        if (showType === 'movie' && details.runtime && details.runtime > 0) {
+            str = `${details.runtime} minutes`;
+        } else if (showType === 'movie') {
+            str = 'No runtime available';
+        }
+        if (showType === 'tv' && details.seasons != undefined) {
+            str = `${details.seasons.length} seasons`;
+        } else if (showType === 'tv') {
+            str = 'No seasons available';
+        }
+
+        if (!str) return null;
+        return (
+            <Typ align='left' variant='body2'>
+                {str}
+            </Typ>
+        );
+    };
+
+    /**
+     * Displays release date if movie, runtime range if TV. If TV Show is ongoing, displays "YYYY - Present"
+     */
     const handleReleaseDates = (): JSX.Element | null => {
         let date: string | null = null;
         if (!details.release_date || details.release_date.length !== 10) return null;
@@ -156,7 +183,6 @@ const ShowDetailsScreen: React.FC = () => {
         if (showType === 'movie') {
             date = formatReleaseDate(details.release_date, DateSize.LONG);
         }
-
         if (showType === 'tv' && details.next_air_date !== undefined) {
             date = `${formatReleaseDate(details.release_date, DateSize.SHORT).slice(-4)} - Present`;
         } else if (details.end_date) {
@@ -164,7 +190,6 @@ const ShowDetailsScreen: React.FC = () => {
                 -4
             )} - ${formatReleaseDate(details.end_date, DateSize.SHORT).slice(-4)}`;
         }
-
         if (!date) return null;
         return (
             <Typ align='left' data-testid='details-release-date'>
@@ -208,14 +233,7 @@ const ShowDetailsScreen: React.FC = () => {
                         </Typ>
                         {handleReleaseDates()}
                         <Typ align='left'>{details.age_rating}</Typ>
-                        <Typ align='left' variant='body2'>
-                            {details.runtime && details.runtime > 0
-                                ? details.runtime + ' minutes'
-                                : 'No runtime available'}
-                            {showType === 'movie'
-                                ? `${details.runtime} minutes`
-                                : `${details.seasons?.length} seasons`}
-                        </Typ>
+                        {handleRuntimes()}
                     </div>
                     <Rating
                         vote_average={details.vote_average || 0}

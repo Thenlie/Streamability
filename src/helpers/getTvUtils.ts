@@ -11,7 +11,8 @@ const LOG = new Logger('getTvUtils');
  */
 const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/search/tv?api_key=${import.meta.env.VITE_MOVIEDB_KEY
+        `https://api.themoviedb.org/3/search/tv?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
         }&language=en-US&query=${name}&page=1&include_adult=false`
     );
     if (!response.ok) {
@@ -29,7 +30,8 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
  */
 const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_MOVIEDB_KEY
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
         }&append_to_response=images,release_dates,content_ratings,watch/providers`
     );
     if (!response.ok) {
@@ -47,7 +49,8 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
  */
 const getTvProviders = async (id: number): Promise<ShowProviders> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${import.meta.env.VITE_MOVIEDB_KEY
+        `https://api.themoviedb.org/3/tv/${id}/watch/providers?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
     if (!response.ok) {
@@ -79,7 +82,8 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
  */
 const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${import.meta.env.VITE_MOVIEDB_KEY
+        `https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${
+            import.meta.env.VITE_MOVIEDB_KEY
         }`
     );
     if (!response.ok) {
@@ -110,8 +114,9 @@ const getDiscoverTv = async ({
     include_adult = false,
     ...params
 }: DiscoverTv): Promise<ShowData[] | null> => {
-    let url = `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_MOVIEDB_KEY
-        }&include_adult=${include_adult}&language=en-US&page=${params.pages}&region=us`;
+    let url = `https://api.themoviedb.org/3/discover/tv?api_key=${
+        import.meta.env.VITE_MOVIEDB_KEY
+    }&include_adult=${include_adult}&language=en-US&page=${params.pages}&region=us`;
 
     if (params.with_genres) url += `&with_genres=${params.with_genres}`;
     if (params.sort_by) url += `&sort_by=${params.sort_by}`;

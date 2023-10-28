@@ -37,7 +37,7 @@ const convertResultsToShowType = (
             release_date:
                 show.media_type === 'movie'
                     ? (show as MovieData).release_date
-                    : (show as TvData).first_air_date,
+                    : (show as TvData).first_air_date
         };
     });
 
@@ -83,7 +83,16 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
                     logo_path: provider.logo_path,
                     origin_country: 'US'
                 };
-            })
+            }),
+        seasons: mediaType === 'movie'
+            ? null
+            : (data as TvDetailsData).seasons,
+        end_date: mediaType === 'movie'
+            ? null
+            : (data as TvDetailsData).last_episode_to_air.air_date,
+        next_air_date: mediaType === 'movie'
+            ? null
+            : (data as TvDetailsData).next_episode_to_air?.air_date
     };
 };
 
