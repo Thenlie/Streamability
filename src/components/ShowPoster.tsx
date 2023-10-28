@@ -81,19 +81,19 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
         isInQueue
             ? profileActions?.removeFromQueue(dbShowId)
             : profileActions?.addToQueue(dbShowId);
-    }, [isInQueue]);
+    }, [isInQueue, profileActions]);
 
     const favoritesCallback = useCallback(() => {
         isInFavorites
             ? profileActions?.removeFromFavorites(dbShowId)
             : profileActions?.addToFavorites(dbShowId);
-    }, [isInFavorites]);
+    }, [isInFavorites, profileActions]);
 
     const watchedCallback = useCallback(() => {
         isInWatched
             ? profileActions?.removeFromWatched(dbShowId)
             : profileActions?.addToWatched(dbShowId);
-    }, [isInWatched]);
+    }, [isInWatched, profileActions]);
 
     if (!profile || !profileActions || numOfIcons === 0) return;
 

@@ -66,7 +66,7 @@ const SearchResultsScreen: React.FC = () => {
                 setProfile={setProfile}
             />
         );
-    }, [data, hash, viewState]);
+    }, [data, hash, viewState, profile]);
 
     if (!data) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
