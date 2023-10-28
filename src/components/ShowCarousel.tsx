@@ -112,7 +112,9 @@ const CarouselHeader: React.FC<{
     return (
         <div className='flex justify-between'>
             <div className='bg-foreground p-2 relative w-60 ml-6 rounded-t-lg' id='carousel-tab'>
-                <Typ variant='h6'>{title}</Typ>
+                <Typ variant='h6' align='center'>
+                    {title}
+                </Typ>
             </div>
             {hasButton && buttonTitle && (
                 <Button
