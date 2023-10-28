@@ -1,5 +1,7 @@
 import { SimplePaletteColorOptions, createTheme } from '@mui/material';
 
+// test ci
+
 declare module '@mui/material/styles' {
     interface Palette {
         loader: {
