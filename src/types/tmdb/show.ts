@@ -88,6 +88,17 @@ export interface ShowProviders {
     };
 }
 
+export interface Season {
+    air_date: string;
+    episode_count: number;
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string;
+    season_number: number;
+    vote_average: number;
+}
+
 /**
  * Returned by getMovieDetails and getTvDetails
  * Custom type to work with both tv and movies
@@ -113,20 +124,7 @@ export interface ShowData {
     }[];
     media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
-    seasons?:
-        | [
-              {
-                  air_date: string;
-                  episode_count: number;
-                  id: number;
-                  name: string;
-                  overview: string;
-                  poster_path: string;
-                  season_number: number;
-                  vote_average: number;
-              },
-          ]
-        | null;
+    seasons?: Season[] | null;
 }
 
 /**

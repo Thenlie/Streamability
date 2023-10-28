@@ -33,6 +33,22 @@ export interface TvResults {
     total_results?: number;
 }
 
+export interface NextEpisodeData {
+    air_date: string;
+    episode_number: number;
+    episode_type: string;
+    id: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    runtime: number | null;
+    season_number: number;
+    show_id: number;
+    still_path: string | null;
+    vote_average: number;
+    vote_count: number;
+}
+
 /**
  * Returned by MovieDB details request
  * https://developer.themoviedb.org/reference/tv-series-details
@@ -66,23 +82,7 @@ export interface TvDetailsData extends TvData {
         vote_count: number;
     };
     media_type: 'tv';
-    next_episode_to_air:
-        | {
-              air_date: string;
-              episode_number: number;
-              episode_type: string;
-              id: number;
-              name: string;
-              overview: string;
-              production_code: string;
-              runtime: number | null;
-              season_number: number;
-              show_id: number;
-              still_path: string | null;
-              vote_average: number;
-              vote_count: number;
-          }
-        | undefined;
+    next_episode_to_air: NextEpisodeData[] | undefined;
     networks: [
         {
             name: string;

@@ -232,8 +232,8 @@ const ShowDetailsScreen: React.FC = () => {
                             {details.title}
                         </Typ>
                         {handleReleaseDates()}
-                        <Typ align='left'>{details.age_rating}</Typ>
                         {handleRuntimes()}
+                        <Typ align='left'>{details.age_rating}</Typ>
                     </div>
                     <Rating
                         vote_average={details.vote_average || 0}
