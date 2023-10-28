@@ -66,4 +66,20 @@ const formatReleaseDate = (date: string, size: DateSize): string => {
     return formattedDate;
 };
 
-export { formatReleaseDate, DateSize };
+/**
+ * Determine the date N days ago in 'yyyy-mm-dd' format
+ *
+ * @param days | the number of days to look back, default 180
+ * @returns {string} | formatted date
+ */
+const daysAgo = (days?: number): string => {
+    if (!days) days = 180;
+
+    const startDate = new Date();
+    const dateOffset = startDate.getDate() - days;
+    startDate.setDate(dateOffset);
+
+    return startDate.toISOString().split('T')[0];
+};
+
+export { formatReleaseDate, daysAgo, DateSize };
