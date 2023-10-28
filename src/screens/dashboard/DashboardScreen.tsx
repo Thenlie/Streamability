@@ -12,6 +12,7 @@ import { Delete, Logout } from '@mui/icons-material';
 import { ProfileArrayCols, ShowData } from '../../types';
 import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
+import { DashboardLoader } from '../loaders';
 
 interface DashboardCarouselProps {
     /**
@@ -104,6 +105,7 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
                 disabled={!data || data.length === 0}
                 loading={loading}
                 StartIcon={Delete}
+                sx={{ marginTop: 2 }}
                 onClick={() => emptyProfileArray(whichCol)}
             />
         </div>
@@ -163,7 +165,7 @@ const DashboardScreen: React.FC = () => {
 
     // TODO: #665 Create skeleton loader component
     if (!profile) {
-        return <Typ>Loading...</Typ>;
+        return <DashboardLoader />;
     }
 
     return (
