@@ -82,6 +82,4 @@ const daysAgo = (days?: number): string => {
     return startDate.toISOString().split('T')[0];
 };
 
-
-
 export { formatReleaseDate, daysAgo, DateSize };
