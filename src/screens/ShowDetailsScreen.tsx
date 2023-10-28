@@ -187,11 +187,11 @@ const ShowDetailsScreen: React.FC = () => {
                             </Typ>
                         )}
                         <Typ align='left'>{details.age_rating}</Typ>
-                        {details.runtime && (
-                            <Typ align='left' variant='body2'>
-                                {details.runtime} minutes
-                            </Typ>
-                        )}
+                        <Typ align='left' variant='body2'>
+                            {details.runtime && details.runtime > 0
+                                ? details.runtime + ' minutes'
+                                : 'No runtime available'}
+                        </Typ>
                     </div>
                     <Rating
                         vote_average={details.vote_average || 0}
