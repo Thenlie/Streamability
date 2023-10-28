@@ -1,5 +1,5 @@
 import Logger from '../logger';
-import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv } from '../types';
+import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv, TvData } from '../types';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getTvUtils');
@@ -133,6 +133,8 @@ const getDiscoverTv = async ({
 
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
+    const dataWithType: TvData[] = data.results.map((d) => ({ ...d, media_type: 'tv' }));
+    data.results = dataWithType;
     return convertResultsToShowType(data);
 };
 

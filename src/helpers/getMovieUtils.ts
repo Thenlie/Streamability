@@ -1,5 +1,12 @@
 import Logger from '../logger';
-import { MovieResults, MovieDetailsData, ShowProviders, ShowData, DiscoverMovie } from '../types';
+import {
+    MovieResults,
+    MovieDetailsData,
+    ShowProviders,
+    ShowData,
+    DiscoverMovie,
+    MovieData,
+} from '../types';
 import { MOVIE_RATINGS } from './constants';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
@@ -135,6 +142,8 @@ const getDiscoverMovies = async ({
 
     const data = (await response.json()) as MovieResults;
     if (!data.results || data.results.length < 1) return null;
+    const dataWithType: MovieData[] = data.results.map((d) => ({ ...d, media_type: 'movie' }));
+    data.results = dataWithType;
     return convertResultsToShowType(data);
 };
 

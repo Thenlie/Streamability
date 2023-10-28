@@ -47,6 +47,7 @@ const convertResultsToShowType = (
 /**
  * Convert movie or tv details to the ShowData type.
  * @param data | Details data being converted
+ * @param mediaType | Type of details being converted
  * @returns {ShowData[] | null}
  */
 const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaType: 'movie' | 'tv'): ShowData => {
