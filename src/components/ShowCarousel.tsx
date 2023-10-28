@@ -7,6 +7,7 @@ import { WindowSize } from '../hooks/useWindowSize';
 import { ShowCarouselLoader } from './loaders';
 import { Typography as Typ } from '@mui/material';
 import { Profile, ProfileActions } from '../types';
+import Button from './Button';
 
 interface ShowCarouselProps {
     /**
@@ -27,6 +28,16 @@ interface ShowCarouselProps {
      * in the carousel
      */
     fallbackText?: string;
+    /**
+     * Options used when displaying a header on the carousel.
+     * This can contain a label and/or button.
+     */
+    headerProps?: {
+        title: string;
+        hasButton?: boolean;
+        buttonTitle?: string;
+        onClick?: () => void;
+    };
     /**
      * User profile if logged in, otherwise `null`
      */
@@ -90,6 +101,33 @@ const CarouselChildren: React.FC<{
 };
 
 /**
+ * The optional label and button for the carousel
+ */
+const CarouselHeader: React.FC<{
+    title: string;
+    hasButton?: boolean;
+    buttonTitle?: string;
+    onClick?: () => void;
+}> = ({ title, hasButton = false, buttonTitle, onClick }) => {
+    return (
+        <div className='flex justify-between'>
+            <div className='bg-foreground p-2 relative w-60 ml-6 rounded-t-lg' id='carousel-tab'>
+                <Typ variant='h6' align='center'>
+                    {title}
+                </Typ>
+            </div>
+            {hasButton && buttonTitle && (
+                <Button
+                    title={buttonTitle}
+                    sx={{ margin: 1, minWidth: 150, minHeight: 30 }}
+                    onClick={onClick}
+                />
+            )}
+        </div>
+    );
+};
+
+/**
  * Show carousels will be used throughout the site to display collections of shows
  * The scroll horizontally and contain any number of show cards
  */
@@ -98,6 +136,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     dataLoading = false,
     size,
     fallbackText,
+    headerProps,
     ...rest
 }): JSX.Element => {
     const windowSize = useWindowSize();
@@ -156,7 +195,8 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     if (!data || data.length === 0) {
         return (
-            <div style={{ width: carouselWidth }}>
+            <div style={{ width: carouselWidth }} className='flex flex-col'>
+                {headerProps && <CarouselHeader {...headerProps} />}
                 <Carousel
                     className='bg-foreground'
                     style={{
@@ -184,6 +224,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     return (
         <div style={{ width: carouselWidth }}>
+            {headerProps && <CarouselHeader {...headerProps} />}
             <Carousel
                 wrapAround
                 className='bg-foreground'
