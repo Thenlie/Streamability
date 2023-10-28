@@ -36,6 +36,7 @@ interface ShowCarouselProps {
         title: string;
         hasButton?: boolean;
         buttonTitle?: string;
+        onClick?: () => void;
     };
     /**
      * User profile if logged in, otherwise `null`
@@ -106,14 +107,19 @@ const CarouselHeader: React.FC<{
     title: string;
     hasButton?: boolean;
     buttonTitle?: string;
-}> = ({ title, hasButton = false, buttonTitle }) => {
+    onClick?: () => void;
+}> = ({ title, hasButton = false, buttonTitle, onClick }) => {
     return (
         <div className='flex justify-between'>
             <div className='bg-foreground p-2 relative w-60 ml-6 rounded-t-lg' id='carousel-tab'>
                 <Typ variant='h6'>{title}</Typ>
             </div>
             {hasButton && buttonTitle && (
-                <Button title={buttonTitle} sx={{ margin: 1, minWidth: 150, minHeight: 30 }} />
+                <Button
+                    title={buttonTitle}
+                    sx={{ margin: 1, minWidth: 150, minHeight: 30 }}
+                    onClick={onClick}
+                />
             )}
         </div>
     );
@@ -188,6 +194,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     if (!data || data.length === 0) {
         return (
             <div style={{ width: carouselWidth }} className='flex flex-col'>
+                {headerProps && <CarouselHeader {...headerProps} />}
                 <Carousel
                     className='bg-foreground'
                     style={{

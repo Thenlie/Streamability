@@ -18,7 +18,11 @@ const FeaturedSearchScreen: React.FC = () => {
                 renderLogo
             />
             <div className='my-12 mx-auto'>
-                <ShowCarousel data={trendingShows} dataLoading={loading} />
+                <ShowCarousel
+                    data={trendingShows}
+                    dataLoading={loading}
+                    headerProps={{ title: 'Trending Shows' }}
+                />
             </div>
             <OfflineSnackbar />
         </div>

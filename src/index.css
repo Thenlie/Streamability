@@ -38,7 +38,9 @@ input:-webkit-autofill:active {
   border-radius: 10px;
   padding: 1px;
 }
-
+/* Inverted corners for carousel tabs
+ * https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
+*/
 #carousel-tab:before {
   content: "";
   position: absolute;
