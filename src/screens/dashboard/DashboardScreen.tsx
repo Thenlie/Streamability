@@ -163,7 +163,6 @@ const DashboardScreen: React.FC = () => {
         setLogoutLoading(false);
     };
 
-    // TODO: #665 Create skeleton loader component
     if (!profile) {
         return <DashboardLoader />;
     }

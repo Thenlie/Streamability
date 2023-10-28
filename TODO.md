@@ -16,5 +16,4 @@
 | [src/__tests__/screens/navigation.test.tsx](src/__tests__/screens/navigation.test.tsx#L10) | 10 | #427 Re-enable tests when UI stable |
 | [src/screens/auth/LoginScreen.tsx](src/screens/auth/LoginScreen.tsx#L86) | 86 | We could try to get the AuthApiError type and use 'cause' instead |
 | [src/screens/dashboard/DashboardGalleryScreen.tsx](src/screens/dashboard/DashboardGalleryScreen.tsx#L27) | 27 | If profile does not return after a few seconds, |
-| [src/screens/dashboard/DashboardScreen.tsx](src/screens/dashboard/DashboardScreen.tsx#L163) | 163 | #665 Create skeleton loader component |
 | [src/__tests__/screens/assets/showData.ts](src/__tests__/screens/assets/showData.ts#L260) | 260 | Fill out rest of data, this does not have all details |
