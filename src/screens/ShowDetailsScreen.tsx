@@ -161,9 +161,10 @@ const ShowDetailsScreen: React.FC = () => {
     return (
         <>
             <section className='m-6 mb-8 flex flex-col lg:flex-row'>
-                <div className='rounded-md m-3 w-[250px] lg:w-[330px] h-[400px] lg:h-[550px]'>
+                <div className='rounded-md m-3 w-[250px] lg:w-[330px]'>
                     <img
-                        className='w-[250px] lg:w-[330px] h-[400px] lg:h-[550px] max-w-none rounded-md'
+                        className='w-[250px] lg:w-[330px] max-w-none rounded-md'
+                        style={{ aspectRatio: 2 / 3 }}
                         src={
                             details.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
