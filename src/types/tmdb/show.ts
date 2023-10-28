@@ -99,7 +99,7 @@ export interface ShowData {
     banner_path?: string | null;
     release_date?: string;
     end_date?: string | null;
-    next_air_date?: string | undefined;
+    next_air_date?: string | undefined | null;
     age_rating?: string | null;
     runtime?: number;
     title: string;
@@ -113,18 +113,20 @@ export interface ShowData {
     }[];
     media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
-    seasons?: [
-        {
-            air_date: string;
-            episode_count: number;
-            id: number;
-            name: string;
-            overview: string;
-            poster_path: string;
-            season_number: number;
-            vote_average: number;
-        },
-    ];
+    seasons?:
+        | [
+              {
+                  air_date: string;
+                  episode_count: number;
+                  id: number;
+                  name: string;
+                  overview: string;
+                  poster_path: string;
+                  season_number: number;
+                  vote_average: number;
+              },
+          ]
+        | null;
 }
 
 /**
