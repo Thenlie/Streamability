@@ -232,8 +232,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
                     sx={{
                         width: 180,
                         minWidth: 180,
-                        height: 270,
-                        minHeight: 270,
+                        aspectRatio: 2 / 3,
                         boxShadow: 5,
                         '&:hover': { opacity: 0.8 },
                     }}
