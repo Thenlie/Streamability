@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { formatReleaseDate, DateSize } from '../dateFormatUtils';
+import { describe, expect, it, vi } from 'vitest';
+import { formatReleaseDate, DateSize, daysAgo } from '../dateFormatUtils';
 
 describe('formatReleaseDate', () => {
     it('properly formats release date - LONG', () => {
@@ -37,5 +37,26 @@ describe('formatReleaseDate', () => {
         expect(formatReleaseDate(date3, DateSize.SHORT)).toBe('12-23-1999');
         expect(formatReleaseDate(date4, DateSize.SHORT)).toBe('9-31-2023');
         expect(formatReleaseDate(date5, DateSize.SHORT)).toBe('6-22-2012');
+    });
+});
+
+describe('daysAgo', () => {
+    beforeAll(() => {
+        // January 1st, 2000
+        const mockDate = new Date(2000, 0, 1);
+        vi.useFakeTimers();
+        vi.setSystemTime(mockDate);
+    });
+    it('returns 180 days ago by default', () => {
+        expect(daysAgo()).toBe('1999-07-05');
+    });
+    it('returns the correct date when given a param', () => {
+        expect(daysAgo(181)).toBe('1999-07-04');
+        expect(daysAgo(182)).toBe('1999-07-03');
+        expect(daysAgo(183)).toBe('1999-07-02');
+        expect(daysAgo(90)).toBe('1999-10-03');
+        expect(daysAgo(1)).toBe('1999-12-31');
+        expect(daysAgo(2)).toBe('1999-12-30');
+        expect(daysAgo(3)).toBe('1999-12-29');
     });
 });
