@@ -149,27 +149,23 @@ const ShowDetailsScreen: React.FC = () => {
     }, [location]);
 
     /**
-     * Displays runtime if movie, seasons if TV and their edge cases
+     * Get runtime if movie, seasons if TV and their edge cases
      */
-    const handleRuntimes = (): JSX.Element | null => {
-        let str;
+    const getRuntime = (): string | null => {
+        let str = null;
         if (showType === 'movie' && details.runtime && details.runtime > 0) {
             str = `${details.runtime} minutes`;
         } else if (showType === 'movie') {
             str = 'No runtime available';
         }
+
         if (showType === 'tv' && details.seasons != undefined) {
             str = `${details.seasons.length} seasons`;
         } else if (showType === 'tv') {
             str = 'No seasons available';
         }
 
-        if (!str) return null;
-        return (
-            <Typ align='left' variant='body2'>
-                {str}
-            </Typ>
-        );
+        return str;
     };
 
     if (loading) {
@@ -208,7 +204,9 @@ const ShowDetailsScreen: React.FC = () => {
                         <Typ align='left' data-testid='details-release-date'>
                             {getReleaseDate(details)}
                         </Typ>
-                        {handleRuntimes()}
+                        <Typ align='left' variant='body2'>
+                            {getRuntime()}
+                        </Typ>
                         <Typ align='left'>{details.age_rating}</Typ>
                     </div>
                     <Rating
