@@ -172,7 +172,7 @@ const ShowDetailsScreen: React.FC = () => {
         return <ShowDetailsLoader />;
     }
 
-    // TODO: #438 Handle case when no details are ever returned
+    // TODO: #691 Handle case when no details are ever returned
     if (!details) {
         return <p>No details found!</p>;
     }
