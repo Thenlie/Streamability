@@ -3,10 +3,10 @@ import { Link, Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
     getMovieRecommendations,
-    formatReleaseDate,
-    DateSize,
     getTvDetails,
     getTvRecommendations,
+    getReleaseDate,
+    getRuntime,
 } from '../helpers';
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
@@ -149,60 +149,11 @@ const ShowDetailsScreen: React.FC = () => {
         handler();
     }, [location]);
 
-    /**
-     * Displays runtime if movie, seasons if TV and their edge cases
-     */
-    const handleRuntimes = (): JSX.Element | null => {
-        let str;
-        if (showType === 'movie' && details.runtime && details.runtime > 0) {
-            str = `${details.runtime} minutes`;
-        } else if (showType === 'movie') {
-            str = 'No runtime available';
-        }
-        if (showType === 'tv' && details.seasons != undefined) {
-            str = `${details.seasons.length} seasons`;
-        } else if (showType === 'tv') {
-            str = 'No seasons available';
-        }
-
-        if (!str) return null;
-        return (
-            <Typ align='left' variant='body2'>
-                {str}
-            </Typ>
-        );
-    };
-
-    /**
-     * Displays release date if movie, runtime range if TV. If TV Show is ongoing, displays "YYYY - Present"
-     */
-    const handleReleaseDates = (): JSX.Element | null => {
-        let date: string | null = null;
-        if (!details.release_date || details.release_date.length !== 10) return null;
-
-        if (showType === 'movie') {
-            date = formatReleaseDate(details.release_date, DateSize.LONG);
-        }
-        if (showType === 'tv' && details.next_air_date !== undefined) {
-            date = `${formatReleaseDate(details.release_date, DateSize.SHORT).slice(-4)} - Present`;
-        } else if (details.end_date) {
-            date = `${formatReleaseDate(details.release_date, DateSize.SHORT).slice(
-                -4
-            )} - ${formatReleaseDate(details.end_date, DateSize.SHORT).slice(-4)}`;
-        }
-        if (!date) return null;
-        return (
-            <Typ align='left' data-testid='details-release-date'>
-                {date}
-            </Typ>
-        );
-    };
-
     if (loading) {
         return <ShowDetailsLoader />;
     }
 
-    // TODO: #438 Handle case when no details are ever returned
+    // TODO: #691 Handle case when no details are ever returned
     if (!details) {
         return <p>No details found!</p>;
     }
@@ -231,8 +182,12 @@ const ShowDetailsScreen: React.FC = () => {
                         >
                             {details.title}
                         </Typ>
-                        {handleReleaseDates()}
-                        {handleRuntimes()}
+                        <Typ align='left' data-testid='details-release-date'>
+                            {getReleaseDate(details)}
+                        </Typ>
+                        <Typ align='left' variant='body2'>
+                            {getRuntime(details)}
+                        </Typ>
                         <Typ align='left'>{details.age_rating}</Typ>
                     </div>
                     <Rating
