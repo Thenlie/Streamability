@@ -3,10 +3,9 @@ import { Link, Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
     getMovieRecommendations,
-    formatReleaseDate,
-    DateSize,
     getTvDetails,
     getTvRecommendations,
+    getReleaseDate,
 } from '../helpers';
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
@@ -173,31 +172,6 @@ const ShowDetailsScreen: React.FC = () => {
         );
     };
 
-    /**
-     * Displays release date if movie, runtime range if TV. If TV Show is ongoing, displays "YYYY - Present"
-     */
-    const handleReleaseDates = (): JSX.Element | null => {
-        let date: string | null = null;
-        if (!details.release_date || details.release_date.length !== 10) return null;
-
-        if (showType === 'movie') {
-            date = formatReleaseDate(details.release_date, DateSize.LONG);
-        }
-        if (showType === 'tv' && details.next_air_date !== undefined) {
-            date = `${formatReleaseDate(details.release_date, DateSize.SHORT).slice(-4)} - Present`;
-        } else if (details.end_date) {
-            date = `${formatReleaseDate(details.release_date, DateSize.SHORT).slice(
-                -4
-            )} - ${formatReleaseDate(details.end_date, DateSize.SHORT).slice(-4)}`;
-        }
-        if (!date) return null;
-        return (
-            <Typ align='left' data-testid='details-release-date'>
-                {date}
-            </Typ>
-        );
-    };
-
     if (loading) {
         return <ShowDetailsLoader />;
     }
@@ -231,7 +205,9 @@ const ShowDetailsScreen: React.FC = () => {
                         >
                             {details.title}
                         </Typ>
-                        {handleReleaseDates()}
+                        <Typ align='left' data-testid='details-release-date'>
+                            {getReleaseDate(details)}
+                        </Typ>
                         {handleRuntimes()}
                         <Typ align='left'>{details.age_rating}</Typ>
                     </div>
