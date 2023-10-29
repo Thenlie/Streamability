@@ -6,6 +6,7 @@ import {
     getTvDetails,
     getTvRecommendations,
     getReleaseDate,
+    getRuntime,
 } from '../helpers';
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
@@ -148,26 +149,6 @@ const ShowDetailsScreen: React.FC = () => {
         handler();
     }, [location]);
 
-    /**
-     * Get runtime if movie, seasons if TV and their edge cases
-     */
-    const getRuntime = (): string | null => {
-        let str = null;
-        if (showType === 'movie' && details.runtime && details.runtime > 0) {
-            str = `${details.runtime} minutes`;
-        } else if (showType === 'movie') {
-            str = 'No runtime available';
-        }
-
-        if (showType === 'tv' && details.seasons != undefined) {
-            str = `${details.seasons.length} seasons`;
-        } else if (showType === 'tv') {
-            str = 'No seasons available';
-        }
-
-        return str;
-    };
-
     if (loading) {
         return <ShowDetailsLoader />;
     }
@@ -205,7 +186,7 @@ const ShowDetailsScreen: React.FC = () => {
                             {getReleaseDate(details)}
                         </Typ>
                         <Typ align='left' variant='body2'>
-                            {getRuntime()}
+                            {getRuntime(details)}
                         </Typ>
                         <Typ align='left'>{details.age_rating}</Typ>
                     </div>
