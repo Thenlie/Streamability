@@ -26,7 +26,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element
                 label='Search'
                 color='primary'
                 textOverrideColor={colorOverride}
-                variant='outlined'
+                variant='filled'
                 ariaLabel='search'
                 inputProps={{
                     'data-testid': 'search-input',
