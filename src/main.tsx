@@ -20,10 +20,10 @@ import { loader as searchLoader } from './screens/search_results/SearchResultsSc
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
 
 /**
- * Create the 'root route' and serve the entire app to it
- * All screens will be child routes of the root
+ * Create the 'root' route and serve the entire app to it.
+ * All screens will be children of the root.
  */
-const router = createBrowserRouter([
+export const routes = [
     {
         path: '/',
         element: <AppWrapper />,
@@ -90,7 +90,9 @@ const router = createBrowserRouter([
             },
         ],
     },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 /**
  * Create a new React root which can be used to render React elements in the browser's DOM.

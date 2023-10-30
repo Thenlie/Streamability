@@ -10,7 +10,7 @@ const FeaturedSearchScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('release');
 
     return (
-        <div className='flex-1 flex flex-col w-full'>
+        <div className='flex-1 flex flex-col w-full' data-testid='featured-search-screen'>
             <Banner
                 data={trendingShows}
                 title={'Search for any movie or tv show to discover streaming providers and more!'}
