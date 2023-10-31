@@ -27,7 +27,10 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
      * https://reactrouter.com/en/main/route/error-element#throwing-responses
      */
     return (
-        <div className='flex min-h-screen flex-col place-items-center justify-center'>
+        <div
+            className='flex min-h-screen flex-col place-items-center justify-center'
+            data-testid='page-not-found-screen'
+        >
             <Typ variant='h4' data-testid='page-not-found-header' sx={{ paddingBottom: 6 }}>
                 Page Not Found!
             </Typ>
