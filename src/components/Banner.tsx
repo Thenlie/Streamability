@@ -12,7 +12,7 @@ interface BannerProps {
     /**
      * If the show data is still loading
      */
-    dataLoading: boolean;
+    dataLoading?: boolean;
     /**
      * Title that is displayed on the banner
      */
@@ -32,7 +32,7 @@ interface BannerProps {
  */
 const Banner: React.FC<BannerProps> = ({
     data,
-    dataLoading,
+    dataLoading = false,
     title,
     renderSearchInput,
     renderLogo,

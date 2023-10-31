@@ -26,7 +26,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
     const { trendingShows, loading } = useTrendingShows();
 
     return (
-        <>
+        <div data-testid='empty-search-results'>
             <SearchResultsHeader query={query} viewState={viewState} disableControls />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
@@ -59,7 +59,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
                     </>
                 )}
             </section>
-        </>
+        </div>
     );
 };
 

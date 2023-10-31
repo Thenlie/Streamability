@@ -77,7 +77,7 @@ const SearchResultsScreen: React.FC = () => {
     }
 
     return (
-        <>
+        <div data-testid='search-results-screen'>
             <SearchResultsHeader
                 query={query}
                 viewState={viewState}
@@ -95,7 +95,7 @@ const SearchResultsScreen: React.FC = () => {
                 sx={{ display: moreToFetch ? 'block' : 'none', marginBottom: 2 }}
             />
             <OfflineSnackbar />
-        </>
+        </div>
     );
 };
 

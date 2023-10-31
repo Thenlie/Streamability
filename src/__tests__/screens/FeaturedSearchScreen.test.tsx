@@ -8,20 +8,16 @@ import { TRENDING_DATA } from '../constants';
 
 vi.mock('../../hooks', async () => {
     return {
-        useProfileContext: vi.fn(),
-        useProfileActions: vi.fn(),
-        useSessionContext: vi.fn(),
+        useDebounceValue: vi.fn(),
+        useTrendingShows: vi.fn(),
+        usePaginatedData: vi.fn(),
+        useNetworkStatus: vi.fn().mockReturnValue(true),
         useIsInProfileArray: vi.fn().mockReturnValue({
             isInQueue: false,
             isInFavorites: false,
             isInWatched: false,
         }),
-        useWindowSize: vi.fn().mockReturnValue({ width: 500, height: 500 }),
-        useDebounceValue: vi.fn(),
-        useTrendingShows: vi.fn(),
-        useGetProfileArray: vi.fn(),
-        useNetworkStatus: vi.fn().mockReturnValue(true),
-        usePaginatedData: vi.fn(),
+        useWindowSize: vi.fn().mockReturnValue({ width: 1080, height: 720 }),
     };
 });
 

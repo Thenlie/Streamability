@@ -24,7 +24,7 @@ const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({
     windowSize,
 }) => {
     return (
-        <>
+        <div data-testid='search-results-loader'>
             <SearchResultsHeader query={query} viewState={viewState} disableControls />
             <div
                 className={
@@ -39,7 +39,7 @@ const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({
                     <ShowListCardLoader count={10} />
                 )}
             </div>
-        </>
+        </div>
     );
 };
 
