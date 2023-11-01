@@ -7,17 +7,11 @@ import { useTrendingShows } from '../../hooks';
 import { TRENDING_DATA } from '../constants';
 
 vi.mock('../../hooks', async () => {
+    const actual = await vi.importActual('../../hooks');
+
     return {
-        useDebounceValue: vi.fn(),
+        ...(actual as object),
         useTrendingShows: vi.fn(),
-        usePaginatedData: vi.fn(),
-        useNetworkStatus: vi.fn().mockReturnValue(true),
-        useIsInProfileArray: vi.fn().mockReturnValue({
-            isInQueue: false,
-            isInFavorites: false,
-            isInWatched: false,
-        }),
-        useWindowSize: vi.fn().mockReturnValue({ width: 1080, height: 720 }),
     };
 });
 

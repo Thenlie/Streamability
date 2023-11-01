@@ -1,8 +1,7 @@
 import React from 'react';
 import { Typography as Typ } from '@mui/material';
-import ShowCarousel from '../../components/ShowCarousel';
-import useTrendingShows from '../../hooks/useTrendingShows';
-import Button from '../../components/Button';
+import { ShowCarousel, Button } from '../../components';
+import { useTrendingShows } from '../../hooks';
 import { Home } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import SearchResultsHeader from './SearchResultsHeader';

@@ -47,6 +47,7 @@ const useTrendingShows = (sortBy: 'rating' | 'release' | 'alpha' = 'rating') => 
         };
         handler();
     }, [sortBy]);
+
     return { trendingShows: trending, loading };
 };
 
