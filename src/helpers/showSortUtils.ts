@@ -98,5 +98,5 @@ export {
     sortShowsByReleaseDateAsc,
     sortShowsByReleaseDateDesc,
     sortShowsAlphaAsc,
-    sortShowsAlphaDesc,
+    sortShowsAlphaDesc
 };

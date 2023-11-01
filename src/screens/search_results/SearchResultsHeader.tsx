@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { ViewModule, ViewList } from '@mui/icons-material';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ViewModule, ViewList, FilterAltOff, Tv, Movie } from '@mui/icons-material';
 import { ToggleButtonGroup, ToggleButton, SvgIcon, Typography as Typ } from '@mui/material';
 import { useWindowSize } from '../../hooks';
-import { sortShowsAlphaAsc, sortShowsAlphaDesc } from '../../helpers';
+import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
 import Logger from '../../logger';
 import { ShowData } from '../../types';
+import { preview } from 'vite';
 
 const LOG = new Logger('SearchResultsHeader');
 
@@ -39,6 +40,10 @@ interface SearchResultsHeaderProps {
     disableControls?: boolean;
 }
 
+interface SortFilterProps {
+    sort: 'none' | ((showData: ShowData[]) => ShowData[]);
+    filter: 'none' | ((showData: ShowData[], type: 'tv' | 'movie') => ShowData[]);
+}
 /**
  * Heading of the screen showing the search query
  * and containing the view toggle button.
@@ -53,36 +58,13 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     disableControls = false,
 }) => {
     const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
+    const [filterShowType, setFilterShowType] = useState<'tv' | 'movie' | 'none'>('none')
     const windowSize = useWindowSize();
+    const [sortAndFilters, setSortAndFilters] = useState<SortFilterProps>({ sort: 'none', filter: 'none' })
 
     const handleViewToggle = (view: 'grid' | 'list') => {
         setViewState?.(view);
         localStorage.setItem('streamabilityView', view);
-        setHash?.(Math.random());
-    };
-
-    const handleSortAlpha = () => {
-        const sortedShows = sortShowsAlphaAsc(showDetails || []);
-        setShowDetails?.(sortedShows);
-        setSortState('alpha');
-        setHash?.(Math.random());
-    };
-
-    const handleSortRevAlpha = () => {
-        const sortedShows = sortShowsAlphaDesc(showDetails || []);
-        setShowDetails?.(sortedShows);
-        setSortState('rev');
-        setHash?.(Math.random());
-    };
-
-    const handleRemoveSort = () => {
-        const unsortedShows = localStorage.getItem('streamabilityUnsortedResults');
-        if (!unsortedShows) {
-            LOG.error('Unable to un-sort shows!');
-            return;
-        }
-        setShowDetails?.(JSON.parse(unsortedShows));
-        setSortState('none');
         setHash?.(Math.random());
     };
 
@@ -92,11 +74,56 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                 Search results for: <span className='underline'>{query}</span>
             </Typ>
             <div>
+                <ToggleButtonGroup
+                    value={filterShowType}
+                    exclusive
+                    sx={{ marginRight: 2 }}
+
+                >
+                    <ToggleButton
+                        value='tv'
+                        aria-label='filter by tv shows'
+                        onClick={() => {
+                            setFilterShowType('tv');
+                            setSortAndFilters({ sort: sortAndFilters.sort, filter: (showData: ShowData[]) => filterShowsByType(showData, 'tv') });
+
+                        }}
+                        disabled={disableControls}
+                    >
+                        <Tv />
+                    </ToggleButton>
+                    <ToggleButton
+                        value='movie'
+                        aria-label='filter by movies'
+                        onClick={() => {
+                            setFilterShowType('movie')
+                            setSortAndFilters({ sort: sortAndFilters.sort, filter: (showData: ShowData[]) => filterShowsByType(showData, 'movie') });
+                        }}
+                        disabled={disableControls}
+                    >
+                        <Movie />
+                    </ToggleButton>
+                    <ToggleButton
+                        value='none'
+                        aria-label='Remove filter'
+                        onClick={() => {
+                            setFilterShowType('none');
+                            setSortAndFilters({ sort: sortAndFilters.sort, filter: 'none' });
+                        }}
+                        disabled={disableControls}
+                    >
+                        <FilterAltOff />
+                    </ToggleButton>
+                </ToggleButtonGroup>
+
                 <ToggleButtonGroup value={sortState} exclusive sx={{ marginRight: 2 }}>
                     <ToggleButton
                         value='alpha'
                         aria-label='sort results alphabetically'
-                        onClick={handleSortAlpha}
+                        onClick={() => {
+                            setSortState('alpha');
+                            setSortAndFilters({ sort: (showData: ShowData[]) => sortShowsAlphaAsc(showData), filter: sortAndFilters.filter });
+                        }}
                         disabled={disableControls}
                     >
                         <SvgIcon>
@@ -113,7 +140,10 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value='rev'
                         aria-label='sort results reverse alphabetically'
-                        onClick={handleSortRevAlpha}
+                        onClick={() => {
+                            setSortState('rev');
+                            setSortAndFilters({ sort: (showData: ShowData[]) => sortShowsAlphaDesc(showData), filter: sortAndFilters.filter });
+                        }}
                         disabled={disableControls}
                     >
                         <SvgIcon>
@@ -128,9 +158,12 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         </SvgIcon>
                     </ToggleButton>
                     <ToggleButton
-                        value='none'
+                        value={'none'}
                         aria-label='Remove sort'
-                        onClick={handleRemoveSort}
+                        onClick={() => {
+                            setSortState(null);
+                            setSortAndFilters({ sort: 'none', filter: sortAndFilters.filter });
+                        }}
                         disabled={disableControls}
                     >
                         <SvgIcon>
@@ -168,6 +201,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         <ViewList />
                     </ToggleButton>
                 </ToggleButtonGroup>
+
             </div>
         </div>
     );
