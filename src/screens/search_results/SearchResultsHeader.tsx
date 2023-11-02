@@ -88,7 +88,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
 
     return (
         <div className='flex flex-wrap justify-between align-middle w-full p-3'>
-            <Typ variant='h5' data-testid='search-results-heading' alignSelf='center' margin={1}>
+            <Typ variant='h5' alignSelf='center' margin={1}>
                 Search results for: <span className='underline'>{query}</span>
             </Typ>
             <div>

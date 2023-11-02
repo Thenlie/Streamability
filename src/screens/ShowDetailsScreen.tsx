@@ -181,9 +181,7 @@ const ShowDetailsScreen: React.FC = () => {
                         <Typ variant='h3' align='left' className='max-w-lg'>
                             {details.title}
                         </Typ>
-                        <Typ align='left' data-testid='details-release-date'>
-                            {getReleaseDate(details)}
-                        </Typ>
+                        <Typ align='left'>{getReleaseDate(details)}</Typ>
                         <Typ align='left' variant='body2'>
                             {getRuntime(details)}
                         </Typ>

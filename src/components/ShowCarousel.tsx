@@ -198,7 +198,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             <div
                 style={{ width: carouselWidth }}
                 className='flex flex-col'
-                data-testid='show-carousel'
+                data-testid='empty-show-carousel'
             >
                 {headerProps && <CarouselHeader {...headerProps} />}
                 <Carousel

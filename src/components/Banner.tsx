@@ -65,7 +65,6 @@ const Banner: React.FC<BannerProps> = ({
                 height: 400,
             }}
             data-testid='banner'
-            id='banner'
         >
             {renderLogo && (
                 <img

@@ -23,7 +23,6 @@ const BannerLoader: React.FC = (): JSX.Element => {
             <div
                 className='w-full flex lg:rounded-b-lg bottom-0.5 mx-auto justify-center'
                 data-testid='banner-loader'
-                id='banner-loader'
             >
                 <Skeleton
                     height={400}

@@ -30,6 +30,7 @@ describe('Show Details Screen', () => {
     // TODO: #691 Update test to look for new screen and validate it
     it('No details found page when nothing is returned from details query', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(null as unknown as ShowData);
+
         const router = createMemoryRouter(routes, {
             initialEntries: ['/details/movie/1'],
         });
@@ -40,6 +41,7 @@ describe('Show Details Screen', () => {
     it('movie details properly displayed', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);
         vi.mocked(getMovieRecommendations).mockResolvedValue(null);
+
         const router = createMemoryRouter(routes, {
             initialEntries: [`/details/movie/${MOVIE_DETAIL.id}`],
         });
@@ -47,7 +49,7 @@ describe('Show Details Screen', () => {
 
         await screen.findByTestId('show-details-screen');
 
-        expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
+        expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
         expect(screen.getByAltText(MOVIE_DETAIL.title + ' poster')).toBeInTheDocument();
         expect(screen.getByText(MOVIE_DETAIL.title)).toBeInTheDocument();
         expect(screen.getByText(MOVIE_DETAIL.overview || '')).toBeInTheDocument();
@@ -57,13 +59,14 @@ describe('Show Details Screen', () => {
     it('tv details properly displayed', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
         vi.mocked(getTvRecommendations).mockResolvedValue(null);
+
         const router = createMemoryRouter(routes, {
             initialEntries: [`/details/tv/${TV_DETAIL.id}`],
         });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('show-details-screen');
-        expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
+        expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
         expect(screen.getByAltText(TV_DETAIL.title + ' poster')).toBeInTheDocument();
         expect(screen.getByText(TV_DETAIL.title)).toBeInTheDocument();
         expect(screen.getByText(TV_DETAIL.overview || '')).toBeInTheDocument();
@@ -73,6 +76,7 @@ describe('Show Details Screen', () => {
     it('shows recommendation carousel when recommendation data is returned', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);
         vi.mocked(getMovieRecommendations).mockResolvedValue(TRENDING_DATA);
+
         const router = createMemoryRouter(routes, {
             initialEntries: [`/details/movie/${MOVIE_DETAIL.id}`],
         });
@@ -87,13 +91,14 @@ describe('Show Details Screen', () => {
     it('shows empty recommendation carousel when no recommendation data is returned', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
         vi.mocked(getTvRecommendations).mockResolvedValue(null);
+
         const router = createMemoryRouter(routes, {
             initialEntries: [`/details/tv/${TV_DETAIL.id}`],
         });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('show-details-screen');
-        expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
+        expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
         expect(
             screen.getByText('Sorry, we could not find any recommendations based on this title.')
         ).toBeInTheDocument();

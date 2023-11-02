@@ -56,6 +56,6 @@ describe('Featured Search Screen', () => {
 
         await screen.findByTestId('featured-search-screen');
         expect(screen.getByTestId('banner')).toBeInTheDocument();
-        expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
+        expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
     });
 });
