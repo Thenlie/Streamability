@@ -22,6 +22,7 @@ import {
     PersonAddAltRounded,
     RemoveFromQueue,
 } from '@mui/icons-material';
+import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
 
 /**
  * Buttons to alter the show in a logged in users profile.
@@ -153,9 +154,8 @@ const ShowDetailsScreen: React.FC = () => {
         return <ShowDetailsLoader />;
     }
 
-    // TODO: #691 Handle case when no details are ever returned
     if (!details) {
-        return <p>No details found!</p>;
+        return <EmptyShowDetailsScreen />;
     }
 
     return (

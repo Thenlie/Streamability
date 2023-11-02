@@ -27,7 +27,6 @@ vi.mock('../../helpers', async () => {
 });
 
 describe('Show Details Screen', () => {
-    // TODO: #691 Update test to look for new screen and validate it
     it('No details found page when nothing is returned from details query', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(null as unknown as ShowData);
 
@@ -36,7 +35,12 @@ describe('Show Details Screen', () => {
         });
         render(<RouterProvider router={router} />);
 
-        await screen.findByText('No details found!');
+        await screen.findByTestId('empty-show-details-screen');
+        expect(screen.getByRole('button', { name: 'Go Back' })).toBeInTheDocument();
+        expect(
+            // eslint-disable-next-line prettier/prettier
+            screen.getByText('We couldn\'t find any more details for this show. Sorry about that!')
+        ).toBeInTheDocument();
     });
     it('movie details properly displayed', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);
