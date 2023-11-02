@@ -1,11 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ViewModule, ViewList, FilterAltOff, Tv, Movie } from '@mui/icons-material';
+import { ViewModule, ViewList, FilterAltOff, Tv, Movie, CatchingPokemonSharp, ConstructionOutlined } from '@mui/icons-material';
 import { ToggleButtonGroup, ToggleButton, SvgIcon, Typography as Typ } from '@mui/material';
 import { useWindowSize } from '../../hooks';
 import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
 import Logger from '../../logger';
 import { ShowData } from '../../types';
-import { preview } from 'vite';
 
 const LOG = new Logger('SearchResultsHeader');
 
@@ -41,8 +40,8 @@ interface SearchResultsHeaderProps {
 }
 
 interface SortFilterProps {
-    sort: 'none' | ((showData: ShowData[]) => ShowData[]);
-    filter: 'none' | ((showData: ShowData[], type: 'tv' | 'movie') => ShowData[]);
+    filter: null | ((showData: ShowData[], type: 'tv' | 'movie') => ShowData[])
+    sort: null | ((showData: ShowData[]) => ShowData[]);
 }
 /**
  * Heading of the screen showing the search query
@@ -60,7 +59,33 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
     const [filterShowType, setFilterShowType] = useState<'tv' | 'movie' | 'none'>('none')
     const windowSize = useWindowSize();
-    const [sortAndFilters, setSortAndFilters] = useState<SortFilterProps>({ sort: 'none', filter: 'none' })
+    const [sortAndFilters, setSortAndFilters] = useState<SortFilterProps>({ filter: null, sort: null, })
+    const unsortedShows = localStorage.getItem('streamabilityUnsortedResults');
+
+    useEffect(() => {
+        if (!unsortedShows) return; // shuould never be false
+        if (sortAndFilters.filter === null && sortAndFilters.sort === null) { // resets to original data
+            setShowDetails?.(JSON.parse(unsortedShows));
+            return;
+        }
+
+        let results: ShowData[] = [];
+        if (filterShowType !== 'none') { // reset to unsortedshows if neither are selected
+            const filteredShows = sortAndFilters['filter']?.(JSON.parse(unsortedShows), filterShowType);
+            if (filteredShows) results.push(...filteredShows);
+        }
+
+        if (sortState !== 'none' && results.length > 0) { // if sort AND filter
+            let arr = sortAndFilters['sort']?.(results);
+            if (arr) setShowDetails?.(arr)
+        } else if (sortState !== 'none') { // If ONLY sort
+            if (unsortedShows && sortAndFilters['sort']) setShowDetails?.(sortAndFilters['sort']?.(JSON.parse(unsortedShows)))
+
+        }
+
+        if (results.length > 0) setShowDetails?.(results);
+
+    }, [sortAndFilters.sort, sortAndFilters.filter])
 
     const handleViewToggle = (view: 'grid' | 'list') => {
         setViewState?.(view);
@@ -108,7 +133,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         aria-label='Remove filter'
                         onClick={() => {
                             setFilterShowType('none');
-                            setSortAndFilters({ sort: sortAndFilters.sort, filter: 'none' });
+                            setSortAndFilters({ sort: sortAndFilters.sort, filter: null });
                         }}
                         disabled={disableControls}
                     >
@@ -161,8 +186,8 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                         value={'none'}
                         aria-label='Remove sort'
                         onClick={() => {
-                            setSortState(null);
-                            setSortAndFilters({ sort: 'none', filter: sortAndFilters.filter });
+                            setSortState('none');
+                            setSortAndFilters({ sort: null, filter: sortAndFilters.filter });
                         }}
                         disabled={disableControls}
                     >
