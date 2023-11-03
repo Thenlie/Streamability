@@ -20,7 +20,10 @@ const BannerLoader: React.FC = (): JSX.Element => {
 
     return (
         <>
-            <div className='w-full flex lg:rounded-b-lg bottom-0.5 mx-auto justify-center'>
+            <div
+                className='w-full flex lg:rounded-b-lg bottom-0.5 mx-auto justify-center'
+                data-testid='banner-loader'
+            >
                 <Skeleton
                     height={400}
                     width={loaderWidth}

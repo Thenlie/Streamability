@@ -1,8 +1,7 @@
 import React from 'react';
 import { Typography as Typ } from '@mui/material';
-import ShowCarousel from '../../components/ShowCarousel';
-import useTrendingShows from '../../hooks/useTrendingShows';
-import Button from '../../components/Button';
+import { ShowCarousel, Button } from '../../components';
+import { useTrendingShows } from '../../hooks';
 import { Home } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import SearchResultsHeader from './SearchResultsHeader';
@@ -26,7 +25,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
     const { trendingShows, loading } = useTrendingShows();
 
     return (
-        <>
+        <div data-testid='empty-search-results'>
             <SearchResultsHeader query={query} viewState={viewState} disableControls />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
@@ -59,7 +58,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
                     </>
                 )}
             </section>
-        </>
+        </div>
     );
 };
 

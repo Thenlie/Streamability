@@ -129,3 +129,5 @@ npm test <test-name>
 ```
 
 These tests will be run on each commit. See [work in progress commits](#work-in-progress-commits) if you would like to bypass this behavior.
+
+When running UI automation tests, failing tests will print out the React Testing Library DOM at time of failure. It is common for this to get truncated in out app. The size of this print can be expanded with the `DEBUG_PRINT_LIMIT` environment variable.

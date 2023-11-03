@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import useTrendingShows from '../useTrendingShows';
 import { getMovieTrending } from '../../helpers';
 import { MOVIE_DATA_ARRAY } from './constants';
@@ -30,9 +30,7 @@ describe('useTrendingShows', () => {
             const { result } = renderHook(({ sortBy }) => useTrendingShows(sortBy), {
                 initialProps: { sortBy: SORT_BY[0] },
             });
-            await act(
-                async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
-            );
+            await waitFor(() => expect(result.current).toHaveProperty('loading'));
             await waitFor(() => expect(result.current.loading).toBe(false));
             expect(result.current).toHaveProperty('trendingShows');
             expect(result.current.trendingShows?.[0].id).toBe(1726);
@@ -44,9 +42,7 @@ describe('useTrendingShows', () => {
             const { result } = renderHook(({ sortBy }) => useTrendingShows(sortBy), {
                 initialProps: { sortBy: SORT_BY[1] },
             });
-            await act(
-                async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
-            );
+            await waitFor(() => expect(result.current).toHaveProperty('loading'));
             await waitFor(() => expect(result.current.loading).toBe(false));
             expect(result.current).toHaveProperty('trendingShows');
             expect(result.current.trendingShows?.[0].id).toBe(951647);
@@ -58,9 +54,7 @@ describe('useTrendingShows', () => {
             const { result } = renderHook(({ sortBy }) => useTrendingShows(sortBy), {
                 initialProps: { sortBy: SORT_BY[2] },
             });
-            await act(
-                async () => await waitFor(() => expect(result.current).toHaveProperty('loading'))
-            );
+            await waitFor(() => expect(result.current).toHaveProperty('loading'));
             await waitFor(() => expect(result.current.loading).toBe(false));
             expect(result.current).toHaveProperty('trendingShows');
             expect(result.current.trendingShows?.[0].id).toBe(37113);

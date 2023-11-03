@@ -160,7 +160,10 @@ const ShowDetailsScreen: React.FC = () => {
 
     return (
         <>
-            <section className='m-6 mb-8 flex flex-col lg:flex-row'>
+            <section
+                className='m-6 mb-8 flex flex-col lg:flex-row'
+                data-testid='show-details-screen'
+            >
                 <div className='rounded-md m-3 w-[250px] lg:w-[330px]'>
                     <img
                         className='w-[250px] lg:w-[330px] max-w-none rounded-md'
@@ -170,21 +173,15 @@ const ShowDetailsScreen: React.FC = () => {
                                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                                 : '/poster-placeholder.jpeg'
                         }
+                        alt={`${details.title} poster`}
                     ></img>
                 </div>
                 <div className='m-3 max-w-xl'>
                     <div>
-                        <Typ
-                            variant='h3'
-                            align='left'
-                            className='max-w-lg'
-                            data-testid='show-details-heading'
-                        >
+                        <Typ variant='h3' align='left' className='max-w-lg'>
                             {details.title}
                         </Typ>
-                        <Typ align='left' data-testid='details-release-date'>
-                            {getReleaseDate(details)}
-                        </Typ>
+                        <Typ align='left'>{getReleaseDate(details)}</Typ>
                         <Typ align='left' variant='body2'>
                             {getRuntime(details)}
                         </Typ>

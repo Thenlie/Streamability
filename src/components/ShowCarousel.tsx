@@ -156,7 +156,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             setCarouselWidth((SHOW_POSTER_WIDTH * size + 100).toString() + 'px');
             return;
         }
-        if (debouncedWindowSize.width === null) return;
+        if (!debouncedWindowSize || debouncedWindowSize.width === null) return;
         if (debouncedWindowSize.width && debouncedWindowSize.width > 1536) {
             setCarouselWidth((SHOW_POSTER_WIDTH * 5 + 190).toString() + 'px');
         } else if (debouncedWindowSize.width && debouncedWindowSize.width > 1350) {
@@ -195,7 +195,11 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
 
     if (!data || data.length === 0) {
         return (
-            <div style={{ width: carouselWidth }} className='flex flex-col'>
+            <div
+                style={{ width: carouselWidth }}
+                className='flex flex-col'
+                data-testid='empty-show-carousel'
+            >
                 {headerProps && <CarouselHeader {...headerProps} />}
                 <Carousel
                     className='bg-foreground'
@@ -223,7 +227,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     }
 
     return (
-        <div style={{ width: carouselWidth }}>
+        <div style={{ width: carouselWidth }} data-testid='show-carousel'>
             {headerProps && <CarouselHeader {...headerProps} />}
             <Carousel
                 wrapAround

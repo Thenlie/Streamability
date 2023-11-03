@@ -189,10 +189,10 @@ const SignUpScreen: React.FC = () => {
 
     return (
         <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <Typ data-testid='signup-heading' variant='h4' sx={{ margin: 2 }}>
+            <Typ variant='h4' sx={{ margin: 2 }}>
                 Sign Up
             </Typ>
-            <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
+            <form onSubmit={signUpHandler} className='flex flex-col'>
                 <TextInput
                     id='email-input'
                     type='email'

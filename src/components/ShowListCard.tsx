@@ -71,11 +71,7 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
             data-testid='show-list-card-component'
             className='items-left m-1 flex w-[700px] rounded-md bg-foreground shadow-md'
         >
-            <Link
-                to={`/details/${details.media_type}/${details.id}`}
-                state={details}
-                data-testid='show-details-link'
-            >
+            <Link to={`/details/${details.media_type}/${details.id}`} state={details}>
                 <CardMedia
                     component='img'
                     className='w-full cursor-pointer rounded-l-md'
