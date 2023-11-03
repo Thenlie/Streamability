@@ -9,9 +9,9 @@ import { Typography as Typ } from '@mui/material';
 const LOG = new Logger('PageNotFoundScreen');
 
 /**
- * @returns {JSX.Element} | 404 page
+ * 404 page, returned when an invalid endpoint is hit
  */
-const PageNotFoundScreen: React.FC = (): JSX.Element => {
+const PageNotFoundScreen: React.FC = () => {
     const navigate = useNavigate();
 
     /**
@@ -35,7 +35,7 @@ const PageNotFoundScreen: React.FC = (): JSX.Element => {
                 Page Not Found!
             </Typ>
             <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
-            <Button title='Go back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
+            <Button title='Go Back' StartIcon={ArrowBack} onClick={() => navigate(-1)} />
             {error.statusText && (
                 <Snackbar isOpen isStatic severity='error' message={error.statusText} />
             )}

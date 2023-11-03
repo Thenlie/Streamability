@@ -14,6 +14,6 @@ describe('Page Not Found Screen', () => {
         await screen.findByTestId('page-not-found-screen');
         expect(screen.getByText('Page Not Found!')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Return home' })).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: 'Go back' })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Go Back' })).toBeInTheDocument();
     });
 });

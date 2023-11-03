@@ -8,8 +8,6 @@
 | [src/screens/DiscoverScreen.tsx](src/screens/DiscoverScreen.tsx#L61) | 61 | #613 Dynamic date range |
 | [src/screens/PageNotFoundScreen.tsx](src/screens/PageNotFoundScreen.tsx#L25) | 25 | Implement better error handling |
 | [src/screens/PageNotFoundScreen.tsx](src/screens/PageNotFoundScreen.tsx#L26) | 26 | Handle thrown responses with 'isRouteErrorResponse' |
-| [src/screens/ShowDetailsScreen.tsx](src/screens/ShowDetailsScreen.tsx#L156) | 156 | #691 Handle case when no details are ever returned |
 | [src/supabase/profiles.ts](src/supabase/profiles.ts#L253) | 253 | #587 Ensure country code is valid |
-| [src/__tests__/screens/ShowDetailsScreen.test.tsx](src/__tests__/screens/ShowDetailsScreen.test.tsx#L30) | 30 | #691 Update test to look for new screen and validate it |
 | [src/screens/auth/LoginScreen.tsx](src/screens/auth/LoginScreen.tsx#L86) | 86 | We could try to get the AuthApiError type and use 'cause' instead |
 | [src/screens/dashboard/DashboardGalleryScreen.tsx](src/screens/dashboard/DashboardGalleryScreen.tsx#L27) | 27 | If profile does not return after a few seconds, |
