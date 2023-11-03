@@ -2,7 +2,7 @@
 
 Use the steps below to clone the repository and get the project running on your local machine.
 
-1. Navigate to the develop branch of the repository and click the green "Code" button. Then copy the repository URL with the method of your choosing. We suggest SSH which can be setup by following [these docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
+1. Navigate to the develop branch of the repository on GitHub and click the green "Code" button. Then copy the repository URL with the method of your choosing. We suggest SSH which can be setup by following [these docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 
 2. Go to your terminal program of choice and navigate the the folder you want the project to live in. Then run the command below to clone the repository:
 
@@ -19,13 +19,19 @@ git clone <repository_url>
 npm install
 ```
 
-6. Next, you need to run the set up command:
+6. To ensure git-hooks run during commits, you need to run the set up command:
+
 ```s
 npm run setup
 ```
-This will ensure the projects git hooks run during the pre-commit step.
 
-7. Finally, you will need to install [docker](https://www.docker.com/) one your machine. This is used to run the local Supabase server.
+7. You will need to install [docker](https://www.docker.com/) on your machine to run the local Supabase server. Follow the installation instruction on the docker website for your specific OS.
+
+8. Finally, you will need to fill out the `.env` file. Use the `.env.template` as a guide.
+
+`VITE_SUPABASE_URL` & `VITE_SUPABASE_ANON_KEY` come from supabase. For local development, these keys will be output by the `npm run db-start` command. To have the keys automatically written to you .env file, use the command `npm run db-start-env`.
+
+`VITE_MOVIEDB_KEY` comes from The Movie Database. Navigate to [https://www.themoviedb.org/](https://www.themoviedb.org/) and create a free account. Navigate to your profile setting and click on "API" there you will see your API key or a button to generate one.
 
 This should be everything you need to move on to the usage instructions!
 
