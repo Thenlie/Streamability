@@ -88,22 +88,50 @@ npm run db-start-env
 
 2. Navigate to your profile settings and click on "API". There you will see your API key or a button to generate one.
 
-## Running
+## Usage
 
-You should now have everything set up and be able to run the application. To do so, use the command:
+### App
+
+You should now have everything set up and be able to run the application. If you have stopped the database since setting up environment variables, ensure docker is running and then run the command:
+
+```sh
+npm run db-start
+```
+
+To run the development server, use the command:
 
 ```sh
 npm run dev
 ```
 
-To run the [storybook](storybook.md) application, use the command:
+This will show a localhost URL in the terminal which is where the app is being served.
+
+If you would like to see a deployed version of your work, push your branch to remote. Vercel will automatically deploy that branch in a test site. 
+
+### Storybook
+
+To run the storybook application, use the command:
 
 ```sh
 npm run storybook
 ```
 
-If you have stopped the database since setting up environment variables, ensure docker is running and then run the command:
+The storybook application should automatically open in your web browser. Check out more detailed storybook documentation [here](storybook.md).
+
+## Troubleshooting
+
+If you run into issues with an npm install, use the command:
 
 ```sh
-npm run db-start
+npm run clean
+```
+
+This will delete and reinstall all `node_modules` as well as the npm cache.
+
+---
+
+If you see the error `permission denied` when running one of the script files, use the command:
+
+```sh
+chmod +x ./scripts/file-name
 ```
