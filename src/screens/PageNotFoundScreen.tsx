@@ -19,7 +19,7 @@ const PageNotFoundScreen: React.FC = () => {
      * action, loader, or rendering
      */
     const error: ErrorResponse = useRouteError() as ErrorResponse;
-    LOG.error(error);
+    LOG.error(error.statusText);
 
     /**
      * @TODO Implement better error handling
@@ -31,7 +31,8 @@ const PageNotFoundScreen: React.FC = () => {
             className='flex min-h-screen flex-col place-items-center justify-center'
             data-testid='page-not-found-screen'
         >
-            <Typ variant='h4' sx={{ paddingBottom: 6 }}>
+            <img src='/images/404.svg' width={500} className='p-4' />
+            <Typ variant='h4' sx={{ paddingY: 6 }}>
                 Page Not Found!
             </Typ>
             <Button title='Return home' StartIcon={Home} onClick={() => navigate('/')} />
