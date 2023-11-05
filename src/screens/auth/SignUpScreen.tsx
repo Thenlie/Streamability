@@ -188,7 +188,11 @@ const SignUpScreen: React.FC = () => {
     }
 
     return (
-        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
+        <div
+            aria-live='polite'
+            className='flex flex-col flex-1 justify-center'
+            data-testid='signup-screen'
+        >
             <Typ variant='h4' sx={{ margin: 2 }}>
                 Sign Up
             </Typ>
