@@ -77,7 +77,7 @@ const SearchResultsScreen: React.FC = () => {
     }
 
     return (
-        <div data-testid='search-results-screen'>
+        <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
             <SearchResultsHeader
                 query={query}
                 viewState={viewState}
