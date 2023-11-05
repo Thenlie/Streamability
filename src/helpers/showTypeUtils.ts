@@ -92,7 +92,7 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
             : (data as TvDetailsData).last_episode_to_air.air_date,
         next_air_date: mediaType === 'movie'
             ? null
-            : (data as TvDetailsData).next_episode_to_air?.[0].air_date
+            : (data as TvDetailsData).next_episode_to_air?.air_date
     };
 };
 
