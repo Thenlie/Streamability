@@ -13,7 +13,7 @@ describe('Page Not Found Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('page-not-found-screen');
-        expect(screen.getByText('Page Not Found!')).toBeInTheDocument();
+        expect(screen.getByAltText('Page not found')).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Return home' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Go Back' })).toBeInTheDocument();
     });
