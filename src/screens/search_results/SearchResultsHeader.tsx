@@ -3,7 +3,10 @@ import { ViewModule, ViewList, FilterAltOff, Tv, Movie } from '@mui/icons-materi
 import { ToggleButtonGroup, ToggleButton, SvgIcon, Typography as Typ } from '@mui/material';
 import { useWindowSize } from '../../hooks';
 import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
+import Logger from '../../logger';
 import { ShowData } from '../../types';
+
+const LOG = new Logger('SearchResultsHeader');
 
 interface SearchResultsHeaderProps {
     /**
@@ -35,10 +38,12 @@ interface SearchResultsHeaderProps {
      */
     disableControls?: boolean;
 }
+
 interface FilterProps {
     showType: 'tv' | 'movie' | 'none';
     // more filters to add
 }
+
 /**
  * Heading of the screen showing the search query
  * and containing the view toggle button.
@@ -57,7 +62,11 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     const unsortedShows = localStorage.getItem('streamabilityUnsortedResults');
 
     useEffect(() => {
-        if (!unsortedShows) return; // should never be false
+        if (!unsortedShows) {
+            // should never be false
+            LOG.error('No original data in local storage');
+            return;
+        }
         if (filterState.showType === 'none' && sortState === 'none') {
             // resets to original data if neither are selected
             setShowDetails?.(JSON.parse(unsortedShows));
@@ -98,18 +107,20 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     };
 
     return (
-        <div className='flex flex-wrap justify-between align-middle w-full p-3'>
+        <div className='flex flex-col md:flex-row flex-wrap justify-between align-middle w-full p-3'>
             <Typ variant='h5' alignSelf='center' margin={1}>
                 Search results for: <span className='underline'>{query}</span>
             </Typ>
             <div>
-                <ToggleButtonGroup value={filterState.showType} exclusive sx={{ marginRight: 2 }}>
+                <ToggleButtonGroup
+                    value={filterState.showType}
+                    exclusive
+                    sx={{ marginRight: 2, marginBottom: 0.5 }}
+                >
                     <ToggleButton
                         value='tv'
                         aria-label='filter by tv shows'
-                        onClick={() => {
-                            setFilterState({ showType: 'tv' });
-                        }}
+                        onClick={() => setFilterState({ showType: 'tv' })}
                         disabled={disableControls}
                     >
                         <Tv />
@@ -117,9 +128,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value='movie'
                         aria-label='filter by movies'
-                        onClick={() => {
-                            setFilterState({ showType: 'movie' });
-                        }}
+                        onClick={() => setFilterState({ showType: 'movie' })}
                         disabled={disableControls}
                     >
                         <Movie />
@@ -127,9 +136,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value='none'
                         aria-label='Remove filter'
-                        onClick={() => {
-                            setFilterState({ showType: 'none' });
-                        }}
+                        onClick={() => setFilterState({ showType: 'none' })}
                         disabled={disableControls}
                     >
                         <FilterAltOff />
@@ -140,9 +147,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value='alpha'
                         aria-label='sort results alphabetically'
-                        onClick={() => {
-                            setSortState('alpha');
-                        }}
+                        onClick={() => setSortState('alpha')}
                         disabled={disableControls}
                     >
                         <SvgIcon>
@@ -159,9 +164,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value='rev'
                         aria-label='sort results reverse alphabetically'
-                        onClick={() => {
-                            setSortState('rev');
-                        }}
+                        onClick={() => setSortState('rev')}
                         disabled={disableControls}
                     >
                         <SvgIcon>
@@ -178,9 +181,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                     <ToggleButton
                         value={'none'}
                         aria-label='Remove sort'
-                        onClick={() => {
-                            setSortState('none');
-                        }}
+                        onClick={() => setSortState('none')}
                         disabled={disableControls}
                     >
                         <SvgIcon>
