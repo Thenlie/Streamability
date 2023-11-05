@@ -82,7 +82,7 @@ export interface TvDetailsData extends TvData {
         vote_count: number;
     };
     media_type: 'tv';
-    next_episode_to_air: NextEpisodeData[] | undefined;
+    next_episode_to_air: NextEpisodeData | undefined;
     networks: [
         {
             name: string;
