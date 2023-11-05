@@ -120,7 +120,7 @@ const SignUpScreen: React.FC = () => {
         }
 
         // Ensure password is of sufficient length
-        if (password.length < 3) {
+        if (password.length < 6) {
             showError('Password must be at least 6 characters');
             setPasswordError(true);
             setLoading(false);
