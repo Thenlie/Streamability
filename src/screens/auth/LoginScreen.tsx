@@ -95,7 +95,11 @@ const LoginScreen: React.FC = () => {
     }
 
     return (
-        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
+        <div
+            aria-live='polite'
+            className='flex flex-col flex-1 justify-center'
+            data-testid='login-screen'
+        >
             <Typ variant='h4' sx={{ margin: 2 }}>
                 Login
             </Typ>
@@ -115,6 +119,7 @@ const LoginScreen: React.FC = () => {
                 <TextInput
                     id='password-input'
                     name='password'
+                    data-testid='qqq'
                     type={isPasswordVisible ? 'text' : 'password'}
                     label='Password'
                     color='secondary'
