@@ -1,4 +1,4 @@
-# Project Set Up 🏗️
+# Getting Started 🏗️
 
 The steps below contain everything a first time developer needs to get the Streamability project running locally.
 
@@ -20,13 +20,7 @@ Git is the version control system used on the Streamability project. You can dow
 
 1. Navigate to the [develop](https://github.com/Thenlie/Streamability/tree/develop) branch of the repository on GitHub and click the "Fork" button on the top right corner of the page.
 
-- Under "Owner," select the dropdown menu and click an owner for the forked repository.
-
-- By default the fork will be named "Streamability". Optionally, to further distinguish your fork, in the "Repository name" field, type a name.
-
-- Optionally, in the "Description" field, type a description of your fork.
-
-- Do not select "Copy the DEFAULT branch only" as you will need `develop` and the default branch is `main`.
+    - Do not select "Copy the DEFAULT branch only" as you will need `develop` and the default branch is `main`.
 
 2. Click Create fork.
 
@@ -44,21 +38,21 @@ git clone repository-url
 
 1. In your terminal, navigate to the project directory with the command:
 
-```sh
-cd path-to-project
-```
+    ```sh
+    cd path-to-project
+    ```
 
 2. Once you are in the project directory you need to install node modules with the command:
 
-```sh
-npm install
-```
+    ```sh
+    npm install
+    ```
 
-6. To ensure git-hooks run during commits, you need to run the set up command:
+3. To ensure git-hooks run during commits, you need to run the set up command:
 
-```sh
-npm run setup
-```
+    ```sh
+    npm run setup
+    ```
 
 ## Environment Variables
 
@@ -70,21 +64,21 @@ You will need to fill out the `.env` file with 3 variables. Use the `.env.templa
 
 2. These keys will be output by the command:
 
-```sh
-npm run db-start
-```
+    ```sh
+    npm run db-start
+    ```
 
-To have the keys automatically written to you .env file, use the command:
+    To have the keys automatically written to you .env file, use the command:
 
-```sh
-npm run db-start-env
-```
+    ```sh
+    npm run db-start-env
+    ```
 
 > Note: For remote develop or production keys, you will need to reach out to a codeowner. In general, these should not be needed.
 
-`VITE_MOVIEDB_KEY` comes from The Movie Database. 
+`VITE_MOVIEDB_KEY` comes from The Movie Database.
 
-1. Navigate to [https://www.themoviedb.org/](https://www.themoviedb.org/) and create a free account. 
+1. Navigate to [https://www.themoviedb.org/](https://www.themoviedb.org/) and create a free account.
 
 2. Navigate to your profile settings and click on "API". There you will see your API key or a button to generate one.
 
@@ -106,7 +100,7 @@ npm run dev
 
 This will show a localhost URL in the terminal which is where the app is being served.
 
-If you would like to see a deployed version of your work, push your branch to remote. Vercel will automatically deploy that branch in a test site. 
+If you would like to see a deployed version of your work, push your branch to remote. Vercel will automatically deploy that branch in a test site.
 
 ### Storybook
 
