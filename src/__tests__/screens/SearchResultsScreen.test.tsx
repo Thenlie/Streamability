@@ -16,6 +16,10 @@ vi.mock('../../hooks', async () => {
     };
 });
 
+const router = createMemoryRouter(routes, {
+    initialEntries: ['/search?q=iron+man'],
+});
+
 describe('Search Results Screen', () => {
     it('search results loader displayed initially when `data` is null', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
@@ -26,9 +30,6 @@ describe('Search Results Screen', () => {
             refetch: () => {},
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/search?q=iron+man'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-loader');
@@ -49,9 +50,6 @@ describe('Search Results Screen', () => {
             refetch: () => {},
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/search?q=iron+man'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('empty-search-results');
@@ -74,9 +72,6 @@ describe('Search Results Screen', () => {
             refetch: () => {},
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/search?q=iron+man'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-screen');
@@ -95,9 +90,6 @@ describe('Search Results Screen', () => {
             refetch: () => {},
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/search?q=iron+man'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-screen');
