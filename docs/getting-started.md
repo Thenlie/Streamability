@@ -14,7 +14,7 @@ You will need to install [docker](https://www.docker.com/) on your machine to ru
 
 Git is the version control system used on the Streamability project. You can download the latest version from [this link](https://git-scm.com/downloads).
 
-## Forking
+## Forking 🍴
 
 > If you would prefer to follow the official GitHub documentation on forking, you can find them [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository). This is a slightly abridged version of those instructions.
 
@@ -34,7 +34,7 @@ Git is the version control system used on the Streamability project. You can dow
 git clone repository-url
 ```
 
-## Dependency Installation
+## Dependency Installation 📥
 
 1. In your terminal, navigate to the project directory with the command:
 
@@ -54,7 +54,7 @@ git clone repository-url
     npm run setup
     ```
 
-## Environment Variables
+## Environment Variables 🌎
 
 You will need to fill out the `.env` file with 3 variables. Use the `.env.template` as a guide.
 
@@ -82,7 +82,7 @@ You will need to fill out the `.env` file with 3 variables. Use the `.env.templa
 
 2. Navigate to your profile settings and click on "API". There you will see your API key or a button to generate one.
 
-## Usage
+## Usage 🧑‍💻
 
 ### App
 
@@ -112,7 +112,7 @@ npm run storybook
 
 The storybook application should automatically open in your web browser. Check out more detailed storybook documentation [here](storybook.md).
 
-## Troubleshooting
+## Troubleshooting 🛠️
 
 If you run into issues with an npm install, use the command:
 

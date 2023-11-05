@@ -12,7 +12,7 @@ UI tests aim to test all the code working together in a functional application. 
 
 ---
 
-## Usage
+## Usage 🧑‍🔬
 
 Unit test live in `__tests__` directories within different modules. For example, `src/helpers/__tests__`. In general, we have one test file per code file. This makes it easy to know which test file is associated with each source code file.
 
@@ -42,7 +42,7 @@ To run the tests in watch mode so they re-run on save:
 npm test -- -w
 ```
 
-## Commits
+## Commits 🗂️
 
 The pre-commit hook will run the complete UI and Unit test suite. This ensures that new code being added to the repository is passing all checks. Frequently however, a develop would like to make a commit while tests are failing and fix them in a subsequent commit. This can be achieved in a number of ways.
 
@@ -58,9 +58,9 @@ You can also set an environment flag in you shell to do this. Here is a helpful 
 export NO_VERIFY=1 && git add -A && git commit -m "WIP -- [skip ci]" && export NO_VERIFY=
 ```
 
-## Troubleshooting
+## Troubleshooting 🛠️
 
-When tests are failing, we should try and fix them. If a UI change was made, tests may just need to be updated to accommodate. If logic was changed, something could have broke and is being caught by the tests. 
+When tests are failing, we should try and fix them. If a UI change was made, tests may just need to be updated to accommodate. If logic was changed, something could have broke and is being caught by the tests.
 
 If a test is failing and needs to be temporarily skipped for some reason, you can do so with `describe.skip` or `it.skip`. For example:
 

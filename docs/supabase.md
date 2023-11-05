@@ -2,7 +2,7 @@
 
 [Supabase](https://supabase.com/) is a Postgres database and database API used on the Streamability project. This is cloud based for production and run on in a docker container for local development. This document is intended to help developers setup and use the local supabase instance.
 
-## Setup
+## Setup 🏗
 
 ### Pre-requisites
 
@@ -31,7 +31,7 @@ To have the keys automatically written to you .env file, use the command:
 npm run db-start-env
 ```
 
-## Usage
+## Usage 🧑‍💻
 
 To start the local Supabase instance, use the command:
 
@@ -49,6 +49,6 @@ To stop the local Supabase instance, use the command:
 npm run db-stop
 ```
 
-## Other Documents
+## Other Documents 📄
 
 [How To] [Delete the profile table](https://gist.github.com/Thenlie/164c28391075b3882de29f2bfc1d91bf)
