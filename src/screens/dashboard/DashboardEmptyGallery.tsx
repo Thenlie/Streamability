@@ -14,7 +14,7 @@ const DashboardEmptyGallery: React.FC<DashboardEmptyGalleryProps> = ({ title }) 
             <div className='flex justify-center w-full'>
                 <img src='/images/resting.svg' width={500}></img>
             </div>
-            <Typ variant='h5'>{`Your ${title} is empty!`}</Typ>
+            <Typ variant='h5' sx={{ marginTop: 4 }}>{`Your ${title} is empty!`}</Typ>
             <Typ variant='body1'>{`Add shows to you ${title} to view them here.`}</Typ>
         </div>
     );

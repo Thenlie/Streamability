@@ -1,4 +1,4 @@
-import { ShowGenre } from './show';
+import { ShowGenre, ShowProviders } from './show';
 
 /**
  * Returned by TMDB as non-detailed info
@@ -19,6 +19,7 @@ export interface TvData {
     vote_average?: number;
     vote_count?: number;
     origin_country?: string[];
+    last_air_date: string;
 }
 
 /**
@@ -30,6 +31,22 @@ export interface TvResults {
     results?: TvData[];
     total_pages?: number;
     total_results?: number;
+}
+
+export interface NextEpisodeData {
+    air_date: string;
+    episode_number: number;
+    episode_type: string;
+    id: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    runtime: number | null;
+    season_number: number;
+    show_id: number;
+    still_path: string | null;
+    vote_average: number;
+    vote_count: number;
 }
 
 /**
@@ -64,7 +81,8 @@ export interface TvDetailsData extends TvData {
         vote_average: number;
         vote_count: number;
     };
-    next_episode_to_air: null;
+    media_type: 'tv';
+    next_episode_to_air: NextEpisodeData | undefined;
     networks: [
         {
             name: string;
@@ -89,7 +107,7 @@ export interface TvDetailsData extends TvData {
             name: string;
         },
     ];
-    seasons: [
+    seasons?: [
         {
             air_date: string;
             episode_count: number;
@@ -98,6 +116,7 @@ export interface TvDetailsData extends TvData {
             overview: string;
             poster_path: string;
             season_number: number;
+            vote_average: number;
         },
     ];
     spoken_languages: [
@@ -128,6 +147,7 @@ export interface TvDetailsData extends TvData {
             },
         ];
     };
+    'watch/providers': ShowProviders;
 }
 
 export interface DiscoverTv {

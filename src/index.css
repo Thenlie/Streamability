@@ -38,3 +38,36 @@ input:-webkit-autofill:active {
   border-radius: 10px;
   padding: 1px;
 }
+/* Inverted corners for carousel tabs
+ * https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
+*/
+#carousel-tab:before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: -25px;
+  height: 25px;
+  width: 25px;
+  border-bottom-right-radius: 50%;
+  background: rgb(var(--color-background));
+}
+
+#carousel-tab:before {
+  box-shadow: 10px 0 0 0 rgb(var(--color-foreground));
+}
+
+#carousel-tab:after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 240px;
+  height: 25px;
+  width: 25px;
+  border-top-right-radius: 50%;
+  background: rgb(var(--color-background));
+  transform: rotate(180deg);
+}
+
+#carousel-tab:after {
+  box-shadow: 10px 0 0 0 rgb(var(--color-foreground));
+}

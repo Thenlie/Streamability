@@ -29,7 +29,6 @@ type Story = StoryObj<typeof meta>;
 export const LoggedOut: Story = {
     args: {
         details: MOVIE_DATA,
-        showType: 'movie',
         profile: null,
     },
 };
@@ -37,7 +36,6 @@ export const LoggedOut: Story = {
 export const LoggedIn: Story = {
     args: {
         details: MOVIE_DATA,
-        showType: 'movie',
         profile: PROFILE,
     },
 };

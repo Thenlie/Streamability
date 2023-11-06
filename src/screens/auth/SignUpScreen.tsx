@@ -45,11 +45,6 @@ const SignUpScreen: React.FC = () => {
         message: '',
     });
 
-    // redirect users that are logged in
-    if (session) {
-        return <Navigate to={'/dashboard'} />;
-    }
-
     // show error message for 3 seconds and then remove
     const showError = (msg: string): void => {
         setSnackBarOptions({
@@ -125,7 +120,7 @@ const SignUpScreen: React.FC = () => {
         }
 
         // Ensure password is of sufficient length
-        if (password.length < 3) {
+        if (password.length < 6) {
             showError('Password must be at least 6 characters');
             setPasswordError(true);
             setLoading(false);
@@ -176,6 +171,9 @@ const SignUpScreen: React.FC = () => {
         return;
     };
 
+    /**
+     * The options of the drop down menu
+     */
     const DropDownItems: JSX.Element[] = useMemo(() => {
         return COUNTRIES.map((item, i) => (
             <MenuItem key={i} value={item.country}>
@@ -184,12 +182,21 @@ const SignUpScreen: React.FC = () => {
         ));
     }, [COUNTRIES]);
 
+    // redirect users that are logged in
+    if (session) {
+        return <Navigate to={'/dashboard'} />;
+    }
+
     return (
-        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <Typ data-testid='signup-heading' variant='h4' sx={{ margin: 2 }}>
+        <div
+            aria-live='polite'
+            className='flex flex-col flex-1 justify-center'
+            data-testid='signup-screen'
+        >
+            <Typ variant='h4' sx={{ margin: 2 }}>
                 Sign Up
             </Typ>
-            <form onSubmit={signUpHandler} className='flex flex-col' data-testid='signup-form'>
+            <form onSubmit={signUpHandler} className='flex flex-col'>
                 <TextInput
                     id='email-input'
                     type='email'

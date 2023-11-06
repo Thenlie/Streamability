@@ -130,7 +130,6 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                                 aria-haspopup='true'
                                 aria-controls={open ? 'menu-appbar' : undefined}
                                 aria-expanded={open ? 'true' : undefined}
-                                data-testid='menu-button'
                             >
                                 <AccountCircle fontSize='inherit' className='!fill-text' />
                                 {expandedMenu ? (
@@ -153,7 +152,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             }}
                             open={open}
                             onClose={() => toggleUserMenu(null, false)}
-                            data-testid='menu-appbar'
+                            // TODO: Fix deprecated prop
                             PaperProps={{
                                 className: '!bg-background',
                                 sx: {

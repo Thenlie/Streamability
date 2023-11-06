@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Banner } from '../../components';
-import { MOVIE_DATA_ARRAY } from '../../__tests__/screens/assets';
+import { MOVIE_DATA_ARRAY } from '../constants';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {

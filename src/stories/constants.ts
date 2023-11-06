@@ -69,7 +69,7 @@ export const MOVIE_DATA: ShowData = {
     overview:
         'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.',
     media_type: 'movie',
-    networks: [
+    providers: [
         {
             name: 'Disney Plus',
             id: 1234,

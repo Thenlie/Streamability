@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTrendingShows } from '../hooks';
-import { Typography as Typ } from '@mui/material';
-import { ShowCarousel, Banner } from '../components';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
 import { getDiscoverMovies, getDiscoverTv } from '../helpers';
 /**
@@ -160,74 +159,84 @@ const DiscoverScreen: React.FC = () => {
         <div className='w-full'>
             <div className='mb-12 flex flex-col items-center'>
                 <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Trending
-                    </Typ>
-                    <ShowCarousel data={trendingShows} dataLoading={loading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={trendingShows}
+                        dataLoading={loading}
+                        headerProps={{ title: 'Trending' }}
+                    />
                 </div>
 
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Highest Rated
-                    </Typ>
-                    <ShowCarousel data={highestRated} dataLoading={highestRatedLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={highestRated}
+                        dataLoading={highestRatedLoading}
+                        headerProps={{ title: 'Highest Rated' }}
+                    />
                 </div>
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h6'>
-                        Newly Added
-                    </Typ>
-                    <ShowCarousel data={newlyAdded} dataLoading={newlyAddedLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={newlyAdded}
+                        dataLoading={newlyAddedLoading}
+                        headerProps={{ title: 'Newly Added' }}
+                    />
                 </div>
             </div>
 
             <div className='my-12 flex flex-col items-center'>
                 <Banner data={actionAdventure} title={'Genres'} />
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Action & Adventure
-                    </Typ>
-                    <ShowCarousel data={actionAdventure} dataLoading={actionAdventureLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={actionAdventure}
+                        dataLoading={actionAdventureLoading}
+                        headerProps={{ title: 'Action & Adventure' }}
+                    />
                 </div>
 
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Comedy
-                    </Typ>
-                    <ShowCarousel data={comedy} dataLoading={comedyLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={comedy}
+                        dataLoading={comedyLoading}
+                        headerProps={{ title: 'Comedy' }}
+                    />
                 </div>
 
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Horror
-                    </Typ>
-                    <ShowCarousel data={horror} dataLoading={horrorLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={horror}
+                        dataLoading={horrorLoading}
+                        headerProps={{ title: 'Horror' }}
+                    />
                 </div>
             </div>
 
             <div className='my-12 flex flex-col items-center'>
                 <Banner data={popularNetflix} title={'Platforms'} />
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Popular on Netflix
-                    </Typ>
-                    <ShowCarousel data={popularNetflix} dataLoading={popularNetflixLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={popularNetflix}
+                        dataLoading={popularNetflixLoading}
+                        headerProps={{ title: 'Popular on Netflix' }}
+                    />
                 </div>
 
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Popular on Prime
-                    </Typ>
-                    <ShowCarousel data={popularPrime} dataLoading={popularPrimeLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={popularPrime}
+                        dataLoading={popularPrimeLoading}
+                        headerProps={{ title: 'Popular on Prime' }}
+                    />
                 </div>
 
-                <div className='text-left my-6'>
-                    <Typ sx={{ marginY: 1 }} variant='h5'>
-                        Popular on Hulu
-                    </Typ>
-                    <ShowCarousel data={popularHulu} dataLoading={popularHuluLoading} />
+                <div className='my-6'>
+                    <ShowCarousel
+                        data={popularHulu}
+                        dataLoading={popularHuluLoading}
+                        headerProps={{ title: 'Popular on Hulu' }}
+                    />
                 </div>
             </div>
+            <OfflineSnackbar />
         </div>
     );
 };

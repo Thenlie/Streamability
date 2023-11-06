@@ -95,11 +95,15 @@ const LoginScreen: React.FC = () => {
     }
 
     return (
-        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
-            <Typ data-testid='login-heading' variant='h4' sx={{ margin: 2 }}>
+        <div
+            aria-live='polite'
+            className='flex flex-col flex-1 justify-center'
+            data-testid='login-screen'
+        >
+            <Typ variant='h4' sx={{ margin: 2 }}>
                 Login
             </Typ>
-            <form onSubmit={signInWithEmail} className='flex flex-col' data-testid='login-form'>
+            <form onSubmit={signInWithEmail} className='flex flex-col'>
                 <TextInput
                     id='email-input'
                     type='email'
@@ -115,6 +119,7 @@ const LoginScreen: React.FC = () => {
                 <TextInput
                     id='password-input'
                     name='password'
+                    data-testid='qqq'
                     type={isPasswordVisible ? 'text' : 'password'}
                     label='Password'
                     color='secondary'

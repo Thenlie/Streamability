@@ -29,7 +29,6 @@ type Story = StoryObj<typeof meta>;
 export const IronMan: Story = {
     args: {
         details: MOVIE_DATA,
-        showType: 'movie',
         profile: null,
     },
 };

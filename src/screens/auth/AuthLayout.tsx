@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useSessionContext } from '../../hooks';
 import React from 'react';
+import { OfflineSnackbar } from '../../components';
 
 /**
  * Wrapper for all authentication components
@@ -12,6 +13,7 @@ const AuthLayout: React.FC = () => {
     return (
         <>
             <Outlet context={{ session }} />
+            <OfflineSnackbar />
         </>
     );
 };

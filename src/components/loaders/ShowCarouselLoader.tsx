@@ -26,7 +26,7 @@ const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ steps }) => {
         (SHOW_POSTER_WIDTH * (steps || initialCarouselSteps) + 180).toString() + 'px';
 
     return (
-        <div style={{ width: carouselWidth }}>
+        <div style={{ width: carouselWidth }} data-testid='show-carousel-loader'>
             <Carousel
                 className='bg-foreground'
                 style={{

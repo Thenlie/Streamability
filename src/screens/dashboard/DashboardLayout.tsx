@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useProfileContext, useSessionContext } from '../../hooks';
 import React from 'react';
+import { OfflineSnackbar } from '../../components';
 
 /**
  * Wrapper for all dashboard screens
@@ -13,6 +14,7 @@ const DashboardLayout: React.FC = () => {
     return (
         <>
             <Outlet context={{ session, setSession, profile, setProfile }} />
+            <OfflineSnackbar />
         </>
     );
 };

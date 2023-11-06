@@ -15,10 +15,10 @@ export interface ShowGenre {
  * More detailed information about streaming providers
  */
 export interface ShowProviderInfo {
-    display_priority?: number;
-    logo_path?: string;
-    provider_id?: number;
-    provider_name?: string;
+    display_priority: number;
+    logo_path: string;
+    provider_id: number;
+    provider_name: string;
 }
 
 /**
@@ -88,6 +88,17 @@ export interface ShowProviders {
     };
 }
 
+export interface Season {
+    air_date: string;
+    episode_count: number;
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string;
+    season_number: number;
+    vote_average: number;
+}
+
 /**
  * Returned by getMovieDetails and getTvDetails
  * Custom type to work with both tv and movies
@@ -98,21 +109,22 @@ export interface ShowData {
     poster_path?: string | null;
     banner_path?: string | null;
     release_date?: string;
+    end_date?: string | null;
+    next_air_date?: string | undefined | null;
     age_rating?: string | null;
     runtime?: number;
     title: string;
     vote_average?: number;
     vote_count?: number;
-    networks?: [
-        {
-            name: string;
-            id: number;
-            logo_path: string | null;
-            origin_country: string;
-        },
-    ];
-    media_type: 'movie' | 'tv';
+    providers?: {
+        name: string;
+        id: number;
+        logo_path: string | null;
+        origin_country: string;
+    }[];
+    media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
+    seasons?: Season[] | null;
 }
 
 /**
@@ -120,8 +132,8 @@ export interface ShowData {
  * https://developer.themoviedb.org/reference/search-multi
  */
 export interface ShowResults {
-    page?: number;
+    page: number;
     results?: Array<MovieData | TvData>;
-    total_pages?: number;
-    total_results?: number;
+    total_pages: number;
+    total_results: number;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShowCarousel, Banner } from '../components';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { useTrendingShows } from '../hooks';
 
 /**
@@ -10,16 +10,22 @@ const FeaturedSearchScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('release');
 
     return (
-        <div className='flex-1 flex flex-col w-full'>
+        <div className='flex-1 flex flex-col w-full' data-testid='featured-search-screen'>
             <Banner
                 data={trendingShows}
+                dataLoading={loading}
                 title={'Search for any movie or tv show to discover streaming providers and more!'}
                 renderSearchInput
                 renderLogo
             />
             <div className='my-12 mx-auto'>
-                <ShowCarousel data={trendingShows} dataLoading={loading} />
+                <ShowCarousel
+                    data={trendingShows}
+                    dataLoading={loading}
+                    headerProps={{ title: 'Trending Shows' }}
+                />
             </div>
+            <OfflineSnackbar />
         </div>
     );
 };

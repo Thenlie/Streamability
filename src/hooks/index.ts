@@ -5,6 +5,8 @@ import useIsInProfileArray from './useIsInProfileArray';
 import useDebounceValue from './useDebounceValue';
 import useTrendingShows from './useTrendingShows';
 import useGetProfileArray from './useGetProfileArray';
+import useNetworkStatus from './useNetworkStatus';
+import usePaginatedData from './usePaginatedData';
 
 export {
     useProfileContext,
@@ -15,4 +17,6 @@ export {
     useDebounceValue,
     useTrendingShows,
     useGetProfileArray,
+    useNetworkStatus,
+    usePaginatedData,
 };

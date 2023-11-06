@@ -1,9 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
-import { EmptySearchResults } from '../../components';
-import { ShowData } from '../../types';
-import { useProfileContext, useWindowSize } from '../../hooks';
-import { getShowsByName } from '../../helpers';
+import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
+import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
@@ -40,11 +38,14 @@ const SearchResultsScreen: React.FC = () => {
     const storageItem = localStorage.getItem('streamabilityView');
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
-    const [showDetails, setShowDetails] = useState<{ data: ShowData[] | null; hash: number }>({
-        data: null,
-        hash: 0,
-    });
-    const [loading, setLoading] = useState<boolean>(true);
+    const [hash, setHash] = useState<number>(1);
+    const {
+        data,
+        setData,
+        loading: dataLoading,
+        moreToFetch,
+        refetch,
+    } = usePaginatedData({ query: query });
 
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
@@ -56,47 +57,45 @@ const SearchResultsScreen: React.FC = () => {
         }
     }, [windowSize]);
 
-    useEffect(() => {
-        setLoading(true);
-        const handler = async () => {
-            const showData: ShowData[] | null = await getShowsByName(query);
-            setShowDetails({ data: showData, hash: Math.random() });
-            localStorage.setItem('streamabilityUnsortedResults', JSON.stringify(showData));
-            setLoading(false);
-        };
-        handler();
-    }, [query]);
-
     const cards = useMemo(() => {
         return (
             <SearchResultCards
-                details={showDetails.data}
+                details={data}
                 viewState={viewState}
                 profile={profile}
                 setProfile={setProfile}
             />
         );
-    }, [showDetails.data, showDetails.hash, viewState]);
+    }, [data, hash, viewState, profile]);
 
-    if (loading) {
+    if (!data) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
     }
 
-    if (showDetails.data && showDetails.data.length === 0) {
+    if (data && data.length === 0) {
         return <EmptySearchResults query={query} viewState={viewState} />;
     }
 
     return (
-        <>
+        <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
             <SearchResultsHeader
                 query={query}
                 viewState={viewState}
                 setViewState={setViewState}
-                showDetails={showDetails}
-                setShowDetails={setShowDetails}
+                showDetails={data}
+                setShowDetails={setData}
+                setHash={setHash}
             />
             {cards}
-        </>
+            <Button
+                title='Load More'
+                loading={dataLoading}
+                onClick={refetch}
+                disabled={!moreToFetch}
+                sx={{ display: moreToFetch ? 'block' : 'none', marginBottom: 2 }}
+            />
+            <OfflineSnackbar />
+        </div>
     );
 };
 

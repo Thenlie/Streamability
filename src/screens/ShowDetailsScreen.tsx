@@ -3,13 +3,13 @@ import { Link, Location, useLocation } from 'react-router-dom';
 import {
     getMovieDetails,
     getMovieRecommendations,
-    formatReleaseDate,
-    DateSize,
     getTvDetails,
     getTvRecommendations,
+    getReleaseDate,
+    getRuntime,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button } from '../components';
+import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
 import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
@@ -22,6 +22,7 @@ import {
     PersonAddAltRounded,
     RemoveFromQueue,
 } from '@mui/icons-material';
+import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
 
 /**
  * Buttons to alter the show in a logged in users profile.
@@ -153,45 +154,38 @@ const ShowDetailsScreen: React.FC = () => {
         return <ShowDetailsLoader />;
     }
 
-    // TODO: #438 Handle case when no details are ever returned
     if (!details) {
-        return <p>No details found!</p>;
+        return <EmptyShowDetailsScreen />;
     }
 
     return (
         <>
-            <section className='m-6 mb-8 flex flex-col lg:flex-row'>
-                <div className='rounded-md m-3 w-[250px] lg:w-[330px] h-[400px] lg:h-[550px]'>
+            <section
+                className='m-6 mb-8 flex flex-col lg:flex-row'
+                data-testid='show-details-screen'
+            >
+                <div className='rounded-md m-3 w-[250px] lg:w-[330px]'>
                     <img
-                        className='w-[250px] lg:w-[330px] h-[400px] lg:h-[550px] max-w-none rounded-md'
+                        className='w-[250px] lg:w-[330px] max-w-none rounded-md'
+                        style={{ aspectRatio: 2 / 3 }}
                         src={
                             details.poster_path
                                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                                 : '/poster-placeholder.jpeg'
                         }
+                        alt={`${details.title} poster`}
                     ></img>
                 </div>
                 <div className='m-3 max-w-xl'>
                     <div>
-                        <Typ
-                            variant='h3'
-                            align='left'
-                            className='max-w-lg'
-                            data-testid='show-details-heading'
-                        >
+                        <Typ variant='h3' align='left' className='max-w-lg'>
                             {details.title}
                         </Typ>
-                        {details.release_date && details.release_date.length === 10 && (
-                            <Typ align='left' data-testid='details-release-date'>
-                                {formatReleaseDate(details.release_date, DateSize.LONG)}
-                            </Typ>
-                        )}
+                        <Typ align='left'>{getReleaseDate(details)}</Typ>
+                        <Typ align='left' variant='body2'>
+                            {getRuntime(details)}
+                        </Typ>
                         <Typ align='left'>{details.age_rating}</Typ>
-                        {details.runtime && (
-                            <Typ align='left' variant='body2'>
-                                {details.runtime} minutes
-                            </Typ>
-                        )}
                     </div>
                     <Rating
                         vote_average={details.vote_average || 0}
@@ -213,8 +207,10 @@ const ShowDetailsScreen: React.FC = () => {
                     data={recommendations}
                     fallbackText={carouselFallbackText}
                     profile={profile}
+                    headerProps={{ title: 'Recommendations' }}
                 />
             </section>
+            <OfflineSnackbar />
         </>
     );
 };

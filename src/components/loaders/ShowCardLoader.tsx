@@ -19,14 +19,13 @@ const ShowCardLoader: React.FC<ShowCardLoaderProps> = ({ count }): JSX.Element =
     return (
         <>
             {[...Array(count)].map((x, i) => (
-                <div key={i} className='flex w-80 mx-auto my-2'>
+                <div key={i} className='flex flex-col w-[180px] m-4'>
                     <Skeleton width={175} height={270} className='mb-2' />
-                    <div className='flex flex-col justify-between py-1 pl-2'>
+                    <div className='flex flex-col justify-between'>
                         <div>
-                            <Skeleton width={120} height={30} count={1} />
-                            <Skeleton width={120} count={1} />
+                            <Skeleton width={150} height={25} count={1} />
+                            <Skeleton width={150} count={1} />
                         </div>
-                        <Skeleton width={120} count={2} />
                     </div>
                 </div>
             ))}

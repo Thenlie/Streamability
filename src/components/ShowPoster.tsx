@@ -81,19 +81,19 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
         isInQueue
             ? profileActions?.removeFromQueue(dbShowId)
             : profileActions?.addToQueue(dbShowId);
-    }, [isInQueue]);
+    }, [isInQueue, profileActions]);
 
     const favoritesCallback = useCallback(() => {
         isInFavorites
             ? profileActions?.removeFromFavorites(dbShowId)
             : profileActions?.addToFavorites(dbShowId);
-    }, [isInFavorites]);
+    }, [isInFavorites, profileActions]);
 
     const watchedCallback = useCallback(() => {
         isInWatched
             ? profileActions?.removeFromWatched(dbShowId)
             : profileActions?.addToWatched(dbShowId);
-    }, [isInWatched]);
+    }, [isInWatched, profileActions]);
 
     if (!profile || !profileActions || numOfIcons === 0) return;
 
@@ -187,13 +187,26 @@ interface ShowPosterProps {
      * If the watched button should be visible
      */
     showWatchedButton?: boolean;
+    /**
+     * Tailwind class names to override default styling
+     */
+    containerStyleOverride?: string;
+    /**
+     * Tailwind class names to override default styling
+     */
+    imageStyleOverride?: string;
 }
 
 /**
  * A show card that only shows the poster image, no text or other content.
- * Used in the Show Carousel.
+ * Used in the Show Carousel and Show Card components.
  */
-const ShowPoster: React.FC<ShowPosterProps> = ({ details, ...rest }): JSX.Element => {
+const ShowPoster: React.FC<ShowPosterProps> = ({
+    details,
+    containerStyleOverride,
+    imageStyleOverride,
+    ...rest
+}): JSX.Element => {
     const [hover, setHover] = useState(false);
 
     const hoverHandler = (hovering: boolean) => {
@@ -204,23 +217,18 @@ const ShowPoster: React.FC<ShowPosterProps> = ({ details, ...rest }): JSX.Elemen
         <div
             onMouseEnter={() => hoverHandler(true)}
             onMouseLeave={() => hoverHandler(false)}
-            data-testid='show-card-component'
-            className='m-1 flex w-[180px] rounded-sm'
+            data-testid='show-poster-component'
+            className={`m-1 flex w-[180px] rounded-sm ${containerStyleOverride}`}
         >
             <ShowPosterButtons visible={hover} details={details} {...rest} />
-            <Link
-                to={`/details/${details.media_type}/${details.id}`}
-                state={details}
-                data-testid='show-details-link'
-            >
+            <Link to={`/details/${details.media_type}/${details.id}`} state={details}>
                 <CardMedia
                     component='img'
-                    className='w-full cursor-pointer rounded-sm'
+                    className={`w-full cursor-pointer rounded-sm ${imageStyleOverride}`}
                     sx={{
                         width: 180,
                         minWidth: 180,
-                        height: 270,
-                        minHeight: 270,
+                        aspectRatio: 2 / 3,
                         boxShadow: 5,
                         '&:hover': { opacity: 0.8 },
                     }}

@@ -6,12 +6,13 @@ import {
     useGetProfileArray,
 } from '../../hooks';
 import { deleteProfileById, clearProfileArray } from '../../supabase/profiles';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Typography as Typ } from '@mui/material';
 import { Delete, Logout } from '@mui/icons-material';
 import { ProfileArrayCols, ShowData } from '../../types';
 import { ConfirmDeleteModal, EditProfileModal, ShowCarousel, Button } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
+import { DashboardLoader } from '../loaders';
 
 interface DashboardCarouselProps {
     /**
@@ -64,6 +65,7 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
     const { profile, setProfile } = useProfileContext();
     const profileActions = useProfileActions(profile, setProfile);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     /**
      * Remove all shows from the users watch queue.
@@ -79,14 +81,6 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
 
     return (
         <div className='m-2'>
-            <div className='flex justify-between items-center p-2'>
-                <Typ variant='h6' align='left'>
-                    {label}
-                </Typ>
-                <Link className='underline hover:text-blue-500' to={whichCol}>
-                    View All
-                </Link>
-            </div>
             <ShowCarousel
                 data={data}
                 dataLoading={dataLoading}
@@ -96,6 +90,14 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
                 showQueueButton={showPosterButtons?.showQueueButton || false}
                 showFavoritesButton={showPosterButtons?.showFavoritesButton || false}
                 showWatchedButton={showPosterButtons?.showWatchedButton || false}
+                headerProps={{
+                    title: label,
+                    hasButton: true,
+                    buttonTitle: 'View All',
+                    onClick: () => {
+                        navigate(whichCol);
+                    },
+                }}
             />
             <Button
                 title={clearButtonTitle}
@@ -103,6 +105,7 @@ export const DashboardCarousel: React.FC<DashboardCarouselProps> = ({
                 disabled={!data || data.length === 0}
                 loading={loading}
                 StartIcon={Delete}
+                sx={{ marginTop: 2 }}
                 onClick={() => emptyProfileArray(whichCol)}
             />
         </div>
@@ -133,7 +136,7 @@ const DashboardScreen: React.FC = () => {
         'Your watched list is empty! Add shows to your watched list to view them here.';
 
     // If the user is not logged in, redirect to login
-    if (!session || !profile) {
+    if (!session) {
         return <Navigate to={'/login'} replace />;
     }
 
@@ -160,19 +163,23 @@ const DashboardScreen: React.FC = () => {
         setLogoutLoading(false);
     };
 
+    if (!profile) {
+        return <DashboardLoader />;
+    }
+
     return (
         <>
             <Typ variant='h5' m={2}>
                 Welcome back {profile?.username}!
             </Typ>
-            <section className='m-6 flex flex-col flex-1'>
+            <section className='m-6 flex flex-col flex-1' data-testid='dashboard-screen'>
                 <div aria-live='polite' className='flex flex-col items-start justify-center m-2'>
                     <div className='text-left m-2'>
                         <Typ fontWeight='bold' display='inline'>
                             Email:{' '}
                         </Typ>
                         <Typ align='left' display='inline'>
-                            {session?.user.email}
+                            {profile?.email}
                         </Typ>
                         <br />
                         <Typ fontWeight='bold' display='inline'>

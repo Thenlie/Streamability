@@ -1,5 +1,6 @@
 import Logger from '../logger';
-import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv } from '../types';
+import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv, TvData } from '../types';
+import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getTvUtils');
 
@@ -19,19 +20,7 @@ const getTvByName = async (name: string): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            poster_path: tv.poster_path,
-            title: tv.name,
-            release_date: tv.first_air_date,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            overview: tv.overview,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -43,34 +32,14 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates,content_ratings`
+        }&append_to_response=images,release_dates,content_ratings,watch/providers`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    const returnRating = (arr: TvDetailsData) => {
-        for (let i = 0; i < arr.content_ratings.results.length; i++) {
-            if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
-                return arr.content_ratings.results[i].rating;
-            }
-        }
-        return 'No rating available';
-    };
+
     const data = (await response.json()) as TvDetailsData;
-    return {
-        id: data.id,
-        poster_path: data.poster_path,
-        title: data.original_name,
-        release_date: data.first_air_date,
-        runtime: data.episode_run_time[0],
-        vote_average: data.vote_average,
-        vote_count: data.vote_count,
-        age_rating: returnRating(data),
-        overview: data.overview,
-        networks: data.networks,
-        media_type: 'tv',
-        genre_ids: data.genres.map((genre) => genre.id),
-    };
+    return convertDetailsToShowType(data, 'tv');
 };
 
 /**
@@ -103,20 +72,7 @@ const getTvTrending = async (): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            poster_path: tv.poster_path,
-            banner_path: tv.backdrop_path,
-            title: tv.original_name,
-            release_date: tv.first_air_date,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            overview: tv.overview,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -135,21 +91,7 @@ const getTvRecommendations = async (id: number): Promise<ShowData[] | null> => {
     }
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
-    const recommendations: ShowData[] = [];
-    data.results.map((rec) =>
-        recommendations.push({
-            id: rec.id,
-            overview: rec.overview,
-            poster_path: rec.poster_path,
-            release_date: rec.first_air_date,
-            title: rec.name,
-            vote_average: rec.vote_average,
-            vote_count: rec.vote_count,
-            media_type: 'tv',
-            genre_ids: rec.genre_ids,
-        })
-    );
-    return recommendations;
+    return convertResultsToShowType(data);
 };
 
 /**
@@ -191,20 +133,22 @@ const getDiscoverTv = async ({
 
     const data = (await response.json()) as TvResults;
     if (!data.results || data.results.length < 1) return null;
-    return data.results.map((tv) => {
-        return {
-            id: tv.id,
-            overview: tv.overview,
-            poster_path: tv.poster_path,
-            banner_path: tv.backdrop_path,
-            release_date: tv.first_air_date,
-            title: tv.name,
-            vote_average: tv.vote_average,
-            vote_count: tv.vote_count,
-            media_type: 'tv',
-            genre_ids: tv.genre_ids,
-        };
-    });
+    const dataWithType: TvData[] = data.results.map((d) => ({ ...d, media_type: 'tv' }));
+    data.results = dataWithType;
+    return convertResultsToShowType(data);
+};
+
+/**
+ * Return the age rating of a given TV show or 'No rating available'
+ * if the rating can not be found
+ */
+const getTvRating = (arr: TvDetailsData) => {
+    for (let i = 0; i < arr.content_ratings.results.length; i++) {
+        if (arr.content_ratings.results[i].iso_3166_1 === 'US') {
+            return arr.content_ratings.results[i].rating;
+        }
+    }
+    return 'No rating available';
 };
 
 export {
@@ -214,4 +158,5 @@ export {
     getTvProviders,
     getTvRecommendations,
     getDiscoverTv,
+    getTvRating,
 };

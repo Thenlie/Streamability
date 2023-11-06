@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ShowProviders } from '../types';
 import { getMovieProviders, getTvProviders } from '../helpers';
 import { ProvidersLoader } from './loaders';
-import { useWindowSize } from '../hooks';
-import useDebounceValue from '../hooks/useDebounceValue';
+import { useWindowSize, useDebounceValue } from '../hooks';
 
 interface ProviderProps {
     id: number;

@@ -1,5 +1,16 @@
 /* eslint-disable quotes */
-import { ShowData } from '../../types';
+import { Season, ShowData } from '../../types';
+
+const fakeSeason: Season = {
+    id: 1,
+    name: 'season 1',
+    season_number: 1,
+    episode_count: 5,
+    air_date: 'fake date',
+    vote_average: 1,
+    poster_path: 'fake poster',
+    overview: 'fake season',
+};
 
 /**
  * A sample show data array that can be used for unit testing
@@ -11,6 +22,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         poster_path: '/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
         title: 'Iron Man',
         release_date: '2008-04-30',
+        runtime: 126,
         vote_average: 7.639,
         vote_count: 24715,
         overview:
@@ -23,6 +35,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         poster_path: '/eHDez1uN5X2ZAq4niX7HvhyZIIO.jpg',
         title: 'Iron Man: Rise of Technovore',
         release_date: '2013-04-24',
+        runtime: 88,
         vote_average: 5.918,
         vote_count: 152,
         overview:
@@ -250,6 +263,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         poster_path: '/nTQWWH6CFtl37x1nPx8HRwbwvGn.jpg',
         title: 'Iron Man',
         release_date: '1994-09-24',
+        seasons: [fakeSeason, fakeSeason],
         vote_average: 6.702,
         vote_count: 85,
         overview:
@@ -262,6 +276,7 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         poster_path: '/zOTJT7JbzSrMBX2OCGPqUnkQA4y.jpg',
         title: 'Iron Man',
         release_date: '2010-10-01',
+        seasons: [fakeSeason, fakeSeason, fakeSeason, fakeSeason],
         vote_average: 7.211,
         vote_count: 76,
         overview:

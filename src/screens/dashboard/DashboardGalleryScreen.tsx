@@ -1,6 +1,11 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import { ProfileArrayCols } from '../../types';
-import { useGetProfileArray, useProfileActions, useProfileContext } from '../../hooks';
+import {
+    useGetProfileArray,
+    useProfileActions,
+    useProfileContext,
+    useSessionContext,
+} from '../../hooks';
 import { Button, ShowPoster } from '../../components';
 import { DashboardGalleryLoader } from '../loaders';
 import { Typography as Typ } from '@mui/material';
@@ -19,14 +24,20 @@ export async function loader({ request }: { request: Request }): Promise<string>
 
 const DashboardGalleryScreen: React.FC = () => {
     const { profile, setProfile } = useProfileContext();
+    const { session } = useSessionContext();
     const profileActions = useProfileActions(profile, setProfile);
     const navigate = useNavigate();
     const path: ProfileArrayCols = useLoaderData() as ProfileArrayCols;
-    const { data } = useGetProfileArray(path);
+    const { data, loading } = useGetProfileArray(path);
+
+    // If the user is not logged in, redirect to login
+    if (!session) {
+        return <Navigate to={'/login'} replace />;
+    }
 
     // TODO: If profile does not return after a few seconds,
     // we should assume the user is not logged in and redirect to an auth page
-    if (!profile) return <DashboardGalleryLoader path={path} />;
+    if (!profile || loading) return <DashboardGalleryLoader path={path} />;
 
     /**
      * Return the page title based on the URL path
@@ -43,8 +54,8 @@ const DashboardGalleryScreen: React.FC = () => {
     };
 
     return (
-        <div className='m-4'>
-            <Typ variant='h5'>{`${profile.username}'s ${getTitle(path)}`}</Typ>
+        <div className='m-4' data-testid='dashboard-gallery-screen'>
+            <Typ variant='h5' sx={{ padding: 2 }}>{`${profile.username}'s ${getTitle(path)}`}</Typ>
             <Button
                 title='Dashboard'
                 StartIcon={ArrowBack}

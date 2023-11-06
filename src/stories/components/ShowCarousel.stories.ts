@@ -28,18 +28,32 @@ type Story = StoryObj<typeof meta>;
 
 export const Carousel: Story = {
     args: {
-        data: [
-            MOVIE_DATA_ARRAY[0],
-            MOVIE_DATA_ARRAY[1],
-            MOVIE_DATA_ARRAY[2],
-            MOVIE_DATA_ARRAY[3],
-            MOVIE_DATA_ARRAY[4],
-            MOVIE_DATA_ARRAY[5],
-            MOVIE_DATA_ARRAY[6],
-            MOVIE_DATA_ARRAY[7],
-            MOVIE_DATA_ARRAY[8],
-        ],
-        size: 1,
+        data: MOVIE_DATA_ARRAY,
+        size: 3,
         profile: null,
+    },
+};
+
+export const CarouselWithTitle: Story = {
+    args: {
+        data: MOVIE_DATA_ARRAY,
+        size: 3,
+        profile: null,
+        headerProps: {
+            title: 'Example',
+        },
+    },
+};
+
+export const CarouselWithButton: Story = {
+    args: {
+        data: MOVIE_DATA_ARRAY,
+        size: 3,
+        profile: null,
+        headerProps: {
+            title: 'Example',
+            hasButton: true,
+            buttonTitle: 'View All',
+        },
     },
 };
