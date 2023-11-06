@@ -120,7 +120,7 @@ const SignUpScreen: React.FC = () => {
         }
 
         // Ensure password is of sufficient length
-        if (password.length < 3) {
+        if (password.length < 6) {
             showError('Password must be at least 6 characters');
             setPasswordError(true);
             setLoading(false);
@@ -188,7 +188,11 @@ const SignUpScreen: React.FC = () => {
     }
 
     return (
-        <div aria-live='polite' className='flex flex-col flex-1 justify-center'>
+        <div
+            aria-live='polite'
+            className='flex flex-col flex-1 justify-center'
+            data-testid='signup-screen'
+        >
             <Typ variant='h4' sx={{ margin: 2 }}>
                 Sign Up
             </Typ>

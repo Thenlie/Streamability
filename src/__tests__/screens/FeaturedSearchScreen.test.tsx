@@ -15,13 +15,14 @@ vi.mock('../../hooks', async () => {
     };
 });
 
+const router = createMemoryRouter(routes, {
+    initialEntries: ['/'],
+});
+
 describe('Featured Search Screen', () => {
     it('initially renders banner and carousel loader component', async () => {
         vi.mocked(useTrendingShows).mockReturnValue({ trendingShows: null, loading: true });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('featured-search-screen');
@@ -34,9 +35,6 @@ describe('Featured Search Screen', () => {
             loading: false,
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('featured-search-screen');
@@ -49,9 +47,6 @@ describe('Featured Search Screen', () => {
             loading: false,
         });
 
-        const router = createMemoryRouter(routes, {
-            initialEntries: ['/'],
-        });
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('featured-search-screen');
