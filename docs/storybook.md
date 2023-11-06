@@ -8,16 +8,18 @@ To run the storybook app, use the command `npm run storybook`.
 
 ## Docs
 
-https://storybook.js.org/
+[https://storybook.js.org/](https://storybook.js.org/)
 
 ## Creating stories 📝
 
 If you are creating a new component, you should also be creating a new story! Don't worry, they are very simple to create.
 
 The easiest way to create a new story is to simply copy an existing story into a new file.
-```s
+
+```sh
 cp src/stories/components/ShowCard.stories.ts > src/stories/components/NewComponent.stories.ts
 ```
+
 From there, you can replace all instances of `ShowCard` with your new component. Be sure to also update the name of the story as well. The location also might need to be updated as loaders and modals have their own directories.
 
 This should get you 99% of the way there. Any other tweaks will be up to you!
