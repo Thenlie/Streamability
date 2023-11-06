@@ -172,14 +172,14 @@ const DashboardScreen: React.FC = () => {
             <Typ variant='h5' m={2}>
                 Welcome back {profile?.username}!
             </Typ>
-            <section className='m-6 flex flex-col flex-1'>
+            <section className='m-6 flex flex-col flex-1' data-testid='dashboard-screen'>
                 <div aria-live='polite' className='flex flex-col items-start justify-center m-2'>
                     <div className='text-left m-2'>
                         <Typ fontWeight='bold' display='inline'>
                             Email:{' '}
                         </Typ>
                         <Typ align='left' display='inline'>
-                            {session?.user.email}
+                            {profile?.email}
                         </Typ>
                         <br />
                         <Typ fontWeight='bold' display='inline'>

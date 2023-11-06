@@ -5,12 +5,12 @@ The steps below contain everything a first time developer needs to get the Strea
 ## Pre-requisites
 
 - Docker Desktop
-- Node v18
+- Node
 - Git
 
-Node is the JavaScript runtime engine used on the Streamability project. Currently the project is set up to run on Node 18.18.2. It should also work on Node 20 but not yet officially supported. You can download Node 18 from [this link](https://nodejs.org/download/release/v18.18.2/). If you already are using a different version you can try to run the project. In most cases it will run without issue. If you do have a problem, you can use a version manager like [asdf](https://asdf-vm.com/) or [nvm](https://github.com/nvm-sh/nvm) to install a different version of Node.
+Node is the JavaScript runtime engine used on the Streamability project. The project is set up to run on the latest stable release which can be downloaded from [this link](https://nodejs.org/). If you are using a different version you can try to run the project and in most cases it will run without issue. If you do have a problem, you can use a version manager like [asdf](https://asdf-vm.com/) or [nvm](https://github.com/nvm-sh/nvm) to install a different version of Node.
 
-You will need to install [docker](https://www.docker.com/) on your machine to run the local Supabase server. Follow the installation instruction on the docker website for your specific OS.
+You will need to install [Docker](https://www.docker.com/) on your machine to run the local Supabase server. Follow the installation instruction on the Docker website for your specific OS.
 
 Git is the version control system used on the Streamability project. You can download the latest version from [this link](https://git-scm.com/downloads).
 
