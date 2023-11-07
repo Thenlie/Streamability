@@ -1,6 +1,6 @@
 import { Search } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
 import TextInput from '../components/TextInput';
 
@@ -18,8 +18,14 @@ interface SearchInputProps {
  * @returns {JSX.Element} | the main search input component
  */
 const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const clearSearch = () => {
+        setSearchTerm('');
+    };
+
     return (
-        <Form method='get' action='/search'>
+        <Form method='get' action='/search' onSubmit={clearSearch}>
             <TextInput
                 type='text'
                 name='q'
@@ -29,6 +35,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element
                 variant='filled'
                 ariaLabel='search'
                 required
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 endAdornment={
                     <InputAdornment aria-label='submit search' position='end'>
                         <IconButton type='submit' sx={{ color: colorOverride }}>
