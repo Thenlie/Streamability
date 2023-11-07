@@ -20,6 +20,10 @@ jobs:
       run: npm run compile
     - name: Run ESLint
       run: npx eslint . --ext .ts,.tsx
+    - name: Run todo report
+      run: |
+        npx leasot -x -S --reporter markdown 'src/**/*' > PR_TODO.md
+        git diff --no-index --exit-code TODO.md PR_TODO.md
     - name: Create .env
       run: |
         touch .env
