@@ -2,6 +2,9 @@ import React from 'react';
 import ShowCard, { ShowCardProps } from '../../components/ShowCard';
 import ShowListCard, { ShowListCardProps } from '../../components/ShowListCard';
 import { Profile, ShowData } from '../../types';
+import Logger from '../../logger';
+
+const LOG = new Logger('SearchResultsCards');
 
 interface SearchResultsCardsProps {
     details: ShowData[] | null;
@@ -26,6 +29,7 @@ const SearchResultsCards: React.FC<SearchResultsCardsProps> = ({
     profile,
     setProfile,
 }) => {
+    LOG.debug('Cards', details);
     const CardComp: React.FC<ShowCardProps | ShowListCardProps> = (props) => {
         return viewState === 'grid' ? <ShowCard {...props} /> : <ShowListCard {...props} />;
     };

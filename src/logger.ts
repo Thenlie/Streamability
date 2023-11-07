@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import { ErrorResponse } from '@remix-run/router';
 
@@ -21,10 +22,10 @@ export default class Logger {
         console.log(log, 'background: gold; color: black');
     }
 
-    debug(message: string | number) {
+    debug(message: any, ...rest: any) {
         if (!import.meta.env.DEV) return;
         const log = '%c DEBUG ' + this.prefix + message;
-        console.log(log, 'background: lightskyblue; color: black');
+        console.log(log, 'background: lightskyblue; color: black', ...rest);
     }
 
     json(message: string | number) {

@@ -56,20 +56,34 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     setHash,
     disableControls = false,
 }) => {
-    const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
-    const [filterState, setFilterState] = useState<FilterProps>({ showType: 'none' });
+    const storageSortFilter = localStorage.getItem('streamabilitySortFilterState');
+    const initialSortFilter = storageSortFilter
+        ? JSON.parse(storageSortFilter)
+        : { sort: 'none', filter: { showType: 'none' } };
+    LOG.debug(JSON.stringify(initialSortFilter));
+    const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>(initialSortFilter.sort);
+    const [filterState, setFilterState] = useState<FilterProps>({
+        showType: initialSortFilter.filter.showType,
+    });
     const windowSize = useWindowSize();
     const unsortedShows = localStorage.getItem('streamabilityUnsortedResults');
 
     useEffect(() => {
+        LOG.debug('useEffect: ' + sortState + JSON.stringify(filterState));
         if (!unsortedShows) {
             // should never be false
             LOG.error('No original data in local storage');
             return;
         }
+
         if (filterState.showType === 'none' && sortState === 'none') {
             // resets to original data if neither are selected
+            LOG.warn('set 1');
             setShowDetails?.(JSON.parse(unsortedShows));
+            localStorage.setItem(
+                'streamabilitySortFilterState',
+                JSON.stringify({ sort: 'none', filter: { showType: 'none' } })
+            );
             return;
         }
 
@@ -80,25 +94,38 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                 JSON.parse(unsortedShows),
                 filterState.showType
             );
+            LOG.warn(JSON.stringify(filteredShows));
             results.push(...filteredShows);
         }
 
         if (sortState === 'alpha' && results.length > 0) {
             // If sort AND filter
+            LOG.warn('set 2');
             setShowDetails?.(sortShowsAlphaAsc(results));
         } else if (sortState === 'rev' && results.length > 0) {
             // if sort AND filter
+            LOG.warn('set 3');
             setShowDetails?.(sortShowsAlphaDesc(results));
         } else if (sortState === 'alpha') {
             // If ONLY sort
+            LOG.warn('set 4');
             setShowDetails?.(sortShowsAlphaAsc(JSON.parse(unsortedShows)));
         } else if (sortState === 'rev') {
             // If ONLY sort
+            LOG.warn('set 5');
             setShowDetails?.(sortShowsAlphaDesc(JSON.parse(unsortedShows)));
         }
 
-        if (results.length > 0) setShowDetails?.(results);
-    }, [sortState, filterState.showType]);
+        localStorage.setItem(
+            'streamabilitySortFilterState',
+            JSON.stringify({ sort: sortState, filter: { showType: filterState.showType } })
+        );
+
+        if (results.length > 0) {
+            LOG.warn('set 6');
+            setShowDetails?.(results);
+        }
+    }, [sortState, filterState.showType, query]);
 
     const handleViewToggle = (view: 'grid' | 'list') => {
         setViewState?.(view);

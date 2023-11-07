@@ -57,7 +57,7 @@ const SearchResultsScreen: React.FC = () => {
         }
     }, [windowSize]);
 
-    const cards = useMemo(() => {
+    const Cards = () => {
         return (
             <SearchResultCards
                 details={data}
@@ -66,7 +66,7 @@ const SearchResultsScreen: React.FC = () => {
                 setProfile={setProfile}
             />
         );
-    }, [data, hash, viewState, profile]);
+    };
 
     if (!data) {
         return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
@@ -86,7 +86,7 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setData}
                 setHash={setHash}
             />
-            {cards}
+            {<Cards />}
             <Button
                 title='Load More'
                 loading={dataLoading}

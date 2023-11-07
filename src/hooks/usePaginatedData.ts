@@ -17,6 +17,7 @@ interface PaginatedDataProps {
  * along with a function to fetch the next page.
  */
 const usePaginatedData = ({ query }: PaginatedDataProps) => {
+    LOG.debug('Query:', query);
     const [data, setData] = useState<ShowData[] | null>(null);
     const [moreToFetch, setMoreToFetch] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(true);
@@ -78,6 +79,7 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
 
             setMoreToFetch(json.total_pages > page);
             setPage((prev) => prev + 1);
+            LOG.debug('Hook 1');
             setData(newData);
             setLoading(false);
         };
@@ -91,8 +93,11 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
 
     // Reset the state when the query changes
     useEffect(() => {
+        // on page refresh, skip
+
         localStorage.setItem('streamabilityUnsortedResults', '');
         setPage(1);
+        LOG.debug('Hook 2');
         setData(null);
         setMoreToFetch(true);
         setLoading(true);
