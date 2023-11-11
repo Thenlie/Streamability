@@ -29,6 +29,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element
             <TextInput
                 type='text'
                 name='q'
+                id='q'
                 label='Search'
                 color='primary'
                 textOverrideColor={colorOverride}
