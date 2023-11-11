@@ -215,20 +215,23 @@ const SignUpScreen: React.FC = () => {
                     name='username'
                     label='Username'
                     color='secondary'
+                    autoComplete='username'
                     value={username}
                     error={usernameError}
                     onChange={(e) => setUsername(e.target.value)}
                     onFocus={() => setUsernameError(false)}
                 />
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel htmlFor='country-input' color='primary' className='!text-text'>
+                    <InputLabel id='country-input-label' color='primary' className='!text-text'>
                         Country
                     </InputLabel>
                     <Select
                         id='country-input'
+                        labelId='country-input-label'
                         name='country'
                         color='primary'
                         className='!text-text text-left'
+                        autoComplete='country'
                         value={country}
                         error={countryError}
                         onChange={(e) => setCountry(e.target.value)}

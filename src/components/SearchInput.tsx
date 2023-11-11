@@ -14,10 +14,8 @@ interface SearchInputProps {
 /**
  * Currently using a react router form, this will redirect to /search?q=INPUT
  * We can then pull the query from the URL and don't need to pass it as props
- *
- * @returns {JSX.Element} | the main search input component
  */
-const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element => {
+const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const clearSearch = () => {
@@ -29,6 +27,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }): JSX.Element
             <TextInput
                 type='text'
                 name='q'
+                id='q'
                 label='Search'
                 color='primary'
                 textOverrideColor={colorOverride}
