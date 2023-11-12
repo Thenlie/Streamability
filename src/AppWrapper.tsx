@@ -132,7 +132,7 @@ export default function AppWrapper(): JSX.Element {
                 baseColor={theme.palette.loader.base}
                 highlightColor={theme.palette.loader.highlight}
             >
-                <main className='flex min-h-screen flex-col place-items-center'>
+                <main className='flex min-h-screen flex-col place-items-center bg-background'>
                     <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
                     <div className='flex flex-auto flex-col items-center text-center w-full'>
                         <Outlet context={{ session, setSession, profile, setProfile }} />
