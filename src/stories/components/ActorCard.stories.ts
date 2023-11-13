@@ -26,8 +26,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const WithImage: Story = {
     args: {
         details: ACTOR,
+    },
+};
+
+export const WithoutImage: Story = {
+    args: {
+        details: {
+            ...ACTOR,
+            profile_path: '',
+        },
     },
 };

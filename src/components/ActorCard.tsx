@@ -18,7 +18,13 @@ const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
             data-testid='actor-card-component'
             className='m-3 flex flex-col w-[180px] bg-foreground rounded-sm overflow-hidden'
         >
-            <img src={`https://image.tmdb.org/t/p/w500/${details.profile_path}`} />
+            <img
+                src={
+                    details.profile_path
+                        ? `https://image.tmdb.org/t/p/w500/${details.profile_path}`
+                        : '/poster-placeholder.jpeg'
+                }
+            />
             <div className='flex flex-col justify-between p-2'>
                 <Typ fontWeight={'bold'}>{details.name}</Typ>
                 <Typ>{details.character}</Typ>
