@@ -1,3 +1,4 @@
+import { Actor } from './actor';
 import { ShowGenre, ShowProviders } from './show';
 
 /**
@@ -148,6 +149,10 @@ export interface TvDetailsData extends TvData {
         ];
     };
     'watch/providers': ShowProviders;
+    credits: {
+        cast: Actor[];
+        crew: Actor[];
+    };
 }
 
 export interface DiscoverTv {

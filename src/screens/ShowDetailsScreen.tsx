@@ -9,7 +9,7 @@ import {
     getRuntime,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
+import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar, ActorCard } from '../components';
 import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
@@ -210,6 +210,16 @@ const ShowDetailsScreen: React.FC = () => {
                     headerProps={{ title: 'Recommendations' }}
                 />
             </section>
+            {details.credits && (
+                <section>
+                    <Typ variant='h5'>Cast</Typ>
+                    <div className='flex flex-wrap justify-center'>
+                        {details.credits.cast.map((actor, i) => {
+                            return <ActorCard key={i} details={actor} />;
+                        })}
+                    </div>
+                </section>
+            )}
             <OfflineSnackbar />
         </>
     );

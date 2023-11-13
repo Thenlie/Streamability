@@ -1,3 +1,4 @@
+import { Actor } from './actor';
 import { MovieData } from './movie';
 import { TvData } from './tv';
 
@@ -125,6 +126,10 @@ export interface ShowData {
     media_type: 'movie' | 'tv' | 'person';
     genre_ids?: number[];
     seasons?: Season[] | null;
+    credits?: {
+        cast: Actor[];
+        crew: Actor[];
+    };
 }
 
 /**

@@ -58,6 +58,7 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
         vote_count: data.vote_count,
         overview: data.overview,
         media_type: mediaType,
+        credits: data.credits,
         genre_ids: data.genres.map((genre) => genre.id),
         age_rating:
             mediaType === 'movie'
@@ -92,7 +93,7 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
             : (data as TvDetailsData).last_episode_to_air.air_date,
         next_air_date: mediaType === 'movie'
             ? null
-            : (data as TvDetailsData).next_episode_to_air?.air_date
+            : (data as TvDetailsData).next_episode_to_air?.air_date,
     };
 };
 
