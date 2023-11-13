@@ -202,7 +202,17 @@ const ShowDetailsScreen: React.FC = () => {
                     <ProfileButtonSection showId={showId} showType={showType} />
                 </div>
             </section>
-            <section className='pb-6'>
+            {details.credits && (
+                <section className='w-full px-6 md:px-12'>
+                    <Typ variant='h5'>Cast</Typ>
+                    <div className='flex flex-nowrap overflow-x-auto w-full'>
+                        {details.credits.cast.map((actor, i) => {
+                            return <ActorCard key={i} details={actor} />;
+                        })}
+                    </div>
+                </section>
+            )}
+            <section className='py-8'>
                 <ShowCarousel
                     data={recommendations}
                     fallbackText={carouselFallbackText}
@@ -210,16 +220,6 @@ const ShowDetailsScreen: React.FC = () => {
                     headerProps={{ title: 'Recommendations' }}
                 />
             </section>
-            {details.credits && (
-                <section>
-                    <Typ variant='h5'>Cast</Typ>
-                    <div className='flex flex-wrap justify-center'>
-                        {details.credits.cast.map((actor, i) => {
-                            return <ActorCard key={i} details={actor} />;
-                        })}
-                    </div>
-                </section>
-            )}
             <OfflineSnackbar />
         </>
     );
