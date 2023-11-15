@@ -2,6 +2,7 @@
  * This file exports all components to make imports easier
  * Be sure to add any new components to this file
  */
+import ActorCard from './ActorCard';
 import ShowCard, { ShowCardProps } from './ShowCard';
 import ShowListCard, { ShowListCardProps } from './ShowListCard';
 import ShowPoster from './ShowPoster';
@@ -20,6 +21,7 @@ import TextInput from './TextInput';
 import Banner from './Banner';
 
 export {
+    ActorCard,
     ShowCard,
     ShowListCard,
     ShowPoster,
