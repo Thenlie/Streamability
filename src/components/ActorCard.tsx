@@ -16,7 +16,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
     return (
         <div
             data-testid='actor-card-component'
-            className='m-3 flex flex-col w-[180px] bg-foreground rounded-sm overflow-hidden'
+            className='m-3 flex flex-col w-[180px] bg-foreground rounded-t-md overflow-hidden flex-[0_0_auto]'
         >
             <img
                 src={

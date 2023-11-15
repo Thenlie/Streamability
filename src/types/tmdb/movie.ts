@@ -1,3 +1,4 @@
+import { Actor } from './actor';
 import { ShowGenre, ShowProviders } from './show';
 
 /**
@@ -106,6 +107,10 @@ export interface MovieDetailsData extends MovieData {
     status: string;
     tagline: string;
     'watch/providers': ShowProviders;
+    credits: {
+        cast: Actor[];
+        crew: Actor[];
+    };
 }
 
 export interface DiscoverMovie {
