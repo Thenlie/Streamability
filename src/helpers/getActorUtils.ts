@@ -10,9 +10,9 @@ const LOG = new Logger('getActorUtils');
  */
 const getActorDetails = async (id: string): Promise<ActorDetail> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/credit/${id}?api_key=${
+        `https://api.themoviedb.org/3/person/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&language=en-US`
+        }&append_to_response=movie_credits,tv_credits&language=en-US`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);

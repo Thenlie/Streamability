@@ -1,3 +1,8 @@
+import { MovieData } from './movie';
+
+/**
+ * Returned when 'credits' is appended to TMDB show details request
+ */
 export interface Actor {
     adult: boolean;
     gender: number;
@@ -13,43 +18,28 @@ export interface Actor {
     order: number;
 }
 
+/**
+ * Returned by TMDB actor detail query
+ */
 export interface ActorDetail {
-    credit_type: string;
-    department: string;
-    job: string;
-    media: Media;
-    media_type: string;
-    id: number;
-    person: Person;
-}
-
-export interface Media {
     adult: boolean;
-    backdrop_path: string;
-    id: number;
-    title: string;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    poster_path: string;
-    media_type: string;
-    genre_ids: number[];
-    popularity: number;
-    release_date: Date;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-    character: string;
-}
-
-export interface Person {
-    adult: boolean;
-    id: number;
-    name: string;
-    original_name: string;
-    media_type: string;
-    popularity: number;
+    also_known_as: string[];
+    biography: string;
+    birthday: string;
+    deathday: null;
     gender: number;
+    homepage: null;
+    id: number;
+    imdb_id: string;
     known_for_department: string;
+    name: string;
+    place_of_birth: string;
+    popularity: number;
     profile_path: string;
+    movie_credits?: MovieCredits;
+}
+
+export interface MovieCredits {
+    cast: MovieData[];
+    crew: MovieData[];
 }

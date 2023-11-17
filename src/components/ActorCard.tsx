@@ -19,7 +19,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
             data-testid='actor-card-component'
             className='m-3 flex flex-col w-[180px] bg-foreground rounded-t-md overflow-hidden flex-[0_0_auto]'
         >
-            <Link to={`/details/actor/${details.credit_id}`}>
+            <Link to={`/details/actor/${details.id}`}>
                 <img
                     src={
                         details.profile_path
