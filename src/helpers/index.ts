@@ -8,3 +8,4 @@ export * from './showSortUtils';
 export * from './stringFormatUtils';
 export * from './validationUtils';
 export * from './showTypeUtils';
+export * from './getActorUtils';
