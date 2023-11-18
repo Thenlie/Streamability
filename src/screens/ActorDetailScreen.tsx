@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import { ActorDetail } from '../types';
 import { convertDataToShowType, getActorDetails } from '../helpers';
-import { Typography as Typ } from '@mui/material';
-import { ShowCarousel } from '../components';
+import { Collapse, Typography as Typ } from '@mui/material';
+import { Button, ShowCarousel } from '../components';
 
 const ActorDetailScreen: React.FC = () => {
     const location: Location = useLocation();
@@ -12,6 +12,7 @@ const ActorDetailScreen: React.FC = () => {
         location.state ? location.state.details : null
     );
     const [loading, setLoading] = useState(true);
+    const [detailsOpen, setDetailsOpen] = useState(false);
 
     useEffect(() => {
         const handler = async () => {
@@ -59,18 +60,43 @@ const ActorDetailScreen: React.FC = () => {
                     <Typ variant='body2' align='left'>
                         {details.place_of_birth}
                     </Typ>
-                    <Typ align='left' marginTop={1}>
-                        {details.biography}
-                    </Typ>
+                    <Collapse in={detailsOpen} collapsedSize={335}>
+                        <Typ align='left' marginTop={1}>
+                            {details.biography}
+                        </Typ>
+                    </Collapse>
+                    <div
+                        className={`relative top-[-30px] bg-gradient-to-t from-foreground h-8 ${
+                            (detailsOpen || details.biography.length < 1000) && 'hidden'
+                        }`}
+                    ></div>
+                    <Button
+                        title={detailsOpen ? 'Read less' : 'Read more'}
+                        sx={{
+                            minHeight: 30,
+                            visibility: details.biography.length < 1000 ? 'hidden' : 'visible',
+                        }}
+                        onClick={() => setDetailsOpen(!detailsOpen)}
+                    />
                 </div>
             </section>
             {details.movie_credits && (
                 <section className='m-4 mb-8'>
                     <ShowCarousel
-                        data={convertDataToShowType(details.movie_credits.cast, 'movie')} // TODO: Convert to ShowData
+                        data={convertDataToShowType(details.movie_credits.cast, 'movie')}
                         fallbackText='Sorry, we can not find any movies associate with this actor!'
                         profile={null}
                         headerProps={{ title: 'Movies' }}
+                    />
+                </section>
+            )}
+            {details.tv_credits && (
+                <section className='m-4 mb-8'>
+                    <ShowCarousel
+                        data={convertDataToShowType(details.tv_credits.cast, 'tv')}
+                        fallbackText='Sorry, we can not find any movies associate with this actor!'
+                        profile={null}
+                        headerProps={{ title: 'TV' }}
                     />
                 </section>
             )}

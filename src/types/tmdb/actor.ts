@@ -1,4 +1,5 @@
 import { MovieData } from './movie';
+import { TvData } from './tv';
 
 /**
  * Returned when 'credits' is appended to TMDB show details request
@@ -37,9 +38,15 @@ export interface ActorDetail {
     popularity: number;
     profile_path: string;
     movie_credits?: MovieCredits;
+    tv_credits?: TvCredits;
 }
 
 export interface MovieCredits {
     cast: MovieData[];
     crew: MovieData[];
+}
+
+export interface TvCredits {
+    cast: TvData[];
+    crew: TvData[];
 }
