@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Location, useLocation } from 'react-router-dom';
 import { ActorDetail } from '../types';
-import { getActorDetails } from '../helpers';
+import { convertDataToShowType, getActorDetails } from '../helpers';
 import { Typography as Typ } from '@mui/material';
 import { ShowCarousel } from '../components';
 
@@ -67,7 +67,7 @@ const ActorDetailScreen: React.FC = () => {
             {details.movie_credits && (
                 <section className='m-4 mb-8'>
                     <ShowCarousel
-                        data={details.movie_credits.cast} // TODO: Convert to ShowData
+                        data={convertDataToShowType(details.movie_credits.cast, 'movie')} // TODO: Convert to ShowData
                         fallbackText='Sorry, we can not find any movies associate with this actor!'
                         profile={null}
                         headerProps={{ title: 'Movies' }}

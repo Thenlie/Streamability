@@ -97,4 +97,37 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
     };
 };
 
-export { convertResultsToShowType, convertDetailsToShowType };
+/**
+ * Convert movie or tv results to the ShowData type.
+ * @param data | Results data being converted
+ * @returns {ShowData[] | null}
+ */
+const convertDataToShowType = (
+    data: MovieData[] | TvData[],
+    mediaType: 'movie' | 'tv'
+): ShowData[] | null => {
+    if (!data) return null;
+
+    const showData: ShowData[] = data.map((show) => {
+        return {
+            id: show.id,
+            poster_path: show.poster_path,
+            banner_path: show.backdrop_path,
+            vote_average: show.vote_average,
+            vote_count: show.vote_count,
+            overview: show.overview,
+            media_type: mediaType,
+            genre_ids: show.genre_ids,
+            title: mediaType === 'tv'
+                ? (show as TvData).name
+                : (show as MovieData).title,
+            release_date: mediaType === 'tv'
+                ? (show as TvData).first_air_date
+                : (show as MovieData).release_date
+        };
+    });
+
+    return showData;
+};
+
+export { convertResultsToShowType, convertDetailsToShowType, convertDataToShowType };
