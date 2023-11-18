@@ -94,7 +94,7 @@ const ActorDetailScreen: React.FC = () => {
                 <section className='m-4 mb-8'>
                     <ShowCarousel
                         data={convertDataToShowType(details.tv_credits.cast, 'tv')}
-                        fallbackText='Sorry, we can not find any movies associate with this actor!'
+                        fallbackText='Sorry, we can not find any tv shows associate with this actor!'
                         profile={null}
                         headerProps={{ title: 'TV' }}
                     />
