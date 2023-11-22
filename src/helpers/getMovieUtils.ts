@@ -11,6 +11,7 @@ import { MOVIE_RATINGS } from './constants';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getMovieUtils');
+
 /**
  * Returns a list of movies based on a given search query.
  * @param name | Name of movie being queried
