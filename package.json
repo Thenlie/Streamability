@@ -31,7 +31,7 @@
     "@mui/material": "^5.14.13",
     "@remix-run/web-fetch": "^4.4.1",
     "@supabase/supabase-js": "^2.38.0",
-    "nuka-carousel": "^6.0.3",
+    "nuka-carousel": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.1",
