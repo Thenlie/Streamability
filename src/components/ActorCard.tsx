@@ -1,4 +1,4 @@
-import { Typography as Typ } from '@mui/material';
+import { CardMedia, Typography as Typ } from '@mui/material';
 import { Actor } from '../types';
 import { Link } from 'react-router-dom';
 
@@ -20,12 +20,22 @@ const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
             className='m-3 flex flex-col w-[180px] bg-foreground rounded-t-md overflow-hidden flex-[0_0_auto]'
         >
             <Link to={`/details/actor/${details.id}`}>
-                <img
-                    src={
+                <CardMedia
+                    component='img'
+                    className='w-full cursor-pointer rounded-sm'
+                    sx={{
+                        width: 180,
+                        minWidth: 180,
+                        aspectRatio: 2 / 3,
+                        boxShadow: 5,
+                        '&:hover': { opacity: 0.8 },
+                    }}
+                    image={
                         details.profile_path
-                            ? `https://image.tmdb.org/t/p/w500/${details.profile_path}`
+                            ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
                             : '/poster-placeholder.jpeg'
                     }
+                    alt={details.name}
                 />
             </Link>
             <div className='flex flex-col justify-between p-2'>
