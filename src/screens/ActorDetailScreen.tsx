@@ -5,6 +5,7 @@ import { convertDataToShowType, getActorDetails } from '../helpers';
 import { Collapse, Typography as Typ } from '@mui/material';
 import { Button, ShowCarousel } from '../components';
 import { ActorDetailLoader } from './loaders';
+import EmptyActorDetailScreen from './EmptyActorDetailScreen';
 
 const ActorDetailScreen: React.FC = () => {
     const location: Location = useLocation();
@@ -29,9 +30,8 @@ const ActorDetailScreen: React.FC = () => {
         return <ActorDetailLoader />;
     }
 
-    // TODO: #757 Create empty screen
     if (!details) {
-        return <p>Empty...</p>;
+        return <EmptyActorDetailScreen />;
     }
 
     return (
