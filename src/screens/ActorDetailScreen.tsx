@@ -4,6 +4,7 @@ import { ActorDetail } from '../types';
 import { convertDataToShowType, getActorDetails } from '../helpers';
 import { Collapse, Typography as Typ } from '@mui/material';
 import { Button, ShowCarousel } from '../components';
+import { ActorDetailLoader } from './loaders';
 
 const ActorDetailScreen: React.FC = () => {
     const location: Location = useLocation();
@@ -24,9 +25,8 @@ const ActorDetailScreen: React.FC = () => {
         handler();
     }, [location]);
 
-    // TODO: #758 Create loader screen
     if (loading && !details) {
-        return <p>Loading...</p>;
+        return <ActorDetailLoader />;
     }
 
     // TODO: #757 Create empty screen
@@ -37,10 +37,10 @@ const ActorDetailScreen: React.FC = () => {
     return (
         <>
             <section
-                className='m-6 mb-8 flex flex-col lg:flex-row'
+                className='m-6 mb-0 flex flex-col lg:flex-row'
                 data-testid='actor-detail-screen'
             >
-                <div className='rounded-md m-3 w-[250px] lg:w-[330px['>
+                <div className='rounded-md m-3 w-[250px] h-[375px] xl:w-[330px] xl:h-[525px]'>
                     <img
                         className='rounded-md'
                         src={
@@ -65,19 +65,20 @@ const ActorDetailScreen: React.FC = () => {
                             {details.biography}
                         </Typ>
                     </Collapse>
-                    <div
-                        className={`relative top-[-30px] bg-gradient-to-t from-foreground h-8 ${
-                            (detailsOpen || details.biography.length < 1000) && 'hidden'
-                        }`}
-                    ></div>
-                    <Button
-                        title={detailsOpen ? 'Read less' : 'Read more'}
-                        sx={{
-                            minHeight: 30,
-                            visibility: details.biography.length < 1000 ? 'hidden' : 'visible',
-                        }}
-                        onClick={() => setDetailsOpen(!detailsOpen)}
-                    />
+                    {details.biography.length > 1000 && (
+                        <>
+                            <div
+                                className={`relative top-[-30px] bg-gradient-to-t from-foreground h-8 ${
+                                    (detailsOpen || details.biography.length < 1000) && 'hidden'
+                                }`}
+                            ></div>
+                            <Button
+                                title={detailsOpen ? 'Read less' : 'Read more'}
+                                sx={{ minHeight: 30 }}
+                                onClick={() => setDetailsOpen(!detailsOpen)}
+                            />
+                        </>
+                    )}
                 </div>
             </section>
             {details.movie_credits && (
