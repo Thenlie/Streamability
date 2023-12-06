@@ -25,7 +25,6 @@ const ActorDetailScreen: React.FC = () => {
         handler();
     }, [location]);
 
-    // TODO: #758 Create loader screen
     if (loading && !details) {
         return <ActorDetailLoader />;
     }
