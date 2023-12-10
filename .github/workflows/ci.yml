@@ -19,7 +19,9 @@ jobs:
     - name: Run typescript compiler
       run: npm run compile
     - name: Run ESLint
-      run: npx eslint . --ext .ts,.tsx
+      run: |
+        npx eslint . --ext .ts,.tsx
+        npx markdownlint *.md **/*.md .github/*.md --ignore node_modules
     - name: Run todo report
       run: |
         npx leasot -x -S --reporter markdown 'src/**/*' > PR_TODO.md
