@@ -24,7 +24,7 @@ jobs:
         npx markdownlint *.md **/*.md .github/*.md --ignore node_modules
     - name: Run todo report
       run: |
-        npx leasot -x -S --reporter markdown 'src/**/*' > PR_TODO.md
+        npm run todo-pr
         git diff --no-index --exit-code TODO.md PR_TODO.md
     - name: Create .env
       run: |

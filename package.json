@@ -20,6 +20,7 @@
     "postclean": "npm install",
     "todo": "leasot -S 'src/**/*'",
     "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md",
+    "todo-pr": "leasot -x -S --reporter markdown 'src/**/*' > PR_TODO.md",
     "db-start": "npx supabase start",
     "db-start-env": "./scripts/db-start.sh",
     "db-stop": "npx supabase stop",
