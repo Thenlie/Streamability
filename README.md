@@ -1,5 +1,7 @@
+<!-- markdownlint-disable no-inline-html -->
+<!-- markdownlint-disable first-line-h1 -->
 <p align="center">
-    <img src="./public/android-chrome-192x192.png">
+    <img src="./public/android-chrome-192x192.png" alt="Streamability logo">
     <h1 align="center">Streamability 🎬</h1>
 </p>
 

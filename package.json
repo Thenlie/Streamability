@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "lint": "npx eslint . --color --ext .ts,.tsx",
     "lint-fix": "npx eslint . --ext .ts,.tsx --fix",
-    "lint-md": "markdownlint **/*.md --ignore node_modules --dot",
+    "lint-md": "markdownlint *.md **/*.md .github/*.md --ignore node_modules",
     "setup": "git config core.hooksPath .githooks",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
