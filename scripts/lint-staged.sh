@@ -4,8 +4,19 @@
 echo "--- Running ES-Lint ---"
 passing=true
 while read filename; do
+    # Typescript files
     if [[ "$filename" =~ \.ts$ || "$filename" =~ \.tsx ]]; then
         npx eslint $filename --fix
+        if [[ "$?" == 0 ]]; then
+            git add $filename
+            printf "\033[32m✅ ESLint Passed for $filename\033[0m\n"
+        else
+            printf "\033[41m❌ ESLint Failed for $filename\033[0m\n"
+            passing=false
+        fi
+    # Markdown files
+    elif [[ "$filename" =~ \.md$ ]]; then
+        npx markdownlint $filename --fix
         if [[ "$?" == 0 ]]; then
             git add $filename
             printf "\033[32m✅ ESLint Passed for $filename\033[0m\n"
