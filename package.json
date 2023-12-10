@@ -24,7 +24,8 @@
     "db-start": "npx supabase start",
     "db-start-env": "./scripts/db-start.sh",
     "db-stop": "npx supabase stop",
-    "db-reset": "npx supabase db reset"
+    "db-reset": "npx supabase db reset",
+    "patch": "patch-package"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -67,6 +68,7 @@
     "jsdom": "^22.1.0",
     "leasot": "^13.3.0",
     "markdownlint-cli": "^0.38.0",
+    "patch-package": "^8.0.0",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "storybook": "^7.5.2",

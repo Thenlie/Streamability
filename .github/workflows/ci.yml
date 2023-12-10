@@ -15,7 +15,9 @@ jobs:
       with:
         node-version: 20
     - name: Install modules
-      run: npm ci
+      run: |
+        npm ci
+        npm run patch
     - name: Run typescript compiler
       run: npm run compile
     - name: Run ESLint
