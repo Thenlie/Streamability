@@ -75,16 +75,25 @@ export const routes: RouteObject[] = [
                 loader: searchLoader,
             },
             {
-                path: 'details/movie/:id',
-                element: <ShowDetailsScreen />,
-            },
-            {
-                path: 'details/tv/:id',
-                element: <ShowDetailsScreen />,
-            },
-            {
-                path: 'details/actor/:id',
-                element: <ActorDetailScreen />,
+                path: 'details',
+                children: [
+                    {
+                        path: '',
+                        element: <PageNotFoundScreen />,
+                    },
+                    {
+                        path: 'movie/:id',
+                        element: <ShowDetailsScreen />,
+                    },
+                    {
+                        path: 'tv/:id',
+                        element: <ShowDetailsScreen />,
+                    },
+                    {
+                        path: 'actor/:id',
+                        element: <ActorDetailScreen />,
+                    },
+                ],
             },
             {
                 path: 'discover',
