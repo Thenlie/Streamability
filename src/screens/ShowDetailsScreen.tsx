@@ -9,7 +9,7 @@ import {
     getRuntime,
 } from '../helpers';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar } from '../components';
+import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar, ActorCard } from '../components';
 import { Tooltip, Typography as Typ } from '@mui/material';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
@@ -202,7 +202,17 @@ const ShowDetailsScreen: React.FC = () => {
                     <ProfileButtonSection showId={showId} showType={showType} />
                 </div>
             </section>
-            <section className='pb-6'>
+            {details.credits && (
+                <section className='w-full px-6 md:px-12'>
+                    <Typ variant='h5'>Cast</Typ>
+                    <div className='flex flex-nowrap overflow-x-auto w-full'>
+                        {details.credits.cast.map((actor, i) => {
+                            return <ActorCard key={i} details={actor} />;
+                        })}
+                    </div>
+                </section>
+            )}
+            <section className='py-8'>
                 <ShowCarousel
                     data={recommendations}
                     fallbackText={carouselFallbackText}

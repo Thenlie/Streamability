@@ -4,21 +4,21 @@ import { Typography as Typ } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
 /**
- * Returned when the show details endpoint is hit but the
+ * Returned when the actor details endpoint is hit but the
  * TMDB details query does not return anything.
  */
-const EmptyShowDetailsScreen: React.FC = () => {
+const EmptyActorDetailScreen: React.FC = () => {
     const navigate = useNavigate();
 
     return (
         <div className='m-6 flex flex-col items-center' data-testid='empty-show-details-screen'>
             <img src='/images/error.svg' width={500} />
             <Typ variant='h5' margin={2}>
-                We couldn&apos;t find any more details for this show. Sorry about that!
+                We couldn&apos;t find any more details for this actor. Sorry about that!
             </Typ>
             <Typ>
                 Something may have gone wrong on our end, or there may simply not be detailed
-                information about this show.
+                information about this person.
             </Typ>
             <Button
                 title='Go Back'
@@ -30,4 +30,4 @@ const EmptyShowDetailsScreen: React.FC = () => {
     );
 };
 
-export default EmptyShowDetailsScreen;
+export default EmptyActorDetailScreen;

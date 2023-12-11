@@ -11,6 +11,7 @@ import {
     DiscoverScreen,
     DashboardGalleryScreen,
     DashboardLayout,
+    ActorDetailScreen,
 } from './screens';
 import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
@@ -80,6 +81,10 @@ export const routes: RouteObject[] = [
             {
                 path: 'details/tv/:id',
                 element: <ShowDetailsScreen />,
+            },
+            {
+                path: 'details/actor/:id',
+                element: <ActorDetailScreen />,
             },
             {
                 path: 'discover',

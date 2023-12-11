@@ -11,6 +11,7 @@ import { MOVIE_RATINGS } from './constants';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getMovieUtils');
+
 /**
  * Returns a list of movies based on a given search query.
  * @param name | Name of movie being queried
@@ -39,7 +40,7 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates,watch/providers&language=en-US`
+        }&append_to_response=images,release_dates,watch/providers,credits&language=en-US`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);

@@ -1,0 +1,13 @@
+diff --git a/node_modules/leasot/dist/lib/reporters/markdown.js b/node_modules/leasot/dist/lib/reporters/markdown.js
+index 04cc4b5..dbf3d82 100644
+--- a/node_modules/leasot/dist/lib/reporters/markdown.js
++++ b/node_modules/leasot/dist/lib/reporters/markdown.js
+@@ -7,7 +7,7 @@ const reporterConfig = {
+         return [`| [${file}](${file}#L${line}) | ${line} | ${text} |`];
+     },
+     transformHeader(tag) {
+-        return [`### ${tag}s`, `| Filename | line # | ${tag} |`, '|:------|:------:|:------|'];
++        return [`# ${tag}s\n`, `| Filename | line # | ${tag} |`, '|:------|:------:|:------|'];
+     },
+ };
+ export const reporter = (todos, config) => {
