@@ -29,4 +29,12 @@ const filterPathsByReqType = (paths, reqType) => {
     return filteredArray;
 };
 
-export { hasParams, numParams, filterPathsByReqType };
+// { sequence: 'a', name: 'a', ctrl: false, meta: false, shift: false }
+const isAlphaNumeric = (key) => {
+    if (key.name.length === 1 && key.name.toLowerCase().match(/[a-z]|[0-9]/i)) {
+        return true;
+    }
+    return false;
+};
+
+export { hasParams, numParams, filterPathsByReqType, isAlphaNumeric };

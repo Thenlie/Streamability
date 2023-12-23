@@ -9,12 +9,12 @@ import {
     isEnterKey,
     isUpKey,
     isDownKey,
-    isNumberKey,
     Separator,
 } from '@inquirer/core';
 import chalk from 'chalk';
 import figures from 'figures';
 import ansiEscapes from 'ansi-escapes';
+import { isAlphaNumeric } from './utils.js';
 
 function isSelectable(item) {
     return !Separator.isSeparator(item) && !item.disabled;
@@ -42,42 +42,48 @@ export default createPrompt((config, done) => {
     const prefix = usePrefix();
     const [status, setStatus] = useState('pending');
     const [search, setSearch] = useState('');
-    const [filter, setFilter] = useState(items);
+    const [filteredItems, setFilteredItems] = useState(items);
 
     const bounds = useMemo(() => {
-        const first = filter.findIndex(isSelectable);
-        const last = filter.length - 1 - [...filter].reverse().findIndex(isSelectable);
+        const first = filteredItems.findIndex(isSelectable);
+        const last =
+            filteredItems.length - 1 - [...filteredItems].reverse().findIndex(isSelectable);
         if (first < 0)
             throw new Error('[select prompt] No selectable choices. All choices are disabled.');
         return { first, last };
-    }, [filter, items]);
+    }, [filteredItems, items]);
 
     const defaultItemIndex = useMemo(() => {
         if (!('default' in config)) return -1;
-        return filter.findIndex((item) => isSelectable(item) && item.value === config.default);
-    }, [config.default, filter, items]);
+        return filteredItems.findIndex(
+            (item) => isSelectable(item) && item.value === config.default
+        );
+    }, [config.default, filteredItems, items]);
 
     const [active, setActive] = useState(defaultItemIndex === -1 ? bounds.first : defaultItemIndex);
 
     // Safe to assume the cursor position always point to a Choice.
-    const selectedChoice = filter[active];
+    const selectedChoice = filteredItems[active];
 
+    // key: { sequence: 'a', name: 'a', ctrl: false, meta: false, shift: false }
     useKeypress((key) => {
         /**
          * TODO:
          * [ ] - Don't set for modifier keys
          * [ ] - Handle backspace
          * [ ] - Handle left/right arrow keys ?
+         * [ ] - Handle empty filteredItems list
          */
-        setSearch(search + key.name);
-        const re = new RegExp(search);
-        setFilter(filter.filter((item) => re.test(item.name)));
-        // console.log(filter);
+        if (isAlphaNumeric(key)) {
+            setSearch(search + key.name);
+            const re = new RegExp(search);
+            setFilteredItems(filteredItems.filter((item) => re.test(item.name)));
+        }
 
         if (isEnterKey(key)) {
             setStatus('done');
             done(selectedChoice.value);
-        } else if (isUpKey(key) || isDownKey(key)) {
+        } else if (key.name !== 'j' && key.name !== 'k' && (isUpKey(key) || isDownKey(key))) {
             if (
                 loop ||
                 (isUpKey(key) && active !== bounds.first) ||
@@ -86,15 +92,9 @@ export default createPrompt((config, done) => {
                 const offset = isUpKey(key) ? -1 : 1;
                 let next = active;
                 do {
-                    next = (next + offset + filter.length) % filter.length;
-                } while (!isSelectable(filter[next]));
+                    next = (next + offset + filteredItems.length) % filteredItems.length;
+                } while (!isSelectable(filteredItems[next]));
                 setActive(next);
-            }
-        } else if (isNumberKey(key)) {
-            const position = Number(key.name) - 1;
-            const item = filter[position];
-            if (item != null && isSelectable(item)) {
-                setActive(position);
             }
         }
     });
@@ -106,7 +106,7 @@ export default createPrompt((config, done) => {
     }
 
     const page = usePagination({
-        items: filter,
+        items: filteredItems,
         active,
         renderItem,
         pageSize,
