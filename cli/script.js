@@ -1,38 +1,38 @@
-import json from './tmdb_openapi.json' assert { type: 'json' };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+// import chalk from 'chalk';
+// import { input } from '@inquirer/prompts';
+// import { createPrompt, useState, useKeypress, isEnterKey, usePrefix } from '@inquirer/core';
+import { filterPathsByReqType } from './utils.js';
+import searchSelect from './searchSelect.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Parse The Movie DB's Open API schema
+let json = JSON.parse(fs.readFileSync(`${__dirname}/tmdb_openapi.json`, 'utf-8'));
+
 const PATHS = Object.keys(json.paths);
-const PARAM_REGEX = /\{\w+\}/g;
+// Create path choices
+const getReqPaths = filterPathsByReqType(Object.entries(json.paths), 'get');
+const pathChoices = getReqPaths.map((path) => {
+    return {
+        name: path[0],
+        value: path[0],
+        description: path[1]['get'].description,
+    };
+});
 
-// Check if a given string contains any params
-const hasParams = (s) => {
-    const params = s.match(PARAM_REGEX);
-    if (!params) return false;
-    return true;
-};
+// Which then can be used like this:
+const answer = await searchSelect({
+    message: 'Select a Movie DB API request',
+    choices: pathChoices,
+});
 
-// Return the number of params in a given string
-const numParams = (s) => {
-    const params = s.match(PARAM_REGEX);
-    if (!params) return 0;
-    return params.length;
-};
+console.log(answer);
 
-/**
- * Takes an array of API paths and returns a new array containing only paths
- * which use the given request type.
- * @param {Array<Array<string, object>>} paths
- * @param {'get' | 'post' | 'put' | 'delete'} reqType
- * @returns {Array<Array<string, object>>}
- */
-const filterByRequestType = (paths, reqType) => {
-    const filteredArray = [];
-    for (let i = 0; i < paths.length; i++) {
-        if (paths[i][1][reqType]) filteredArray.push(paths[i]);
-    }
-    return filteredArray;
-};
-
-console.log(filterByRequestType(Object.entries(json.paths), 'get'));
+// console.log(filterPathsByReqType(Object.entries(json.paths), 'get'));
 
 // for (let i = 0; i < PATHS.length; i++) {
 //     console.log(numParams(PATHS[i]));
