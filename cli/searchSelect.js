@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import {
     createPrompt,
     useState,
@@ -64,13 +65,6 @@ export default createPrompt((config, done) => {
     const selectedChoice = filteredItems.length > 0 ? filteredItems[active] : null;
 
     useKeypress((key) => {
-        /**
-         * TODO:
-         * [x] - Don't setSearch for modifier keys
-         * [x] - Handle backspace
-         * [ ] - Handle left/right arrow keys ?
-         * [ ] - Handle empty filteredItems list
-         */
         if (isAlphaNumeric(key)) {
             const re = new RegExp(search + key.name);
             setFilteredItems(items.filter((item) => re.test(item.name)));
@@ -121,12 +115,12 @@ export default createPrompt((config, done) => {
     const page =
         filteredItems.length > 0
             ? usePagination({
-                items: filteredItems,
-                active,
-                renderItem,
-                pageSize,
-                loop,
-            })
+                  items: filteredItems,
+                  active,
+                  renderItem,
+                  pageSize,
+                  loop,
+              })
             : '';
 
     if (status === 'done') {

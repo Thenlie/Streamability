@@ -41,6 +41,13 @@ const isAlphaNumeric = (key) => {
     return false;
 };
 
+/**
+ * To always render the search bar at 50 characters, this function
+ * takes the search query and returns spaces to bring the total
+ * character count to 50.
+ * @param {string} search
+ * @returns {string}
+ */
 const addSpaceToSearchBar = (search) => {
     const diff = 50 - (search.length || 0);
     let spaces = '';
@@ -50,4 +57,25 @@ const addSpaceToSearchBar = (search) => {
     return spaces;
 };
 
-export { hasParams, numParams, filterPathsByReqType, isAlphaNumeric, addSpaceToSearchBar };
+/**
+ * Make a GET request to The Movie DB API with a given endpoint
+ * @param {string} path
+ * @returns {Promise<object>}
+ */
+const fetchTMDB = async (path) => {
+    const BASE_PATH = 'https://api.themoviedb.org';
+    // eslint-disable-next-line no-undef
+    const apiKey = '?api_key=' + process.env.VITE_MOVIEDB_KEY;
+    const res = await fetch(BASE_PATH + path + apiKey);
+    const json = await res.json();
+    return json;
+};
+
+export {
+    hasParams,
+    numParams,
+    filterPathsByReqType,
+    isAlphaNumeric,
+    addSpaceToSearchBar,
+    fetchTMDB,
+};
