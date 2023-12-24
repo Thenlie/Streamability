@@ -9,18 +9,19 @@ import {
     isEnterKey,
     isUpKey,
     isDownKey,
+    isBackspaceKey,
     Separator,
 } from '@inquirer/core';
 import chalk from 'chalk';
 import figures from 'figures';
 import ansiEscapes from 'ansi-escapes';
-import { isAlphaNumeric } from './utils.js';
+import { addSpaceToSearchBar, isAlphaNumeric } from './utils.js';
 
-function isSelectable(item) {
+const isSelectable = (item) => {
     return !Separator.isSeparator(item) && !item.disabled;
-}
+};
 
-function renderItem({ item, isActive }) {
+const renderItem = ({ item, isActive }) => {
     if (Separator.isSeparator(item)) {
         return ` ${item.separator}`;
     }
@@ -34,7 +35,7 @@ function renderItem({ item, isActive }) {
     const color = isActive ? chalk.cyan : (x) => x;
     const prefix = isActive ? figures.pointer : ' ';
     return color(`${prefix} ${line}`);
-}
+};
 
 export default createPrompt((config, done) => {
     const { choices: items, loop = true, pageSize } = config;
@@ -48,8 +49,6 @@ export default createPrompt((config, done) => {
         const first = filteredItems.findIndex(isSelectable);
         const last =
             filteredItems.length - 1 - [...filteredItems].reverse().findIndex(isSelectable);
-        if (first < 0)
-            throw new Error('[select prompt] No selectable choices. All choices are disabled.');
         return { first, last };
     }, [filteredItems, items]);
 
@@ -62,22 +61,28 @@ export default createPrompt((config, done) => {
 
     const [active, setActive] = useState(defaultItemIndex === -1 ? bounds.first : defaultItemIndex);
 
-    // Safe to assume the cursor position always point to a Choice.
-    const selectedChoice = filteredItems[active];
+    const selectedChoice = filteredItems.length > 0 ? filteredItems[active] : null;
 
-    // key: { sequence: 'a', name: 'a', ctrl: false, meta: false, shift: false }
     useKeypress((key) => {
         /**
          * TODO:
-         * [ ] - Don't set for modifier keys
-         * [ ] - Handle backspace
+         * [x] - Don't setSearch for modifier keys
+         * [x] - Handle backspace
          * [ ] - Handle left/right arrow keys ?
          * [ ] - Handle empty filteredItems list
          */
         if (isAlphaNumeric(key)) {
+            const re = new RegExp(search + key.name);
+            setFilteredItems(items.filter((item) => re.test(item.name)));
             setSearch(search + key.name);
-            const re = new RegExp(search);
-            setFilteredItems(filteredItems.filter((item) => re.test(item.name)));
+        } else if (isBackspaceKey(key)) {
+            const re = new RegExp(search.slice(0, search.length - 1));
+            setFilteredItems(items.filter((item) => re.test(item.name)));
+            setSearch(search.slice(0, search.length - 1));
+        } else if (key.sequence === '_') {
+            const re = new RegExp(search + key.sequence);
+            setFilteredItems(items.filter((item) => re.test(item.name)));
+            setSearch(search + key.sequence);
         }
 
         if (isEnterKey(key)) {
@@ -100,26 +105,35 @@ export default createPrompt((config, done) => {
     });
 
     let message = chalk.bold(config.message);
+    let searchBar = chalk.bgWhite.black(
+        `${figures.pointer} ${search}${addSpaceToSearchBar(search)}`
+    );
     if (firstRender.current) {
         firstRender.current = false;
         message += chalk.dim(' (Use arrow keys or search)');
+        searchBar = chalk.bgWhite.black(
+            `${figures.pointer} ${'(start typing to search)'}${addSpaceToSearchBar(
+                '(start typing to search)'
+            )}`
+        );
     }
 
-    const page = usePagination({
-        items: filteredItems,
-        active,
-        renderItem,
-        pageSize,
-        loop,
-    });
+    const page =
+        filteredItems.length > 0
+            ? usePagination({
+                items: filteredItems,
+                active,
+                renderItem,
+                pageSize,
+                loop,
+            })
+            : '';
 
     if (status === 'done') {
         return `${prefix} ${message} ${chalk.cyan(selectedChoice.name || selectedChoice.value)}`;
     }
 
-    const choiceDescription = selectedChoice.description ? `\n${selectedChoice.description}` : '';
+    const choiceDescription = selectedChoice?.description ? `\n${selectedChoice.description}` : '';
 
-    return `${search}\n${prefix} ${message}\n${page}${choiceDescription}${ansiEscapes.cursorHide}`;
+    return `${searchBar}\n${prefix} ${message}\n${page}${choiceDescription}${ansiEscapes.cursorHide}`;
 });
-
-export { Separator };

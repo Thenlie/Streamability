@@ -29,12 +29,25 @@ const filterPathsByReqType = (paths, reqType) => {
     return filteredArray;
 };
 
-// { sequence: 'a', name: 'a', ctrl: false, meta: false, shift: false }
+/**
+ * Check if a given key is a letter or number
+ * @param {object} key ex: { sequence: 'a', name: 'a', ctrl: false, meta: false, shift: false }
+ * @returns {boolean}
+ */
 const isAlphaNumeric = (key) => {
-    if (key.name.length === 1 && key.name.toLowerCase().match(/[a-z]|[0-9]/i)) {
+    if (key.name && key.name.length === 1 && key.name.toLowerCase().match(/[a-z]|[0-9]/i)) {
         return true;
     }
     return false;
 };
 
-export { hasParams, numParams, filterPathsByReqType, isAlphaNumeric };
+const addSpaceToSearchBar = (search) => {
+    const diff = 50 - (search.length || 0);
+    let spaces = '';
+    for (let i = 0; i < diff; i++) {
+        spaces += ' ';
+    }
+    return spaces;
+};
+
+export { hasParams, numParams, filterPathsByReqType, isAlphaNumeric, addSpaceToSearchBar };
