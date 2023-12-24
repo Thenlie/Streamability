@@ -14,6 +14,13 @@ const numParams = (s) => {
     return params.length;
 };
 
+const getPathParams = (s) => {
+    const matches = s.match(PARAM_REGEX);
+    return matches.map((match) => {
+        return match.slice(1, match.length - 1);
+    });
+};
+
 /**
  * Takes an array of API paths and returns a new array containing only paths
  * which use the given request type.
@@ -60,13 +67,25 @@ const addSpaceToSearchBar = (search) => {
 /**
  * Make a GET request to The Movie DB API with a given endpoint
  * @param {string} path
+ * @param {Array<{ param: string, value: string, path: boolean }>} params
  * @returns {Promise<object>}
  */
-const fetchTMDB = async (path) => {
+const fetchTMDB = async (path, params) => {
     const BASE_PATH = 'https://api.themoviedb.org';
     // eslint-disable-next-line no-undef
-    const apiKey = '?api_key=' + process.env.VITE_MOVIEDB_KEY;
-    const res = await fetch(BASE_PATH + path + apiKey);
+    const API_KEY = '?api_key=' + process.env.VITE_MOVIEDB_KEY;
+    let PARAMS = '';
+    if (params.length > 0) {
+        for (let i = 0; i < params.length; i++) {
+            if (!params[i].path) {
+                PARAMS += `&${params[i].param}=${params[i].value}`;
+            } else {
+                path = path.replace(`{${params[i].param}}`, params[i].value);
+            }
+        }
+    }
+    const url = new URL(BASE_PATH + path + API_KEY + PARAMS);
+    const res = await fetch(url);
     const json = await res.json();
     return json;
 };
@@ -74,6 +93,7 @@ const fetchTMDB = async (path) => {
 export {
     hasParams,
     numParams,
+    getPathParams,
     filterPathsByReqType,
     isAlphaNumeric,
     addSpaceToSearchBar,

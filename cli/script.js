@@ -2,8 +2,9 @@ import 'dotenv/config';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { fetchTMDB, filterPathsByReqType } from './utils.js';
+import { fetchTMDB, filterPathsByReqType, getPathParams } from './utils.js';
 import searchSelect from './searchSelect.js';
+import { checkbox, input } from '@inquirer/prompts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,11 +22,34 @@ const pathChoices = getReqPaths.map((path) => {
     };
 });
 
-// Which then can be used like this:
-const answer = await searchSelect({
+const selectedPath = await searchSelect({
     message: 'Select a Movie DB API request',
     choices: pathChoices,
 });
 
+const params = json.paths[selectedPath].get.parameters.map((param) => {
+    const req = param.required ? ' (required)' : '';
+    return {
+        name: param.name + req,
+        value: param.name,
+        checked: !!req,
+    };
+});
+
+const selectedParamList = await checkbox({
+    message: 'Select params to add',
+    choices: params,
+    loop: true,
+});
+
+const pathParams = getPathParams(selectedPath);
+const selectedParams = [];
+for (let i = 0; i < selectedParamList.length; i++) {
+    const answer = await input({ message: selectedParamList[i] });
+    const isInPath = pathParams.includes(selectedParamList[i]);
+    selectedParams.push({ param: selectedParamList[i], value: answer, path: isInPath });
+}
+
 // eslint-disable-next-line no-console
-console.log(await fetchTMDB(answer));
+console.log(await fetchTMDB(selectedPath, selectedParams));
+// console.log(selectedParams);
