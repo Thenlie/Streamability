@@ -10,11 +10,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Parse The Movie DB's Open API schema
-let json = JSON.parse(fs.readFileSync(`${__dirname}/tmdb_openapi.json`, 'utf-8'));
+const json = JSON.parse(fs.readFileSync(`${__dirname}/tmdb_openapi.json`, 'utf-8'));
 
 // Create path choices
 const getReqPaths = filterPathsByReqType(Object.entries(json.paths), 'get');
-const pathChoices = getReqPaths.map((path) => {
+const pathChoices = getReqPaths.map((path: object) => {
     return {
         name: path[0],
         value: path[0],
@@ -36,14 +36,18 @@ const params = json.paths[selectedPath].get.parameters.map((param) => {
     };
 });
 
-const selectedParamList = await checkbox({
+const selectedParamList: string[] = await checkbox({
     message: 'Select params to add',
     choices: params,
     loop: true,
 });
 
 const pathParams = getPathParams(selectedPath);
-const selectedParams = [];
+const selectedParams: {
+    param: string;
+    value: string;
+    path: boolean;
+}[] = [];
 for (let i = 0; i < selectedParamList.length; i++) {
     const answer = await input({ message: selectedParamList[i] });
     const isInPath = pathParams.includes(selectedParamList[i]);
@@ -52,4 +56,3 @@ for (let i = 0; i < selectedParamList.length; i++) {
 
 // eslint-disable-next-line no-console
 console.log(await fetchTMDB(selectedPath, selectedParams));
-// console.log(selectedParams);
