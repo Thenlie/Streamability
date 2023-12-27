@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Parse The Movie DB's Open API schema
-const json = JSON.parse(fs.readFileSync(`${__dirname}/tmdb_openapi.json`, 'utf-8'));
+const json = JSON.parse(fs.readFileSync(`${__dirname}/data/tmdb_openapi.json`, 'utf-8'));
 
 // Create path choices
 const getReqPaths = filterPathsByReqType(Object.entries(json.paths), 'get');
