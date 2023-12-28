@@ -95,6 +95,9 @@ const fetchTMDB = async (
     }
     const url = new URL(BASE_PATH + path + API_KEY + PARAMS);
     const res = await fetch(url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch: ${String(url)}. Status: ${res.statusText}`);
+    }
     const json = await res.json();
     return json;
 };

@@ -2,29 +2,19 @@
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { main } from '.';
+import { Props, main } from '.';
 
 yargs(hideBin(process.argv))
-    .command(
-        'run',
-        'run the CLI tool',
-        () => {},
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        (argv) => {
-            main();
-        }
-    )
     .options({
         o: {
-            alias: 'output',
-            // demandOption: true,
+            alias: 'outputFile',
             default: 'stdio',
             describe: 'Filename to write response to',
             type: 'string',
         },
         i: {
-            alias: 'input',
-            default: './data/tmdb_openapi.json',
+            alias: 'inputFile',
+            default: 'data/tmdb_openapi.json',
             describe: 'Filename to read open api spec from',
             type: 'string',
         },
@@ -34,10 +24,19 @@ yargs(hideBin(process.argv))
             type: 'string',
         },
         d: {
-            alias: 'default',
+            alias: 'useDefault',
             describe: 'If the request should use default values and bypass param entry',
             type: 'boolean',
         },
     })
+    .command(
+        'run',
+        'run the CLI tool',
+        () => {},
+        (argv) => {
+            const { outputFile, inputFile, request, useDefault } = argv as unknown as Props;
+            main({ outputFile, inputFile, request, useDefault });
+        }
+    )
     .demandCommand(1)
     .parse();
