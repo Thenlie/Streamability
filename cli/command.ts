@@ -18,8 +18,8 @@ yargs(hideBin(process.argv))
             describe: 'Filename to read open api spec from',
             type: 'string',
         },
-        r: {
-            alias: 'request',
+        p: {
+            alias: 'inputPath',
             describe: 'TMDB endpoint to be requested',
             type: 'string',
         },
@@ -34,9 +34,11 @@ yargs(hideBin(process.argv))
         'run the CLI tool',
         () => {},
         (argv) => {
-            const { outputFile, inputFile, request, useDefault } = argv as unknown as Props;
-            main({ outputFile, inputFile, request, useDefault });
+            const { outputFile, inputFile, inputPath, useDefault } = argv as unknown as Props;
+            main({ outputFile, inputFile, inputPath, useDefault });
         }
     )
     .demandCommand(1)
+    // @ts-expect-error `terminalWidth` is typed incorrectly in @types/yargs. See: https://github.com/yargs/yargs/issues/2381
+    .wrap(yargs.terminalWidth)
     .parse();

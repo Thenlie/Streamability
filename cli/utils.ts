@@ -70,36 +70,8 @@ const addSpaceToSearchBar = (search: string): string => {
     return spaces;
 };
 
-/**
- * Make a GET request to The Movie DB API with a given endpoint
- * @param {string} path
- * @param {Array<{ param: string, value: string, path: boolean }>} params
- * @returns {Promise<object>}
- */
-const fetchTMDB = async (
-    path: string,
-    params: Array<{ param: string; value: string; path: boolean }>
-): Promise<object> => {
-    const BASE_PATH = 'https://api.themoviedb.org';
-    // eslint-disable-next-line no-undef
-    const API_KEY = '?api_key=' + process.env.VITE_MOVIEDB_KEY;
-    let PARAMS = '';
-    if (params.length > 0) {
-        for (let i = 0; i < params.length; i++) {
-            if (!params[i].path) {
-                PARAMS += `&${params[i].param}=${params[i].value}`;
-            } else {
-                path = path.replace(`{${params[i].param}}`, params[i].value);
-            }
-        }
-    }
-    const url = new URL(BASE_PATH + path + API_KEY + PARAMS);
-    const res = await fetch(url);
-    if (!res.ok) {
-        throw new Error(`Failed to fetch: ${String(url)}. Status: ${res.statusText}`);
-    }
-    const json = await res.json();
-    return json;
+const validatePath = (path: string, paths: string[]) => {
+    return paths.includes(path);
 };
 
 export {
@@ -109,5 +81,5 @@ export {
     filterPathsByReqType,
     isAlphaNumeric,
     addSpaceToSearchBar,
-    fetchTMDB,
+    validatePath,
 };
