@@ -21,7 +21,7 @@ interface MakeRequestProps {
 const makeRequest = async ({ path, params, outputFile }: MakeRequestProps) => {
     // Make fetch request and print output
     const data = JSON.stringify(await fetchTMDB(path, params), null, 4);
-    if (outputFile) {
+    if (outputFile && outputFile !== 'stdio') {
         try {
             const writeOptions: WriteFileOptions = {
                 encoding: 'utf8',

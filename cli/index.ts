@@ -6,6 +6,7 @@ import { filterPathsByReqType, getPathParams, validatePath } from './utils.js';
 import searchSelect from './searchSelect.js';
 import { checkbox, input } from '@inquirer/prompts';
 import { makeRequest } from './fetch.js';
+import { DEFAULT_PARAMS } from './lib/params.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,16 +15,17 @@ export interface Props {
     outputFile: string | undefined;
     inputFile: string;
     inputPath: string | undefined;
-    useDefault: boolean;
+    useDefaults: boolean;
 }
 
-export const main = async ({ outputFile, inputFile, inputPath, useDefault }: Props) => {
+export const main = async ({ outputFile, inputFile, inputPath, useDefaults }: Props) => {
     // Parse The Movie DB's Open API schema
     const json = JSON.parse(fs.readFileSync(`${__dirname}/${inputFile}`, 'utf8'));
 
     // Create path choices
     const getReqPaths = filterPathsByReqType(Object.entries(json.paths), 'get');
 
+    // Get user selected path
     let selectedPath: string;
     if (inputPath) {
         const isValid = validatePath(inputPath, getReqPaths.map((path) => path[0]) as string[]);
@@ -37,42 +39,55 @@ export const main = async ({ outputFile, inputFile, inputPath, useDefault }: Pro
                 description: path[1]['get'].description,
             };
         });
-
-        // Get user selected path
         selectedPath = await searchSelect({
             message: 'Select a Movie DB API request',
             choices: pathChoices,
         });
     }
 
-    // Get list of params for selected path
-    const params = json.paths[selectedPath].get.parameters.map((param) => {
-        const req = param.required ? ' (required)' : '';
-        return {
-            name: param.name + req,
-            value: param.name,
-            checked: !!req,
-        };
-    });
-
-    // Get user selected params
-    const selectedParamList: string[] = await checkbox({
-        message: 'Select params to add',
-        choices: params,
-        loop: true,
-    });
-
-    // Prompt user for each selected param
-    const pathParams = getPathParams(selectedPath);
+    // Create list of user selected OR default query parameters
     const selectedParams: Array<{
         param: string;
         value: string;
         path: boolean;
     }> = [];
-    for (let i = 0; i < selectedParamList.length; i++) {
-        const answer = await input({ message: selectedParamList[i] });
-        const isInPath = pathParams.includes(selectedParamList[i]);
-        selectedParams.push({ param: selectedParamList[i], value: answer, path: isInPath });
+    const pathParams = getPathParams(selectedPath);
+    if (!useDefaults) {
+        // Get list of all params for selected path
+        const params = json.paths[selectedPath].get.parameters.map((param) => {
+            const req = param.required ? ' (required)' : '';
+            return {
+                name: param.name + req,
+                value: param.name,
+                checked: !!req,
+            };
+        });
+
+        // Get user selected params
+        const selectedParamList: string[] = await checkbox({
+            message: 'Select params to add',
+            choices: params,
+            loop: true,
+        });
+
+        // Prompt user for each selected param
+        for (let i = 0; i < selectedParamList.length; i++) {
+            const answer = await input({ message: selectedParamList[i] });
+            const isInPath = pathParams.includes(selectedParamList[i]);
+            selectedParams.push({ param: selectedParamList[i], value: answer, path: isInPath });
+        }
+    } else {
+        // Get default path params
+        for (let i = 0; i < pathParams.length; i++) {
+            const defaultParam = DEFAULT_PARAMS.find((param) => param.name === pathParams[i]);
+            if (defaultParam) {
+                selectedParams.push({
+                    param: pathParams[i],
+                    value: defaultParam.values[Math.round(Math.random())],
+                    path: true,
+                });
+            }
+        }
     }
 
     await makeRequest({ path: selectedPath, params: selectedParams, outputFile });

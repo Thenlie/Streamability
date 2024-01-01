@@ -24,7 +24,7 @@ yargs(hideBin(process.argv))
             type: 'string',
         },
         d: {
-            alias: 'useDefault',
+            alias: 'useDefaults',
             describe: 'If the request should use default values and bypass param entry',
             type: 'boolean',
         },
@@ -34,8 +34,8 @@ yargs(hideBin(process.argv))
         'run the CLI tool',
         () => {},
         (argv) => {
-            const { outputFile, inputFile, inputPath, useDefault } = argv as unknown as Props;
-            main({ outputFile, inputFile, inputPath, useDefault });
+            const { outputFile, inputFile, inputPath, useDefaults } = argv as unknown as Props;
+            main({ outputFile, inputFile, inputPath, useDefaults });
         }
     )
     .demandCommand(1)
