@@ -4,7 +4,9 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { Props, main } from '.';
 
-yargs(hideBin(process.argv))
+const yargsInstance = yargs(hideBin(process.argv));
+
+yargsInstance
     .options({
         o: {
             alias: 'outputFile',
@@ -38,7 +40,6 @@ yargs(hideBin(process.argv))
             main({ outputFile, inputFile, inputPath, useDefaults });
         }
     )
+    .wrap(yargsInstance.terminalWidth())
     .demandCommand(1)
-    // @ts-expect-error `terminalWidth` is typed incorrectly in @types/yargs. See: https://github.com/yargs/yargs/issues/2381
-    .wrap(yargs.terminalWidth)
     .parse();
