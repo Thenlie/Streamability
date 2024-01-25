@@ -3,12 +3,14 @@ import { useTrendingShows } from '../hooks';
 import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
 import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
 import { getDiscoverMovies, getDiscoverTv } from '../helpers';
+import { useNavigate } from 'react-router-dom';
 /**
  * Requests a variety of filtered shows, rendering carousels
  * @returns {JSX.Element}
  */
 const DiscoverScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('alpha');
+    const navigate = useNavigate();
     const [highestRated, setHighestRated] = useState<ShowData[] | null>(null);
     const [newlyAdded, setNewlyAdded] = useState<ShowData[] | null>(null);
     const [actionAdventure, setActionAdventure] = useState<ShowData[] | null>(null);
@@ -95,7 +97,6 @@ const DiscoverScreen: React.FC = () => {
                 vote_average_gte: 5.0,
                 vote_count_gte: 2500,
             };
-
             discoverHandler(params, params, setComedy, setComedyLoading);
         };
 
@@ -155,86 +156,87 @@ const DiscoverScreen: React.FC = () => {
         huluHandler();
     }, []);
 
+    const sections = [
+        {
+            data: trendingShows,
+            dataLoading: loading,
+            title: 'Trending',
+            path: 'trending',
+        },
+        {
+            data: highestRated,
+            dataLoading: highestRatedLoading,
+            title: 'Highest Rated',
+            path: 'best',
+        },
+        {
+            data: newlyAdded,
+            dataLoading: newlyAddedLoading,
+            title: 'Newly Added',
+            path: 'new',
+        },
+        {
+            data: actionAdventure,
+            dataLoading: actionAdventureLoading,
+            title: 'Action & Adventure',
+            path: 'action',
+        },
+        {
+            data: comedy,
+            dataLoading: comedyLoading,
+            title: 'Comedy',
+            path: 'comedy',
+        },
+        {
+            data: horror,
+            dataLoading: horrorLoading,
+            title: 'Horror',
+            path: 'horror',
+        },
+        {
+            data: popularNetflix,
+            dataLoading: popularNetflixLoading,
+            title: 'Popular on Netflix',
+            path: 'netflix',
+        },
+        {
+            data: popularHulu,
+            dataLoading: popularHuluLoading,
+            title: 'Popular on Hulu',
+            path: 'hulu',
+        },
+        {
+            data: popularPrime,
+            dataLoading: popularPrimeLoading,
+            title: 'Popular on Prime',
+            path: 'prime',
+        },
+    ];
+
     return (
         <div className='w-full'>
-            <div className='mb-12 flex flex-col items-center'>
-                <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={trendingShows}
-                        dataLoading={loading}
-                        headerProps={{ title: 'Trending' }}
-                    />
-                </div>
-
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={highestRated}
-                        dataLoading={highestRatedLoading}
-                        headerProps={{ title: 'Highest Rated' }}
-                    />
-                </div>
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={newlyAdded}
-                        dataLoading={newlyAddedLoading}
-                        headerProps={{ title: 'Newly Added' }}
-                    />
-                </div>
-            </div>
-
+            <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
             <div className='my-12 flex flex-col items-center'>
-                <Banner data={actionAdventure} title={'Genres'} />
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={actionAdventure}
-                        dataLoading={actionAdventureLoading}
-                        headerProps={{ title: 'Action & Adventure' }}
-                    />
-                </div>
-
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={comedy}
-                        dataLoading={comedyLoading}
-                        headerProps={{ title: 'Comedy' }}
-                    />
-                </div>
-
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={horror}
-                        dataLoading={horrorLoading}
-                        headerProps={{ title: 'Horror' }}
-                    />
-                </div>
-            </div>
-
-            <div className='my-12 flex flex-col items-center'>
-                <Banner data={popularNetflix} title={'Platforms'} />
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={popularNetflix}
-                        dataLoading={popularNetflixLoading}
-                        headerProps={{ title: 'Popular on Netflix' }}
-                    />
-                </div>
-
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={popularPrime}
-                        dataLoading={popularPrimeLoading}
-                        headerProps={{ title: 'Popular on Prime' }}
-                    />
-                </div>
-
-                <div className='my-6'>
-                    <ShowCarousel
-                        data={popularHulu}
-                        dataLoading={popularHuluLoading}
-                        headerProps={{ title: 'Popular on Hulu' }}
-                    />
-                </div>
+                {sections.map((section, i) => {
+                    return (
+                        <>
+                            {i === 3 && <Banner data={actionAdventure} title='Genres' />}
+                            {i === 6 && <Banner data={popularNetflix} title='Platforms' />}
+                            <div className='my-6' key={i}>
+                                <ShowCarousel
+                                    data={section.data}
+                                    dataLoading={section.dataLoading}
+                                    headerProps={{
+                                        title: section.title,
+                                        hasButton: true,
+                                        buttonTitle: 'View More',
+                                        onClick: () => navigate(`${section.path}`),
+                                    }}
+                                />
+                            </div>
+                        </>
+                    );
+                })}
             </div>
             <OfflineSnackbar />
         </div>
