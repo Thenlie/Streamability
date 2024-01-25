@@ -26,7 +26,7 @@
     "db-stop": "npx supabase stop",
     "db-reset": "npx supabase db reset",
     "patch": "patch-package",
-    "cli": "tsx cli/index.ts"
+    "cli": "npx tsx cli/command.ts run"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
