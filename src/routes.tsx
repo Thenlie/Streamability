@@ -9,6 +9,7 @@ import {
     SignUpScreen,
     ShowDetailsScreen,
     DiscoverScreen,
+    DiscoverDetailScreen,
     DashboardGalleryScreen,
     DashboardLayout,
     ActorDetailScreen,
@@ -16,7 +17,6 @@ import {
 import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
 import { RouteObject } from 'react-router-dom';
-import DiscoverDetailScreen from './screens/DiscoverDetailScreen';
 
 /**
  * Create the 'root' route and serve the entire app to it.

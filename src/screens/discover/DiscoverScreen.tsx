@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useTrendingShows } from '../hooks';
-import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
-import { ShowData, DiscoverMovie, DiscoverTv } from '../types/tmdb';
-import { getDiscoverMovies, getDiscoverTv } from '../helpers';
+import { useTrendingShows } from '../../hooks';
+import { ShowCarousel, Banner, OfflineSnackbar } from '../../components';
+import { ShowData, DiscoverMovie, DiscoverTv } from '../../types/tmdb';
+import { getDiscoverMovies, getDiscoverTv } from '../../helpers';
 import { useNavigate } from 'react-router-dom';
 /**
  * Requests a variety of filtered shows, rendering carousels
