@@ -35,7 +35,7 @@ interface RequestHandlerProps {
 
 /**
  * Make a MovieDB API request based on the URL path
- * @todo paginate data
+ * @todo paginate data #838
  */
 const requestHandler = async (props: RequestHandlerProps) => {
     const { path, ...rest } = props;
@@ -85,7 +85,7 @@ const DiscoverDetailScreen: React.FC = () => {
 
     const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
 
-    // TODO: Create loader
+    // TODO: Create loader #839
     if (loading) return <p>Loading...</p>;
 
     return (
