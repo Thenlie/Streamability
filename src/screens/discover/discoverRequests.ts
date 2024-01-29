@@ -1,4 +1,4 @@
-import { getDiscoverMovies, getDiscoverTv } from '../../helpers';
+import { getDiscoverMovies, getDiscoverTv, getMovieTrending, getTvTrending } from '../../helpers';
 import { DiscoverMovie, DiscoverTv, ShowData } from '../../types';
 
 const discoverHandler = async (
@@ -20,6 +20,21 @@ interface HandlerProps {
     setState: React.Dispatch<React.SetStateAction<ShowData[] | null>>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const trendingHandler = async ({ setState, setLoading }: HandlerProps) => {
+    const shows = [];
+    const movies = await getMovieTrending();
+    const tv = await getTvTrending();
+    if (!movies && !tv) {
+        setLoading(false);
+        return;
+    }
+    if (!tv && movies) shows.push(...movies);
+    else if (!movies && tv) shows.push(...tv);
+    else if (movies && tv) shows.push(...movies, ...tv);
+    setState(shows);
+    setLoading(false);
+};
 
 const highRatedHandler = async ({ setState, setLoading }: HandlerProps) => {
     const params: DiscoverMovie | DiscoverTv = {
@@ -124,6 +139,7 @@ const huluHandler = async ({ setState, setLoading }: HandlerProps) => {
 };
 
 export {
+    trendingHandler,
     highRatedHandler,
     newlyAddedHandler,
     actionAdventureHandler,

@@ -112,28 +112,26 @@ const DiscoverScreen: React.FC = () => {
     return (
         <div className='w-full'>
             <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
-            <div className='my-12 flex flex-col items-center'>
-                {sections.map((section, i) => {
-                    return (
-                        <>
-                            {i === 3 && <Banner data={actionAdventure} title='Genres' />}
-                            {i === 6 && <Banner data={popularNetflix} title='Platforms' />}
-                            <div className='my-6' key={i}>
-                                <ShowCarousel
-                                    data={section.data}
-                                    dataLoading={section.dataLoading}
-                                    headerProps={{
-                                        title: section.title,
-                                        hasButton: true,
-                                        buttonTitle: 'View More',
-                                        onClick: () => navigate(`${section.path}`),
-                                    }}
-                                />
-                            </div>
-                        </>
-                    );
-                })}
-            </div>
+            {sections.map((section, i) => {
+                return (
+                    <div key={i}>
+                        {i === 3 && <Banner data={actionAdventure} title='Genres' />}
+                        {i === 6 && <Banner data={popularNetflix} title='Platforms' />}
+                        <div className='my-6 flex flex-col items-center'>
+                            <ShowCarousel
+                                data={section.data}
+                                dataLoading={section.dataLoading}
+                                headerProps={{
+                                    title: section.title,
+                                    hasButton: true,
+                                    buttonTitle: 'View More',
+                                    onClick: () => navigate(`${section.path}`),
+                                }}
+                            />
+                        </div>
+                    </div>
+                );
+            })}
             <OfflineSnackbar />
         </div>
     );
