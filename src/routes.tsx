@@ -9,6 +9,7 @@ import {
     SignUpScreen,
     ShowDetailsScreen,
     DiscoverScreen,
+    DiscoverDetailScreen,
     DashboardGalleryScreen,
     DashboardLayout,
     ActorDetailScreen,
@@ -98,6 +99,10 @@ export const routes: RouteObject[] = [
             {
                 path: 'discover',
                 element: <DiscoverScreen />,
+            },
+            {
+                path: 'discover/:genre',
+                element: <DiscoverDetailScreen />,
             },
         ],
     },
