@@ -18,6 +18,7 @@
     "build-storybook": "storybook build",
     "clean": "./scripts/clean.sh",
     "postclean": "npm install",
+    "postinstall": "npm run patch",
     "todo": "leasot -S 'src/**/*'",
     "todo-ci": "leasot -x -S --reporter markdown 'src/**/*' > TODO.md",
     "todo-pr": "leasot -x -S --reporter markdown 'src/**/*' > PR_TODO.md",
