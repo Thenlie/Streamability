@@ -15,7 +15,8 @@ import {
 } from './discoverRequests';
 
 /**
- * Requests a variety of filtered shows, rendering carousels
+ * A non-login required screen which requests a variety
+ * of filtered shows, rendering them within carousels
  */
 const DiscoverScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('alpha');
@@ -52,6 +53,7 @@ const DiscoverScreen: React.FC = () => {
         huluHandler({ setState: setPopularPrime, setLoading: setPopularPrimeLoading });
     }, []);
 
+    // #851 Create global sections variable
     const sections = [
         {
             data: trendingShows,
@@ -110,7 +112,7 @@ const DiscoverScreen: React.FC = () => {
     ];
 
     return (
-        <div className='w-full'>
+        <div className='w-full' data-testid='discover-screen'>
             <Banner data={trendingShows} title={'Discover Our Popular Shows'} />
             {sections.map((section, i) => {
                 return (
