@@ -9,6 +9,7 @@
 | [src/screens/PageNotFoundScreen.tsx](src/screens/PageNotFoundScreen.tsx#L42) | 42 | Implement better error handling |
 | [src/screens/PageNotFoundScreen.tsx](src/screens/PageNotFoundScreen.tsx#L43) | 43 | Handle thrown responses with 'isRouteErrorResponse' |
 | [src/supabase/profiles.ts](src/supabase/profiles.ts#L253) | 253 | #587 Ensure country code is valid |
+| [src/__tests__/screens/DiscoverScreen.test.tsx](src/__tests__/screens/DiscoverScreen.test.tsx#L29) | 29 | #851 Create global sections variable |
 | [src/screens/auth/LoginScreen.tsx](src/screens/auth/LoginScreen.tsx#L86) | 86 | We could try to get the AuthApiError type and use 'cause' instead |
 | [src/screens/dashboard/DashboardGalleryScreen.tsx](src/screens/dashboard/DashboardGalleryScreen.tsx#L38) | 38 | If profile does not return after a few seconds, |
 | [src/screens/discover/DiscoverDetailScreen.tsx](src/screens/discover/DiscoverDetailScreen.tsx#L38) | 38 | paginate data #838 |
