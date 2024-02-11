@@ -126,7 +126,7 @@ const getDiscoverMovies = async ({
 }: DiscoverMovie): Promise<ShowData[] | null> => {
     let url = `https://api.themoviedb.org/3/discover/movie?api_key=${
         import.meta.env.VITE_MOVIEDB_KEY
-    }&include_adult=${include_adult}&language=en-US&page=${params.pages}&region=us`;
+    }&include_adult=${include_adult}&language=en-US&page=${params.pages}`;
 
     if (params.with_genres) url += `&with_genres=${params.with_genres}`;
     if (params.sort_by) url += `&sort_by=${params.sort_by}`;
