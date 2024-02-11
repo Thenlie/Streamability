@@ -3,7 +3,7 @@
  * Be sure to add any new screens to this file
  * You will also need to add the new route to routes.tsx
  */
-import DiscoverScreen from './DiscoverScreen';
+import { DiscoverScreen, DiscoverDetailScreen } from './discover';
 import FeaturedSearchScreen from './FeaturedSearchScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
@@ -19,4 +19,5 @@ export {
     FeaturedSearchScreen,
     PageNotFoundScreen,
     ShowDetailsScreen,
+    DiscoverDetailScreen,
 };
