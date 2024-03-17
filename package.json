@@ -45,7 +45,7 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^8.0.0",
     "@storybook/addon-interactions": "^7.6.17",
-    "@inquirer/prompts": "^3.3.0",
+    "@inquirer/prompts": "^4.3.0",
     "@storybook/addon-links": "^7.6.4",
     "@storybook/addon-themes": "^8.0.0",
     "@storybook/blocks": "^7.6.17",
