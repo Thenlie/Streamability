@@ -30,5 +30,6 @@ export const IronMan: Story = {
     args: {
         details: MOVIE_DATA,
         profile: null,
+        setProfile: () => {},
     },
 };

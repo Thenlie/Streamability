@@ -18,5 +18,6 @@ export const Primary: Story = {
     args: {
         session: SESSION,
         profile: PROFILE,
+        setProfile: () => {},
     },
 };

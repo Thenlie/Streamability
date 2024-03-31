@@ -30,6 +30,7 @@ export const LoggedOut: Story = {
     args: {
         details: MOVIE_DATA,
         profile: null,
+        setProfile: () => {},
     },
 };
 
@@ -37,5 +38,6 @@ export const LoggedIn: Story = {
     args: {
         details: MOVIE_DATA,
         profile: PROFILE,
+        setProfile: () => {},
     },
 };
