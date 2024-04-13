@@ -43,9 +43,9 @@
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
+    "@inquirer/prompts": "^4.3.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^7.6.17",
-    "@inquirer/prompts": "^4.3.0",
     "@storybook/addon-links": "^7.6.4",
     "@storybook/addon-themes": "^8.0.0",
     "@storybook/blocks": "^7.6.17",
@@ -59,9 +59,9 @@
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.77",
     "@types/react-dom": "^18.2.24",
+    "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^6.18.1",
-    "@types/yargs": "^17.0.32",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "babel-plugin-direct-import": "^1.0.0",
@@ -79,11 +79,11 @@
     "prettier": "^3.2.4",
     "storybook": "^7.6.17",
     "storybook-addon-react-router-v6": "^2.0.10",
-    "vite": "^4.5.2",
     "supabase": "^1.153.4",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.3",
     "tsx": "^4.7.1",
+    "typescript": "^5.4.3",
+    "vite": "^4.5.3",
     "vitest": "^1.5.0",
     "yargs": "^17.7.2"
   }
