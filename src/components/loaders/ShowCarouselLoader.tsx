@@ -2,7 +2,7 @@ import React from 'react';
 import ShowPosterLoader from './ShowPosterLoader';
 import { getCarouselSteps } from '../ShowCarousel';
 import { SHOW_POSTER_WIDTH } from '../ShowPoster';
-import Carousel from 'nuka-carousel';
+import { Carousel } from 'nuka-carousel';
 
 interface ShowCarouselLoaderProps {
     /**
@@ -28,18 +28,9 @@ const ShowCarouselLoader: React.FC<ShowCarouselLoaderProps> = ({ steps }) => {
     return (
         <div style={{ width: carouselWidth }} data-testid='show-carousel-loader'>
             <Carousel
-                className='bg-foreground'
-                style={{
-                    width: carouselWidth,
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    borderRadius: '5px',
-                }}
-                defaultControlsConfig={{
-                    pagingDotsClassName: 'hidden',
-                    nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
-                    prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
-                }}
+                className={`bg-foreground py-4 px-4 rounded-md w-[${carouselWidth}]`}
+                showDots={false}
+                showArrows
             >
                 <div className='flex justify-center'>
                     {[...Array(initialCarouselSteps)].map((x, i) => (
