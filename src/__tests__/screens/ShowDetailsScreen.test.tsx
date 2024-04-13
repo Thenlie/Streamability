@@ -30,7 +30,7 @@ const movieRouter = createMemoryRouter(routes, {
     initialEntries: [`/details/movie/${MOVIE_DETAIL.id}`],
 });
 
-const tvRrouter = createMemoryRouter(routes, {
+const tvRouter = createMemoryRouter(routes, {
     initialEntries: [`/details/tv/${TV_DETAIL.id}`],
 });
 
@@ -69,7 +69,7 @@ describe('Show Details Screen', () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
         vi.mocked(getTvRecommendations).mockResolvedValue(null);
 
-        render(<RouterProvider router={tvRrouter} />);
+        render(<RouterProvider router={tvRouter} />);
 
         await screen.findByTestId('show-details-screen');
         expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
@@ -88,14 +88,13 @@ describe('Show Details Screen', () => {
         await screen.findByTestId('show-details-screen');
         expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
         const posters = screen.getAllByTestId('show-poster-component');
-        // we multiply by 3 here because nuka-carousel duplicates the component
-        expect(posters.length).toBe(TRENDING_DATA.length * 3);
+        expect(posters.length).toBe(TRENDING_DATA.length);
     });
     it('shows empty recommendation carousel when no recommendation data is returned', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
         vi.mocked(getTvRecommendations).mockResolvedValue(null);
 
-        render(<RouterProvider router={tvRrouter} />);
+        render(<RouterProvider router={tvRouter} />);
 
         await screen.findByTestId('show-details-screen');
         expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
