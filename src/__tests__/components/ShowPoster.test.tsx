@@ -1,13 +1,24 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
-import { screen, render } from '@testing-library/react';
-import { ShowPoster } from '../../components';
-import { MOVIE_DETAIL, PROFILE, TV_DETAIL } from '../constants';
+import { screen, render, fireEvent, waitFor } from '@testing-library/react';
+import ShowPoster from '../../components/ShowPoster';
+import { MOVIE_DETAIL, PROFILE, PROFILE_ACTIONS, TV_DETAIL } from '../constants';
 import { MemoryRouter, Router } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
+import { ThemeProvider } from '@emotion/react';
+import { lightTheme } from '../../theme';
+import { useTheme } from '@mui/material';
 
 const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
+
+vi.mock('@mui/material', async () => {
+    const actual = await vi.importActual('@mui/material');
+
+    return {
+        ...actual,
+        useTheme: vi.fn(),
+    };
+});
 
 describe('Show Poster Component', () => {
     it('properly renders a movie poster', () => {
@@ -51,8 +62,55 @@ describe('Show Poster Component', () => {
         expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
         expect(screen.getByRole('img')).toHaveAttribute('src', '/poster-placeholder.jpeg');
     });
+    it('renders profile buttons when logged in', async () => {
+        vi.mocked(useTheme).mockReturnValue(lightTheme);
+        const { rerender } = render(
+            <ThemeProvider theme={lightTheme}>
+                <MemoryRouter>
+                    <ShowPoster
+                        details={MOVIE_DETAIL}
+                        profile={PROFILE}
+                        profileActions={PROFILE_ACTIONS}
+                        showQueueButton
+                        showWatchedButton
+                        showFavoritesButton
+                    />
+                </MemoryRouter>
+            </ThemeProvider>
+        );
+        expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
+        fireEvent.mouseEnter(screen.getByTestId('show-poster-component'));
+        await waitFor(() => {
+            expect(screen.getByTestId('button-container'));
+        });
+        expect(screen.getByLabelText('Remove from queue')).toBeInTheDocument();
+        expect(screen.getByLabelText('Remove from watched')).toBeInTheDocument();
+        expect(screen.getByLabelText('Remove from favorites')).toBeInTheDocument();
+
+        rerender(
+            <ThemeProvider theme={lightTheme}>
+                <MemoryRouter>
+                    <ShowPoster
+                        details={MOVIE_DETAIL}
+                        profile={{ ...PROFILE, queue: [], watched: [], favorites: [] }}
+                        profileActions={PROFILE_ACTIONS}
+                        showQueueButton
+                        showWatchedButton
+                        showFavoritesButton
+                    />
+                </MemoryRouter>
+            </ThemeProvider>
+        );
+        expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
+        fireEvent.mouseEnter(screen.getByTestId('show-poster-component'));
+        await waitFor(() => {
+            expect(screen.getByTestId('button-container'));
+        });
+        expect(screen.getByLabelText('Add to queue')).toBeInTheDocument();
+        expect(screen.getByLabelText('Add to watched')).toBeInTheDocument();
+        expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument();
+    });
     it('navigates to details screen on click', async () => {
-        const user = userEvent.setup();
         const history = createMemoryHistory();
         history.push = vi.fn();
 
@@ -62,7 +120,7 @@ describe('Show Poster Component', () => {
             </Router>
         );
         expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
-        await user.click(screen.getByRole('img'));
+        fireEvent.click(screen.getByRole('img'));
         expect(history.push).toHaveBeenCalledWith(
             {
                 hash: '',
