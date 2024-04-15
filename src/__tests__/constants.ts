@@ -1,4 +1,4 @@
-import { Profile, Session, ShowData } from '../types';
+import { Profile, ProfileActions, Session, ShowData } from '../types';
 
 /* eslint-disable prettier/prettier */
 export const TRENDING_DATA: ShowData[] = [
@@ -192,4 +192,16 @@ export const PROFILE: Profile = {
     country: 'US',
     updated_at: '2023-08-09T03:17:57.310334+00:00',
     created_at: '2023-02-15T03:59:59.075061+00:00',
+};
+
+export const PROFILE_ACTIONS: ProfileActions = {
+    removeFromFavorites: async () => {},
+    removeFromQueue: async () => {},
+    removeFromWatched: async () => {},
+    addToFavorites: async () => {},
+    addToQueue: async () => {},
+    addToWatched: async () => {},
+    queueLoading: false,
+    favoritesLoading: false,
+    watchedLoading: false,
 };

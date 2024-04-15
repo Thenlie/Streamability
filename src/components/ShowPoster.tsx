@@ -102,6 +102,7 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     return (
         <div
             id='button-container'
+            data-testid='button-container'
             className={`absolute z-10 m-2
                 ${visible ? 'flex' : 'hidden'}
                 ${numOfIcons === 1 && 'ml-[137px]'}
