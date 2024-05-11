@@ -79,7 +79,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.4",
     "storybook": "^7.6.17",
-    "storybook-addon-react-router-v6": "^2.0.10",
+    "storybook-addon-react-router-v6": "^2.0.15",
     "supabase": "^1.153.4",
     "tailwindcss": "^3.4.3",
     "tsx": "^4.7.1",
