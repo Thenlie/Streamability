@@ -205,3 +205,18 @@ export const PROFILE_ACTIONS: ProfileActions = {
     favoritesLoading: false,
     watchedLoading: false,
 };
+
+export const ACTOR = {
+    adult: false,
+    gender: 2,
+    id: 3223,
+    known_for_department: 'Acting',
+    name: 'Robert Downey Jr.',
+    original_name: 'Robert Downey Jr.',
+    popularity: 57.084,
+    profile_path: '/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg',
+    cast_id: 19,
+    character: 'Tony Stark / Iron Man',
+    credit_id: '52fe4311c3a36847f8037ee9',
+    order: 0
+};
