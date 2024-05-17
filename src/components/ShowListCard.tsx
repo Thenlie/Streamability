@@ -1,12 +1,13 @@
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
 import { Link, useNavigate } from 'react-router-dom';
-import { formatReleaseDate, DateSize, pluralizeString } from '../helpers';
-import { CardActions, CardMedia, Rating, Typography as Typ } from '@mui/material';
+import { formatReleaseDate, DateSize } from '../helpers';
+import { CardActions, CardMedia, Typography as Typ } from '@mui/material';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 import Button from './Button';
 import { AddToQueue, RemoveFromQueue } from '@mui/icons-material';
+import Rating from './Rating';
 
 export interface ShowListCardProps {
     /**
@@ -120,19 +121,9 @@ const ShowListCard: React.FC<ShowListCardProps> = ({
                 <div className='flex justify-between'>
                     <div style={{ textAlign: 'left', alignSelf: 'end' }}>
                         <Rating
-                            name='half-rating'
-                            defaultValue={details.vote_average ? details.vote_average / 2 : 0}
-                            precision={0.5}
-                            style={{ paddingLeft: 4 }}
-                            readOnly
+                            vote_average={details.vote_average}
+                            vote_count={details.vote_count}
                         />
-                        <Typ variant='body2' align='left' paddingLeft={1}>
-                            {details.vote_average && details.vote_count
-                                ? details.vote_count +
-                                  ' ' +
-                                  pluralizeString(details.vote_count, 'rating')
-                                : 'No Ratings available'}
-                        </Typ>
                     </div>
                     {profile && (
                         <CardActions

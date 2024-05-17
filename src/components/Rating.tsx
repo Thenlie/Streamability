@@ -7,11 +7,11 @@ interface RatingProps {
      * Average rating out of 10 based on all
      * TMDB user ratings
      */
-    vote_average: number;
+    vote_average: number | undefined;
     /**
      * Total number of people who rated the show
      */
-    vote_count: number;
+    vote_count: number | undefined;
 }
 
 /**
@@ -24,15 +24,15 @@ interface RatingProps {
  */
 const Rating: React.FC<RatingProps> = ({ vote_average, vote_count }): JSX.Element => {
     return (
-        <div className='flex flex-col my-2'>
+        <div className='flex flex-col my-2' data-testid='rating-component'>
             <RatingMUI
                 name='half-rating'
-                defaultValue={vote_average / 2}
+                defaultValue={vote_average ? vote_average / 2 : 0}
                 precision={0.5}
                 readOnly
             />
             <Typ variant='body2' align='left' paddingLeft={0.6}>
-                {vote_count} {pluralizeString(vote_count, 'rating')}
+                {vote_count} {pluralizeString(vote_count || 0, 'rating')}
             </Typ>
         </div>
     );
