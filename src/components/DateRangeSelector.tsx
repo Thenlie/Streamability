@@ -1,4 +1,9 @@
 // DateRangeSelector.tsx
+
+// Before Using Install the required dependencies
+/*npm install react-datepicker
+npm install date-fns*/
+
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
