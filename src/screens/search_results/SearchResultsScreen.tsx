@@ -28,7 +28,6 @@ const SearchResultsScreen: React.FC = () => {
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
-    const [showLoadingIndicator, setShowLoadingIndicator] = useState<boolean>(false);
     const {
         data,
         setData,
@@ -44,7 +43,6 @@ const SearchResultsScreen: React.FC = () => {
             if (observer.current) observer.current.disconnect();
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && moreToFetch) {
-                    setShowLoadingIndicator(true);
                     setTimeout(() => {
                         refetch();
                     }, 0); // Delay for dev purposes -> should be 0 for the fastest loading time!
@@ -63,12 +61,6 @@ const SearchResultsScreen: React.FC = () => {
             localStorage.setItem('streamabilityView', 'grid');
         }
     }, [windowSize]);
-
-    useEffect(() => {
-        if (!dataLoading) {
-            setShowLoadingIndicator(false);
-        }
-    }, [dataLoading]);
 
     const cards = useMemo(() => {
         return (
@@ -101,9 +93,7 @@ const SearchResultsScreen: React.FC = () => {
             />
             <div>
                 {cards}
-                <div ref={loadMoreRef}>
-                    {(showLoadingIndicator || dataLoading) && <LoadingIndicator />}
-                </div>
+                <div ref={loadMoreRef}>{<LoadingIndicator />}</div>
             </div>
             <OfflineSnackbar />
         </div>
