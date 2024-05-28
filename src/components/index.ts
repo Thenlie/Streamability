@@ -19,6 +19,7 @@ import OfflineSnackbar from './OfflineSnackbar';
 import Footer from './Footer';
 import TextInput from './TextInput';
 import Banner from './Banner';
+import LoadingIndicator from './LoadingIndicator';
 
 export {
     ActorCard,
@@ -29,6 +30,7 @@ export {
     SearchInput,
     Providers,
     Navigation,
+    LoadingIndicator,
     Rating,
     Button,
     EmptySearchResults,

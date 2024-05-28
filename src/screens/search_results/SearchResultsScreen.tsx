@@ -1,23 +1,16 @@
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import React, { useState, useEffect, useMemo } from 'react';
-import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
+import { EmptySearchResults, OfflineSnackbar } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
 import SearchResultsHeader from './SearchResultsHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const LOG = new Logger('SearchResultsScreen');
 
-/**
- * This loader is mostly built straight from the react-router docs
- * https://reactrouter.com/en/main/components/form#get-submissions
- *
- * @param request | HTTP GET request from the SearchInput component
- * @returns {Promise<string>} | the users query
- */
 export async function loader({ request }: { request: Request }): Promise<string> {
-    // get the query parameters from the URL
     const url = new URL(request.url);
     const query = url.searchParams.get('q')?.trim();
     if (!query) {
@@ -27,10 +20,6 @@ export async function loader({ request }: { request: Request }): Promise<string>
     return query as string;
 }
 
-/**
- * The page displayed after a user makes a search query.
- * A gallery of shows that are linked to detail pages.
- */
 const SearchResultsScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
     const windowSize = useWindowSize();
@@ -47,9 +36,25 @@ const SearchResultsScreen: React.FC = () => {
         refetch,
     } = usePaginatedData({ query: query });
 
+    const observer = useRef<IntersectionObserver | null>(null);
+    const loadMoreRef = useCallback(
+        (node: HTMLDivElement) => {
+            if (dataLoading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && moreToFetch) {
+                    setTimeout(() => {
+                        refetch();
+                    }, 0); // Delay for dev purposes -> should be 0 for the fastest loading time!
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [dataLoading, moreToFetch, refetch]
+    );
+
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
-    // default to grid view on mobile
     useEffect(() => {
         if (windowSize.width && windowSize.width < 750) {
             setViewState('grid');
@@ -86,14 +91,10 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setData}
                 setHash={setHash}
             />
-            {cards}
-            <Button
-                title='Load More'
-                loading={dataLoading}
-                onClick={refetch}
-                disabled={!moreToFetch}
-                sx={{ display: moreToFetch ? 'block' : 'none', marginBottom: 2 }}
-            />
+            <div>
+                {cards}
+                <div ref={loadMoreRef}>{<LoadingIndicator />}</div>
+            </div>
             <OfflineSnackbar />
         </div>
     );

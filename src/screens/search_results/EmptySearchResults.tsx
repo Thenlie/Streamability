@@ -42,7 +42,7 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
                     </div>
                     <Button
                         StartIcon={Home}
-                        title='Return Home'
+                        title='Take me Home'
                         onClick={() => navigate('/')}
                         sx={{ width: 210 }}
                     />
