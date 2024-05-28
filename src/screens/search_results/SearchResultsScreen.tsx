@@ -38,19 +38,22 @@ const SearchResultsScreen: React.FC = () => {
     } = usePaginatedData({ query: query });
 
     const observer = useRef<IntersectionObserver | null>(null);
-    const loadMoreRef = useCallback((node: HTMLDivElement) => {
-        if (dataLoading) return;
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && moreToFetch) {
-                setShowLoadingIndicator(true);
-                setTimeout(() => {
-                    refetch();
-                }, 0); // Delay for dev purposes
-            }
-        });
-        if (node) observer.current.observe(node);
-    }, [dataLoading, moreToFetch, refetch]);
+    const loadMoreRef = useCallback(
+        (node: HTMLDivElement) => {
+            if (dataLoading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && moreToFetch) {
+                    setShowLoadingIndicator(true);
+                    setTimeout(() => {
+                        refetch();
+                    }, 0); // Delay for dev purposes -> should be 0 for the fastest loading time!
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [dataLoading, moreToFetch, refetch]
+    );
 
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
@@ -96,9 +99,9 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setData}
                 setHash={setHash}
             />
-            <div className='relative w-full'>
+            <div>
                 {cards}
-                <div ref={loadMoreRef} className='mb-5'>
+                <div ref={loadMoreRef}>
                     {(showLoadingIndicator || dataLoading) && <LoadingIndicator />}
                 </div>
             </div>
