@@ -1,11 +1,12 @@
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import React, { useState, useEffect, useMemo } from 'react';
-import { Button, EmptySearchResults, OfflineSnackbar } from '../../components';
+import { EmptySearchResults, OfflineSnackbar } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
 import SearchResultsHeader from './SearchResultsHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -47,6 +48,21 @@ const SearchResultsScreen: React.FC = () => {
         refetch,
     } = usePaginatedData({ query: query });
 
+    const observer = useRef<IntersectionObserver | null>(null);
+    const loadMoreRef = useCallback(
+        (node: HTMLDivElement) => {
+            if (dataLoading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && moreToFetch) {
+                    refetch();
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [dataLoading, moreToFetch, refetch]
+    );
+
     if (!storageItem) localStorage.setItem('streamabilityView', initialView);
 
     // default to grid view on mobile
@@ -86,14 +102,12 @@ const SearchResultsScreen: React.FC = () => {
                 setShowDetails={setData}
                 setHash={setHash}
             />
-            {cards}
-            <Button
-                title='Load More'
-                loading={dataLoading}
-                onClick={refetch}
-                disabled={!moreToFetch}
-                sx={{ display: moreToFetch ? 'block' : 'none', marginBottom: 2 }}
-            />
+            <div>
+                {cards}
+                {moreToFetch && <LoadingIndicator />}{' '}
+                {/* Show the indicator while more data is available */}
+                <div ref={loadMoreRef}></div>
+            </div>
             <OfflineSnackbar />
         </div>
     );

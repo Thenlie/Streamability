@@ -37,6 +37,7 @@ describe('Search Results Screen', () => {
         expect(headerText).toBeInTheDocument();
         expect(within(headerText).getByText('iron man')).toBeInTheDocument();
     });
+
     it('empty search results displayed when no data is returned', async () => {
         vi.mocked(useTrendingShows).mockReturnValue({
             trendingShows: TRENDING_DATA,
@@ -63,6 +64,7 @@ describe('Search Results Screen', () => {
         const button = screen.getByRole('button', { name: 'Return Home' });
         expect(button).toHaveTextContent('Return Home');
     });
+
     it('search results gallery displayed when data is returned', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
             data: TRENDING_DATA,
@@ -78,22 +80,5 @@ describe('Search Results Screen', () => {
         const headerText = screen.getByText('Search results for:');
         expect(headerText).toBeInTheDocument();
         expect(within(headerText).getByText('iron man')).toBeInTheDocument();
-        expect(screen.getByText('Load More')).toBeInTheDocument();
-        expect(screen.getByText('Load More')).toHaveAttribute('disabled');
-    });
-    it('a clickable "Load More" button is displayed when `moreToFetch` is true', async () => {
-        vi.mocked(usePaginatedData).mockReturnValue({
-            data: TRENDING_DATA,
-            setData: () => {},
-            loading: false,
-            moreToFetch: true,
-            refetch: () => {},
-        });
-
-        render(<RouterProvider router={router} />);
-
-        await screen.findByTestId('search-results-screen');
-        expect(screen.getByText('Load More')).toBeInTheDocument();
-        expect(screen.getByText('Load More')).not.toHaveAttribute('disabled');
     });
 });
