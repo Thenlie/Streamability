@@ -1,4 +1,4 @@
-import Carousel from 'nuka-carousel';
+import { Carousel } from 'nuka-carousel';
 import { ShowData } from '../types/tmdb';
 import React, { useEffect, useState } from 'react';
 import { useWindowSize, useDebounceValue } from '../hooks';
@@ -202,18 +202,9 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
             >
                 {headerProps && <CarouselHeader {...headerProps} />}
                 <Carousel
-                    className='bg-foreground'
-                    style={{
-                        width: carouselWidth,
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                        borderRadius: '5px',
-                    }}
-                    defaultControlsConfig={{
-                        pagingDotsClassName: 'hidden',
-                        nextButtonClassName: 'hidden',
-                        prevButtonClassName: 'hidden',
-                    }}
+                    className={`bg-foreground py-4 px-4 rounded-md w-[${carouselWidth}]`}
+                    showArrows={false}
+                    showDots={false}
                 >
                     <Typ
                         variant='body1'
@@ -230,19 +221,11 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
         <div style={{ width: carouselWidth }} data-testid='show-carousel'>
             {headerProps && <CarouselHeader {...headerProps} />}
             <Carousel
-                wrapAround
-                className='bg-foreground'
-                style={{
-                    width: carouselWidth,
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    borderRadius: '5px',
-                }}
-                defaultControlsConfig={{
-                    pagingDotsClassName: 'hidden',
-                    nextButtonClassName: 'mr-3 rounded-sm hidden md:block',
-                    prevButtonClassName: 'ml-3 rounded-sm hidden md:block',
-                }}
+                wrapMode='wrap'
+                scrollDistance={'slide'}
+                className={`bg-foreground py-4 px-4 rounded-md w-[${carouselWidth}]`}
+                showDots={false}
+                showArrows
             >
                 {handleDataSlice(data)}
             </Carousel>

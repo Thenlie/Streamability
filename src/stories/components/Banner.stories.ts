@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Banner } from '../../components';
 import { MOVIE_DATA_ARRAY } from '../constants';
-import { withRouter } from 'storybook-addon-react-router-v6';
+import { withRouter } from 'storybook-addon-remix-react-router';
 
 const meta = {
     title: 'Components/Banner',
