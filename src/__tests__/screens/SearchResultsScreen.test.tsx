@@ -21,6 +21,16 @@ const router = createMemoryRouter(routes, {
 });
 
 describe('Search Results Screen', () => {
+    beforeEach(() => {
+        // IntersectionObserver isn't available in test environment
+        const mockIntersectionObserver = vi.fn();
+        mockIntersectionObserver.mockReturnValue({
+            observe: () => null,
+            unobserve: () => null,
+            disconnect: () => null,
+        });
+        window.IntersectionObserver = mockIntersectionObserver;
+    });
     it('search results loader displayed initially when `data` is null', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
             data: null,
