@@ -31,7 +31,7 @@ You can read more about creating stories in the [Official Documentation](https:/
 If you are getting errors around context or routers, you might need to add the `withRouters` decorator.
 
 ```js
-import { withRouter } from 'storybook-addon-react-router-v6';
+import { withRouter } from 'storybook-addon-remix-react-router';
 const meta = {
     // ...rest of meta
     decorators: [withRouter],

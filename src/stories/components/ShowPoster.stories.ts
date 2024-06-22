@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { withRouter, reactRouterParameters } from 'storybook-addon-react-router-v6';
+import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-router';
 import { ShowPoster } from '../../components';
 import { MOVIE_DATA } from '../constants';
 import { ProfileActions } from '../../types';
