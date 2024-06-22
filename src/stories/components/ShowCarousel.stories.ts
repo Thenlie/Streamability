@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ShowCarousel } from '../../components';
 import { MOVIE_DATA_ARRAY } from '../constants';
-import { reactRouterParameters, withRouter } from 'storybook-addon-react-router-v6';
+import { reactRouterParameters, withRouter } from 'storybook-addon-remix-react-router';
 
 const meta = {
     title: 'Components/Show Carousel',
