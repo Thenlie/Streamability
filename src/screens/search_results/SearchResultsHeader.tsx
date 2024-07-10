@@ -1,5 +1,9 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ViewModule, ViewList, FilterAltOff, Tv, Movie } from '@mui/icons-material';
+import ViewModule from '@mui/icons-material/ViewModule';
+import ViewList from '@mui/icons-material/ViewList';
+import FilterAltOff from '@mui/icons-material/FilterAltOff';
+import Tv from '@mui/icons-material/Tv';
+import Movie from '@mui/icons-material/Movie';
 import { ToggleButtonGroup, ToggleButton, SvgIcon, Typography as Typ } from '@mui/material';
 import { useWindowSize } from '../../hooks';
 import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';

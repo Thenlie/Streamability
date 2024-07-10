@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from '@mui/system';
 import { lightTheme, darkTheme } from '../src/theme';
-import { CssBaseline } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import '../src/index.css'
 
 const preview: Preview = {
