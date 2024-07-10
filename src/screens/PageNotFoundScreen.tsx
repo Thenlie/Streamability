@@ -3,7 +3,8 @@ import { useNavigate, useRouteError } from 'react-router-dom';
 import { Button, Footer, Navigation, OfflineSnackbar } from '../components';
 import Logger from '../logger';
 import React, { useState } from 'react';
-import { ArrowBack, Home } from '@mui/icons-material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import Home from '@mui/icons-material/Home';
 import { Theme } from '@mui/material';
 import { darkTheme, lightTheme } from '../theme';
 

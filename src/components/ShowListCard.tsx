@@ -6,7 +6,8 @@ import { CardActions, CardMedia, Typography as Typ } from '@mui/material';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 import Button from './Button';
-import { AddToQueue, RemoveFromQueue } from '@mui/icons-material';
+import AddToQueue from '@mui/icons-material/AddToQueue';
+import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
 import Rating from './Rating';
 
 export interface ShowListCardProps {

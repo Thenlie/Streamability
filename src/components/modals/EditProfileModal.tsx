@@ -13,7 +13,10 @@ import {
     Select,
     MenuItem,
 } from '@mui/material';
-import { Close, Edit, Language, NoAdultContent } from '@mui/icons-material';
+import Close from '@mui/icons-material/Close';
+import Edit from '@mui/icons-material/Edit';
+import Language from '@mui/icons-material/Language';
+import NoAdultContent from '@mui/icons-material/NoAdultContent';
 import { Profile, Session } from '../../types';
 import Button from '../Button';
 import { COUNTRIES, validateCountry } from '../../helpers';

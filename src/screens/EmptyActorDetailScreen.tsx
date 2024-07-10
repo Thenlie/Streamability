@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components';
 import { Typography as Typ } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 /**
  * Returned when the actor details endpoint is hit but the

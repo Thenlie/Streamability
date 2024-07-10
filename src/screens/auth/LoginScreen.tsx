@@ -4,7 +4,8 @@ import { SUPABASE } from '../../supabase/supabaseClient';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
 import { InputAdornment, IconButton, Typography as Typ } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Logger from '../../logger';
 import { SnackbarProps } from '../../components/Snackbar';
 

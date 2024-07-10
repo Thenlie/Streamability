@@ -8,7 +8,7 @@ import {
     Tooltip,
 } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { RotateRight } from '@mui/icons-material';
+import RotateRight from '@mui/icons-material/RotateRight';
 
 interface IconButtonProps {
     /**

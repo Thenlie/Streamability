@@ -14,19 +14,17 @@ import {
     Tooltip,
     Typography as Typ,
 } from '@mui/material';
-import {
-    AccountCircle,
-    DarkMode,
-    ExpandLess,
-    ExpandMore,
-    Explore,
-    LightMode,
-    Login,
-    Logout,
-    PersonAddAlt,
-    Search,
-    Settings,
-} from '@mui/icons-material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import DarkMode from '@mui/icons-material/DarkMode';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Explore from '@mui/icons-material/Explore';
+import LightMode from '@mui/icons-material/LightMode';
+import Login from '@mui/icons-material/Login';
+import Logout from '@mui/icons-material/Logout';
+import PersonAddAlt from '@mui/icons-material/PersonAddAlt';
+import Search from '@mui/icons-material/Search';
+import Settings from '@mui/icons-material/Settings';
 import SearchInput from './SearchInput';
 import { lightTheme } from '../theme';
 
