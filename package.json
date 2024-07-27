@@ -78,7 +78,7 @@
     "patch-package": "^8.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
-    "storybook": "^8.1.10",
+    "storybook": "^8.2.6",
     "storybook-addon-remix-react-router": "^3.0.0",
     "supabase": "^1.178.2",
     "tailwindcss": "^3.4.4",
