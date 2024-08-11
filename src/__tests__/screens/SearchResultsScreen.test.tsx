@@ -16,6 +16,13 @@ vi.mock('../../hooks', async () => {
     };
 });
 
+// This needs to mock `log` since we transform LOG.error calls into console.log
+const consoleErrorMock = vi.spyOn(console, 'log').mockImplementation(() => {});
+const consoleErrorMsg = [
+    '%c ERROR [SearchResultsHeader] No original data in local storage',
+    'background: firebrick; color: white',
+];
+
 const router = createMemoryRouter(routes, {
     initialEntries: ['/search?q=iron+man'],
 });
@@ -30,6 +37,9 @@ describe('Search Results Screen', () => {
             disconnect: () => null,
         });
         window.IntersectionObserver = mockIntersectionObserver;
+    });
+    afterAll(() => {
+        consoleErrorMock.mockRestore();
     });
     it('search results loader displayed initially when `data` is null', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
@@ -46,6 +56,8 @@ describe('Search Results Screen', () => {
         const headerText = screen.getByText('Search results for:');
         expect(headerText).toBeInTheDocument();
         expect(within(headerText).getByText('iron man')).toBeInTheDocument();
+        expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
+        expect(consoleErrorMock).toHaveBeenCalledTimes(1);
     });
 
     it('empty search results displayed when no data is returned', async () => {
@@ -73,6 +85,8 @@ describe('Search Results Screen', () => {
         expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
         const button = screen.getByRole('button', { name: 'Return Home' });
         expect(button).toHaveTextContent('Return Home');
+        expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
+        expect(consoleErrorMock).toHaveBeenCalledTimes(2);
     });
 
     it('search results gallery displayed when data is returned', async () => {
@@ -90,5 +104,7 @@ describe('Search Results Screen', () => {
         const headerText = screen.getByText('Search results for:');
         expect(headerText).toBeInTheDocument();
         expect(within(headerText).getByText('iron man')).toBeInTheDocument();
+        expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
+        expect(consoleErrorMock).toHaveBeenCalledTimes(3);
     });
 });
