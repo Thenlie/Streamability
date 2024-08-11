@@ -1,12 +1,10 @@
 import React, { ReactElement } from 'react';
-import {
-    FormControl as FormControlMUI,
-    InputLabel as InputLabelMUI,
-    Input as InputMUI,
-    FilledInput as FilledInputMUI,
-    SxProps,
-    Theme,
-} from '@mui/material';
+import FormControlMUI from '@mui/material/FormControl';
+import InputLabelMUI from '@mui/material/InputLabel';
+import InputMUI from '@mui/material/Input';
+import FilledInputMUI from '@mui/material/FilledInput';
+import type { SxProps } from '@mui/system/styleFunctionSx';
+import type { Theme } from '@mui/material';
 
 interface TextInputProps {
     /**

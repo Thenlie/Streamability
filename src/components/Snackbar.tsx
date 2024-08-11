@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Snackbar as SnackbarMUI } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import SnackbarMUI from '@mui/material/Snackbar';
 
 export interface SnackbarProps {
     /**

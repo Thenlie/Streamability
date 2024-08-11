@@ -1,6 +1,6 @@
 import { Profile, ShowData } from '../types';
 import { formatReleaseDate, DateSize } from '../helpers';
-import { Typography as Typ } from '@mui/material';
+import Typ from '@mui/material/Typography';
 import { useProfileActions } from '../hooks';
 import React from 'react';
 import ShowPoster from './ShowPoster';

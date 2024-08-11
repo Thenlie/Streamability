@@ -1,4 +1,4 @@
-import { Typography as Typ } from '@mui/material';
+import Typ from '@mui/material/Typography';
 
 interface DashboardEmptyGalleryProps {
     title: string;

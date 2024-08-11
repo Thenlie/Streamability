@@ -1,5 +1,6 @@
 import Search from '@mui/icons-material/Search';
-import { IconButton, InputAdornment } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
 import TextInput from '../components/TextInput';

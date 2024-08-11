@@ -4,7 +4,7 @@ export async function workflow({ files }: Api) {
     await files('**/*.{ts,tsx}')
         .jsFam()
         // eslint-disable-next-line
-        .astGrep("import { $$$IMPORTS } from '@mui/icons-material';", async ({ replace, map }) => {
+        .astGrep("import { $$$IMPORTS } from '@mui/material';", async ({ replace, map }) => {
             const newImports: string[] = [];
             await map(async ({ getMultipleMatches }) => {
                 // get all imports matched with $$$ selector
@@ -14,7 +14,7 @@ export async function workflow({ files }: Api) {
                     const text = node.text();
                     // ignore commas
                     if (text !== ',') {
-                        newImports.push(`import ${text} from '@mui/icons-material/${text}';`);
+                        newImports.push(`import ${text} from '@mui/material/${text}';`);
                     }
                 });
             });

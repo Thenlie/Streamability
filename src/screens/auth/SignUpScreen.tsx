@@ -4,15 +4,13 @@ import { SUPABASE } from '../../supabase/supabaseClient';
 import { COUNTRIES, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
 import { Link, Navigate } from 'react-router-dom';
-import {
-    InputAdornment,
-    InputLabel,
-    FormControl,
-    IconButton,
-    Select,
-    MenuItem,
-    Typography as Typ,
-} from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Typ from '@mui/material/Typography';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Logger from '../../logger';

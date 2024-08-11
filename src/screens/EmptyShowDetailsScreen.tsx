@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components';
-import { Typography as Typ } from '@mui/material';
+import Typ from '@mui/material/Typography';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 /**

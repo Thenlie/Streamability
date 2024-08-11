@@ -4,15 +4,13 @@ import {
     setProfileAdultFlag,
     setProfileCountry,
 } from '../../supabase/profiles';
-import {
-    Box,
-    FormControl,
-    InputLabel,
-    Modal,
-    Typography as Typ,
-    Select,
-    MenuItem,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Modal from '@mui/material/Modal';
+import Typ from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Close from '@mui/icons-material/Close';
 import Edit from '@mui/icons-material/Edit';
 import Language from '@mui/icons-material/Language';

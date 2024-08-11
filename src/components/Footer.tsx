@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Typography as Typ } from '@mui/material';
+import Typ from '@mui/material/Typography';
 import { useWindowSize } from '../hooks';
 
 const Footer: React.FC = (): JSX.Element => {

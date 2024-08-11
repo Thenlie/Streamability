@@ -5,7 +5,7 @@ import Logger from '../logger';
 import React, { useState } from 'react';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import Home from '@mui/icons-material/Home';
-import { Theme } from '@mui/material';
+import type { Theme } from '@mui/material';
 import { darkTheme, lightTheme } from '../theme';
 
 const LOG = new Logger('PageNotFoundScreen');
