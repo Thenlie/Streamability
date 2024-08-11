@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, vi } from 'vitest';
 import { ShowCard } from '../../components';
 import { MOVIE_DETAIL, PROFILE } from '../constants';
-import { useTheme } from '@mui/material';
+import useTheme from '@mui/material/styles/useTheme';
 import { lightTheme } from '../../theme';
 import { DateSize, formatReleaseDate } from '../../helpers';
 
@@ -12,14 +12,10 @@ const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 const mockedUseNavigate = vi.fn();
 const mockSetProfile = vi.fn();
 
-vi.mock('@mui/material', async () => {
-    const actual = await vi.importActual('@mui/material');
-
-    return {
-        ...actual,
-        useTheme: vi.fn(),
-    };
-});
+vi.mock('@mui/material/styles/useTheme', async () => ({
+    __esModule: true,
+    default: vi.fn(),
+}));
 
 vi.mock('react-router-dom', async () => {
     const mod = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');

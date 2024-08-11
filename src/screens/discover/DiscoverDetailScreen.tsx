@@ -13,7 +13,7 @@ import {
 } from './discoverRequests';
 import { ShowCard } from '../../components';
 import { useProfileContext } from '../../hooks';
-import { Typography } from '@mui/material';
+import Typ from '@mui/material/Typography';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -93,7 +93,7 @@ const DiscoverDetailScreen: React.FC = () => {
             className='flex flex-col items-center w-full m-6'
             data-testid={`discover-details-${path}-screen`}
         >
-            <Typography variant='h4'>{title}</Typography>
+            <Typ variant='h4'>{title}</Typ>
             <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}>
                 {data?.map((item, i) => (
                     <ShowCard key={i} details={item} profile={profile} setProfile={setProfile} />

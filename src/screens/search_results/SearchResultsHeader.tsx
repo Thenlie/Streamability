@@ -1,6 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { ViewModule, ViewList, FilterAltOff, Tv, Movie } from '@mui/icons-material';
-import { ToggleButtonGroup, ToggleButton, SvgIcon, Typography as Typ } from '@mui/material';
+import ViewModule from '@mui/icons-material/ViewModule';
+import ViewList from '@mui/icons-material/ViewList';
+import FilterAltOff from '@mui/icons-material/FilterAltOff';
+import Tv from '@mui/icons-material/Tv';
+import Movie from '@mui/icons-material/Movie';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import SvgIcon from '@mui/material/SvgIcon';
+import Typ from '@mui/material/Typography';
 import { useWindowSize } from '../../hooks';
 import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
 import Logger from '../../logger';

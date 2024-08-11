@@ -7,18 +7,14 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { ThemeProvider } from '@emotion/react';
 import { lightTheme } from '../../theme';
-import { useTheme } from '@mui/material';
+import useTheme from '@mui/material/styles/useTheme';
 
 const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 
-vi.mock('@mui/material', async () => {
-    const actual = await vi.importActual('@mui/material');
-
-    return {
-        ...actual,
-        useTheme: vi.fn(),
-    };
-});
+vi.mock('@mui/material/styles/useTheme', async () => ({
+    __esModule: true,
+    default: vi.fn(),
+}));
 
 describe('Show Poster Component', () => {
     it('properly renders a movie poster', () => {

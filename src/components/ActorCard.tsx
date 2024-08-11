@@ -1,4 +1,5 @@
-import { CardMedia, Typography as Typ } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import { default as Typ } from '@mui/material/Typography';
 import { Actor } from '../types';
 import { Link } from 'react-router-dom';
 

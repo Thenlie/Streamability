@@ -1,4 +1,5 @@
-import { Rating as RatingMUI, Typography as Typ } from '@mui/material';
+import RatingMUI from '@mui/material/Rating';
+import Typ from '@mui/material/Typography';
 import { pluralizeString } from '../helpers';
 import React, { useEffect, useState } from 'react';
 

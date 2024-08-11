@@ -10,18 +10,17 @@ import {
 } from '../helpers';
 import { ShowData } from '../types';
 import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar, ActorCard } from '../components';
-import { Tooltip, Typography as Typ } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import Typ from '@mui/material/Typography';
 import { ShowDetailsLoader } from './loaders';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
-import {
-    AddToQueue,
-    Cancel,
-    CheckCircle,
-    Favorite,
-    HeartBroken,
-    PersonAddAltRounded,
-    RemoveFromQueue,
-} from '@mui/icons-material';
+import AddToQueue from '@mui/icons-material/AddToQueue';
+import Cancel from '@mui/icons-material/Cancel';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import Favorite from '@mui/icons-material/Favorite';
+import HeartBroken from '@mui/icons-material/HeartBroken';
+import PersonAddAltRounded from '@mui/icons-material/PersonAddAltRounded';
+import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
 import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
 
 /**

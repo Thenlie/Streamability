@@ -4,9 +4,9 @@ import { SUPABASE } from './supabase/supabaseClient';
 import type { Session, Profile } from './types';
 import { Navigation, Footer } from './components';
 import { getProfileById } from './supabase/profiles';
-import { ThemeProvider } from '@mui/system';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { darkTheme, lightTheme } from './theme';
-import { Theme } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import Logger from './logger';
 

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '../../components';
-import { Check, CloseSharp } from '@mui/icons-material';
+import Check from '@mui/icons-material/Check';
+import CloseSharp from '@mui/icons-material/CloseSharp';
 
 const meta = {
     title: 'Components/Button',

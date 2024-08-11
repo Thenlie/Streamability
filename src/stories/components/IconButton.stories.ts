@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconButton } from '../../components';
-import { Cancel, CheckCircle } from '@mui/icons-material';
+import Cancel from '@mui/icons-material/Cancel';
+import CheckCircle from '@mui/icons-material/CheckCircle';
 
 const meta = {
     title: 'Components/Icon Button',

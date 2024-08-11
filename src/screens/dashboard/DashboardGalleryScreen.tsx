@@ -8,8 +8,8 @@ import {
 } from '../../hooks';
 import { Button, ShowPoster } from '../../components';
 import { DashboardGalleryLoader } from '../loaders';
-import { Typography as Typ } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import Typ from '@mui/material/Typography';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import DashboardEmptyGallery from './DashboardEmptyGallery';
 
 export async function loader({ request }: { request: Request }): Promise<string> {

@@ -2,11 +2,14 @@ import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles'
 import { Profile, ShowData } from '../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatReleaseDate, DateSize } from '../helpers';
-import { CardActions, CardMedia, Typography as Typ } from '@mui/material';
+import CardActions from '@mui/material/CardActions';
+import CardMedia from '@mui/material/CardMedia';
+import Typ from '@mui/material/Typography';
 import { useIsInProfileArray } from '../hooks';
 import React from 'react';
 import Button from './Button';
-import { AddToQueue, RemoveFromQueue } from '@mui/icons-material';
+import AddToQueue from '@mui/icons-material/AddToQueue';
+import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
 import Rating from './Rating';
 
 export interface ShowListCardProps {

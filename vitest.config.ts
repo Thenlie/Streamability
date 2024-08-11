@@ -7,5 +7,7 @@ export default defineConfig({
         setupFiles: 'vitest.setup.ts',
         globals: true,
         watch: false,
+        // Add per: https://vitest.dev/guide/common-errors.html#failed-to-terminate-worker
+        pool: 'forks',
     },
 });

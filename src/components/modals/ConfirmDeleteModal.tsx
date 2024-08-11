@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Modal, Typography as Typ } from '@mui/material';
-import { Delete, ArrowBackIosNew, WarningSharp } from '@mui/icons-material';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Typ from '@mui/material/Typography';
+import Delete from '@mui/icons-material/Delete';
+import ArrowBackIosNew from '@mui/icons-material/ArrowBackIosNew';
+import WarningSharp from '@mui/icons-material/WarningSharp';
 import Button from '../Button';
 
 interface ConfirmDeleteModalProps {

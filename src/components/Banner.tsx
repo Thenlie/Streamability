@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ShowData } from '../types';
-import { Typography as Typ } from '@mui/material';
+import { default as Typ } from '@mui/material/Typography';
 import SearchInput from './SearchInput';
 import { BannerLoader } from './loaders';
 
