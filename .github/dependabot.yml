@@ -20,6 +20,12 @@ updates:
       - "maxh1231"
     assignees:
       - "dependabot"
+    groups:
+      storybook:
+        applies-to: version-updates
+        patterns:
+          - "@storybook*"
+          - "storybook*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
