@@ -1,16 +1,16 @@
 import { Profile, ShowData } from '../types';
 import { Link } from 'react-router-dom';
-import { CardMedia, SimplePaletteColorOptions, useTheme } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import type { SimplePaletteColorOptions } from '@mui/material/styles';
+import useTheme from '@mui/material/styles/useTheme';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-    AddToQueue,
-    Cancel,
-    CheckCircle,
-    Favorite,
-    HeartBroken,
-    RemoveFromQueue,
-} from '@mui/icons-material';
-import { ProfileActions } from '../types';
+import AddToQueue from '@mui/icons-material/AddToQueue';
+import Cancel from '@mui/icons-material/Cancel';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import Favorite from '@mui/icons-material/Favorite';
+import HeartBroken from '@mui/icons-material/HeartBroken';
+import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
+import type { ProfileActions } from '../types';
 import { useIsInProfileArray } from '../hooks';
 import IconButton from './IconButton';
 

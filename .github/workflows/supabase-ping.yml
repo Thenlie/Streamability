@@ -1,0 +1,22 @@
+# Make a request to Supabase every day to prevent the project from pausing
+name: Ping Supabase
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run at midnight every day
+  workflow_dispatch:
+
+jobs:
+  fetch-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run fetch request
+        run: |
+          curl -X POST '${{ secrets.SUPABASE_URL }}/auth/v1/token?grant_type=password' \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "email": "${{ secrets.SUPABASE_TEST_EMAIL }}",
+              "password": "${{ secrets.SUPABASE_TEST_PASSWORD }}"
+            }'

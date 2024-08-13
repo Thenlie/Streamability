@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button as ButtonMUI, SvgIconTypeMap, SxProps, Theme } from '@mui/material';
+import ButtonMUI from '@mui/material/Button';
+import { SvgIconTypeMap } from '@mui/material/SvgIcon';
+import type { SxProps } from '@mui/system/styleFunctionSx';
+import type { Theme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 

@@ -6,7 +6,7 @@ const config: StorybookConfig = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-interactions',
-        'storybook-addon-react-router-v6',
+        'storybook-addon-remix-react-router',
         '@storybook/addon-themes',
     ],
     framework: {
@@ -16,5 +16,8 @@ const config: StorybookConfig = {
     docs: {
         autodocs: 'tag',
     },
+    typescript: {
+        reactDocgen: 'react-docgen-typescript'
+    }
 };
 export default config;

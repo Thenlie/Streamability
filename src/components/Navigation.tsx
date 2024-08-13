@@ -2,31 +2,27 @@ import { SUPABASE } from '../supabase/supabaseClient';
 import { Link } from 'react-router-dom';
 import { Session } from '../types';
 import React, { useState, useEffect, MouseEvent } from 'react';
-import {
-    AppBar,
-    Divider,
-    IconButton,
-    ListItemIcon,
-    Menu,
-    MenuItem,
-    Theme,
-    Toolbar,
-    Tooltip,
-    Typography as Typ,
-} from '@mui/material';
-import {
-    AccountCircle,
-    DarkMode,
-    ExpandLess,
-    ExpandMore,
-    Explore,
-    LightMode,
-    Login,
-    Logout,
-    PersonAddAlt,
-    Search,
-    Settings,
-} from '@mui/icons-material';
+import type { Theme } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typ from '@mui/material/Typography';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import DarkMode from '@mui/icons-material/DarkMode';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Explore from '@mui/icons-material/Explore';
+import LightMode from '@mui/icons-material/LightMode';
+import Login from '@mui/icons-material/Login';
+import Logout from '@mui/icons-material/Logout';
+import PersonAddAlt from '@mui/icons-material/PersonAddAlt';
+import Search from '@mui/icons-material/Search';
+import Settings from '@mui/icons-material/Settings';
 import SearchInput from './SearchInput';
 import { lightTheme } from '../theme';
 

@@ -5,7 +5,7 @@ import { useWindowSize, useDebounceValue } from '../hooks';
 import ShowPoster, { SHOW_POSTER_WIDTH } from './ShowPoster';
 import { WindowSize } from '../hooks/useWindowSize';
 import { ShowCarouselLoader } from './loaders';
-import { Typography as Typ } from '@mui/material';
+import Typ from '@mui/material/Typography';
 import { Profile, ProfileActions } from '../types';
 import Button from './Button';
 

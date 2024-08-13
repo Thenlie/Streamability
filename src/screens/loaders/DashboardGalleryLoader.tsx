@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ShowPosterLoader } from '../../components';
-import { Typography as Typ } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import { default as Typ } from '@mui/material/Typography';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 
 interface DashboardGalleryLoaderProps {

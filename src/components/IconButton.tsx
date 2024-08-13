@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-    Fade,
-    SimplePaletteColorOptions,
-    SvgIconTypeMap,
-    SxProps,
-    Theme,
-    Tooltip,
-} from '@mui/material';
+import Fade from '@mui/material/Fade';
+import { SimplePaletteColorOptions } from '@mui/material/styles';
+import { SvgIconTypeMap } from '@mui/material/SvgIcon';
+import type { SxProps } from '@mui/system/styleFunctionSx';
+import type { Theme } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { RotateRight } from '@mui/icons-material';
+import RotateRight from '@mui/icons-material/RotateRight';
 
 interface IconButtonProps {
     /**
