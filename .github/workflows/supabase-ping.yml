@@ -7,14 +7,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  fetch-request:
+  ping:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Run fetch request
+      - uses: actions/checkout@v4
+      - name: Run fetch request (develop)
         run: |
-          curl -X POST '${{ secrets.SUPABASE_URL }}/auth/v1/token?grant_type=password' \
+          curl -X POST \
+            --url '${{ secrets.SUPABASE_URL }}/auth/v1/token?grant_type=password' \
             -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "email": "${{ secrets.SUPABASE_TEST_EMAIL }}",
+              "password": "${{ secrets.SUPABASE_TEST_PASSWORD }}"
+            }'
+      - name: Run fetch request (production)
+        run: |
+          curl -X POST \
+            --url '${{ secrets.SUPABASE_URL_PROD }}/auth/v1/token?grant_type=password' \
+            -H "apikey: ${{ secrets.SUPABASE_KEY_PROD }}" \
             -H "Content-Type: application/json" \
             -d '{
               "email": "${{ secrets.SUPABASE_TEST_EMAIL }}",
