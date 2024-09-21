@@ -30,7 +30,7 @@
     "cli": "npx tsx cli/command.ts run"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.15.20",
