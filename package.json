@@ -74,7 +74,7 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^25.0.1",
-    "leasot": "^13.3.0",
+    "leasot": "^14.4.0",
     "markdownlint-cli": "^0.41.0",
     "patch-package": "^8.0.0",
     "postcss": "^8.4.41",
