@@ -73,7 +73,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-storybook": "^0.8.0",
-    "jsdom": "^24.1.0",
+    "jsdom": "^25.0.1",
     "leasot": "^13.3.0",
     "markdownlint-cli": "^0.41.0",
     "patch-package": "^8.0.0",
