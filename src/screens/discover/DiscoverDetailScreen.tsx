@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { ShowData } from '../../types';
 import {
     actionAdventureHandler,
@@ -14,6 +14,14 @@ import {
 import { ShowCard } from '../../components';
 import { useProfileContext } from '../../hooks';
 import Typ from '@mui/material/Typography';
+import { OfflineSnackbar } from '../../components';
+import SearchResultCards from '../search_results/SearchResultsCards';
+import { SearchResultsLoader } from '../loaders';
+import SearchResultsHeader from '../search_results/SearchResultsHeader';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import Logger from '../../logger';
+import { useLoaderData } from 'react-router-dom';
+import { usePaginatedData } from '../../hooks';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -70,35 +78,96 @@ const requestHandler = async (props: RequestHandlerProps) => {
     }
 };
 
+const LOG = new Logger('SearchResultsScreen');
+
+/**
+ * This loader is mostly built straight from the react-router docs
+ * https://reactrouter.com/en/main/components/form#get-submissions
+ *
+ * @param request | HTTP GET request from the SearchInput component
+ * @returns {Promise<string>} | the users query
+ */
+export async function loader({ request }: { request: Request }): Promise<string> {
+    // get the query parameters from the URL
+    const url = new URL(request.url);
+    const query = url.searchParams.get('q')?.trim();
+    if (!query) {
+        LOG.error('No query found!');
+        throw new Response('Bad Request', { status: 400 });
+    }
+    return query as string;
+}
+
 const DiscoverDetailScreen: React.FC = () => {
+    const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
     const path = window.location.pathname
         .match(/\/\w+$/)
         ?.join()
         .slice(1);
-    const [data, setData] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const storageItem = localStorage.getItem('streamabilityView');
+    const initialView = storageItem === 'grid' ? 'grid' : 'list';
+    const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
+    const [hash, setHash] = useState<number>(1);
+    const {
+        data,
+        setData,
+        loading: dataLoading,
+        moreToFetch,
+        refetch,
+    } = usePaginatedData({ query: query });
 
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
     }, []);
 
-    const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
+    const observer = useRef<IntersectionObserver | null>(null);
+    const loadMoreRef = useCallback(
+        (node: HTMLDivElement) => {
+            if (dataLoading) return;
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && moreToFetch) {
+                    refetch();
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [dataLoading, moreToFetch, refetch]
+    );
 
-    // TODO: Create loader #839
+    const cards = useMemo(() => {
+        return (
+            <SearchResultCards
+                details={data}
+                viewState={viewState}
+                profile={profile}
+                setProfile={setProfile}
+            />
+        );
+    }, [data, hash, viewState, profile]);
+
+    // TODO: Create loader #839r
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div
-            className='flex flex-col items-center w-full m-6'
-            data-testid={`discover-details-${path}-screen`}
-        >
-            <Typ variant='h4'>{title}</Typ>
-            <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}>
-                {data?.map((item, i) => (
-                    <ShowCard key={i} details={item} profile={profile} setProfile={setProfile} />
-                ))}
+        <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
+            <SearchResultsHeader
+                query={query}
+                viewState={viewState}
+                setViewState={setViewState}
+                showDetails={data}
+                setShowDetails={setData}
+                setHash={setHash}
+            />
+            <div>
+                {cards}
+                {moreToFetch && <LoadingIndicator />}{' '}
+                {/* Show the indicator while more data is available */}
+                <div ref={loadMoreRef}></div>
             </div>
+            <OfflineSnackbar />
         </div>
     );
 };
