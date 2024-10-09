@@ -11,29 +11,12 @@ import {
     primeHandler,
     trendingHandler,
 } from './discoverRequests';
-import { ShowCard } from '../../components';
 import { useProfileContext } from '../../hooks';
-import Typ from '@mui/material/Typography';
-import { OfflineSnackbar } from '../../components';
 import SearchResultCards from '../search_results/SearchResultsCards';
-import { SearchResultsLoader } from '../loaders';
-import SearchResultsHeader from '../search_results/SearchResultsHeader';
-import LoadingIndicator from '../../components/LoadingIndicator';
 import Logger from '../../logger';
 import { useLoaderData } from 'react-router-dom';
 import { usePaginatedData } from '../../hooks';
-
-const PATHS = [
-    { path: 'trending', title: 'Trending' },
-    { path: 'best', title: 'Highest Rated' },
-    { path: 'new', title: 'Newly Added' },
-    { path: 'action', title: 'Action & Adventure' },
-    { path: 'comedy', title: 'Comedy' },
-    { path: 'horror', title: 'Horror' },
-    { path: 'netflix', title: 'Popular on Netflix' },
-    { path: 'hulu', title: 'Popular on Hulu' },
-    { path: 'prime', title: 'Popular on Prime' },
-];
+import DetailScreen from '../DetailScreen';
 
 interface RequestHandlerProps {
     path: string;
@@ -152,22 +135,21 @@ const DiscoverDetailScreen: React.FC = () => {
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
-            <SearchResultsHeader
+        <div
+            className='flex flex-col items-center w-full m-6'
+            data-testid={`discover-details-${path}-screen`}
+        >
+            <DetailScreen
                 query={query}
                 viewState={viewState}
                 setViewState={setViewState}
-                showDetails={data}
-                setShowDetails={setData}
+                data={data}
+                setData={setData}
                 setHash={setHash}
+                cards={cards}
+                moreToFetch={moreToFetch}
+                loadMoreRef={loadMoreRef}
             />
-            <div>
-                {cards}
-                {moreToFetch && <LoadingIndicator />}{' '}
-                {/* Show the indicator while more data is available */}
-                <div ref={loadMoreRef}></div>
-            </div>
-            <OfflineSnackbar />
         </div>
     );
 };

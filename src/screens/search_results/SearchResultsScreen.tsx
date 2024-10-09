@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { EmptySearchResults, OfflineSnackbar } from '../../components';
+import { EmptySearchResults } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
-import SearchResultsHeader from './SearchResultsHeader';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import ToggleDetailScreen from '../DetailScreen';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -94,21 +93,17 @@ const SearchResultsScreen: React.FC = () => {
 
     return (
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
-            <SearchResultsHeader
+            <ToggleDetailScreen
                 query={query}
                 viewState={viewState}
                 setViewState={setViewState}
-                showDetails={data}
-                setShowDetails={setData}
+                data={data}
+                setData={setData}
                 setHash={setHash}
+                cards={cards}
+                moreToFetch={moreToFetch}
+                loadMoreRef={loadMoreRef}
             />
-            <div>
-                {cards}
-                {moreToFetch && <LoadingIndicator />}{' '}
-                {/* Show the indicator while more data is available */}
-                <div ref={loadMoreRef}></div>
-            </div>
-            <OfflineSnackbar />
         </div>
     );
 };
