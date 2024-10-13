@@ -44,6 +44,16 @@ interface SearchResultsHeaderProps {
      * All controls are disabled when `true`, defaults to `false`
      */
     disableControls?: boolean;
+
+    /**
+     * Disable the filter options of the filter items, defaults to `false`
+     */
+    disableAlphabeticOrderFilter?: boolean;
+
+    /**
+     * Disable the order filter for the type of results, defaults to `false`
+     */
+    disableResultTypeFilter?: boolean;
 }
 
 interface FilterProps {
@@ -62,6 +72,8 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     setShowDetails,
     setHash,
     disableControls = false,
+    disableAlphabeticOrderFilter = false,
+    disableResultTypeFilter = false
 }) => {
     const [sortState, setSortState] = useState<'alpha' | 'rev' | 'none'>('none');
     const [filterState, setFilterState] = useState<FilterProps>({ showType: 'none' });
@@ -119,38 +131,41 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                 Search results for: <span className='underline'>{query}</span>
             </Typ>
             <div>
-                <ToggleButtonGroup
-                    value={filterState.showType}
-                    exclusive
-                    sx={{ marginRight: 2, marginBottom: 0.5 }}
-                >
-                    <ToggleButton
-                        value='tv'
-                        aria-label='filter by tv shows'
-                        onClick={() => setFilterState({ showType: 'tv' })}
-                        disabled={disableControls}
+                {!disableResultTypeFilter &&
+                    <ToggleButtonGroup
+                        value={filterState.showType}
+                        exclusive
+                        sx={{ marginRight: 2, marginBottom: 0.5 }}
+                        disabled={disableResultTypeFilter}
                     >
-                        <Tv />
-                    </ToggleButton>
-                    <ToggleButton
-                        value='movie'
-                        aria-label='filter by movies'
-                        onClick={() => setFilterState({ showType: 'movie' })}
-                        disabled={disableControls}
-                    >
-                        <Movie />
-                    </ToggleButton>
-                    <ToggleButton
-                        value='none'
-                        aria-label='Remove filter'
-                        onClick={() => setFilterState({ showType: 'none' })}
-                        disabled={disableControls}
-                    >
-                        <FilterAltOff />
-                    </ToggleButton>
-                </ToggleButtonGroup>
+                        <ToggleButton
+                            value='tv'
+                            aria-label='filter by tv shows'
+                            onClick={() => setFilterState({ showType: 'tv' })}
+                            disabled={disableControls}
+                        >
+                            <Tv />
+                        </ToggleButton>
+                        <ToggleButton
+                            value='movie'
+                            aria-label='filter by movies'
+                            onClick={() => setFilterState({ showType: 'movie' })}
+                            disabled={disableControls}
+                        >
+                            <Movie />
+                        </ToggleButton>
+                        <ToggleButton
+                            value='none'
+                            aria-label='Remove filter'
+                            onClick={() => setFilterState({ showType: 'none' })}
+                            disabled={disableControls}
+                        >
+                            <FilterAltOff />
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                }
 
-                <ToggleButtonGroup value={sortState} exclusive sx={{ marginRight: 2 }}>
+                {!disableAlphabeticOrderFilter && <ToggleButtonGroup value={sortState} exclusive sx={{ marginRight: 2 }}>
                     <ToggleButton
                         value='alpha'
                         aria-label='sort results alphabetically'
@@ -202,7 +217,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
                             </svg>
                         </SvgIcon>
                     </ToggleButton>
-                </ToggleButtonGroup>
+                </ToggleButtonGroup>}
                 <ToggleButtonGroup
                     value={viewState}
                     exclusive

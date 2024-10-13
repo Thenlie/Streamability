@@ -94,7 +94,6 @@ const SearchResultsScreen: React.FC = () => {
     return (
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
             <ToggleDetailScreen
-                query={query}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}

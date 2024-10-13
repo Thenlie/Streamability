@@ -63,24 +63,6 @@ const requestHandler = async (props: RequestHandlerProps) => {
 
 const LOG = new Logger('SearchResultsScreen');
 
-/**
- * This loader is mostly built straight from the react-router docs
- * https://reactrouter.com/en/main/components/form#get-submissions
- *
- * @param request | HTTP GET request from the SearchInput component
- * @returns {Promise<string>} | the users query
- */
-export async function loader({ request }: { request: Request }): Promise<string> {
-    // get the query parameters from the URL
-    const url = new URL(request.url);
-    const query = url.searchParams.get('q')?.trim();
-    if (!query) {
-        LOG.error('No query found!');
-        throw new Response('Bad Request', { status: 400 });
-    }
-    return query as string;
-}
-
 const DiscoverDetailScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
     const { profile, setProfile } = useProfileContext();
@@ -140,7 +122,6 @@ const DiscoverDetailScreen: React.FC = () => {
             data-testid={`discover-details-${path}-screen`}
         >
             <DetailScreen
-                query={query}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}
