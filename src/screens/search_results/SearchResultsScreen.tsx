@@ -5,7 +5,7 @@ import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks'
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
-import ToggleDetailScreen from '../DetailScreen';
+import DetailScreen from '../DetailScreen';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -93,7 +93,8 @@ const SearchResultsScreen: React.FC = () => {
 
     return (
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
-            <ToggleDetailScreen
+            <DetailScreen
+                query={query}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}

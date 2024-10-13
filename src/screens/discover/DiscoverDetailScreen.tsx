@@ -119,6 +119,7 @@ const DiscoverDetailScreen: React.FC = () => {
             data-testid={`discover-details-${path}-screen`}
         >
             <DetailScreen
+                query={`trending`}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}
@@ -127,6 +128,8 @@ const DiscoverDetailScreen: React.FC = () => {
                 cards={cards}
                 moreToFetch={moreToFetch}
                 loadMoreRef={loadMoreRef}
+                disableAlphabeticOrderFilter={true}
+                disableResultTypeFilter={true}
             />
         </div>
     );

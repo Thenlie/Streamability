@@ -5,6 +5,7 @@ import { SearchResultsHeader } from './search_results';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 interface Props {
+    query: string;
     viewState: 'grid' | 'list';
     setViewState: React.Dispatch<React.SetStateAction<'grid' | 'list'>>;
     data: ShowData[] | null;
@@ -13,9 +14,13 @@ interface Props {
     cards: JSX.Element;
     moreToFetch: boolean;
     loadMoreRef: (node: HTMLDivElement) => void;
+    disableAlphabeticOrderFilter?: boolean;
+    disableResultTypeFilter?: boolean;
+
 }
 
 const DetailScreen: React.FC<Props> = ({
+    query,
     viewState,
     setViewState,
     data,
@@ -24,18 +29,20 @@ const DetailScreen: React.FC<Props> = ({
     cards,
     moreToFetch,
     loadMoreRef,
+    disableAlphabeticOrderFilter,
+    disableResultTypeFilter
 }) => {
     return (
         <>
             <SearchResultsHeader
-                query={'trending'}
+                query={query}
                 viewState={viewState}
                 setViewState={setViewState}
                 showDetails={data}
                 setShowDetails={setData}
                 setHash={setHash}
-                disableAlphabeticOrderFilter={true}
-                disableResultTypeFilter={true}
+                disableAlphabeticOrderFilter={disableAlphabeticOrderFilter}
+                disableResultTypeFilter={disableResultTypeFilter}
             />
             <div>
                 {cards}
