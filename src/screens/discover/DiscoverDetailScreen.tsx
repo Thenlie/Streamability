@@ -13,7 +13,6 @@ import {
 } from './discoverRequests';
 import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
-import Logger from '../../logger';
 import { useLoaderData } from 'react-router-dom';
 import { usePaginatedData } from '../../hooks';
 import DetailScreen from '../DetailScreen';
@@ -60,8 +59,6 @@ const requestHandler = async (props: RequestHandlerProps) => {
             break;
     }
 };
-
-const LOG = new Logger('SearchResultsScreen');
 
 const DiscoverDetailScreen: React.FC = () => {
     const query: string = useLoaderData() as string;

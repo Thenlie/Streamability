@@ -28,7 +28,7 @@ const DetailScreen: React.FC<Props> = ({
     return (
         <>
             <SearchResultsHeader
-                query={`trending`}
+                query={'trending'}
                 viewState={viewState}
                 setViewState={setViewState}
                 showDetails={data}
