@@ -21,6 +21,10 @@ interface SearchResultsHeaderProps {
      */
     query?: string;
     /**
+     * Local storage key that for view state
+     */
+    viewStateKey: string;
+    /**
      * Current state of users view
      */
     viewState?: 'list' | 'grid';
@@ -67,6 +71,7 @@ interface FilterProps {
  */
 const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     query,
+    viewStateKey,
     viewState,
     setViewState,
     setShowDetails,
@@ -121,7 +126,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
 
     const handleViewToggle = (view: 'grid' | 'list') => {
         setViewState?.(view);
-        localStorage.setItem('streamabilityView', view);
+        localStorage.setItem(viewStateKey, view);
         setHash?.(Math.random());
     };
 

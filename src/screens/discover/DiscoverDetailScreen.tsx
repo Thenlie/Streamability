@@ -74,13 +74,14 @@ const requestHandler = async (props: RequestHandlerProps) => {
 
 const DiscoverDetailScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
+    const viewStateKey: string = 'streamabilityDiscoverDetailView';
     const { profile, setProfile } = useProfileContext();
     const path = window.location.pathname
         .match(/\/\w+$/)
         ?.join()
         .slice(1);
     const [loading, setLoading] = useState<boolean>(true);
-    const storageItem = localStorage.getItem('streamabilityDiscoverDetailView');
+    const storageItem = localStorage.getItem(viewStateKey);
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
@@ -93,7 +94,7 @@ const DiscoverDetailScreen: React.FC = () => {
 
     const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
 
-    if (!storageItem) localStorage.setItem('streamabilityDiscoverDetailView', initialView);
+    if (!storageItem) localStorage.setItem(viewStateKey, initialView);
 
     const cards = useMemo(() => {
         return (
@@ -116,6 +117,7 @@ const DiscoverDetailScreen: React.FC = () => {
         >
             <Typography variant='h4'>{title}</Typography>
             <DetailScreen
+                viewStateKey={viewStateKey}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}

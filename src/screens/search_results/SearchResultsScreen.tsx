@@ -33,9 +33,10 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 const SearchResultsScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
+    const viewStateKey: string = 'streamabilityView';
     const windowSize = useWindowSize();
     const { profile, setProfile } = useProfileContext();
-    const storageItem = localStorage.getItem('streamabilityView');
+    const storageItem = localStorage.getItem(viewStateKey);
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
@@ -62,7 +63,7 @@ const SearchResultsScreen: React.FC = () => {
         [dataLoading, moreToFetch, refetch]
     );
 
-    if (!storageItem) localStorage.setItem('streamabilityView', initialView);
+    if (!storageItem) localStorage.setItem(viewStateKey, initialView);
 
     // default to grid view on mobile
     useEffect(() => {
@@ -95,6 +96,7 @@ const SearchResultsScreen: React.FC = () => {
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
             <DetailScreen
                 query={query}
+                viewStateKey={viewStateKey}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}

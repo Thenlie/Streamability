@@ -6,6 +6,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 
 interface Props {
     query?: string;
+    viewStateKey: string;
     viewState: 'grid' | 'list';
     setViewState: React.Dispatch<React.SetStateAction<'grid' | 'list'>>;
     data: ShowData[] | null;
@@ -21,6 +22,7 @@ interface Props {
 
 const DetailScreen: React.FC<Props> = ({
     query,
+    viewStateKey,
     viewState,
     setViewState,
     data,
@@ -36,6 +38,7 @@ const DetailScreen: React.FC<Props> = ({
         <>
             <SearchResultsHeader
                 query={query}
+                viewStateKey={viewStateKey}
                 viewState={viewState}
                 setViewState={setViewState}
                 showDetails={data}
