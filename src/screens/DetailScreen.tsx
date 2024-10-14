@@ -17,7 +17,6 @@ interface Props {
     loadMoreRef?: (node: HTMLDivElement) => void;
     disableAlphabeticOrderFilter?: boolean;
     disableResultTypeFilter?: boolean;
-
 }
 
 const DetailScreen: React.FC<Props> = ({
@@ -32,7 +31,7 @@ const DetailScreen: React.FC<Props> = ({
     moreToFetch,
     loadMoreRef,
     disableAlphabeticOrderFilter,
-    disableResultTypeFilter
+    disableResultTypeFilter,
 }) => {
     return (
         <>

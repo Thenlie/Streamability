@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo} from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ShowData } from '../../types';
 import {
     actionAdventureHandler,
@@ -13,7 +13,6 @@ import {
 } from './discoverRequests';
 import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
-import { useLoaderData } from 'react-router-dom';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
 
@@ -73,7 +72,6 @@ const requestHandler = async (props: RequestHandlerProps) => {
 };
 
 const DiscoverDetailScreen: React.FC = () => {
-    const query: string = useLoaderData() as string;
     const viewStateKey: string = 'streamabilityDiscoverDetailView';
     const { profile, setProfile } = useProfileContext();
     const path = window.location.pathname
@@ -90,7 +88,6 @@ const DiscoverDetailScreen: React.FC = () => {
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
     }, []);
-
 
     const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
 
