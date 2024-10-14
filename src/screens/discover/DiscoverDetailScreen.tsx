@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useEffect, useState, useMemo} from 'react';
 import { ShowData } from '../../types';
 import {
     actionAdventureHandler,
@@ -14,8 +14,20 @@ import {
 import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import { useLoaderData } from 'react-router-dom';
-import { usePaginatedData } from '../../hooks';
 import DetailScreen from '../DetailScreen';
+import { Typography } from '@mui/material';
+
+const PATHS = [
+    { path: 'trending', title: 'Trending' },
+    { path: 'best', title: 'Highest Rated' },
+    { path: 'new', title: 'Newly Added' },
+    { path: 'action', title: 'Action & Adventure' },
+    { path: 'comedy', title: 'Comedy' },
+    { path: 'horror', title: 'Horror' },
+    { path: 'netflix', title: 'Popular on Netflix' },
+    { path: 'hulu', title: 'Popular on Hulu' },
+    { path: 'prime', title: 'Popular on Prime' },
+];
 
 interface RequestHandlerProps {
     path: string;
@@ -76,8 +88,10 @@ const DiscoverDetailScreen: React.FC = () => {
 
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
-        console.log(requestHandler);
     }, []);
+
+
+    const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
 
     if (!storageItem) localStorage.setItem('streamabilityDiscoverDetailView', initialView);
 
@@ -100,8 +114,8 @@ const DiscoverDetailScreen: React.FC = () => {
             className='flex flex-col items-center w-full m-6'
             data-testid={`discover-details-${path}-screen`}
         >
+            <Typography variant='h4'>{title}</Typography>
             <DetailScreen
-                query={`trending`}
                 viewState={viewState}
                 setViewState={setViewState}
                 data={data}

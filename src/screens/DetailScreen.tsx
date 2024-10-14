@@ -5,7 +5,7 @@ import { SearchResultsHeader } from './search_results';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 interface Props {
-    query: string;
+    query?: string;
     viewState: 'grid' | 'list';
     setViewState: React.Dispatch<React.SetStateAction<'grid' | 'list'>>;
     data: ShowData[] | null;

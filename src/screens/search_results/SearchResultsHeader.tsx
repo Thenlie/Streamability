@@ -19,7 +19,7 @@ interface SearchResultsHeaderProps {
     /**
      * String the user entered as a search
      */
-    query: string;
+    query?: string;
     /**
      * Current state of users view
      */
@@ -128,7 +128,7 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     return (
         <div className='flex flex-col md:flex-row flex-wrap justify-between align-middle w-full p-3'>
             <Typ variant='h5' alignSelf='center' margin={1}>
-                Search results for: <span className='underline'>{query}</span>
+                {query && <p>Search results for: <span className='underline'>{query}</span></p>}
             </Typ>
             <div>
                 {!disableResultTypeFilter && (
