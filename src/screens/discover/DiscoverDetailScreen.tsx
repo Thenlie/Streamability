@@ -68,7 +68,7 @@ const DiscoverDetailScreen: React.FC = () => {
         ?.join()
         .slice(1);
     const [loading, setLoading] = useState<boolean>(true);
-    const storageItem = localStorage.getItem('streamabilityView');
+    const storageItem = localStorage.getItem('streamabilityDiscoverDetailView');
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
@@ -98,6 +98,8 @@ const DiscoverDetailScreen: React.FC = () => {
         },
         [dataLoading, moreToFetch, refetch]
     );
+
+    if (!storageItem) localStorage.setItem('streamabilityDiscoverDetailView', initialView);
 
     const cards = useMemo(() => {
         return (
