@@ -72,32 +72,12 @@ const DiscoverDetailScreen: React.FC = () => {
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
-    const {
-        data,
-        setData,
-        loading: dataLoading,
-        moreToFetch,
-        refetch,
-    } = usePaginatedData({ query: query });
+    const [data, setData] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
+        console.log(requestHandler);
     }, []);
-
-    const observer = useRef<IntersectionObserver | null>(null);
-    const loadMoreRef = useCallback(
-        (node: HTMLDivElement) => {
-            if (dataLoading) return;
-            if (observer.current) observer.current.disconnect();
-            observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && moreToFetch) {
-                    refetch();
-                }
-            });
-            if (node) observer.current.observe(node);
-        },
-        [dataLoading, moreToFetch, refetch]
-    );
 
     if (!storageItem) localStorage.setItem('streamabilityDiscoverDetailView', initialView);
 
@@ -128,8 +108,6 @@ const DiscoverDetailScreen: React.FC = () => {
                 setData={setData}
                 setHash={setHash}
                 cards={cards}
-                moreToFetch={moreToFetch}
-                loadMoreRef={loadMoreRef}
                 disableAlphabeticOrderFilter={true}
                 disableResultTypeFilter={true}
             />

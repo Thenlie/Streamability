@@ -12,8 +12,8 @@ interface Props {
     setData: React.Dispatch<React.SetStateAction<ShowData[] | null>>;
     setHash: React.Dispatch<React.SetStateAction<number>>;
     cards: JSX.Element;
-    moreToFetch: boolean;
-    loadMoreRef: (node: HTMLDivElement) => void;
+    moreToFetch?: boolean;
+    loadMoreRef?: (node: HTMLDivElement) => void;
     disableAlphabeticOrderFilter?: boolean;
     disableResultTypeFilter?: boolean;
 
