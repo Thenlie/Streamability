@@ -4,7 +4,7 @@ import { ShowCarousel, Button } from '../../components';
 import { useTrendingShows } from '../../hooks';
 import Home from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
-import SearchResultsHeader from './SearchResultsHeader';
+import SearchResultsHeader from '../../components/SortFilterHeader';
 
 interface EmptySearchResultsProps {
     /**
