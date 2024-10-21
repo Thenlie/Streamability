@@ -131,15 +131,13 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     };
 
     return (
-        <div className='flex flex-col md:flex-row flex-wrap justify-between align-middle w-full p-3'>
-            <Typ variant='h5' alignSelf='center' margin={1}>
-                {query && (
-                    <p>
-                        Search results for: <span className='underline'>{query}</span>
-                    </p>
-                )}
-            </Typ>
-            <div>
+        <div className={`flex flex-col md:flex-row flex-wrap ${query ? 'justify-between' : 'justify-end'} align-middle w-full p-3`}>
+            {query && (
+                <Typ variant='h5' alignSelf='center' margin={1}>
+                    Search results for: <span className='underline'>{query}</span>
+                </Typ>
+            )}
+            <div className="">
                 {!disableResultTypeFilter && (
                     <ToggleButtonGroup
                         value={filterState.showType}
