@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShowCardLoader, ShowListCardLoader } from '../../components';
 import { WindowSize } from '../../hooks/useWindowSize';
-import { SearchResultsHeader } from '../search_results';
+import SortFilterHeader from '../../components/SortFilterHeader';
 
 interface SearchResultsLoaderProps {
     /**
@@ -13,6 +13,10 @@ interface SearchResultsLoaderProps {
      */
     viewState: 'list' | 'grid';
     /**
+     * Local storage key that for view state
+     */
+    viewStateKey: string;
+    /**
      * Current size of users window
      */
     windowSize: WindowSize;
@@ -21,11 +25,12 @@ interface SearchResultsLoaderProps {
 const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({
     query,
     viewState,
+    viewStateKey,
     windowSize,
 }) => {
     return (
         <div data-testid='search-results-loader'>
-            <SearchResultsHeader query={query} viewState={viewState} disableControls />
+            <SortFilterHeader query={query} viewState={viewState} viewStateKey={viewStateKey} disableControls />
             <div
                 className={
                     viewState === 'grid'
