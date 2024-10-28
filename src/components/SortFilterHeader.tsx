@@ -8,10 +8,10 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typ from '@mui/material/Typography';
-import { useWindowSize } from '../../hooks';
-import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
-import Logger from '../../logger';
-import { ShowData } from '../../types';
+import { useWindowSize } from '../hooks';
+import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../helpers';
+import Logger from '../logger';
+import { ShowData } from '../types';
 
 const LOG = new Logger('SearchResultsHeader');
 
@@ -69,7 +69,7 @@ interface FilterProps {
  * Heading of the screen showing the search query
  * and containing the view toggle button.
  */
-const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
+const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
     query,
     viewStateKey,
     viewState,
@@ -131,13 +131,15 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     };
 
     return (
-        <div className={`flex flex-col md:flex-row flex-wrap ${query ? 'justify-between' : 'justify-end'} align-middle w-full p-3`}>
+        <div
+            className={`flex flex-col md:flex-row flex-wrap ${query ? 'justify-between' : 'justify-end'} align-middle w-full p-3`}
+        >
             {query && (
                 <Typ variant='h5' alignSelf='center' margin={1}>
                     Search results for: <span className='underline'>{query}</span>
                 </Typ>
             )}
-            <div className="">
+            <div className=''>
                 {!disableResultTypeFilter && (
                     <ToggleButtonGroup
                         value={filterState.showType}
@@ -255,4 +257,4 @@ const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     );
 };
 
-export default SearchResultsHeader;
+export default SortFilterHeader;

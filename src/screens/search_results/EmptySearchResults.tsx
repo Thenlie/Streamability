@@ -4,7 +4,7 @@ import { ShowCarousel, Button } from '../../components';
 import { useTrendingShows } from '../../hooks';
 import Home from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
-import SearchResultsHeader from './SearchResultsHeader';
+import SortFilterHeader from '../../components/SortFilterHeader';
 
 interface EmptySearchResultsProps {
     /**
@@ -24,13 +24,21 @@ interface EmptySearchResultsProps {
 /**
  * Rendered when MDB returns no results for a search.
  */
-const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewState, viewStateKey }) => {
+const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({
+    query,
+    viewState,
+}) => {
     const navigate = useNavigate();
     const { trendingShows, loading } = useTrendingShows();
 
     return (
         <div data-testid='empty-search-results'>
-            <SearchResultsHeader query={query} viewState={viewState} viewStateKey={viewStateKey} disableControls />
+            <SortFilterHeader
+                query={query}
+                viewState={viewState}
+                viewStateKey={'streamabilityView'}
+                disableControls
+            />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
                     <img src='/images/no-search-results.png' className='mb-5 w-64 inline'></img>
