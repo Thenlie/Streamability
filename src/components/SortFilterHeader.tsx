@@ -139,7 +139,7 @@ const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
                     Search results for: <span className='underline'>{query}</span>
                 </Typ>
             )}
-            <div className=''>
+            <div>
                 {!disableResultTypeFilter && (
                     <ToggleButtonGroup
                         value={filterState.showType}
