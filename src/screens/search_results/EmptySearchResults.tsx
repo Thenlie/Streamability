@@ -12,10 +12,6 @@ interface EmptySearchResultsProps {
      */
     query: string;
     /**
-     * Local storage key that for view state
-     */
-    viewStateKey: string;
-    /**
      * Current state of users view
      */
     viewState: 'list' | 'grid';
@@ -24,10 +20,7 @@ interface EmptySearchResultsProps {
 /**
  * Rendered when MDB returns no results for a search.
  */
-const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({
-    query,
-    viewState,
-}) => {
+const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewState }) => {
     const navigate = useNavigate();
     const { trendingShows, loading } = useTrendingShows();
 
