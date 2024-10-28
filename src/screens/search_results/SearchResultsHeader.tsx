@@ -8,10 +8,10 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typ from '@mui/material/Typography';
-import { useWindowSize } from '../hooks';
-import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../helpers';
-import Logger from '../logger';
-import { ShowData } from '../types';
+import { useWindowSize } from '../../hooks';
+import { sortShowsAlphaAsc, sortShowsAlphaDesc, filterShowsByType } from '../../helpers';
+import Logger from '../../logger';
+import { ShowData } from '../../types';
 
 const LOG = new Logger('SearchResultsHeader');
 
@@ -69,7 +69,7 @@ interface FilterProps {
  * Heading of the screen showing the search query
  * and containing the view toggle button.
  */
-const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
+const SearchResultsHeader: React.FC<SearchResultsHeaderProps> = ({
     query,
     viewStateKey,
     viewState,
@@ -255,4 +255,4 @@ const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
     );
 };
 
-export default SortFilterHeader;
+export default SearchResultsHeader;
