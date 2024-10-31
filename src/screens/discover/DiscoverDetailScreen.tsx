@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ShowData } from '../../types';
 import {
     actionAdventureHandler,
@@ -11,9 +11,10 @@ import {
     primeHandler,
     trendingHandler,
 } from './discoverRequests';
-import { ShowCard } from '../../components';
 import { useProfileContext } from '../../hooks';
-import Typ from '@mui/material/Typography';
+import SearchResultCards from '../search_results/SearchResultsCards';
+import DetailScreen from '../DetailScreen';
+import { Typography } from '@mui/material';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -71,13 +72,18 @@ const requestHandler = async (props: RequestHandlerProps) => {
 };
 
 const DiscoverDetailScreen: React.FC = () => {
+    const viewStateKey: string = 'streamabilityDiscoverDetailView';
     const { profile, setProfile } = useProfileContext();
     const path = window.location.pathname
         .match(/\/\w+$/)
         ?.join()
         .slice(1);
-    const [data, setData] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const storageItem = localStorage.getItem(viewStateKey);
+    const initialView = storageItem === 'grid' ? 'grid' : 'list';
+    const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
+    const [hash, setHash] = useState<number>(1);
+    const [data, setData] = useState<ShowData[] | null>(null);
 
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
@@ -85,7 +91,20 @@ const DiscoverDetailScreen: React.FC = () => {
 
     const title = path ? PATHS[PATHS.findIndex((p) => p.path === path)].title : '';
 
-    // TODO: Create loader #839
+    if (!storageItem) localStorage.setItem(viewStateKey, initialView);
+
+    const cards = useMemo(() => {
+        return (
+            <SearchResultCards
+                details={data}
+                viewState={viewState}
+                profile={profile}
+                setProfile={setProfile}
+            />
+        );
+    }, [data, hash, viewState, profile]);
+
+    // TODO: Create loader #839r
     if (loading) return <p>Loading...</p>;
 
     return (
@@ -93,12 +112,18 @@ const DiscoverDetailScreen: React.FC = () => {
             className='flex flex-col items-center w-full m-6'
             data-testid={`discover-details-${path}-screen`}
         >
-            <Typ variant='h4'>{title}</Typ>
-            <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}>
-                {data?.map((item, i) => (
-                    <ShowCard key={i} details={item} profile={profile} setProfile={setProfile} />
-                ))}
-            </div>
+            <Typography variant='h4'>{title}</Typography>
+            <DetailScreen
+                viewStateKey={viewStateKey}
+                viewState={viewState}
+                setViewState={setViewState}
+                data={data}
+                setData={setData}
+                setHash={setHash}
+                cards={cards}
+                disableAlphabeticOrderFilter={true}
+                disableResultTypeFilter={true}
+            />
         </div>
     );
 };

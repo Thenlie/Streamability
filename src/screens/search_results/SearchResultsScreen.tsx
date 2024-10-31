@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { EmptySearchResults, OfflineSnackbar } from '../../components';
+import { EmptySearchResults } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
-import SearchResultsHeader from './SearchResultsHeader';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import DetailScreen from '../DetailScreen';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -34,9 +33,10 @@ export async function loader({ request }: { request: Request }): Promise<string>
  */
 const SearchResultsScreen: React.FC = () => {
     const query: string = useLoaderData() as string;
+    const viewStateKey: string = 'streamabilityView';
     const windowSize = useWindowSize();
     const { profile, setProfile } = useProfileContext();
-    const storageItem = localStorage.getItem('streamabilityView');
+    const storageItem = localStorage.getItem(viewStateKey);
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
@@ -63,7 +63,7 @@ const SearchResultsScreen: React.FC = () => {
         [dataLoading, moreToFetch, refetch]
     );
 
-    if (!storageItem) localStorage.setItem('streamabilityView', initialView);
+    if (!storageItem) localStorage.setItem(viewStateKey, initialView);
 
     // default to grid view on mobile
     useEffect(() => {
@@ -94,21 +94,18 @@ const SearchResultsScreen: React.FC = () => {
 
     return (
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
-            <SearchResultsHeader
+            <DetailScreen
                 query={query}
+                viewStateKey={viewStateKey}
                 viewState={viewState}
                 setViewState={setViewState}
-                showDetails={data}
-                setShowDetails={setData}
+                data={data}
+                setData={setData}
                 setHash={setHash}
+                cards={cards}
+                moreToFetch={moreToFetch}
+                loadMoreRef={loadMoreRef}
             />
-            <div>
-                {cards}
-                {moreToFetch && <LoadingIndicator />}{' '}
-                {/* Show the indicator while more data is available */}
-                <div ref={loadMoreRef}></div>
-            </div>
-            <OfflineSnackbar />
         </div>
     );
 };
