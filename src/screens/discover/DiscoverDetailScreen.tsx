@@ -15,6 +15,7 @@ import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
+import DiscoverDetailsLoader from '../loaders/DiscoverDetailsLoader';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -105,7 +106,9 @@ const DiscoverDetailScreen: React.FC = () => {
     }, [data, hash, viewState, profile]);
 
     // TODO: Create loader #839r
-    if (loading) return <p>Loading...</p>;
+    // if (loading) return (
+    //     <DiscoverDetailsLoader path={title} viewState={viewState} />
+    // );
 
     return (
         <div
@@ -113,17 +116,21 @@ const DiscoverDetailScreen: React.FC = () => {
             data-testid={`discover-details-${path}-screen`}
         >
             <Typography variant='h4'>{title}</Typography>
-            <DetailScreen
-                viewStateKey={viewStateKey}
-                viewState={viewState}
-                setViewState={setViewState}
-                data={data}
-                setData={setData}
-                setHash={setHash}
-                cards={cards}
-                disableAlphabeticOrderFilter={true}
-                disableResultTypeFilter={true}
-            />
+            {
+                loading
+                    ? <DiscoverDetailsLoader path={title} viewState={viewState} />
+                    : <DetailScreen
+                        viewStateKey={viewStateKey}
+                        viewState={viewState}
+                        setViewState={setViewState}
+                        data={data}
+                        setData={setData}
+                        setHash={setHash}
+                        cards={cards}
+                        disableAlphabeticOrderFilter={true}
+                        disableResultTypeFilter={true}
+                    />
+            }
         </div>
     );
 };
