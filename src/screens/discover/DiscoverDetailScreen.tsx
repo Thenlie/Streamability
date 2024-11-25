@@ -15,7 +15,7 @@ import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
-import DiscoverDetailsLoader from '../loaders/DiscoverDetailsLoader';
+import CardLoader from '../loaders/CardLoader';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -105,32 +105,27 @@ const DiscoverDetailScreen: React.FC = () => {
         );
     }, [data, hash, viewState, profile]);
 
-    // TODO: Create loader #839r
-    // if (loading) return (
-    //     <DiscoverDetailsLoader path={title} viewState={viewState} />
-    // );
-
     return (
         <div
             className='flex flex-col items-center w-full m-6'
             data-testid={`discover-details-${path}-screen`}
         >
             <Typography variant='h4'>{title}</Typography>
-            {
-                loading
-                    ? <DiscoverDetailsLoader path={title} viewState={viewState} />
-                    : <DetailScreen
-                        viewStateKey={viewStateKey}
-                        viewState={viewState}
-                        setViewState={setViewState}
-                        data={data}
-                        setData={setData}
-                        setHash={setHash}
-                        cards={cards}
-                        disableAlphabeticOrderFilter={true}
-                        disableResultTypeFilter={true}
-                    />
-            }
+            {loading ? (
+                <CardLoader query={title} viewState={viewState} />
+            ) : (
+                <DetailScreen
+                    viewStateKey={viewStateKey}
+                    viewState={viewState}
+                    setViewState={setViewState}
+                    data={data}
+                    setData={setData}
+                    setHash={setHash}
+                    cards={cards}
+                    disableAlphabeticOrderFilter={true}
+                    disableResultTypeFilter={true}
+                />
+            )}
         </div>
     );
 };

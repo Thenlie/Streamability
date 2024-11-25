@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShowCardLoader, ShowListCardLoader } from '../../components';
 import { WindowSize } from '../../hooks/useWindowSize';
 import SortFilterHeader from '../../components/SortFilterHeader';
+import CardLoader from './CardLoader';
 
 interface SearchResultsLoaderProps {
     /**
@@ -19,11 +19,7 @@ interface SearchResultsLoaderProps {
     windowSize: WindowSize;
 }
 
-const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({
-    query,
-    viewState,
-    windowSize,
-}) => {
+const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({ query, viewState }) => {
     return (
         <div data-testid='search-results-loader'>
             <SortFilterHeader
@@ -32,19 +28,7 @@ const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({
                 viewStateKey={'streamabilityView'}
                 disableControls
             />
-            <div
-                className={
-                    viewState === 'grid'
-                        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-                        : 'flex flex-wrap justify-center'
-                }
-            >
-                {(windowSize.width && windowSize.width < 750) || viewState === 'grid' ? (
-                    <ShowCardLoader count={10} />
-                ) : (
-                    <ShowListCardLoader count={10} />
-                )}
-            </div>
+            <CardLoader query={query} viewState={viewState} />
         </div>
     );
 };
