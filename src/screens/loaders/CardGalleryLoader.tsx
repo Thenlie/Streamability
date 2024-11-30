@@ -3,7 +3,6 @@ import { ShowCardLoader, ShowListCardLoader } from '../../components';
 import useWindowSize from '../../hooks/useWindowSize';
 
 interface CardGalleryLoaderProps {
-    query?: string | null;
     /**
      * Current state of users view
      */

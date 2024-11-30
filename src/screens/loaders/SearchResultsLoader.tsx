@@ -28,7 +28,7 @@ const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({ query, viewSt
                 viewStateKey={'streamabilityView'}
                 disableControls
             />
-            <CardGalleryLoader query={query} viewState={viewState} />
+            <CardGalleryLoader viewState={viewState} />
         </div>
     );
 };

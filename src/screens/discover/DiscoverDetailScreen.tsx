@@ -112,7 +112,7 @@ const DiscoverDetailScreen: React.FC = () => {
         >
             <Typography variant='h4'>{title}</Typography>
             {loading ? (
-                <CardGalleryLoader query={title} viewState={viewState} />
+                <CardGalleryLoader viewState={viewState} />
             ) : (
                 <DetailScreen
                     viewStateKey={viewStateKey}
