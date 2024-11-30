@@ -16,6 +16,7 @@ import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
 import CardGalleryLoader from '../loaders/CardGalleryLoader';
+import { SearchResultsHeader } from '../search_results';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -112,7 +113,19 @@ const DiscoverDetailScreen: React.FC = () => {
         >
             <Typography variant='h4'>{title}</Typography>
             {loading ? (
-                <CardGalleryLoader viewState={viewState} />
+                <>
+                    <SearchResultsHeader
+                        viewStateKey={viewStateKey}
+                        viewState={viewState}
+                        setViewState={setViewState}
+                        showDetails={data}
+                        setShowDetails={setData}
+                        setHash={setHash}
+                        disableAlphabeticOrderFilter={true}
+                        disableResultTypeFilter={true}
+                    />
+                    <CardGalleryLoader viewState={viewState} />
+                </>
             ) : (
                 <DetailScreen
                     viewStateKey={viewStateKey}

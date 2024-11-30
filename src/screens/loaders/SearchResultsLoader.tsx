@@ -21,15 +21,17 @@ interface SearchResultsLoaderProps {
 
 const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({ query, viewState }) => {
     return (
-        <div data-testid='search-results-loader'>
+        <>
             <SortFilterHeader
                 query={query}
                 viewState={viewState}
                 viewStateKey={'streamabilityView'}
                 disableControls
             />
-            <CardGalleryLoader viewState={viewState} />
-        </div>
+            <div data-testid='search-results-loader'>
+                <CardGalleryLoader viewState={viewState} />
+            </div>
+        </>
     );
 };
 
