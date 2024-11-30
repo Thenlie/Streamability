@@ -2,7 +2,7 @@ import React from 'react';
 import { ShowCardLoader, ShowListCardLoader } from '../../components';
 import useWindowSize from '../../hooks/useWindowSize';
 
-interface CardLoaderProps {
+interface CardGalleryLoaderProps {
     query?: string | null;
     /**
      * Current state of users view
@@ -10,7 +10,7 @@ interface CardLoaderProps {
     viewState: 'list' | 'grid';
 }
 
-const CardLoader: React.FC<CardLoaderProps> = ({ viewState = 'list' }) => {
+const CardGalleryLoader: React.FC<CardGalleryLoaderProps> = ({ viewState = 'list' }) => {
     const windowSize = useWindowSize();
     return (
         <div
@@ -29,4 +29,4 @@ const CardLoader: React.FC<CardLoaderProps> = ({ viewState = 'list' }) => {
     );
 };
 
-export default CardLoader;
+export default CardGalleryLoader;

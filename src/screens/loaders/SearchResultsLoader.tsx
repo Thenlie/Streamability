@@ -1,7 +1,7 @@
 import React from 'react';
 import { WindowSize } from '../../hooks/useWindowSize';
 import SortFilterHeader from '../../components/SortFilterHeader';
-import CardLoader from './CardLoader';
+import CardGalleryLoader from './CardGalleryLoader';
 
 interface SearchResultsLoaderProps {
     /**
@@ -28,7 +28,7 @@ const SearchResultsLoader: React.FC<SearchResultsLoaderProps> = ({ query, viewSt
                 viewStateKey={'streamabilityView'}
                 disableControls
             />
-            <CardLoader query={query} viewState={viewState} />
+            <CardGalleryLoader query={query} viewState={viewState} />
         </div>
     );
 };

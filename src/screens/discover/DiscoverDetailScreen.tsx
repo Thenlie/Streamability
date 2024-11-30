@@ -15,7 +15,7 @@ import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
-import CardLoader from '../loaders/CardLoader';
+import CardGalleryLoader from '../loaders/CardGalleryLoader';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -112,7 +112,7 @@ const DiscoverDetailScreen: React.FC = () => {
         >
             <Typography variant='h4'>{title}</Typography>
             {loading ? (
-                <CardLoader query={title} viewState={viewState} />
+                <CardGalleryLoader query={title} viewState={viewState} />
             ) : (
                 <DetailScreen
                     viewStateKey={viewStateKey}
