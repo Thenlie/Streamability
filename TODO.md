@@ -12,5 +12,5 @@
 | [src/__tests__/screens/DiscoverScreen.test.tsx](src/__tests__/screens/DiscoverScreen.test.tsx#L29) | 29 | #851 Create global sections variable |
 | [src/screens/auth/LoginScreen.tsx](src/screens/auth/LoginScreen.tsx#L89) | 89 | We could try to get the AuthApiError type and use 'cause' instead |
 | [src/screens/dashboard/DashboardGalleryScreen.tsx](src/screens/dashboard/DashboardGalleryScreen.tsx#L38) | 38 | If profile does not return after a few seconds, |
-| [src/screens/discover/DiscoverDetailScreen.tsx](src/screens/discover/DiscoverDetailScreen.tsx#L40) | 40 | paginate data #838 |
+| [src/screens/discover/DiscoverDetailScreen.tsx](src/screens/discover/DiscoverDetailScreen.tsx#L41) | 41 | paginate data #838 |
 | [src/screens/discover/discoverRequests.ts](src/screens/discover/discoverRequests.ts#L54) | 54 | #613 Dynamic date range |
