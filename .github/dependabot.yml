@@ -26,6 +26,10 @@ updates:
         patterns:
           - "@storybook*"
           - "storybook*"
+      types:
+        applies-to: version-updates
+        patterns:
+          - "@types/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
