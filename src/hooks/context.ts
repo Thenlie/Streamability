@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router';
 import type { Profile, Session } from '../types';
 
 // Supabase info about the currently logged in Profile

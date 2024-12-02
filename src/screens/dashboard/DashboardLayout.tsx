@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { useProfileContext, useSessionContext } from '../../hooks';
 import React from 'react';
 import { OfflineSnackbar } from '../../components';

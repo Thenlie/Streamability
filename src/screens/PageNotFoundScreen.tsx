@@ -1,5 +1,4 @@
-import { ErrorResponse } from '@remix-run/router';
-import { useNavigate, useRouteError } from 'react-router-dom';
+import { useNavigate, useRouteError, type ErrorResponse } from 'react-router';
 import { Button, Footer, Navigation, OfflineSnackbar } from '../components';
 import Logger from '../logger';
 import React, { useState } from 'react';

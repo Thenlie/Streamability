@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import ActorCard from '../../components/ActorCard';
 import { ACTOR } from '../constants';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { vi } from 'vitest';
 

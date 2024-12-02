@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
 import { useSessionContext } from '../../hooks';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Typ from '@mui/material/Typography';

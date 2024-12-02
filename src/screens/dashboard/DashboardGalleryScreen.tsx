@@ -1,4 +1,4 @@
-import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
+import { Navigate, useLoaderData, useNavigate } from 'react-router';
 import { ProfileArrayCols } from '../../types';
 import {
     useGetProfileArray,

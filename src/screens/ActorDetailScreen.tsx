@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Location, useLocation } from 'react-router-dom';
+import { Location, useLocation } from 'react-router';
 import { ActorDetail } from '../types';
 import { convertDataToShowType, getActorDetails } from '../helpers';
 import Collapse from '@mui/material/Collapse';

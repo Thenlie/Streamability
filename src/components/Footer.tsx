@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Typ from '@mui/material/Typography';
 import { useWindowSize } from '../hooks';
 
