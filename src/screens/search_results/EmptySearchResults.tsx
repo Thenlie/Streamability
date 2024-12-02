@@ -3,7 +3,7 @@ import { default as Typ } from '@mui/material/Typography';
 import { ShowCarousel, Button } from '../../components';
 import { useTrendingShows } from '../../hooks';
 import Home from '@mui/icons-material/Home';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import SortFilterHeader from '../../components/SortFilterHeader';
 
 interface EmptySearchResultsProps {

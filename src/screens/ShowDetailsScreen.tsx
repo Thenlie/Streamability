@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Location, useLocation } from 'react-router-dom';
+import { Link, Location, useLocation } from 'react-router';
 import {
     getMovieDetails,
     getMovieRecommendations,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router';
 import { EmptySearchResults } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';

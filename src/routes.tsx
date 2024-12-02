@@ -16,7 +16,7 @@ import {
 } from './screens';
 import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
-import { RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router';
 
 /**
  * Create the 'root' route and serve the entire app to it.

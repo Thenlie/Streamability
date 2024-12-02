@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { useTrendingShows } from '../../hooks';
 import { TRENDING_DATA } from '../constants';

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { describe, vi } from 'vitest';
 import { ShowListCard } from '../../components';
 import { MOVIE_DETAIL, PROFILE } from '../constants';
@@ -10,8 +10,8 @@ const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 const mockedUseNavigate = vi.fn();
 const mockSetProfile = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-    const mod = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+vi.mock('react-router', async () => {
+    const mod = await vi.importActual<typeof import('react-router')>('react-router');
     return {
         ...mod,
         useNavigate: () => mockedUseNavigate,

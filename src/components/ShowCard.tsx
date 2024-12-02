@@ -4,7 +4,7 @@ import Typ from '@mui/material/Typography';
 import { useProfileActions } from '../hooks';
 import React from 'react';
 import ShowPoster from './ShowPoster';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export const SHOW_CARD_WIDTH = 360;
 

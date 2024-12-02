@@ -3,7 +3,7 @@ import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
 import { COUNTRIES, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';

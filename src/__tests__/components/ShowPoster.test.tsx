@@ -3,7 +3,7 @@ import { describe, it, vi } from 'vitest';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import ShowPoster from '../../components/ShowPoster';
 import { MOVIE_DETAIL, PROFILE, PROFILE_ACTIONS, TV_DETAIL } from '../constants';
-import { MemoryRouter, Router } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { ThemeProvider } from '@emotion/react';
 import { lightTheme } from '../../theme';

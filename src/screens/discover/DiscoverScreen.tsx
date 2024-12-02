@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTrendingShows } from '../../hooks';
 import { ShowCarousel, Banner, OfflineSnackbar } from '../../components';
 import { ShowData } from '../../types/tmdb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
     actionAdventureHandler,
     comedyHandler,

@@ -1,5 +1,5 @@
 import { SUPABASE } from '../supabase/supabaseClient';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Session } from '../types';
 import React, { useState, useEffect, MouseEvent } from 'react';
 import type { Theme } from '@mui/material';
