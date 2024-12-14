@@ -32,7 +32,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^5.16.7",
+    "@mui/icons-material": "^5.16.11",
     "@mui/material": "^5.16.9",
     "@remix-run/web-fetch": "^4.4.2",
     "@supabase/supabase-js": "^2.46.1",
