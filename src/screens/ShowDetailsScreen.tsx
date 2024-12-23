@@ -201,7 +201,7 @@ const ShowDetailsScreen: React.FC = () => {
                     <ProfileButtonSection showId={showId} showType={showType} />
                 </div>
             </section>
-            {details.credits && (
+            {details.credits && details.credits.cast.length > 0 && (
                 <section className='w-full px-6 md:px-12'>
                     <Typ variant='h5'>Cast</Typ>
                     <div className='flex flex-nowrap overflow-x-auto w-full'>
