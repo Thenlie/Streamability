@@ -103,7 +103,7 @@ const SignUpScreen: React.FC = () => {
         }
 
         // Ensure email is valid
-        if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
+        if (!email.match(/^([\w.+-]+)@([\w-]+\.)+([\w]{2,})$/gm)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
             setLoading(false);
