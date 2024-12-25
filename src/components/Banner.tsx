@@ -70,6 +70,7 @@ const Banner: React.FC<BannerProps> = ({
                 <img
                     src='/images/logo-transparent.png'
                     className={`w-60 mx-auto ${bannerPath && 'md:mx-0'}`}
+                    alt='Streamability Logo'
                 />
             )}
             <Typ variant='h4' className='hidden md:block px-2 text-left text-white'>

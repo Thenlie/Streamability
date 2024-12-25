@@ -49,6 +49,11 @@ const ActorDetailScreen: React.FC = () => {
                                 ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
                                 : '/poster-placeholder.jpeg'
                         }
+                        alt={
+                            details.profile_path
+                                ? `${details.name} profile`
+                                : 'Actor Image Placeholder'
+                        }
                     />
                 </div>
                 <div className='m-3 max-w-xl'>

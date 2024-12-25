@@ -90,7 +90,11 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
         <AppBar position='static'>
             <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-foreground px-8 py-3 flex-wrap'>
                 <Link to='/' className='!text-text flex items-center'>
-                    <img src='/images/logo-transparent.png' className='w-16 inline'></img>
+                    <img
+                        src='/images/logo-transparent.png'
+                        className='w-16 inline'
+                        alt='Streamability Logo'
+                    ></img>
                     <Typ
                         variant='h5'
                         sx={{
