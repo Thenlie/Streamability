@@ -21,4 +21,6 @@ const validateCountry = (country: string): boolean => {
     return !!COUNTRIES.find((c) => c.country === country);
 };
 
-export { validateCountryCode, validateCountry };
+const emailRegex = /^([\w.+-]+)@([\w-]+\.)+([\w]{2,})$/gm;
+
+export { validateCountryCode, validateCountry, emailRegex };
