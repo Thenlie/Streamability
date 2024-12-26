@@ -157,8 +157,6 @@ const DiscoverDetailScreen: React.FC = () => {
                     count={getPaginationCount()}
                     onChange={(event, page) => {
                         setPaginationNumber(page);
-                        // eslint-disable-next-line no-console
-                        console.log('page', page);
                     }}
                 />
             </div>
