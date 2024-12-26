@@ -7,7 +7,7 @@ import useTrendingShows from './useTrendingShows';
 import useGetProfileArray from './useGetProfileArray';
 import useNetworkStatus from './useNetworkStatus';
 import usePaginatedData from './usePaginatedData';
-import useInTheatresShows from './useInTheatresShows';
+import useInTheatersShows from './useInTheatersShows';
 
 export {
     useProfileContext,
@@ -20,5 +20,5 @@ export {
     useGetProfileArray,
     useNetworkStatus,
     usePaginatedData,
-    useInTheatresShows,
+    useInTheatersShows,
 };

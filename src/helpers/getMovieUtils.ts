@@ -83,7 +83,11 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
     if (!data.results) return null;
     return convertResultsToShowType(data);
 };
-const getMovieInTheatres = async (): Promise<ShowData[] | null> => {
+
+/**
+ * Returns a list of movies currently playing in theaters
+ */
+const getMovieInTheaters = async (): Promise<ShowData[] | null> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
     );
@@ -186,5 +190,5 @@ export {
     getMovieRecommendations,
     getDiscoverMovies,
     getMovieRating,
-    getMovieInTheatres,
+    getMovieInTheaters,
 };

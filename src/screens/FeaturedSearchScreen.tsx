@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShowCarousel, Banner, OfflineSnackbar } from '../components';
-import { useTrendingShows, useInTheatresShows } from '../hooks';
+import { useTrendingShows, useInTheatersShows } from '../hooks';
 
 /**
  * The landing page of the application which shows a show banner,
@@ -8,7 +8,7 @@ import { useTrendingShows, useInTheatresShows } from '../hooks';
  */
 const FeaturedSearchScreen: React.FC = () => {
     const { trendingShows, loading } = useTrendingShows('release');
-    const { inTheatresShows } = useInTheatresShows();
+    const { inTheatersShows } = useInTheatersShows();
 
     return (
         <div className='flex-1 flex flex-col w-full' data-testid='featured-search-screen'>
@@ -28,9 +28,9 @@ const FeaturedSearchScreen: React.FC = () => {
             </div>
             <div className='my-12 mx-auto'>
                 <ShowCarousel
-                    data={inTheatresShows}
+                    data={inTheatersShows}
                     dataLoading={loading}
-                    headerProps={{ title: 'In theatres' }}
+                    headerProps={{ title: 'In theaters' }}
                 />
             </div>
             <OfflineSnackbar />

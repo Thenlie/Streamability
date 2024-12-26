@@ -222,7 +222,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             className={`m-1 flex w-[180px] rounded-sm ${containerStyleOverride}`}
         >
             <ShowPosterButtons visible={hover} details={details} {...rest} />
-            <Link to={`/details/${details.media_type || 'movie'}/${details.id}`} state={details}>
+            <Link to={`/details/${details.media_type}/${details.id}`} state={details}>
                 <CardMedia
                     component='img'
                     className={`w-full cursor-pointer rounded-sm ${imageStyleOverride}`}

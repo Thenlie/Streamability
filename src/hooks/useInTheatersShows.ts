@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { getMovieInTheatres } from '../helpers';
+import { getMovieInTheaters } from '../helpers';
 import { ShowData } from '../types';
 
 /**
- * Custom hook that returns a list of in Theatres shows
+ * Custom hook that returns a list of in Theaters shows
  * @param sortBy | Method to sort the shows, defaults to `rating`
  */
-const useInTheatresShows = () => {
-    const [inTheatres, setinTheatres] = useState<ShowData[] | null>(null);
+const useInTheatersShows = () => {
+    const [inTheaters, setinTheaters] = useState<ShowData[] | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
         const handler = async () => {
-            const movies = await getMovieInTheatres();
+            const movies = await getMovieInTheaters();
             const shows: ShowData[] = [];
 
             if (!movies) {
@@ -23,13 +23,13 @@ const useInTheatresShows = () => {
 
             if (movies) shows.push(...movies);
 
-            setinTheatres(shows);
+            setinTheaters(shows);
             setLoading(false);
         };
         handler();
     }, []);
 
-    return { inTheatresShows: inTheatres, loading };
+    return { inTheatersShows: inTheaters, loading };
 };
 
-export default useInTheatresShows;
+export default useInTheatersShows;
