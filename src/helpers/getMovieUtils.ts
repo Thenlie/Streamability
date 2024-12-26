@@ -83,7 +83,17 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
     if (!data.results) return null;
     return convertResultsToShowType(data);
 };
-
+const getMovieInTheatres = async (): Promise<ShowData[] | null> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
+    );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
+    const data = await response.json();
+    if (!data.results) return null;
+    return data.results;
+};
 /**
  * Returns recommended movies based off of a given movie
  * @param id | MovieDB id of movie being searched for
@@ -176,4 +186,5 @@ export {
     getMovieRecommendations,
     getDiscoverMovies,
     getMovieRating,
+    getMovieInTheatres,
 };
