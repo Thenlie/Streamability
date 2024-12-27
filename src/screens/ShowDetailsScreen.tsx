@@ -202,11 +202,21 @@ const ShowDetailsScreen: React.FC = () => {
                 </div>
             </section>
             {details.credits && details.credits.cast.length > 0 && (
-                <section className='w-full px-6 md:px-12'>
+                <section className='max-w-full px-6 md:px-12 mx-auto'>
                     <Typ variant='h5'>Cast</Typ>
                     <div className='flex flex-nowrap overflow-x-auto w-full'>
                         {details.credits.cast.map((actor, i) => {
                             return <ActorCard key={i} details={actor} />;
+                        })}
+                    </div>
+                </section>
+            )}
+            {details.credits && details.credits.crew.length > 0 && (
+                <section className='max-w-full px-6 md:px-12 mt-3 mx-auto'>
+                    <Typ variant='h5'>Crew</Typ>
+                    <div className='flex flex-nowrap overflow-x-auto w-full'>
+                        {details.credits.crew.map((actor, i) => {
+                            return <ActorCard key={i} details={actor} isCrew={true} />;
                         })}
                     </div>
                 </section>
