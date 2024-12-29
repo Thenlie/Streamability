@@ -8,7 +8,11 @@ import {
     MovieData,
 } from '../types';
 import { MOVIE_RATINGS } from './constants';
-import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
+import {
+    convertDetailsToShowType,
+    convertResultsForIntheaters,
+    convertResultsToShowType,
+} from './showTypeUtils';
 
 const LOG = new Logger('getMovieUtils');
 
@@ -94,9 +98,10 @@ const getMovieInTheaters = async (): Promise<ShowData[] | null> => {
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
     }
-    const data = await response.json();
+    const data = (await response.json()) as MovieResults;
     if (!data.results) return null;
-    return data.results;
+
+    return convertResultsForIntheaters(data);
 };
 /**
  * Returns recommended movies based off of a given movie
