@@ -30,7 +30,7 @@ const FeaturedSearchScreen: React.FC = () => {
                 <ShowCarousel
                     data={inTheatersShows}
                     dataLoading={loading}
-                    headerProps={{ title: 'In theaters' }}
+                    headerProps={{ title: 'In Theaters' }}
                 />
             </div>
             <OfflineSnackbar />
