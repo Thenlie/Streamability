@@ -4,7 +4,6 @@ import { ShowData } from '../types';
 
 /**
  * Custom hook that returns a list of in Theaters shows
- * @param sortBy | Method to sort the shows, defaults to `rating`
  */
 const useInTheatersShows = () => {
     const [inTheaters, setinTheaters] = useState<ShowData[] | null>(null);
