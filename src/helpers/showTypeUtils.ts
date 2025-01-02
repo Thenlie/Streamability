@@ -37,20 +37,45 @@ const convertResultsToShowType = (
             release_date:
                 show.media_type === 'movie'
                     ? (show as MovieData).release_date
-                    : (show as TvData).first_air_date
+                    : (show as TvData).first_air_date,
         };
     });
 
     return filterShowsByType(showData, 'both');
 };
 
+const convertResultsForIntheaters = (
+    data: MovieResults | TvResults | ShowResults
+): ShowData[] | null => {
+    if (!data || !data.results) return null;
+
+    const showData = data.results.map((show) => {
+        return {
+            id: show.id,
+            poster_path: show.poster_path,
+            banner_path: show.backdrop_path,
+            vote_average: show.vote_average,
+            vote_count: show.vote_count,
+            overview: show.overview,
+            media_type: show.media_type || 'movie',
+            genre_ids: show.genre_ids,
+            title: (show as MovieData).title,
+            release_date: (show as MovieData).release_date,
+        };
+    });
+
+    return showData;
+};
 /**
  * Convert movie or tv details to the ShowData type.
  * @param data | Details data being converted
  * @param mediaType | Type of details being converted
  * @returns {ShowData[] | null}
  */
-const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaType: 'movie' | 'tv'): ShowData => {
+const convertDetailsToShowType = (
+    data: MovieDetailsData | TvDetailsData,
+    mediaType: 'movie' | 'tv'
+): ShowData => {
     return {
         id: data.id,
         poster_path: data.poster_path,
@@ -76,24 +101,19 @@ const convertDetailsToShowType = (data: MovieDetailsData | TvDetailsData, mediaT
             mediaType === 'movie'
                 ? (data as MovieDetailsData).runtime
                 : (data as TvDetailsData).episode_run_time[0],
-        providers:
-            data['watch/providers'].results.US?.flatrate?.map((provider) => {
-                return {
-                    name: provider.provider_name,
-                    id: provider.provider_id,
-                    logo_path: provider.logo_path,
-                    origin_country: 'US'
-                };
-            }),
-        seasons: mediaType === 'movie'
-            ? null
-            : (data as TvDetailsData).seasons,
-        end_date: mediaType === 'movie'
-            ? null
-            : (data as TvDetailsData).last_episode_to_air.air_date,
-        next_air_date: mediaType === 'movie'
-            ? null
-            : (data as TvDetailsData).next_episode_to_air?.air_date,
+        providers: data['watch/providers'].results.US?.flatrate?.map((provider) => {
+            return {
+                name: provider.provider_name,
+                id: provider.provider_id,
+                logo_path: provider.logo_path,
+                origin_country: 'US',
+            };
+        }),
+        seasons: mediaType === 'movie' ? null : (data as TvDetailsData).seasons,
+        end_date:
+            mediaType === 'movie' ? null : (data as TvDetailsData).last_episode_to_air.air_date,
+        next_air_date:
+            mediaType === 'movie' ? null : (data as TvDetailsData).next_episode_to_air?.air_date,
     };
 };
 
@@ -118,16 +138,20 @@ const convertDataToShowType = (
             overview: show.overview,
             media_type: mediaType,
             genre_ids: show.genre_ids,
-            title: mediaType === 'tv'
-                ? (show as TvData).name
-                : (show as MovieData).title,
-            release_date: mediaType === 'tv'
-                ? (show as TvData).first_air_date
-                : (show as MovieData).release_date
+            title: mediaType === 'tv' ? (show as TvData).name : (show as MovieData).title,
+            release_date:
+                mediaType === 'tv'
+                    ? (show as TvData).first_air_date
+                    : (show as MovieData).release_date,
         };
     });
 
     return showData;
 };
 
-export { convertResultsToShowType, convertDetailsToShowType, convertDataToShowType };
+export {
+    convertResultsToShowType,
+    convertDetailsToShowType,
+    convertDataToShowType,
+    convertResultsForIntheaters,
+};
