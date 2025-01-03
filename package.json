@@ -78,7 +78,7 @@
     "markdownlint-cli": "^0.42.0",
     "patch-package": "^8.0.0",
     "postcss": "^8.4.49",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.2",
     "storybook": "^8.2.8",
     "storybook-addon-remix-react-router": "^3.0.2",
     "supabase": "^1.223.10",
