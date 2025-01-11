@@ -71,7 +71,7 @@
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-storybook": "^0.9.0",
     "jsdom": "^25.0.1",
     "leasot": "^14.4.0",
