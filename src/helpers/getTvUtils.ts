@@ -32,7 +32,7 @@ const getTvDetails = async (id: number): Promise<ShowData> => {
     const response = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?api_key=${
             import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates,content_ratings,watch/providers`
+        }&append_to_response=images,release_dates,content_ratings,watch/providers,credits`
     );
     if (!response.ok) {
         LOG.error('Fetch request failed with a status of ' + response.status);
