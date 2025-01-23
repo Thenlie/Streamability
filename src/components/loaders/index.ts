@@ -5,6 +5,7 @@ import ShowListCardLoader from './ShowListCardLoader';
 import ShowPosterLoader from './ShowPosterLoader';
 import BannerLoader from './BannerLoader';
 import ActorCardLoader from './ActorCardLoader';
+import SeasonCardLoader from './SeasonCardLoader';
 
 export {
     ProvidersLoader,
@@ -14,4 +15,5 @@ export {
     ShowPosterLoader,
     BannerLoader,
     ActorCardLoader,
+    SeasonCardLoader,
 };
