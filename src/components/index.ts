@@ -8,6 +8,7 @@ import ShowListCard, { ShowListCardProps } from './ShowListCard';
 import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
+import SeasonCard from './SeasonCard';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
@@ -27,6 +28,7 @@ export {
     ShowPoster,
     ShowCarousel,
     SearchInput,
+    SeasonCard,
     Providers,
     Navigation,
     Rating,
