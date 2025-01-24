@@ -3,18 +3,23 @@ import { default as Typ } from '@mui/material/Typography';
 import { Actor } from '../types';
 import { Link } from 'react-router';
 
+type ActorCrewCardProps = Actor & {
+    job?: string;
+};
+
 interface ActorCardProps {
     /**
      * Actor metadata
      */
-    details: Actor;
+    details: ActorCrewCardProps;
+    isCrew?: boolean;
 }
 
 /**
  * A card that displays a picture of an actor, their name, and
  * the name of the character they played in a given show when applicable
  */
-const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
+const ActorCard: React.FC<ActorCardProps> = ({ details, isCrew = false }) => {
     return (
         <div
             data-testid='actor-card-component'
@@ -41,7 +46,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ details }) => {
             </Link>
             <div className='flex flex-col justify-between p-2'>
                 <Typ fontWeight={'bold'}>{details.name}</Typ>
-                <Typ>{details.character}</Typ>
+                <Typ>{isCrew ? details.job : details.character}</Typ>
             </div>
         </div>
     );

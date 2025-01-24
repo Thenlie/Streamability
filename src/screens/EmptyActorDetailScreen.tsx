@@ -12,7 +12,7 @@ const EmptyActorDetailScreen: React.FC = () => {
 
     return (
         <div className='m-6 flex flex-col items-center' data-testid='empty-show-details-screen'>
-            <img src='/images/error.svg' width={500} />
+            <img src='/images/error.svg' width={500} alt='Error Image' />
             <Typ variant='h5' margin={2}>
                 We couldn&apos;t find any more details for this actor. Sorry about that!
             </Typ>

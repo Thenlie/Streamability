@@ -8,7 +8,11 @@ import {
     MovieData,
 } from '../types';
 import { MOVIE_RATINGS } from './constants';
-import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
+import {
+    convertDetailsToShowType,
+    convertResultsForIntheaters,
+    convertResultsToShowType,
+} from './showTypeUtils';
 
 const LOG = new Logger('getMovieUtils');
 
@@ -84,6 +88,21 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
     return convertResultsToShowType(data);
 };
 
+/**
+ * Returns a list of movies currently playing in theaters
+ */
+const getMovieInTheaters = async (): Promise<ShowData[] | null> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
+    );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
+    const data = (await response.json()) as MovieResults;
+    if (!data.results) return null;
+
+    return convertResultsForIntheaters(data);
+};
 /**
  * Returns recommended movies based off of a given movie
  * @param id | MovieDB id of movie being searched for
@@ -176,4 +195,5 @@ export {
     getMovieRecommendations,
     getDiscoverMovies,
     getMovieRating,
+    getMovieInTheaters,
 };
