@@ -1,4 +1,4 @@
-import { Profile, ProfileActions, Session, ShowData } from '../types';
+import { Profile, ProfileActions, Session, ShowData, Season } from '../types';
 
 /* eslint-disable prettier/prettier */
 export const TRENDING_DATA: ShowData[] = [
@@ -195,12 +195,12 @@ export const PROFILE: Profile = {
 };
 
 export const PROFILE_ACTIONS: ProfileActions = {
-    removeFromFavorites: async () => {},
-    removeFromQueue: async () => {},
-    removeFromWatched: async () => {},
-    addToFavorites: async () => {},
-    addToQueue: async () => {},
-    addToWatched: async () => {},
+    removeFromFavorites: async () => { },
+    removeFromQueue: async () => { },
+    removeFromWatched: async () => { },
+    addToFavorites: async () => { },
+    addToQueue: async () => { },
+    addToWatched: async () => { },
     queueLoading: false,
     favoritesLoading: false,
     watchedLoading: false,
@@ -219,4 +219,16 @@ export const ACTOR = {
     character: 'Tony Stark / Iron Man',
     credit_id: '52fe4311c3a36847f8037ee9',
     order: 0
+};
+
+export const SEASON: Season = {
+    air_date: '2011-04-17',
+    episode_count: 10,
+    id: 3624,
+    name: 'Season 1',
+    overview:
+        'Trouble is brewing in the Seven Kingdoms of Westeros. For the driven inhabitants of this visionary world, control of Westeros\' Iron Throne holds the lure of great power. But in a land where the seasons can last a lifetime, winter is coming...and beyond the Great Wall that protects them, an ancient evil has returned. In Season One, the story centers on three primary areas: the Stark and the Lannister families, whose designs on controlling the throne threaten a tenuous peace; the dragon princess Daenerys, heir to the former dynasty, who waits just over the Narrow Sea with her malevolent brother Viserys; and the Great Wall--a massive barrier of ice where a forgotten danger is stirring.',
+    poster_path: '/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg',
+    season_number: 1,
+    vote_average: 8.3,
 };
