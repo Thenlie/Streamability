@@ -1,5 +1,5 @@
 import { Profile, ShowData } from '../types';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import CardMedia from '@mui/material/CardMedia';
 import type { SimplePaletteColorOptions } from '@mui/material/styles';
 import useTheme from '@mui/material/styles/useTheme';

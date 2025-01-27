@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 
 let user: UserEvent;

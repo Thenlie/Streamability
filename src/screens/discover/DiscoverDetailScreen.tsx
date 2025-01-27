@@ -15,6 +15,8 @@ import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
 import { Typography } from '@mui/material';
+import CardGalleryLoader from '../loaders/CardGalleryLoader';
+import { SearchResultsHeader } from '../search_results';
 
 const PATHS = [
     { path: 'trending', title: 'Trending' },
@@ -104,26 +106,39 @@ const DiscoverDetailScreen: React.FC = () => {
         );
     }, [data, hash, viewState, profile]);
 
-    // TODO: Create loader #839r
-    if (loading) return <p>Loading...</p>;
-
     return (
         <div
             className='flex flex-col items-center w-full m-6'
             data-testid={`discover-details-${path}-screen`}
         >
             <Typography variant='h4'>{title}</Typography>
-            <DetailScreen
-                viewStateKey={viewStateKey}
-                viewState={viewState}
-                setViewState={setViewState}
-                data={data}
-                setData={setData}
-                setHash={setHash}
-                cards={cards}
-                disableAlphabeticOrderFilter={true}
-                disableResultTypeFilter={true}
-            />
+            {loading ? (
+                <>
+                    <SearchResultsHeader
+                        viewStateKey={viewStateKey}
+                        viewState={viewState}
+                        setViewState={setViewState}
+                        showDetails={data}
+                        setShowDetails={setData}
+                        setHash={setHash}
+                        disableAlphabeticOrderFilter={true}
+                        disableResultTypeFilter={true}
+                    />
+                    <CardGalleryLoader viewState={viewState} />
+                </>
+            ) : (
+                <DetailScreen
+                    viewStateKey={viewStateKey}
+                    viewState={viewState}
+                    setViewState={setViewState}
+                    data={data}
+                    setData={setData}
+                    setHash={setHash}
+                    cards={cards}
+                    disableAlphabeticOrderFilter={true}
+                    disableResultTypeFilter={true}
+                />
+            )}
         </div>
     );
 };

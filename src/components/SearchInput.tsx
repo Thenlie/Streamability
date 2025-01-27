@@ -2,7 +2,7 @@ import Search from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import React, { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form } from 'react-router';
 import TextInput from '../components/TextInput';
 
 interface SearchInputProps {

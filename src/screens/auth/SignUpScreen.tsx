@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
-import { COUNTRIES, validateCountry } from '../../helpers';
+import { COUNTRIES, emailRegex, validateCountry } from '../../helpers';
 import { useSessionContext } from '../../hooks';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -103,7 +103,7 @@ const SignUpScreen: React.FC = () => {
         }
 
         // Ensure email is valid
-        if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
+        if (!email.match(emailRegex)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
             setLoading(false);

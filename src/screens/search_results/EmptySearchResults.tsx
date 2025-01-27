@@ -3,7 +3,7 @@ import { default as Typ } from '@mui/material/Typography';
 import { ShowCarousel, Button } from '../../components';
 import { useTrendingShows } from '../../hooks';
 import Home from '@mui/icons-material/Home';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import SortFilterHeader from '../../components/SortFilterHeader';
 
 interface EmptySearchResultsProps {
@@ -34,7 +34,11 @@ const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewStat
             />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
-                    <img src='/images/no-search-results.png' className='mb-5 w-64 inline'></img>
+                    <img
+                        src='/images/no-search-results.png'
+                        className='mb-5 w-64 inline'
+                        alt='No Search Results Image'
+                    ></img>
                     <Typ sx={{ fontSize: 30 }}>No results found!</Typ>
                     <div className='m-2'>
                         <Typ display='inline'>We couldn&apos;t find any search results for</Typ>

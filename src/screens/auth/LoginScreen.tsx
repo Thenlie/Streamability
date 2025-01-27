@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Snackbar, TextInput } from '../../components';
 import { SUPABASE } from '../../supabase/supabaseClient';
 import { useSessionContext } from '../../hooks';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Typ from '@mui/material/Typography';
@@ -10,6 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Logger from '../../logger';
 import { SnackbarProps } from '../../components/Snackbar';
+import { emailRegex } from '../../helpers/validationUtils';
 
 const LOG = new Logger('LoginForm');
 
@@ -72,7 +73,7 @@ const LoginScreen: React.FC = () => {
         }
 
         // Ensure email is valid
-        if (!email.match(/^(\w+|\d+)@(\w+|\d+)\.(\w+|\d+)/gm)) {
+        if (!email.match(emailRegex)) {
             showError('Must provide valid email');
             if (!email) setEmailError(true);
             setLoading(false);

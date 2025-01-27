@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 
 const router = createMemoryRouter(routes, {

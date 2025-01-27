@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Location, useLocation } from 'react-router-dom';
+import { Location, useLocation } from 'react-router';
 import { ActorDetail } from '../types';
 import { convertDataToShowType, getActorDetails } from '../helpers';
 import Collapse from '@mui/material/Collapse';
@@ -48,6 +48,11 @@ const ActorDetailScreen: React.FC = () => {
                             details.profile_path
                                 ? `https://image.tmdb.org/t/p/w500${details.profile_path}`
                                 : '/poster-placeholder.jpeg'
+                        }
+                        alt={
+                            details.profile_path
+                                ? `${details.name} profile`
+                                : 'Actor Image Placeholder'
                         }
                     />
                 </div>

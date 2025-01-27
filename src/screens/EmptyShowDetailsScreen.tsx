@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Button } from '../components';
 import Typ from '@mui/material/Typography';
 import ArrowBack from '@mui/icons-material/ArrowBack';
@@ -12,7 +12,7 @@ const EmptyShowDetailsScreen: React.FC = () => {
 
     return (
         <div className='m-6 flex flex-col items-center' data-testid='empty-show-details-screen'>
-            <img src='/images/error.svg' width={500} />
+            <img src='/images/error.svg' width={500} alt='Error Image' />
             <Typ variant='h5' margin={2}>
                 We couldn&apos;t find any more details for this show. Sorry about that!
             </Typ>

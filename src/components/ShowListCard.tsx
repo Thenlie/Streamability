@@ -1,6 +1,6 @@
 import { addToProfileArray, removeFromProfileArray } from '../supabase/profiles';
 import { Profile, ShowData } from '../types';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { formatReleaseDate, DateSize } from '../helpers';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';

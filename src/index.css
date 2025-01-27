@@ -38,6 +38,24 @@ input:-webkit-autofill:active {
   border-radius: 10px;
   padding: 1px;
 }
+::-webkit-scrollbar {
+  width: 10px; 
+  height: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-foreground));; 
+  border-radius: 6px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777; 
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-background));; 
+  border-radius: 6px; 
+}
 /* Inverted corners for carousel tabs
  * https://blog.logrocket.com/how-to-create-fancy-corners-in-css/
 */

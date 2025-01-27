@@ -6,7 +6,7 @@ import {
     useGetProfileArray,
 } from '../../hooks';
 import { deleteProfileById, clearProfileArray } from '../../supabase/profiles';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router';
 import Typ from '@mui/material/Typography';
 import Delete from '@mui/icons-material/Delete';
 import Logout from '@mui/icons-material/Logout';

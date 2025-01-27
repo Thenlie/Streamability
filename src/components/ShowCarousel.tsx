@@ -208,7 +208,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
                 >
                     <Typ
                         variant='body1'
-                        className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3'}
+                        className={'h-[270px] text-center pt-[100px] md:pt-[120px] p-3 w-full'}
                     >
                         {fallbackText ? fallbackText : 'Sorry, no shows to display at this time.'}
                     </Typ>
