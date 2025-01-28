@@ -1,0 +1,68 @@
+import { useEffect, useState } from "react";
+import { useLocation, Location, Link } from "react-router";
+import { Season, ShowData } from "../types";
+import { getTvDetails } from "../helpers";
+import { SeasonCard, SeasonCardLoader } from "../components";
+import { default as Typ } from '@mui/material/Typography';
+import { CardMedia } from "@mui/material";
+
+const SeasonsScreen: React.FC = (): JSX.Element => {
+    const location: Location = useLocation();
+    const showId = parseInt(location.pathname.split('/')[3]);
+    const [details, setDetails] = useState<ShowData>(
+        location.state ? location.state.details : null
+    );
+    // check if details is passed through router
+    const [loading, setLoading] = useState(details ? false : true);
+
+    useEffect(() => {
+        const handler = async () => {
+            const tvDetails = await getTvDetails(showId);
+            setDetails(tvDetails);
+            setLoading(false);
+        }
+        // check if details is passed through router
+        if (!details) handler();
+    }, [location])
+
+    console.log(details);
+    if (loading) {
+        return <SeasonCardLoader count={5} />
+    }
+
+    return (
+        <section className="m-6 flex items-center sm:items-start flex-col max-w-[1380px]">
+            <div className="mb-3 flex flex-col items-center sm:flex-row">
+                <CardMedia
+                    component='img'
+                    className='rounded-sm'
+                    sx={{
+                        boxShadow: 5,
+                        width: 58,
+                        height: 87,
+                        '&:hover': { opacity: 0.8 },
+                    }}
+                    image={
+                        details.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
+                            : '/poster-placeholder.jpeg'
+                    }
+                    alt={details.title}
+                />
+                <div className="flex flex-col sm:items-start">
+                    <div className="flex flex-col sm:flex-row items-center">
+                        <Typ className="sm:pl-2" fontWeight={'bold'} variant='h4'>{details.title}</Typ>
+                        <Typ className="sm:pl-2">{"(" + details.release_date?.slice(0, 4) + ")"}</Typ>
+                    </div>
+                    <Link className="sm:pl-2" to={`/details/tv/${details.id}`}>Back</Link>
+                </div>
+            </div>
+
+            {details.seasons?.map((item, i) => (
+                <SeasonCard details={item} key={i} />
+            ))}
+        </section>
+    )
+}
+
+export default SeasonsScreen;
