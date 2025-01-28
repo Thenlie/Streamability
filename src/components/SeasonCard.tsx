@@ -16,15 +16,15 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details }): JSX.Element => {
     return (
         <Link
             data-testid='season-card-component'
-            className='m-3 flex flex-col sm:flex-row bg-foreground rounded-t-md sm:rounded-md'
-            to={`seasons/${details.season_number}`}
+            className='my-3 flex flex-col sm:flex-row sm:rounded-md max-w-[180px] sm:max-w-none w-full bg-foreground rounded-t-md'
+            to={`./${details.season_number}`}
         >
             <CardMedia
                 component='img'
-                className='rounded-sm w-full'
+                className='rounded-sm'
                 sx={{
                     boxShadow: 5,
-                    minWidth: 180,
+                    width: 180,
                     maxHeight: 270,
                     '&:hover': { opacity: 0.8 },
                 }}
