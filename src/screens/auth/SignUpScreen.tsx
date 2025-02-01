@@ -68,6 +68,7 @@ const SignUpScreen: React.FC = () => {
      * @param isConfirm | true if confirm password, false if password
      */
     const togglePasswordVisibility = (isConfirm: boolean): void => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isConfirm
             ? setIsConfirmPasswordVisible((prev) => !prev)
             : setIsPasswordVisible((prev) => !prev);
