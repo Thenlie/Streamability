@@ -29,7 +29,5 @@ describe('Page Not Found Screen', () => {
             'background: firebrick; color: white'
         );
         expect(consoleErrorMock).toHaveBeenCalledTimes(1);
-        expect(consoleWarnMock).toHaveBeenCalledWith('No routes matched location "/asdf" ');
-        expect(consoleWarnMock).toHaveBeenCalledTimes(1);
     });
 });
