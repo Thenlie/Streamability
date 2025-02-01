@@ -78,18 +78,21 @@ const ShowPosterButtons: React.FC<ShowPosterButtonProps> = ({
     }, [showQueueButton, showFavoritesButton, showWatchedButton]);
 
     const queueCallback = useCallback(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isInQueue
             ? profileActions?.removeFromQueue(dbShowId)
             : profileActions?.addToQueue(dbShowId);
     }, [isInQueue, profileActions]);
 
     const favoritesCallback = useCallback(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isInFavorites
             ? profileActions?.removeFromFavorites(dbShowId)
             : profileActions?.addToFavorites(dbShowId);
     }, [isInFavorites, profileActions]);
 
     const watchedCallback = useCallback(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isInWatched
             ? profileActions?.removeFromWatched(dbShowId)
             : profileActions?.addToWatched(dbShowId);
