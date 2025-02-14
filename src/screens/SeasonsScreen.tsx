@@ -25,13 +25,12 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
         if (!details) handler();
     }, [location])
 
-    console.log(details);
     if (loading) {
         return <SeasonCardLoader count={5} />
     }
 
     return (
-        <section className="m-6 flex items-center sm:items-start flex-col max-w-[1380px]">
+        <section data-testid='seasons-screen' className="m-6 flex items-center sm:items-start flex-col max-w-[1380px]">
             <div className="mb-3 flex flex-col items-center sm:flex-row">
                 <CardMedia
                     component='img'
@@ -47,7 +46,7 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                             : '/poster-placeholder.jpeg'
                     }
-                    alt={details.title}
+                    alt={details.title + " poster"}
                 />
                 <div className="flex flex-col sm:items-start">
                     <div className="flex flex-col sm:flex-row items-center">
@@ -59,7 +58,7 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
             </div>
 
             {details.seasons?.map((item, i) => (
-                <SeasonCard details={item} key={i} />
+                <SeasonCard key={i} details={item} title={details.title} />
             ))}
         </section>
     )
