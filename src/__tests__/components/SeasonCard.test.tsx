@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SeasonCard } from '../../components/';
-import { SEASON } from '../constants';
+import { SEASON, TV_DETAIL } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { vi } from 'vitest';
@@ -12,7 +12,7 @@ describe('SeasonCard', () => {
     it('properly renders with all season info and image', () => {
         render(
             <MemoryRouter>
-                <SeasonCard details={SEASON} />
+                <SeasonCard details={SEASON} title={TV_DETAIL.title} />
             </MemoryRouter>
         );
 
@@ -32,7 +32,7 @@ describe('SeasonCard', () => {
     it('properly renders with placeholder when no image is provided', () => {
         render(
             <MemoryRouter>
-                <SeasonCard details={{ ...SEASON, poster_path: '' }} />
+                <SeasonCard details={{ ...SEASON, poster_path: '' }} title={TV_DETAIL.title} />
             </MemoryRouter>
         );
 
@@ -50,7 +50,7 @@ describe('SeasonCard', () => {
 
         render(
             <Router location={history.location} navigator={history}>
-                <SeasonCard details={SEASON} />
+                <SeasonCard details={SEASON} title={TV_DETAIL.title} />
             </Router>
         );
 

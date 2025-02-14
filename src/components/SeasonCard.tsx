@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 
 interface SeasonCardProps {
     details: Season;
+    title: string;
 }
 
 /**
@@ -12,7 +13,8 @@ interface SeasonCardProps {
  * @param details | Season details
  * @returns {JSX.Element}
  */
-const SeasonCard: React.FC<SeasonCardProps> = ({ details }): JSX.Element => {
+const SeasonCard: React.FC<SeasonCardProps> = ({ details, title }): JSX.Element => {
+    console.log(details);
     return (
         <Link
             data-testid='season-card-component'
@@ -33,7 +35,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details }): JSX.Element => {
                         ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                         : '/poster-placeholder.jpeg'
                 }
-                alt={details.name}
+                alt={details.name + " poster"}
             />
 
             <div className='flex flex-col max-h-[270px] p-2 sm:p-4 max-w-[1200px]'>
@@ -44,9 +46,11 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details }): JSX.Element => {
                     {details.name}
                 </Typ>
                 <div className='flex justify-around sm:justify-start sm:py-1'>
-                    <Typ className='hidden sm:inline pr-4'>{details.vote_average}</Typ>
-                    <Typ className='sm:px-4'>{details.air_date.slice(0, 4)}</Typ>
-                    <Typ className='sm:px-4'>{details.episode_count} Episodes</Typ>
+                    {details.season_number != 0 && details.air_date &&
+                        <Typ className='hidden sm:inline pr-4'>{details.vote_average}</Typ>
+                    }
+                    <Typ className='sm:pr-4'>{details.air_date ? details.air_date.slice(0, 4) : '-'}</Typ>
+                    <Typ className='sm:pr-4'>{details.episode_count} Episodes</Typ>
                 </div>
                 <div className='hidden sm:block'>
                     <Typ
@@ -59,7 +63,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details }): JSX.Element => {
                             WebkitBoxOrient: 'vertical',
                         }}
                     >
-                        {details.overview}
+                        {details.season_number != 0 ? details.overview : `Special episodes including behind the scenes footage of ${title}.`}
                     </Typ>
                 </div>
             </div>
