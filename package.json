@@ -75,7 +75,7 @@
     "eslint-plugin-storybook": "^0.9.0",
     "jsdom": "^26.0.0",
     "leasot": "^14.4.0",
-    "markdownlint-cli": "^0.42.0",
+    "markdownlint-cli": "^0.44.0",
     "patch-package": "^8.0.0",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
