@@ -110,8 +110,7 @@ const convertDetailsToShowType = (
             };
         }),
         seasons: mediaType === 'movie' ? null : (data as TvDetailsData).seasons,
-        end_date:
-            mediaType === 'movie' ? null : (data as TvDetailsData).last_episode_to_air.air_date,
+        end_date: mediaType === 'movie' ? null : (data as TvDetailsData).last_episode_to_air?.air_date,
         next_air_date:
             mediaType === 'movie' ? null : (data as TvDetailsData).next_episode_to_air?.air_date,
     };

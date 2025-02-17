@@ -1,4 +1,5 @@
 import { ShowData } from '../types';
+import { validateSeasons } from './';
 
 /**
  * Extremely basic string pluralize function.
@@ -30,7 +31,8 @@ const getRuntime = (details: ShowData): string | null => {
     }
 
     if (details.media_type === 'tv' && details.seasons != undefined) {
-        str = `${details.seasons.length} ${pluralizeString(details.seasons.length, 'season')}`;
+        const validSeasons = validateSeasons(details.seasons);
+        str = `${validSeasons.length} ${pluralizeString(validSeasons.length, 'season')}`;
     } else if (details.media_type === 'tv') {
         str = 'No seasons available';
     }
