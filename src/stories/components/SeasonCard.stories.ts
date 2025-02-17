@@ -29,5 +29,6 @@ type Story = StoryObj<typeof meta>;
 export const Season: Story = {
     args: {
         details: SEASON,
+        showId: SEASON.show_id,
     },
 };

@@ -66,13 +66,13 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
                         to={`/details/tv/${details.id}`}
                         state={{ details: details }}
                     >
-                        Back
+                        Back to Show Details
                     </Link>
                 </div>
             </div>
 
             {details.seasons?.map((item, i) => (
-                <SeasonCard key={i} details={item} title={details.title} />
+                <SeasonCard key={i} details={item} title={details.title} showId={details.id} />
             ))}
         </section>
     );
