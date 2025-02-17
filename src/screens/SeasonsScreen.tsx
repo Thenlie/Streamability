@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
-import { useLocation, Location, Link } from "react-router";
-import { Season, ShowData } from "../types";
-import { getTvDetails } from "../helpers";
-import { SeasonCard, SeasonCardLoader } from "../components";
+import { useEffect, useState } from 'react';
+import { useLocation, Location, Link } from 'react-router';
+import { ShowData } from '../types';
+import { getTvDetails } from '../helpers';
+import { SeasonCard, SeasonCardLoader } from '../components';
 import { default as Typ } from '@mui/material/Typography';
-import { CardMedia } from "@mui/material";
+import { CardMedia } from '@mui/material';
 
+/**
+ * Screen to render all of a TV Show's Seasons
+ */
 const SeasonsScreen: React.FC = (): JSX.Element => {
     const location: Location = useLocation();
     const showId = parseInt(location.pathname.split('/')[3]);
     const [details, setDetails] = useState<ShowData>(
         location.state ? location.state.details : null
     );
-    // check if details is passed through router
     const [loading, setLoading] = useState(details ? false : true);
 
     useEffect(() => {
@@ -20,18 +22,20 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
             const tvDetails = await getTvDetails(showId);
             setDetails(tvDetails);
             setLoading(false);
-        }
-        // check if details is passed through router
+        };
         if (!details) handler();
-    }, [location])
+    }, [location]);
 
     if (loading) {
-        return <SeasonCardLoader count={5} />
+        return <SeasonCardLoader count={5} />;
     }
 
     return (
-        <section data-testid='seasons-screen' className="m-6 flex items-center sm:items-start flex-col max-w-[1380px]">
-            <div className="mb-3 flex flex-col items-center sm:flex-row">
+        <section
+            data-testid='seasons-screen'
+            className='m-6 flex items-center sm:items-start flex-col w-[70svw] max-w-[1380px]'
+        >
+            <div className='mb-3 flex flex-col sm:flex-row items-center'>
                 <CardMedia
                     component='img'
                     className='rounded-sm'
@@ -46,22 +50,32 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                             : '/poster-placeholder.jpeg'
                     }
-                    alt={details.title + " poster"}
+                    alt={details.title + ' poster'}
                 />
-                <div className="flex flex-col sm:items-start">
-                    <div className="flex flex-col sm:flex-row items-center">
-                        <Typ className="sm:pl-2" fontWeight={'bold'} variant='h4'>{details.title}</Typ>
-                        <Typ className="sm:pl-2">{"(" + details.release_date?.slice(0, 4) + ")"}</Typ>
+                <div className='flex flex-col sm:items-start'>
+                    <div className='flex flex-col sm:flex-row items-center'>
+                        <Typ className='sm:pl-2' fontWeight={'bold'} variant='h4'>
+                            {details.title}
+                        </Typ>
+                        <Typ className='sm:pl-2'>
+                            {'(' + details.release_date?.slice(0, 4) + ')'}
+                        </Typ>
                     </div>
-                    <Link className="sm:pl-2" to={`/details/tv/${details.id}`}>Back</Link>
+                    <Link
+                        className='sm:pl-2 hover:text-blue-500 cursor-pointer'
+                        to={`/details/tv/${details.id}`}
+                        state={{ details: details }}
+                    >
+                        Back to Show Details
+                    </Link>
                 </div>
             </div>
 
             {details.seasons?.map((item, i) => (
-                <SeasonCard key={i} details={item} title={details.title} />
+                <SeasonCard key={i} details={item} title={details.title} showId={details.id} />
             ))}
         </section>
-    )
-}
+    );
+};
 
 export default SeasonsScreen;
