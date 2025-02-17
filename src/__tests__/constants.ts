@@ -64,6 +64,25 @@ export const MOVIE_DETAIL: ShowData = {
             origin_country: 'US',
         },
     ],
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 3223,
+                known_for_department: 'Acting',
+                name: 'Robert Downey Jr.',
+                original_name: 'Robert Downey Jr.',
+                popularity: 57.084,
+                profile_path: '/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg',
+                cast_id: 19,
+                character: 'Tony Stark / Iron Man',
+                credit_id: '52fe4311c3a36847f8037ee9',
+                order: 0
+            }
+        ],
+        crew: []
+    },
     seasons: undefined,
     end_date: null,
     next_air_date: null,
@@ -101,6 +120,25 @@ export const TV_DETAIL: ShowData = {
             origin_country: 'US',
         },
     ],
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 22970,
+                known_for_department: 'Acting',
+                name: 'Peter Dinklage',
+                original_name: 'Peter Dinklage',
+                popularity: 29.051,
+                profile_path: '/9CAd7wr8QZyIN0E7nm8v1B6WkGn.jpg',
+                cast_id: 0,
+                character: 'Tyrion \'The Halfman\' Lannister',
+                credit_id: '5256c8b219c2956ff6047cd8',
+                order: 0
+            }
+        ],
+        crew: []
+    },
     seasons: [
         {
             air_date: '2010-12-05',

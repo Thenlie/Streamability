@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { validateCountry, validateCountryCode } from '../validationUtils';
+import { validateCountry, validateCountryCode, validateSeasons } from '../validationUtils';
+import { SEASONS_VALID, SEASON_INVALID } from './constants';
 
 describe('validateCountryCode', () => {
     it('properly validates valid country codes', () => {
@@ -28,5 +29,22 @@ describe('validateCountryC', () => {
         expect(validateCountry('UK')).toBe(false);
         expect(validateCountry('Russsia')).toBe(false);
         expect(validateCountry('invalid')).toBe(false);
+    });
+});
+
+describe('validateSeasons', () => {
+    it('returns provided array if no invalid seasons are found', () => {
+        expect(validateSeasons(SEASONS_VALID).length).toBe(SEASONS_VALID.length);
+    });
+    it('properly removes specials seasons, unreleased seasons, or both', () => {
+        expect(validateSeasons([...SEASONS_VALID, SEASON_INVALID[0]]).length).toBe(
+            SEASONS_VALID.length
+        );
+        expect(validateSeasons([...SEASONS_VALID, SEASON_INVALID[1]]).length).toBe(
+            SEASONS_VALID.length
+        );
+        expect(
+            validateSeasons([...SEASONS_VALID, SEASON_INVALID[0], SEASON_INVALID[1]]).length
+        ).toBe(SEASONS_VALID.length);
     });
 });

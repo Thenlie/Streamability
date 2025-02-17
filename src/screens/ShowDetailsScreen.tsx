@@ -233,9 +233,12 @@ const ShowDetailsScreen: React.FC = () => {
             {details.seasons && (
                 <section className='flex flex-col items-center sm:items-start my-6 w-[65svw] max-w-[1090px]'>
                     <Typ className='sm:px-1' variant='h5'>
-                        Last Season
+                        Latest Season
                     </Typ>
-                    <SeasonCard details={validateSeasons(details.seasons).slice(-1)[0]} />
+                    <SeasonCard
+                        details={validateSeasons(details.seasons).slice(-1)[0]}
+                        showId={details.id}
+                    />
                     <Link
                         className='sm:px-1 mt-3 hover:text-blue-500 cursor-pointer'
                         to={'seasons'}

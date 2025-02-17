@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, act } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { getTvDetails } from '../../helpers';
-import { act } from 'react';
 import { TV_DETAIL } from '../constants';
 
 const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
@@ -23,7 +22,7 @@ const tvRouter = createMemoryRouter(routes, {
 });
 
 describe('Seasons Screen', () => {
-    it('properly renders applicable TV show data', async () => {
+    it('properly renders TV show and season data', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
 
         render(<RouterProvider router={tvRouter} />);
@@ -34,6 +33,9 @@ describe('Seasons Screen', () => {
         expect(screen.getByAltText(`${TV_DETAIL.title} poster`)).toHaveAttribute(
             'src',
             TMDB_BASE_PATH + TV_DETAIL.poster_path
+        );
+        expect(screen.getAllByTestId('season-card-component').length).toBe(
+            TV_DETAIL.seasons?.length
         );
     });
     it('properly renders placeholder image if no poster path is provided', async () => {
@@ -53,7 +55,7 @@ describe('Seasons Screen', () => {
 
         await screen.findByTestId('seasons-screen');
         await act(async () => {
-            fireEvent.click(await screen.findByRole('link', { name: 'Back' }));
+            fireEvent.click(await screen.findByRole('link', { name: 'Back to Show Details' }));
         });
         expect(tvRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}`);
     });
