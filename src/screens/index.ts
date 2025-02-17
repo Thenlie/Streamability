@@ -21,5 +21,5 @@ export {
     PageNotFoundScreen,
     ShowDetailsScreen,
     DiscoverDetailScreen,
-    SeasonsScreen
+    SeasonsScreen,
 };

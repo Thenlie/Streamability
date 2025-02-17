@@ -1,3 +1,4 @@
+import { Season } from '../types';
 import { COUNTRIES } from './constants';
 
 /**
@@ -23,4 +24,14 @@ const validateCountry = (country: string): boolean => {
 
 const emailRegex = /^([\w.+-]+)@([\w-]+\.)+([\w]{2,})$/gm;
 
-export { validateCountryCode, validateCountry, emailRegex };
+/**
+ * Returns valid list of seasons by removing untraditional entries provided by TMDB
+ * I.E. 'Specials' and unreleased seasons
+ * @param seasons
+ * @returns {Season[]}
+ */
+const validateSeasons = (seasons: Season[]): Season[] => {
+    return seasons.filter((item) => item.season_number != 0 && item.air_date);
+};
+
+export { validateCountryCode, validateCountry, emailRegex, validateSeasons };

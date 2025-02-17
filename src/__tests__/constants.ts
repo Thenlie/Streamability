@@ -64,7 +64,7 @@ export const MOVIE_DETAIL: ShowData = {
             origin_country: 'US',
         },
     ],
-    seasons: null,
+    seasons: undefined,
     end_date: null,
     next_air_date: null,
 };
