@@ -1,11 +1,11 @@
 import { Season } from '../types';
 import CardMedia from '@mui/material/CardMedia';
 import { default as Typ } from '@mui/material/Typography';
-import { Link } from 'react-router';
+import { Link, Location, useLocation } from 'react-router';
 
 interface SeasonCardProps {
     details: Season;
-    title: string;
+    title?: string;
 }
 
 /**
@@ -14,12 +14,17 @@ interface SeasonCardProps {
  * @returns {JSX.Element}
  */
 const SeasonCard: React.FC<SeasonCardProps> = ({ details, title }): JSX.Element => {
-    console.log(details);
+    const location: Location = useLocation();
+    const showId = parseInt(location.pathname.split('/')[3]);
     return (
         <Link
             data-testid='season-card-component'
             className='my-3 flex flex-col sm:flex-row sm:rounded-md max-w-[180px] sm:max-w-none w-full bg-foreground rounded-t-md'
-            to={`./${details.season_number}`}
+            to={
+                location.pathname == `/details/tv/${showId}`
+                    ? `./seasons/${details.season_number}`
+                    : `./${details.season_number}`
+            }
         >
             <CardMedia
                 component='img'
@@ -35,10 +40,10 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details, title }): JSX.Element 
                         ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                         : '/poster-placeholder.jpeg'
                 }
-                alt={details.name + " poster"}
+                alt={details.name + ' poster'}
             />
 
-            <div className='flex flex-col max-h-[270px] p-2 sm:p-4 max-w-[1200px]'>
+            <div className='flex flex-col max-h-[270px] p-2 sm:p-4'>
                 <Typ
                     className='sm:text-left sm:py-1 hover:text-blue-500 cursor-pointer'
                     fontWeight={'bold'}
@@ -46,10 +51,12 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details, title }): JSX.Element 
                     {details.name}
                 </Typ>
                 <div className='flex justify-around sm:justify-start sm:py-1'>
-                    {details.season_number != 0 && details.air_date &&
+                    {details.season_number != 0 && details.air_date && (
                         <Typ className='hidden sm:inline pr-4'>{details.vote_average}</Typ>
-                    }
-                    <Typ className='sm:pr-4'>{details.air_date ? details.air_date.slice(0, 4) : '-'}</Typ>
+                    )}
+                    <Typ className='sm:pr-4'>
+                        {details.air_date ? details.air_date.slice(0, 4) : '-'}
+                    </Typ>
                     <Typ className='sm:pr-4'>{details.episode_count} Episodes</Typ>
                 </div>
                 <div className='hidden sm:block'>
@@ -63,7 +70,9 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details, title }): JSX.Element 
                             WebkitBoxOrient: 'vertical',
                         }}
                     >
-                        {details.season_number != 0 ? details.overview : `Special episodes including behind the scenes footage of ${title}.`}
+                        {details.season_number != 0
+                            ? details.overview
+                            : `Special episodes including behind the scenes footage of ${title}.`}
                     </Typ>
                 </div>
             </div>
