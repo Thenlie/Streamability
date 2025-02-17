@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SeasonCard } from '../../components/';
-import { SEASON, TV_DETAIL } from '../constants';
+import { SEASON } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { vi } from 'vitest';
@@ -12,7 +12,7 @@ describe('SeasonCard', () => {
     it('properly renders with all season info and image', () => {
         render(
             <MemoryRouter>
-                <SeasonCard details={SEASON} title={TV_DETAIL.title} />
+                <SeasonCard details={SEASON} />
             </MemoryRouter>
         );
 
@@ -29,10 +29,10 @@ describe('SeasonCard', () => {
         );
     });
 
-    it('properly renders with placeholder when no image is provided', () => {
+    it('properly renders with placeholder poster when no image is provided', () => {
         render(
             <MemoryRouter>
-                <SeasonCard details={{ ...SEASON, poster_path: '' }} title={TV_DETAIL.title} />
+                <SeasonCard details={{ ...SEASON, poster_path: '' }} />
             </MemoryRouter>
         );
 
@@ -44,13 +44,13 @@ describe('SeasonCard', () => {
         );
     });
 
-    it('is clickable and navigates to season detail screen', () => {
+    it('is clickable and navigates to season details screen', () => {
         const history = createMemoryHistory();
         history.push = vi.fn();
 
         render(
             <Router location={history.location} navigator={history}>
-                <SeasonCard details={SEASON} title={TV_DETAIL.title} />
+                <SeasonCard details={SEASON} />
             </Router>
         );
 
