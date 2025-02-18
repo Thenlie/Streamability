@@ -43,7 +43,6 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
                         boxShadow: 5,
                         width: 58,
                         height: 87,
-                        '&:hover': { opacity: 0.8 },
                     }}
                     image={
                         details.poster_path
