@@ -3,6 +3,7 @@ import { getTvSeasonDetails } from '../helpers';
 import { SeasonDetails } from '../types';
 import { Location, useLocation, Link } from 'react-router';
 import { CardMedia, Typography as Typ } from '@mui/material';
+import { EpisodeCard } from '../components';
 
 /**
  * Screen to render a TV Show's Season's Episodes
@@ -24,7 +25,7 @@ const SeasonDetailsScreen: React.FC = (): JSX.Element => {
     return (
         <section
             data-testid='season-details-screen'
-            className='m-6 flex items-center sm:items-start flex-col w-[70svw] max-w-[1380px]'
+            className='m-6 flex items-center md:items-start flex-col w-[70svw] max-w-[1380px]'
         >
             <div className='mb-3 flex flex-col sm:flex-row items-center'>
                 <CardMedia
@@ -47,7 +48,9 @@ const SeasonDetailsScreen: React.FC = (): JSX.Element => {
                         <Typ className='sm:pl-2' fontWeight={'bold'} variant='h4'>
                             {details?.name}
                         </Typ>
-                        <Typ className='sm:pl-2'>{'(' + details?.air_date?.slice(0, 4) + ')'}</Typ>
+                        <Typ className='sm:pl-2'>
+                            {details?.air_date ? '(' + details?.air_date?.slice(0, 4) + ')' : '-'}
+                        </Typ>
                     </div>
                     <Link
                         className='sm:pl-2 hover:text-blue-500 cursor-pointer'
@@ -57,6 +60,8 @@ const SeasonDetailsScreen: React.FC = (): JSX.Element => {
                     </Link>
                 </div>
             </div>
+
+            {details?.episodes.map((item, i) => <EpisodeCard details={item} key={i} />)}
         </section>
     );
 };

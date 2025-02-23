@@ -1,6 +1,6 @@
 import { Actor } from './actor';
 import { MovieData } from './movie';
-import { TvData } from './tv';
+import { TvData, Season } from './tv';
 
 /**
  * Object containing genre as string and TMDB genre id
@@ -89,17 +89,6 @@ export interface ShowProviders {
     };
 }
 
-export interface Season {
-    air_date: string | null;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string | null;
-    season_number: number;
-    vote_average: number;
-}
-
 /**
  * Returned by getMovieDetails and getTvDetails
  * Custom type to work with both tv and movies
@@ -141,26 +130,4 @@ export interface ShowResults {
     results?: Array<MovieData | TvData>;
     total_pages: number;
     total_results: number;
-}
-
-export interface SeasonDetails extends Season {
-    _id: string;
-    episodes: [
-        {
-            air_date: string;
-            episode_number: number;
-            id: number;
-            name: string;
-            overview: string;
-            production_code: string;
-            runtime: number;
-            season_number: number;
-            show_id: number;
-            still_path: string;
-            vote_average: number;
-            vote_count: number;
-            crew: Actor[];
-            guest_stars: Actor[];
-        },
-    ];
 }

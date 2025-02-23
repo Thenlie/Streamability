@@ -20,6 +20,7 @@ import OfflineSnackbar from './OfflineSnackbar';
 import Footer from './Footer';
 import TextInput from './TextInput';
 import Banner from './Banner';
+import EpisodeCard from './EpisodeCard';
 
 export {
     ActorCard,
@@ -40,6 +41,7 @@ export {
     Footer,
     TextInput,
     Banner,
+    EpisodeCard,
 };
 export * from './loaders';
 export * from './modals';
