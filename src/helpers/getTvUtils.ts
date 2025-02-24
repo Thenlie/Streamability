@@ -7,6 +7,7 @@ import {
     DiscoverTv,
     TvData,
     SeasonDetails,
+    EpisodeDetails,
 } from '../types';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
@@ -176,6 +177,28 @@ const getTvSeasonDetails = async (showId: number, season_num: number): Promise<S
     return data;
 };
 
+/**
+ * Provides additional Episode details that are not provided by Season Details
+ * @param showId
+ * @param season_num
+ * @param episode_num
+ * @returns {Promise<EpisodeDetails>}
+ */
+const getTvEpisodeDetails = async (
+    showId: number,
+    season_num: number,
+    episode_num: number
+): Promise<EpisodeDetails> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${showId}/season/${season_num}/episode/${episode_num}?api_key=${import.meta.env.VITE_MOVIEDB_KEY}&append_to_response=images,videos,credits`
+    );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
+    const data: EpisodeDetails = await response.json();
+    return data;
+};
+
 export {
     getTvByName,
     getTvDetails,
@@ -185,4 +208,5 @@ export {
     getDiscoverTv,
     getTvRating,
     getTvSeasonDetails,
+    getTvEpisodeDetails,
 };
