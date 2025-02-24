@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Episode } from '../types';
+import { useState, useEffect } from 'react';
+import { Episode, EpisodeDetails } from '../types';
 import { CardMedia, Typography as Typ } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material/';
 import { formatReleaseDate, DateSize } from '../helpers';
+import { getTvEpisodeDetails } from '../helpers';
 
 interface EpisodeCardProps {
     details: Episode;
@@ -14,6 +15,21 @@ interface EpisodeCardProps {
  */
 const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
     const [expand, setExpand] = useState<boolean>(false);
+    const [episodeDetails, setEpisodeDetails] = useState<EpisodeDetails | null>(null);
+    // console.log(details);
+
+    useEffect(() => {
+        const handler = async () => {
+            const episodeDetails = await getTvEpisodeDetails(
+                details.show_id,
+                details.season_number,
+                details.episode_number
+            );
+            setEpisodeDetails(episodeDetails);
+        };
+        if (expand) handler();
+    }, [expand]);
+
     return (
         <div className='my-3 bg-foreground rounded-b-md w-full rounded-sm max-w-[275px] md:max-w-none'>
             <div data-testid='episode-card-component' className='flex flex-col md:flex-row '>

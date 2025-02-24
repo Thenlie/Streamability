@@ -34,39 +34,6 @@ export interface TvResults {
     total_results?: number;
 }
 
-export interface Season {
-    air_date: string | null;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string | null;
-    season_number: number;
-    vote_average: number;
-}
-
-export interface SeasonDetails extends Season {
-    _id: string;
-    episodes: Episode[];
-}
-
-export interface Episode {
-    air_date: string;
-    episode_number: number;
-    id: number;
-    name: string;
-    overview: string;
-    production_code: string;
-    runtime: number;
-    season_number: number;
-    show_id: number;
-    still_path: string;
-    vote_average: number;
-    vote_count: number;
-    crew: (Actor & { job: string })[];
-    guest_stars: Actor[];
-}
-
 export interface NextEpisodeData {
     air_date: string;
     episode_number: number;
@@ -197,4 +164,72 @@ export interface DiscoverTv {
     first_air_date_lte?: string;
     with_watch_providers?: string;
     watch_region?: string;
+}
+
+export interface Season {
+    air_date: string | null;
+    episode_count: number;
+    id: number;
+    name: string;
+    overview: string;
+    poster_path: string | null;
+    season_number: number;
+    vote_average: number;
+}
+
+export interface SeasonDetails extends Season {
+    _id: string;
+    episodes: Episode[];
+}
+
+export interface Episode {
+    air_date: string;
+    episode_number: number;
+    id: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    runtime: number;
+    season_number: number;
+    show_id: number;
+    still_path: string;
+    vote_average: number;
+    vote_count: number;
+    crew: (Actor & { job: string })[];
+    guest_stars: Actor[];
+}
+
+export interface EpisodeDetails extends Episode {
+    credits: {
+        cast: Actor[];
+    };
+    images: {
+        stills: [
+            {
+                aspect_ratio: number;
+                height: number;
+                iso_639_1: string;
+                file_path: string;
+                vote_average: number;
+                vote_count: number;
+                width: number;
+            },
+        ];
+    };
+    videos: {
+        results: [
+            {
+                iso_639_1: string;
+                iso_3166_1: string;
+                name: string;
+                key: string;
+                site: string;
+                size: number;
+                type: string;
+                official: boolean;
+                published_at: string;
+                id: string;
+            },
+        ];
+    };
 }
