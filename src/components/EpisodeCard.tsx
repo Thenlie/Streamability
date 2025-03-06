@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Episode, EpisodeDetails } from '../types';
+import { Actor, Episode, EpisodeDetails } from '../types';
 import { CardMedia, Typography as Typ } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material/';
 import { formatReleaseDate, DateSize } from '../helpers';
 import { getTvEpisodeDetails } from '../helpers';
+import { Link } from 'react-router';
 
 interface EpisodeCardProps {
     details: Episode;
@@ -16,7 +17,7 @@ interface EpisodeCardProps {
 const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
     const [expand, setExpand] = useState<boolean>(false);
     const [episodeDetails, setEpisodeDetails] = useState<EpisodeDetails | null>(null);
-    // console.log(details);
+    console.log(details);
 
     useEffect(() => {
         const handler = async () => {
@@ -26,9 +27,58 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                 details.episode_number
             );
             setEpisodeDetails(episodeDetails);
+            // console.log(episodeDetails);
         };
-        if (expand) handler();
+        if (expand && !episodeDetails) handler();
     }, [expand]);
+
+    const renderActors = (actors: (Actor & { job?: string })[], title: 'Cast' | 'Guest Stars' | 'Crew', isCrew?: boolean): JSX.Element => {
+        return (
+            <div className='my-2'>
+                <Typ fontWeight={'bold'} variant='body2' textAlign={'left'}>{title}</Typ>
+                <div className='flex overflow-x-scroll'>
+                    {actors.map((item, i) => (
+                        <Link to={`/details/actor/${item.id}`} key={i} className='flex items-center my-2 space-x-1 mr-4 md:min-w-[180px]'>
+                            <CardMedia
+                                component='img'
+                                className='rounded-lg'
+                                sx={{
+                                    boxShadow: 5,
+                                    width: 66,
+                                    minWidth: 66,
+                                    height: 66,
+                                    '&:hover': { cursor: 'pointer' },
+
+                                }}
+                                image={
+                                    item.profile_path
+                                        ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
+                                        : '/poster-placeholder.jpeg'
+                                }
+                                alt={item.name + ' poster'}
+                            />
+                            <div className='flex-1 min-w-0'>
+                                <Typ className='text-left hover:text-blue-500 truncate' fontWeight={'bold'} variant='body2'>{item.name}</Typ>
+                                <Typ className='text-left truncate' variant='body2'>{!isCrew ? item.character : item.job}</Typ>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    const renderMetaData = (details: Episode) => {
+        return (
+            <>
+                <Typ variant='subtitle1'>{details.vote_average}</Typ>
+                <Typ variant='subtitle1'>
+                    {formatReleaseDate(details.air_date, DateSize.MEDIUM)}
+                </Typ>
+                <Typ variant='subtitle1'>{details.runtime}m</Typ>
+            </>
+        )
+    }
 
     return (
         <div className='my-3 bg-foreground rounded-b-md w-full rounded-sm max-w-[275px] md:max-w-none'>
@@ -57,16 +107,12 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                         </Typ>
                     </div>
                     <div className='hidden md:flex space-x-3'>
-                        <Typ variant='subtitle1'>{details.vote_average}</Typ>
-                        <Typ variant='subtitle1'>
-                            {formatReleaseDate(details.air_date, DateSize.MEDIUM)}
-                        </Typ>
-                        <Typ variant='subtitle1'>{details.runtime}m</Typ>
+                        {renderMetaData(details)}
                     </div>
                     <div className='py-2 hidden md:block'>
                         <Typ
                             variant='body2'
-                            className='text-wrap text-left'
+                            className='text-wrap text-left hidden md:block'
                             sx={{
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -79,8 +125,8 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                         </Typ>
                     </div>
                 </div>
+                {/* Expand mobile */}
                 <div
-                    className='md:hidden'
                     style={{
                         maxHeight: expand ? '600px' : '0px',
                         overflow: 'hidden',
@@ -88,15 +134,12 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                     }}
                 >
                     <Divider />
-                    <div className='p-4'>
+                    <div className='md:hidden p-4'>
                         <div className='flex flex-row justify-start space-x-3'>
-                            <Typ variant='subtitle1'>{details.vote_average}</Typ>
-                            <Typ variant='subtitle1'>
-                                {formatReleaseDate(details.air_date, DateSize.MEDIUM)}
-                            </Typ>
-                            <Typ variant='subtitle1'>{details.runtime}m</Typ>
+                            {renderMetaData(details)}
                         </div>
                         <Typ
+                            className='text-left pt-4'
                             sx={{
                                 overflow: 'hidden',
                                 textOverflow: 'ellipsis',
@@ -105,7 +148,6 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                                 WebkitBoxOrient: 'vertical',
                             }}
                             variant='body2'
-                            className='text-left pt-4'
                         >
                             {details.overview}
                         </Typ>
@@ -124,7 +166,62 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                                 }
                             </Typ>
                         </div>
+                        {episodeDetails?.credits.cast &&
+                            renderActors(episodeDetails.credits.cast, 'Cast')
+                        }
+                        {details?.guest_stars &&
+                            renderActors(details.guest_stars, 'Guest Stars')
+                        }
                     </div>
+                </div>
+
+            </div>
+            {/* >:md expand menu */}
+            <div className='hidden md:block px-4'
+                style={{
+                    maxHeight: expand ? '850px' : '0px',
+                    overflow: 'hidden',
+                    transition: 'max-height .5s ease-in-out',
+                }}
+            >
+                <Divider />
+                <div className='flex flex-col'>
+                    {episodeDetails?.credits.cast &&
+                        renderActors(episodeDetails.credits.cast, 'Cast')
+                    }
+                    {details?.guest_stars &&
+                        renderActors(details.guest_stars, 'Guest Stars')
+                    }
+                    {details?.crew &&
+                        renderActors(details.crew, 'Crew', true)
+                    }
+                    {episodeDetails?.images &&
+                        <div className='text-left flex-col my-2'>
+                            <Typ fontWeight={'bold'} variant='body2' textAlign={'left'}>Episode Images</Typ>
+                            <div className='flex'>
+                                {episodeDetails?.images.stills.map((item, i) => (
+                                    <div key={i} className=''>
+                                        <CardMedia
+                                            component='img'
+                                            className='rounded-sm'
+                                            sx={{
+                                                boxShadow: 5,
+                                                width: 210,
+                                                maxHeight: 270,
+                                                '&:hover': { cursor: 'pointer' },
+                                            }}
+                                            image={
+                                                details.still_path
+                                                    ? `https://image.tmdb.org/t/p/w500${item.file_path}`
+                                                    : '/poster-placeholder.jpeg'
+                                            }
+                                            alt={details.name + ' poster'}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
             <Divider />
