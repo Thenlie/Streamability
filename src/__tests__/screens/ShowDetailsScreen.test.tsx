@@ -88,8 +88,8 @@ describe('Show Details Screen', () => {
         await act(async () => {
             fireEvent.click(await screen.findByRole('link', { name: 'View All Seasons' }));
             expect(tvRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}/seasons`);
+            await tvRouter.navigate(`/details/tv/${TV_DETAIL.id}}`);
         });
-        tvRouter.state.location.pathname = `/details/tv/${TV_DETAIL.id}}`;
     });
     it('shows recommendation carousel when recommendation data is returned', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);

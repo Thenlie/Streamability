@@ -1,14 +1,12 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, act } from '@testing-library/react';
 import { SeasonCard } from '../../components/';
-import { SEASON, TV_DETAIL } from '../constants';
+import { SEASON, TV_DETAIL, TMDB_BASE_PATH } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { pluralizeString } from '../../helpers';
 
-const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
-
-describe('SeasonCard', () => {
+describe('Season Card', () => {
     it('properly renders with all season info and image', () => {
         render(
             <MemoryRouter>

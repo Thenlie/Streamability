@@ -5,6 +5,7 @@ import { getTvDetails } from '../helpers';
 import { SeasonCard, SeasonCardLoader } from '../components';
 import { default as Typ } from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
 /**
  * Screen to render all of a TV Show's Seasons
@@ -65,6 +66,7 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
                         to={`/details/tv/${details.id}`}
                         state={{ details: details }}
                     >
+                        <ArrowBackRoundedIcon />
                         Back to Show Details
                     </Link>
                 </div>
