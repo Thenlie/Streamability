@@ -1,4 +1,4 @@
-import { Actor } from './actor';
+import { Actor, Crew } from './actor';
 import { ShowGenre, ShowProviders } from './show';
 
 /**
@@ -195,41 +195,37 @@ export interface Episode {
     still_path: string;
     vote_average: number;
     vote_count: number;
-    crew: (Actor & { job: string })[];
+    crew: Crew[];
     guest_stars: Actor[];
 }
 
-export interface EpisodeDetails extends Episode {
+export interface EpisodeDetails extends Partial<Episode> {
     credits: {
         cast: Actor[];
     };
     images: {
-        stills: [
-            {
-                aspect_ratio: number;
-                height: number;
-                iso_639_1: string;
-                file_path: string;
-                vote_average: number;
-                vote_count: number;
-                width: number;
-            },
-        ];
+        stills: {
+            aspect_ratio: number;
+            height: number;
+            iso_639_1: string;
+            file_path: string;
+            vote_average: number;
+            vote_count: number;
+            width: number;
+        }[];
     };
     videos: {
-        results: [
-            {
-                iso_639_1: string;
-                iso_3166_1: string;
-                name: string;
-                key: string;
-                site: string;
-                size: number;
-                type: string;
-                official: boolean;
-                published_at: string;
-                id: string;
-            },
-        ];
+        results: {
+            iso_639_1: string;
+            iso_3166_1: string;
+            name: string;
+            site: string;
+            key: string;
+            size: number;
+            type: string;
+            official: boolean;
+            published_at: string;
+            id: string;
+        }[];
     };
 }

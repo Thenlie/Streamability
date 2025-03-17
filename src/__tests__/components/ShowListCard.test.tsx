@@ -3,10 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, vi } from 'vitest';
 import { ShowListCard } from '../../components';
-import { MOVIE_DETAIL, PROFILE } from '../constants';
+import { MOVIE_DETAIL, PROFILE, TMDB_BASE_PATH } from '../constants';
 import { DateSize, formatReleaseDate } from '../../helpers';
 
-const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 const mockedUseNavigate = vi.fn();
 const mockSetProfile = vi.fn();
 

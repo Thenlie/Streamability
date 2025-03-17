@@ -1,12 +1,10 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import ActorCard from '../../components/ActorCard';
-import { ACTOR } from '../constants';
+import { ACTOR, TMDB_BASE_PATH } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { vi } from 'vitest';
-
-const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 
 describe('ActorCard', () => {
     it('properly renders with all actor info and image', () => {
