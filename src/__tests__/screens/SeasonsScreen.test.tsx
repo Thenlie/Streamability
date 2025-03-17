@@ -4,9 +4,7 @@ import { fireEvent, render, screen, act } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { getTvDetails } from '../../helpers';
-import { TV_DETAIL } from '../constants';
-
-const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
+import { TV_DETAIL, TMDB_BASE_PATH } from '../constants';
 
 vi.mock('../../helpers', async () => {
     const actual = await vi.importActual('../../helpers');
@@ -48,7 +46,7 @@ describe('Seasons Screen', () => {
             '/poster-placeholder.jpeg'
         );
     });
-    it('page header properly provides link that navigates back to TV details', async () => {
+    it('properly provides link that navigates back to TV details', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
 
         render(<RouterProvider router={tvRouter} />);
