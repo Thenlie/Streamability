@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, vi } from 'vitest';
 import { ShowListCard } from '../../components';
-import { MOVIE_DETAIL, PROFILE, TMDB_BASE_PATH } from '../constants';
+import { MOVIE_DETAIL, PROFILE, TMDB_IMG_BASE_PATH } from '../constants';
 import { DateSize, formatReleaseDate } from '../../helpers';
 
 const mockedUseNavigate = vi.fn();
@@ -34,7 +34,7 @@ describe('Show List Card Component', () => {
         // There are two images since the Rating component is an image
         const images = screen.getAllByRole('img');
         expect(screen.getByTestId('show-list-card-component')).toBeInTheDocument();
-        expect(images[0]).toHaveAttribute('src', TMDB_BASE_PATH + MOVIE_DETAIL.poster_path);
+        expect(images[0]).toHaveAttribute('src', TMDB_IMG_BASE_PATH + MOVIE_DETAIL.poster_path);
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
             '/details/' + MOVIE_DETAIL.media_type + '/' + MOVIE_DETAIL.id

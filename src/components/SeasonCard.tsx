@@ -1,6 +1,6 @@
 import { Season } from '../types';
 import CardMedia from '@mui/material/CardMedia';
-import { default as Typ } from '@mui/material/Typography';
+import Typ from '@mui/material/Typography';
 import { Link } from 'react-router';
 import { pluralizeString } from '../helpers';
 
@@ -47,12 +47,12 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details, title, showId }): JSX.
                     {details.name}
                 </Typ>
                 <div className='flex justify-around sm:justify-start sm:py-1'>
-                    {details.season_number != 0 && details.air_date && (
+                    {details.season_number != 0 && details.vote_average > 0 && (
                         <Typ className='hidden sm:inline pr-4'>{details.vote_average}</Typ>
                     )}
-                    <Typ className='sm:pr-4'>
-                        {details.air_date ? details.air_date.slice(0, 4) : '-'}
-                    </Typ>
+                    {details.air_date && (
+                        <Typ className='sm:pr-4'>{details.air_date.slice(0, 4)}</Typ>
+                    )}
                     <Typ className='sm:pr-4'>{`${details.episode_count} ${pluralizeString(details.episode_count, 'Episode')}`}</Typ>
                 </div>
                 <div className='hidden sm:block'>

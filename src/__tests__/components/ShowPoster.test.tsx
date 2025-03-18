@@ -2,7 +2,13 @@ import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
 import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import ShowPoster from '../../components/ShowPoster';
-import { MOVIE_DETAIL, PROFILE, PROFILE_ACTIONS, TV_DETAIL, TMDB_BASE_PATH } from '../constants';
+import {
+    MOVIE_DETAIL,
+    PROFILE,
+    PROFILE_ACTIONS,
+    TV_DETAIL,
+    TMDB_IMG_BASE_PATH,
+} from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { ThemeProvider } from '@emotion/react';
@@ -24,7 +30,7 @@ describe('Show Poster Component', () => {
         expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
         expect(screen.getByRole('img')).toHaveAttribute(
             'src',
-            TMDB_BASE_PATH + MOVIE_DETAIL.poster_path
+            TMDB_IMG_BASE_PATH + MOVIE_DETAIL.poster_path
         );
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
@@ -40,7 +46,7 @@ describe('Show Poster Component', () => {
         expect(screen.getByTestId('show-poster-component')).toBeInTheDocument();
         expect(screen.getByRole('img')).toHaveAttribute(
             'src',
-            TMDB_BASE_PATH + TV_DETAIL.poster_path
+            TMDB_IMG_BASE_PATH + TV_DETAIL.poster_path
         );
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',

@@ -8,7 +8,7 @@ import {
     EpisodeDetails,
 } from '../types';
 
-export const TMDB_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
+export const TMDB_IMG_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 
 /* eslint-disable prettier/prettier */
 export const TRENDING_DATA: ShowData[] = [

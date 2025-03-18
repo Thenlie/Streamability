@@ -7,7 +7,7 @@ import {
     getTvRecommendations,
     getReleaseDate,
     getRuntime,
-    validateSeasons,
+    filterValidSeasons,
 } from '../helpers';
 import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import { ShowData } from '../types';
@@ -22,16 +22,16 @@ import {
 } from '../components';
 import { ShowDetailsLoader } from './loaders';
 import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
-import { Tooltip, Typography as Typ } from '@mui/material';
-import {
-    AddToQueue,
-    Cancel,
-    CheckCircle,
-    Favorite,
-    HeartBroken,
-    PersonAddAltRounded,
-    RemoveFromQueue,
-} from '@mui/icons-material';
+import Tooltip from '@mui/material/Tooltip';
+import Typ from '@mui/material/Typography';
+import AddToQueue from '@mui/icons-material/AddToQueue';
+import Cancel from '@mui/icons-material/Cancel';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import Favorite from '@mui/icons-material/Favorite';
+import HeartBroken from '@mui/icons-material/HeartBroken';
+import PersonAddAltRounded from '@mui/icons-material/PersonAddAltRounded';
+import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 /**
  * Buttons to alter the show in a logged in users profile.
@@ -236,7 +236,7 @@ const ShowDetailsScreen: React.FC = () => {
                         Latest Season
                     </Typ>
                     <SeasonCard
-                        details={validateSeasons(details.seasons).slice(-1)[0]}
+                        details={filterValidSeasons(details.seasons).slice(-1)[0]}
                         showId={details.id}
                     />
                     <Link
@@ -245,6 +245,7 @@ const ShowDetailsScreen: React.FC = () => {
                         state={{ details: details }}
                     >
                         View All Seasons
+                        <ArrowForwardRoundedIcon />
                     </Link>
                 </section>
             )}

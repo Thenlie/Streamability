@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Actor, Crew, Episode, EpisodeDetails } from '../types';
-import { CardMedia, Typography as Typ } from '@mui/material';
+import { formatReleaseDate, DateSize } from '../helpers';
+import { getTvEpisodeDetails } from '../helpers';
+import { useWindowSize } from '../hooks';
+import CardMedia from '@mui/material/CardMedia';
+import Typ from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { formatReleaseDate, DateSize } from '../helpers';
-import { getTvEpisodeDetails } from '../helpers';
 import { Link } from 'react-router';
-import { useWindowSize } from '../hooks';
 
 interface EpisodeCardProps {
     details: Episode;
@@ -103,7 +104,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
     const renderMetaData = (details: Episode): JSX.Element => {
         return (
             <>
-                <Typ variant='subtitle1'>{details.vote_average}</Typ>
+                {details.vote_average > 0 && <Typ variant='subtitle1'>{details.vote_average}</Typ>}
                 {details.air_date && (
                     <Typ variant='subtitle1'>
                         {formatReleaseDate(details.air_date, DateSize.MEDIUM)}

@@ -11,8 +11,9 @@ import {
     filterShowsByReleasedBefore,
     filterShowsByReleasedBetween,
     filterShowsByType,
+    filterValidSeasons,
 } from '../showFilterUtils';
-import { SHOW_DATA_ARRAY } from './constants';
+import { SHOW_DATA_ARRAY, SEASONS_VALID, SEASONS_INVALID } from './constants';
 
 describe('filterShowsByGenre', () => {
     it('properly filters shows based on a specified genre id', () => {
@@ -127,5 +128,22 @@ describe('filterShowsByRatingCountBetween', () => {
         expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 100, 1000).length).toBe(9);
         expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 1000, 10000).length).toBe(2);
         expect(filterShowsByRatingCountBetween(SHOW_DATA_ARRAY, 10000, 20000).length).toBe(1);
+    });
+});
+
+describe('filterValidSeasons', () => {
+    it('properly returns provided array if no invalid seasons are found', () => {
+        expect(filterValidSeasons(SEASONS_VALID).length).toBe(SEASONS_VALID.length);
+    });
+    it('properly removes specials seasons, unreleased seasons, or both', () => {
+        expect(filterValidSeasons([...SEASONS_VALID, SEASONS_INVALID[0]]).length).toBe(
+            SEASONS_VALID.length
+        );
+        expect(filterValidSeasons([...SEASONS_VALID, SEASONS_INVALID[1]]).length).toBe(
+            SEASONS_VALID.length
+        );
+        expect(
+            filterValidSeasons([...SEASONS_VALID, SEASONS_INVALID[0], SEASONS_INVALID[1]]).length
+        ).toBe(SEASONS_VALID.length);
     });
 });
