@@ -4,7 +4,7 @@ import { fireEvent, render, screen, act } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { getTvSeasonDetails } from '../../helpers';
-import { SEASON, TV_DETAIL, TMDB_BASE_PATH } from '../constants';
+import { SEASON, TV_DETAIL, TMDB_IMG_BASE_PATH } from '../constants';
 
 vi.mock('../../helpers', async () => {
     const actual = await vi.importActual('../../helpers');
@@ -30,7 +30,7 @@ describe('Season Details Screen', () => {
         expect(screen.getByText('(' + SEASON.air_date?.slice(0, 4) + ')'));
         expect(screen.getByAltText(`${SEASON.name} poster`)).toHaveAttribute(
             'src',
-            TMDB_BASE_PATH + SEASON.poster_path
+            TMDB_IMG_BASE_PATH + SEASON.poster_path
         );
         expect(screen.getAllByTestId('episode-card-component').length).toBe(SEASON.episode_count);
     });

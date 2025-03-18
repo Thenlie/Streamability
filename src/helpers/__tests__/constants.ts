@@ -473,7 +473,7 @@ export const SEASONS_VALID: Season[] = [
     },
 ];
 
-export const SEASON_INVALID: Season[] = [
+export const SEASONS_INVALID: Season[] = [
     {
         air_date: '2016-10-25',
         episode_count: 35,

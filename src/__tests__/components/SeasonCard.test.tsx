@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, act } from '@testing-library/react';
 import { SeasonCard } from '../../components/';
-import { SEASON, TV_DETAIL, TMDB_BASE_PATH } from '../constants';
+import { SEASON, TV_DETAIL, TMDB_IMG_BASE_PATH } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { pluralizeString } from '../../helpers';
@@ -24,7 +24,10 @@ describe('Season Card', () => {
             )
         ).toBeInTheDocument();
         expect(screen.getByText(SEASON.overview)).toBeInTheDocument();
-        expect(screen.getByRole('img')).toHaveAttribute('src', TMDB_BASE_PATH + SEASON.poster_path);
+        expect(screen.getByRole('img')).toHaveAttribute(
+            'src',
+            TMDB_IMG_BASE_PATH + SEASON.poster_path
+        );
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
             `/details/tv/${TV_DETAIL.id}/seasons/${SEASON.season_number}`

@@ -3,8 +3,8 @@ import { useLocation, Location, Link } from 'react-router';
 import { ShowData } from '../types';
 import { getTvDetails } from '../helpers';
 import { SeasonCard, SeasonCardLoader } from '../components';
-import { default as Typ } from '@mui/material/Typography';
-import { CardMedia } from '@mui/material';
+import Typ from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
 /**

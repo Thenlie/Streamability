@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, act, within } from '@testing-library/react';
 import { EpisodeCard } from '../../components/';
-import { EPISODE, EPISODE_DETAILS, TMDB_BASE_PATH } from '../constants';
+import { EPISODE, EPISODE_DETAILS, TMDB_IMG_BASE_PATH } from '../constants';
 import { MemoryRouter } from 'react-router';
 import { formatReleaseDate, DateSize, getTvEpisodeDetails } from '../../helpers';
 import { describe, it, vi } from 'vitest';
@@ -70,7 +70,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
 
@@ -87,7 +87,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
 
@@ -104,7 +104,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
     });
@@ -198,7 +198,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
 
@@ -215,7 +215,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
 
@@ -232,7 +232,7 @@ describe('Episode Card', () => {
             expect(actorContainer.getByText(item.name)).toBeInTheDocument();
             expect(actorContainer.getByRole('img')).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.profile_path
+                TMDB_IMG_BASE_PATH + item.profile_path
             );
         });
 
@@ -241,7 +241,7 @@ describe('Episode Card', () => {
         EPISODE_DETAILS.images?.stills.map((item, i) => {
             expect(menu.getByAltText(`episode image ${i}`)).toHaveAttribute(
                 'src',
-                TMDB_BASE_PATH + item.file_path
+                TMDB_IMG_BASE_PATH + item.file_path
             );
         });
     });

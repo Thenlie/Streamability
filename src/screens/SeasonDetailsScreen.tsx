@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { getTvSeasonDetails } from '../helpers';
 import { SeasonDetails } from '../types';
 import { Location, useLocation, Link } from 'react-router';
-import { CardMedia, Typography as Typ } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+import Typ from '@mui/material/Typography';
 import { EpisodeCard } from '../components';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
