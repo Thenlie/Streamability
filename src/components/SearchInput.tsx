@@ -1,7 +1,7 @@
 import Search from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-router';
 import TextInput from '../components/TextInput';
 
@@ -18,13 +18,27 @@ interface SearchInputProps {
  */
 const SearchInput: React.FC<SearchInputProps> = ({ colorOverride }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const url = new URL(window.location.href);
+    const query = url.searchParams.get('q')?.trim();
 
     const clearSearch = () => {
         setSearchTerm('');
     };
 
+    /**
+     * On page load, if searching, set the value to what was searched.
+     * otherwise clear any input
+     */
+    useEffect(() => {
+        if (query) {
+            setSearchTerm(query);
+        } else {
+            clearSearch();
+        }
+    }, [query]);
+
     return (
-        <Form method='get' action='/search' onSubmit={clearSearch}>
+        <Form method='get' action='/search'>
             <TextInput
                 type='text'
                 name='q'
