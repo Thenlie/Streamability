@@ -17,7 +17,6 @@ import {
     Rating,
     Button,
     OfflineSnackbar,
-    ActorCard,
     SeasonCard,
 } from '../components';
 import { ShowDetailsLoader } from './loaders';
@@ -32,6 +31,7 @@ import HeartBroken from '@mui/icons-material/HeartBroken';
 import PersonAddAltRounded from '@mui/icons-material/PersonAddAltRounded';
 import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import CastCrewCarousel from '../components/CastCrewCarousel';
 
 /**
  * Buttons to alter the show in a logged in users profile.
@@ -211,24 +211,10 @@ const ShowDetailsScreen: React.FC = () => {
                 </div>
             </section>
             {details.credits && details.credits.cast.length > 0 && (
-                <section className='max-w-full px-6 md:px-12 mx-auto'>
-                    <Typ variant='h5'>Cast</Typ>
-                    <div className='flex flex-nowrap overflow-x-auto w-full'>
-                        {details.credits.cast.map((actor, i) => {
-                            return <ActorCard key={i} details={actor} />;
-                        })}
-                    </div>
-                </section>
+                <CastCrewCarousel title='Cast' castCrew={details.credits.cast} />
             )}
             {details.credits && details.credits.crew.length > 0 && (
-                <section className='max-w-full px-6 md:px-12 mt-3 mx-auto'>
-                    <Typ variant='h5'>Crew</Typ>
-                    <div className='flex flex-nowrap overflow-x-auto w-full'>
-                        {details.credits.crew.map((actor, i) => {
-                            return <ActorCard key={i} details={actor} isCrew={true} />;
-                        })}
-                    </div>
-                </section>
+                <CastCrewCarousel title='Crew' castCrew={details.credits.crew} />
             )}
             {details.seasons && (
                 <section className='flex flex-col items-center sm:items-start my-6 w-[65svw] max-w-[1090px]'>
