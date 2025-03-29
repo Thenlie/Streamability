@@ -4,34 +4,23 @@ import { ShowCarousel, Button } from '../../components';
 import { useTrendingShows } from '../../hooks';
 import Home from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router';
-import SortFilterHeader from '../../components/SortFilterHeader';
 
 interface EmptySearchResultsProps {
     /**
      * String of query searched by user
      */
     query: string;
-    /**
-     * Current state of users view
-     */
-    viewState: 'list' | 'grid';
 }
 
 /**
  * Rendered when MDB returns no results for a search.
  */
-const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query, viewState }) => {
+const EmptySearchResults: React.FC<EmptySearchResultsProps> = ({ query }) => {
     const navigate = useNavigate();
     const { trendingShows, loading } = useTrendingShows();
 
     return (
         <div data-testid='empty-search-results'>
-            <SortFilterHeader
-                query={query}
-                viewState={viewState}
-                viewStateKey={'streamabilityView'}
-                disableControls
-            />
             <section className='flex flex-col m-auto text-left px-6'>
                 <div className='flex flex-col items-center mt-6 m-2'>
                     <img

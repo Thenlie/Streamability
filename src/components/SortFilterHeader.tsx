@@ -15,11 +15,11 @@ import { ShowData } from '../types';
 
 const LOG = new Logger('SearchResultsHeader');
 
-interface SearchResultsHeaderProps {
+interface SortFilterHeaderProps {
     /**
-     * String the user entered as a search
+     * String displayed in the center of the header
      */
-    query?: string;
+    title?: string;
     /**
      * Local storage key that for view state
      */
@@ -27,33 +27,31 @@ interface SearchResultsHeaderProps {
     /**
      * Current state of users view
      */
-    viewState?: 'list' | 'grid';
+    viewState: 'list' | 'grid';
     /**
      * Function to set the react state of the view
      */
-    setViewState?: Dispatch<SetStateAction<'list' | 'grid'>>;
+    setViewState: Dispatch<SetStateAction<'list' | 'grid'>>;
     /**
      * Data of shows returned from the requested search
      */
-    showDetails?: ShowData[] | null;
+    showDetails: ShowData[] | null;
     /**
      * Function to set the react state of the show data
      */
-    setShowDetails?: Dispatch<SetStateAction<ShowData[] | null>>;
+    setShowDetails: Dispatch<SetStateAction<ShowData[] | null>>;
     /**
      * Function to trigger a re-render in the search results screen
      */
-    setHash?: Dispatch<SetStateAction<number>>;
+    setHash: Dispatch<SetStateAction<number>>;
     /**
      * All controls are disabled when `true`, defaults to `false`
      */
     disableControls?: boolean;
-
     /**
      * Disable the filter options of the filter items, defaults to `false`
      */
     disableAlphabeticOrderFilter?: boolean;
-
     /**
      * Disable the order filter for the type of results, defaults to `false`
      */
@@ -69,8 +67,8 @@ interface FilterProps {
  * Heading of the screen showing the search query
  * and containing the view toggle button.
  */
-const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
-    query,
+const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
+    title,
     viewStateKey,
     viewState,
     setViewState,
@@ -93,7 +91,7 @@ const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
         }
         if (filterState.showType === 'none' && sortState === 'none') {
             // resets to original data if neither are selected
-            setShowDetails?.(JSON.parse(unsortedShows));
+            setShowDetails(JSON.parse(unsortedShows));
             return;
         }
 
@@ -109,37 +107,48 @@ const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
 
         if (sortState === 'alpha' && results.length > 0) {
             // If sort AND filter
-            setShowDetails?.(sortShowsAlphaAsc(results));
+            setShowDetails(sortShowsAlphaAsc(results));
         } else if (sortState === 'rev' && results.length > 0) {
             // if sort AND filter
-            setShowDetails?.(sortShowsAlphaDesc(results));
+            setShowDetails(sortShowsAlphaDesc(results));
         } else if (sortState === 'alpha') {
             // If ONLY sort
-            setShowDetails?.(sortShowsAlphaAsc(JSON.parse(unsortedShows)));
+            setShowDetails(sortShowsAlphaAsc(JSON.parse(unsortedShows)));
         } else if (sortState === 'rev') {
             // If ONLY sort
-            setShowDetails?.(sortShowsAlphaDesc(JSON.parse(unsortedShows)));
+            setShowDetails(sortShowsAlphaDesc(JSON.parse(unsortedShows)));
         }
 
-        if (results.length > 0) setShowDetails?.(results);
+        if (results.length > 0) setShowDetails(results);
     }, [sortState, filterState.showType]);
 
     const handleViewToggle = (view: 'grid' | 'list') => {
-        setViewState?.(view);
+        setViewState(view);
         localStorage.setItem(viewStateKey, view);
-        setHash?.(Math.random());
+        setHash(Math.random());
     };
+
+    // default to grid view on mobile
+    useEffect(() => {
+        if (windowSize.width && windowSize.width < 768) {
+            setViewState('grid');
+            localStorage.setItem('streamabilityView', 'grid');
+        }
+    }, [windowSize]);
 
     return (
         <div
-            className={`flex flex-col md:flex-row flex-wrap ${query ? 'justify-between' : 'justify-end'} align-middle w-full p-3`}
+            className={`flex flex-col md:flex-row flex-wrap ${title ? 'justify-between' : 'justify-end'} align-middle w-full p-3 relative min-h-[50px]`}
         >
-            {query && (
-                <Typ variant='h5' alignSelf='center' margin={1}>
-                    Search results for: <span className='underline'>{query}</span>
+            {title && (
+                <Typ
+                    variant='h5'
+                    className='self-center flex-1 md:absolute top-[50%] left-[50%] md:-translate-1/2'
+                >
+                    {title}
                 </Typ>
             )}
-            <div>
+            <div className='ml-auto'>
                 {!disableResultTypeFilter && (
                     <ToggleButtonGroup
                         value={filterState.showType}
@@ -232,7 +241,7 @@ const SortFilterHeader: React.FC<SearchResultsHeaderProps> = ({
                 <ToggleButtonGroup
                     value={viewState}
                     exclusive
-                    sx={windowSize.width && windowSize.width < 750 ? { display: 'none' } : {}}
+                    sx={windowSize.width && windowSize.width < 768 ? { display: 'none' } : {}}
                     disabled={disableControls}
                 >
                     <ToggleButton

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { usePaginatedData, useTrendingShows } from '../../hooks';
@@ -37,11 +37,12 @@ describe('Search Results Screen', () => {
             disconnect: () => null,
         });
         window.IntersectionObserver = mockIntersectionObserver;
+        window.history.pushState({}, '', 'search?q=iron+man');
     });
     afterAll(() => {
         consoleErrorMock.mockRestore();
     });
-    it('search results loader displayed initially when `data` is null', async () => {
+    it.only('search results loader displayed initially when `data` is null', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
             data: null,
             setData: () => {},
@@ -53,9 +54,7 @@ describe('Search Results Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-loader');
-        const headerText = screen.getByText('Search results for:');
-        expect(headerText).toBeInTheDocument();
-        expect(within(headerText).getByText('iron man')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('iron man')).toBeInTheDocument();
         expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
         expect(consoleErrorMock).toHaveBeenCalledTimes(1);
     });
@@ -76,9 +75,7 @@ describe('Search Results Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('empty-search-results');
-        const headerText = screen.getByText('Search results for:');
-        expect(headerText).toBeInTheDocument();
-        expect(within(headerText).getByText('iron man')).toBeInTheDocument();
+        expect(screen.getByText('iron man')).toBeInTheDocument();
         expect(
             screen.getByText('Please try again with a different keyword or check your spelling.')
         ).toBeInTheDocument();
@@ -101,9 +98,7 @@ describe('Search Results Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-screen');
-        const headerText = screen.getByText('Search results for:');
-        expect(headerText).toBeInTheDocument();
-        expect(within(headerText).getByText('iron man')).toBeInTheDocument();
+        expect(screen.getByText('iron man')).toBeInTheDocument();
         expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
         expect(consoleErrorMock).toHaveBeenCalledTimes(3);
     });

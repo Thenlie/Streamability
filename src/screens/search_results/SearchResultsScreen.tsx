@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import { useLoaderData } from 'react-router';
-import { EmptySearchResults } from '../../components';
+import { EmptySearchResults, OfflineSnackbar } from '../../components';
 import { usePaginatedData, useProfileContext, useWindowSize } from '../../hooks';
 import Logger from '../../logger';
 import SearchResultCards from './SearchResultsCards';
 import { SearchResultsLoader } from '../loaders';
-import DetailScreen from '../DetailScreen';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import SortFilterHeader from '../../components/SortFilterHeader';
 
 const LOG = new Logger('SearchResultsScreen');
 
@@ -65,14 +66,6 @@ const SearchResultsScreen: React.FC = () => {
 
     if (!storageItem) localStorage.setItem(viewStateKey, initialView);
 
-    // default to grid view on mobile
-    useEffect(() => {
-        if (windowSize.width && windowSize.width < 750) {
-            setViewState('grid');
-            localStorage.setItem('streamabilityView', 'grid');
-        }
-    }, [windowSize]);
-
     const cards = useMemo(() => {
         return (
             <SearchResultCards
@@ -84,28 +77,27 @@ const SearchResultsScreen: React.FC = () => {
         );
     }, [data, hash, viewState, profile]);
 
-    if (!data) {
-        return <SearchResultsLoader query={query} windowSize={windowSize} viewState={viewState} />;
-    }
-
-    if (data && data.length === 0) {
-        return <EmptySearchResults query={query} viewState={viewState} />;
-    }
-
     return (
         <div className='flex flex-col items-center w-full' data-testid='search-results-screen'>
-            <DetailScreen
-                query={query}
+            <SortFilterHeader
                 viewStateKey={viewStateKey}
                 viewState={viewState}
                 setViewState={setViewState}
-                data={data}
-                setData={setData}
+                showDetails={data}
+                setShowDetails={setData}
                 setHash={setHash}
-                cards={cards}
-                moreToFetch={moreToFetch}
-                loadMoreRef={loadMoreRef}
             />
+            {!data && <SearchResultsLoader windowSize={windowSize} viewState={viewState} />}
+            {data && data.length === 0 && <EmptySearchResults query={query} />}
+            {data && data.length > 0 && (
+                <div>
+                    {cards}
+                    {moreToFetch && <LoadingIndicator />}{' '}
+                    {/* Show the indicator while more data is available */}
+                    <div ref={loadMoreRef}></div>
+                </div>
+            )}
+            <OfflineSnackbar />
         </div>
     );
 };
