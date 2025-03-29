@@ -74,7 +74,7 @@ const ActorDetailScreen: React.FC = () => {
                     {details.biography.length > 1000 && (
                         <>
                             <div
-                                className={`relative top-[-30px] bg-gradient-to-t from-foreground h-8 ${
+                                className={`relative top-[-30px] bg-linear-to-t from-foreground h-8 ${
                                     (detailsOpen || details.biography.length < 1000) && 'hidden'
                                 }`}
                             ></div>

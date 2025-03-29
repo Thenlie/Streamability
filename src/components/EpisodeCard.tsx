@@ -116,7 +116,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
     };
 
     return (
-        <div className='my-3 bg-foreground rounded-b-md rounded-sm max-w-[275px] md:max-w-none w-full'>
+        <div className='my-3 bg-foreground rounded-b-md rounded-xs max-w-[275px] md:max-w-none w-full'>
             <div data-testid='episode-card-component' className='flex flex-col md:flex-row '>
                 <CardMedia
                     component='img'
@@ -244,7 +244,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                                             <div key={i} className='mt-2 mr-2'>
                                                 <CardMedia
                                                     component='img'
-                                                    className='rounded-sm'
+                                                    className='rounded-xs'
                                                     sx={{
                                                         boxShadow: 5,
                                                         minWidth: 275,

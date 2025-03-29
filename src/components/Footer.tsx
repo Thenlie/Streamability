@@ -14,7 +14,7 @@ const Footer: React.FC = (): JSX.Element => {
         >
             {windowSize.width && (
                 <div className='flex items-center'>
-                    <Typ className='px-2 !text-text'>Powered By</Typ>
+                    <Typ className='px-2 text-text!'>Powered By</Typ>
                     <Link to='https://www.themoviedb.org/' target='_blank'>
                         <img
                             className='px-2'
@@ -47,7 +47,7 @@ const Footer: React.FC = (): JSX.Element => {
                     )}
                 </div>
             )}
-            <div className='hidden sm:block !text-text'>
+            <div className='hidden sm:block text-text!'>
                 <Typ>
                     Want to contribute?{' '}
                     <Link

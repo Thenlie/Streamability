@@ -66,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
                 disabled={disabled || loading}
                 startIcon={!loading && StartIcon && <StartIcon />}
                 onClick={onClick}
-                className='!p-0'
+                className='p-0!'
                 sx={{ margin: 0.5, minWidth: 210, minHeight: 45, ...sx }}
             >
                 {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : title}
