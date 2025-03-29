@@ -14,7 +14,7 @@ import {
 import { useProfileContext } from '../../hooks';
 import SearchResultCards from '../search_results/SearchResultsCards';
 import DetailScreen from '../DetailScreen';
-import { Typography } from '@mui/material';
+import { Pagination, Typography } from '@mui/material';
 import CardGalleryLoader from '../loaders/CardGalleryLoader';
 import { SearchResultsHeader } from '../search_results';
 
@@ -85,7 +85,9 @@ const DiscoverDetailScreen: React.FC = () => {
     const initialView = storageItem === 'grid' ? 'grid' : 'list';
     const [viewState, setViewState] = useState<'list' | 'grid'>(initialView);
     const [hash, setHash] = useState<number>(1);
+    const [paginationNumber, setPaginationNumber] = useState<number>(1);
     const [data, setData] = useState<ShowData[] | null>(null);
+    const moviesPerPage = 12;
 
     useEffect(() => {
         if (path) requestHandler({ path: path, setState: setData, setLoading: setLoading });
@@ -95,16 +97,27 @@ const DiscoverDetailScreen: React.FC = () => {
 
     if (!storageItem) localStorage.setItem(viewStateKey, initialView);
 
+    const getPaginationCount = () => {
+        const totalMovies = data?.length || 0;
+        const numPages = Math.ceil(totalMovies / moviesPerPage);
+        return numPages;
+    };
+    const showSelectedData = () => {
+        const startIndex = (paginationNumber - 1) * moviesPerPage;
+        const endIndex = paginationNumber * moviesPerPage;
+        return data?.slice(startIndex, endIndex) || [];
+    };
+
     const cards = useMemo(() => {
         return (
             <SearchResultCards
-                details={data}
+                details={showSelectedData()}
                 viewState={viewState}
                 profile={profile}
                 setProfile={setProfile}
             />
         );
-    }, [data, hash, viewState, profile]);
+    }, [data, hash, viewState, profile, paginationNumber]);
 
     return (
         <div
@@ -139,6 +152,14 @@ const DiscoverDetailScreen: React.FC = () => {
                     disableResultTypeFilter={true}
                 />
             )}
+            <div className='mt-10'>
+                <Pagination
+                    count={getPaginationCount()}
+                    onChange={(event, page) => {
+                        setPaginationNumber(page);
+                    }}
+                />
+            </div>
         </div>
     );
 };
