@@ -60,6 +60,10 @@ interface TextInputProps {
      */
     onFocus?: () => void;
     /**
+     * If the input should automatically focus when rendered
+     */
+    autoFocus?: boolean;
+    /**
      * Icon to show in the input field
      */
     endAdornment?: ReactElement;
@@ -91,6 +95,7 @@ const TextInput: React.FC<TextInputProps> = ({
     required,
     onChange,
     onFocus,
+    autoFocus,
     endAdornment,
     ariaLabel,
     inputProps,
@@ -111,6 +116,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 required={required}
                 onChange={onChange}
                 onFocus={onFocus}
+                autoFocus={autoFocus}
                 endAdornment={endAdornment}
                 aria-label={ariaLabel}
                 inputProps={{ ...inputProps }}
