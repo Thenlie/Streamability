@@ -222,7 +222,7 @@ const SignUpScreen: React.FC = () => {
                     onFocus={() => setUsernameError(false)}
                 />
                 <FormControl sx={{ m: 0.5 }} variant='filled'>
-                    <InputLabel id='country-input-label' color='primary' className='!text-text'>
+                    <InputLabel id='country-input-label' color='primary' className='text-text!'>
                         Country
                     </InputLabel>
                     <Select
@@ -230,7 +230,7 @@ const SignUpScreen: React.FC = () => {
                         labelId='country-input-label'
                         name='country'
                         color='primary'
-                        className='!text-text text-left'
+                        className='text-text! text-left'
                         autoComplete='country'
                         value={country}
                         error={countryError}
@@ -262,9 +262,9 @@ const SignUpScreen: React.FC = () => {
                                 sx={{ backgroundColor: 'none' }}
                             >
                                 {isPasswordVisible ? (
-                                    <VisibilityOff className='!text-text' />
+                                    <VisibilityOff className='text-text!' />
                                 ) : (
-                                    <Visibility className='!text-text' />
+                                    <Visibility className='text-text!' />
                                 )}
                             </IconButton>
                         </InputAdornment>
@@ -288,9 +288,9 @@ const SignUpScreen: React.FC = () => {
                                 edge='end'
                             >
                                 {isConfirmPasswordVisible ? (
-                                    <VisibilityOff className='!text-text' />
+                                    <VisibilityOff className='text-text!' />
                                 ) : (
-                                    <Visibility className='!text-text' />
+                                    <Visibility className='text-text!' />
                                 )}
                             </IconButton>
                         </InputAdornment>

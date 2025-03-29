@@ -24,7 +24,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({ details, title, showId }): JSX.
         >
             <CardMedia
                 component='img'
-                className='rounded-sm'
+                className='rounded-xs'
                 sx={{
                     boxShadow: 5,
                     width: 180,

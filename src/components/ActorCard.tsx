@@ -28,7 +28,7 @@ const ActorCard: React.FC<ActorCardProps> = ({ details, isCrew = false }) => {
             <Link to={`/details/actor/${details.id}`}>
                 <CardMedia
                     component='img'
-                    className='w-full cursor-pointer rounded-sm'
+                    className='w-full cursor-pointer rounded-xs'
                     sx={{
                         width: 180,
                         minWidth: 180,

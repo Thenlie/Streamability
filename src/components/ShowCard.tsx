@@ -38,14 +38,14 @@ const ShowCard: React.FC<ShowCardProps> = ({ details, profile, setProfile }): JS
     return (
         <div
             data-testid='show-card-component'
-            className='m-3 flex flex-col w-[180px] bg-foreground rounded-sm'
+            className='m-3 flex flex-col w-[180px] bg-foreground rounded-xs'
         >
             <ShowPoster
                 details={details}
                 profile={profile}
                 profileActions={profileActions}
-                containerStyleOverride='!m-0 !rounded-none'
-                imageStyleOverride='!rounded-b-none'
+                containerStyleOverride='m-0! rounded-none!'
+                imageStyleOverride='rounded-b-none!'
                 showQueueButton={!!profile}
                 showFavoritesButton={!!profile}
                 showWatchedButton={!!profile}

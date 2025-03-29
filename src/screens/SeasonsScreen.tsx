@@ -39,7 +39,7 @@ const SeasonsScreen: React.FC = (): JSX.Element => {
             <div className='mb-3 flex flex-col sm:flex-row items-center'>
                 <CardMedia
                     component='img'
-                    className='rounded-sm'
+                    className='rounded-xs'
                     sx={{
                         boxShadow: 5,
                         width: 58,

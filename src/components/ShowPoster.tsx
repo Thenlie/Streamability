@@ -222,13 +222,13 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             onMouseEnter={() => hoverHandler(true)}
             onMouseLeave={() => hoverHandler(false)}
             data-testid='show-poster-component'
-            className={`m-1 flex w-[180px] rounded-sm ${containerStyleOverride}`}
+            className={`m-1 flex w-[180px] rounded-xs ${containerStyleOverride}`}
         >
             <ShowPosterButtons visible={hover} details={details} {...rest} />
             <Link to={`/details/${details.media_type}/${details.id}`} state={details}>
                 <CardMedia
                     component='img'
-                    className={`w-full cursor-pointer rounded-sm ${imageStyleOverride}`}
+                    className={`w-full cursor-pointer rounded-xs ${imageStyleOverride}`}
                     sx={{
                         width: 180,
                         minWidth: 180,

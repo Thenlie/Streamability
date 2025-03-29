@@ -196,7 +196,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                             <InputLabel
                                 htmlFor='country-input'
                                 color='secondary'
-                                className='!text-text'
+                                className='text-text!'
                             >
                                 Change Country
                             </InputLabel>
@@ -204,7 +204,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                                 id='country-input'
                                 name='country'
                                 color='secondary'
-                                className='!text-text text-left'
+                                className='text-text! text-left'
                                 value={country}
                                 error={countryError}
                                 onChange={(e) => setCountry(e.target.value)}
