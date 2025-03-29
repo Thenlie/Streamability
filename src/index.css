@@ -70,7 +70,7 @@ input:-webkit-autofill:active {
 }
 
 .hidden-bg-scrollbar::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-background));
+  background: var(--color-background);
   border-radius: 10px;
   padding: 1px;
 }
@@ -80,7 +80,7 @@ input:-webkit-autofill:active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-foreground));; 
+  background: var(--color-foreground);
   border-radius: 6px; 
 }
 
@@ -89,7 +89,7 @@ input:-webkit-autofill:active {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(var(--color-background));; 
+  background: var(--color-background);
   border-radius: 6px; 
 }
 /* Inverted corners for carousel tabs
@@ -118,10 +118,10 @@ input:-webkit-autofill:active {
   height: 25px;
   width: 25px;
   border-top-right-radius: 50%;
-  background: rgb(var(--color-background));
+  background: var(--color-background);
   transform: rotate(180deg);
 }
 
 #carousel-tab:after {
-  box-shadow: 10px 0 0 0 rgb(var(--color-foreground));
+  box-shadow: 10px 0 0 0 var(--color-foreground);
 }
