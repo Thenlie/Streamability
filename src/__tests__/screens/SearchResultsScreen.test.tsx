@@ -42,7 +42,7 @@ describe('Search Results Screen', () => {
     afterAll(() => {
         consoleErrorMock.mockRestore();
     });
-    it.only('search results loader displayed initially when `data` is null', async () => {
+    it('search results loader displayed initially when `data` is null', async () => {
         vi.mocked(usePaginatedData).mockReturnValue({
             data: null,
             setData: () => {},
@@ -75,7 +75,7 @@ describe('Search Results Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('empty-search-results');
-        expect(screen.getByText('iron man')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('iron man')).toBeInTheDocument();
         expect(
             screen.getByText('Please try again with a different keyword or check your spelling.')
         ).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe('Search Results Screen', () => {
         render(<RouterProvider router={router} />);
 
         await screen.findByTestId('search-results-screen');
-        expect(screen.getByText('iron man')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('iron man')).toBeInTheDocument();
         expect(consoleErrorMock).toHaveBeenCalledWith(...consoleErrorMsg);
         expect(consoleErrorMock).toHaveBeenCalledTimes(3);
     });
