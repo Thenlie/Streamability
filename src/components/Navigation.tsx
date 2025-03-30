@@ -241,7 +241,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
             {/* TODO: Add a transition when search is expanded or collapsed */}
             {expandedSearch && (
                 <div className='flex items-center justify-center bg-foreground px-8 py-3'>
-                    <SearchInput />
+                    <SearchInput autoFocus />
                 </div>
             )}
         </AppBar>
