@@ -54,7 +54,7 @@ describe('Episode Card', () => {
         expect(
             screen.getByText(formatReleaseDate(EPISODE.air_date, DateSize.MEDIUM))
         ).toBeInTheDocument();
-        expect(screen.getByText(`${EPISODE.runtime}m`));
+        expect(screen.getByText(`(${EPISODE.runtime}m)`)).toBeInTheDocument();
         expect(screen.getByText(EPISODE.overview)).toBeInTheDocument();
 
         expect(screen.getByText('Cast')).toBeInTheDocument();
@@ -164,7 +164,7 @@ describe('Episode Card', () => {
         expect(
             screen.getByText(formatReleaseDate(EPISODE.air_date, DateSize.MEDIUM))
         ).toBeInTheDocument();
-        expect(screen.getByText(`${EPISODE.runtime}m`));
+        expect(screen.getByText(`(${EPISODE.runtime}m)`)).toBeInTheDocument();
         expect(screen.getByText(EPISODE.overview)).toBeInTheDocument();
     });
     it('properly expands menu when pressed on tablet+ viewports and renders additional episode data', async () => {

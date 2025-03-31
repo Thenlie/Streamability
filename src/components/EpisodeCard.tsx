@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router';
+import { Star } from '@mui/icons-material';
 
 interface EpisodeCardProps {
     details: Episode;
@@ -103,15 +104,19 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
      */
     const renderMetaData = (details: Episode): JSX.Element => {
         return (
-            <>
-                {details.vote_average > 0 && <Typ variant='subtitle1'>{details.vote_average}</Typ>}
+            <div>
                 {details.air_date && (
-                    <Typ variant='subtitle1'>
+                    <Typ variant='subtitle1' fontWeight={'light'}>
                         {formatReleaseDate(details.air_date, DateSize.MEDIUM)}
                     </Typ>
                 )}
-                {details.runtime && <Typ variant='subtitle1'>{details.runtime}m</Typ>}
-            </>
+                {details.vote_average > 0 && (
+                    <div className='flex'>
+                        <Star />
+                        <Typ variant='subtitle1'>{details.vote_average}</Typ>
+                    </div>
+                )}
+            </div>
         );
     };
 
@@ -143,6 +148,11 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                             className='grow md:grow-0 truncate'
                         >
                             {details.name}
+                            {details.runtime && (
+                                <span className='text-gray-300 font-light text-xs'>
+                                    {' (' + details.runtime + 'm)'}
+                                </span>
+                            )}
                         </Typ>
                     </div>
                     {windowSize.width && windowSize.width >= 768 && (
@@ -177,7 +187,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
                         }}
                     >
                         <div className='p-4'>
-                            <div className='flex flex-row justify-center space-x-3'>
+                            <div className='flex flex-row justify-start space-x-3'>
                                 {renderMetaData(details)}
                             </div>
                             <Typ
