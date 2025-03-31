@@ -6,6 +6,34 @@ import { useWindowSize, useDebounceValue } from '../hooks';
 import { getCarouselSteps } from './ShowCarousel';
 import { SHOW_POSTER_WIDTH } from './ShowPoster';
 
+type CombinedCrewActor = Actor & {
+    job?: string;
+};
+
+/**
+ * Takes a cast or crew list and combines the job & character
+ * for entries with the same name
+ * @param castCrew | List of cast or crew
+ */
+const combineDuplicateCastCrew = (castCrew: CombinedCrewActor[]) => {
+    const actorList: string[] = [];
+    const filteredCastCrew: CombinedCrewActor[] = [];
+    castCrew.map((actor) => {
+        if (actorList.includes(actor.name)) {
+            const idx = filteredCastCrew.findIndex((a) => a.name === actor.name);
+            filteredCastCrew[idx] = {
+                ...filteredCastCrew[idx],
+                job: filteredCastCrew[idx].job + ', ' + actor.job,
+                character: filteredCastCrew[idx].character + ', ' + actor.character,
+            };
+        } else {
+            actorList.push(actor.name);
+            filteredCastCrew.push(actor);
+        }
+    });
+    return filteredCastCrew;
+};
+
 interface CastCrewCarouselProps {
     /**
      * Text shown above the carousel
@@ -15,9 +43,13 @@ interface CastCrewCarouselProps {
      * Either the cast or the crew data
      */
     castCrew: Actor[];
+    /**
+     * If the data is crew, otherwise cast
+     */
+    isCrew: boolean;
 }
 
-const CastCrewCarousel = ({ title, castCrew }: CastCrewCarouselProps) => {
+const CastCrewCarousel = ({ title, castCrew, isCrew }: CastCrewCarouselProps) => {
     const windowSize = useWindowSize();
     const initialCarouselSteps = getCarouselSteps({
         width: window.innerWidth,
@@ -47,8 +79,8 @@ const CastCrewCarousel = ({ title, castCrew }: CastCrewCarouselProps) => {
         <section className='max-w-full mt-3 mx-auto' style={{ width: carouselWidth }}>
             <Typ variant='h5'>{title}</Typ>
             <div className='flex flex-nowrap overflow-x-auto w-full'>
-                {castCrew.map((actor, i) => {
-                    return <ActorCard key={i} details={actor} isCrew={true} />;
+                {combineDuplicateCastCrew(castCrew).map((actor, i) => {
+                    return <ActorCard key={i} details={actor} isCrew={isCrew} />;
                 })}
             </div>
         </section>
