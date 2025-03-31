@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import {
@@ -61,9 +61,12 @@ describe('Show Details Screen', () => {
         expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
         expect(screen.getByAltText(MOVIE_DETAIL.title + ' poster')).toBeInTheDocument();
         expect(screen.getByText(MOVIE_DETAIL.title)).toBeInTheDocument();
-        expect(screen.getByText(MOVIE_DETAIL.overview || '')).toBeInTheDocument();
         expect(screen.getByText(getReleaseDate(MOVIE_DETAIL) || '')).toBeInTheDocument();
         expect(screen.getByText(getRuntime(MOVIE_DETAIL) || '')).toBeInTheDocument();
+        expect(screen.getByText(MOVIE_DETAIL.age_rating || '')).toBeInTheDocument();
+        expect(screen.getByTestId('rating-component')).toBeInTheDocument();
+        expect(screen.getByText(MOVIE_DETAIL.overview || '')).toBeInTheDocument();
+        expect(screen.getByTestId('actor-card-component')).toBeInTheDocument();
     });
     it('tv details properly displayed', async () => {
         vi.mocked(getTvDetails).mockResolvedValue(TV_DETAIL);
@@ -75,9 +78,18 @@ describe('Show Details Screen', () => {
         expect(screen.getByTestId('empty-show-carousel')).toBeInTheDocument();
         expect(screen.getByAltText(TV_DETAIL.title + ' poster')).toBeInTheDocument();
         expect(screen.getByText(TV_DETAIL.title)).toBeInTheDocument();
-        expect(screen.getByText(TV_DETAIL.overview || '')).toBeInTheDocument();
         expect(screen.getByText(getReleaseDate(TV_DETAIL) || '')).toBeInTheDocument();
         expect(screen.getByText(getRuntime(TV_DETAIL) || '')).toBeInTheDocument();
+        expect(screen.getByText(TV_DETAIL.age_rating!)).toBeInTheDocument();
+        expect(screen.getByTestId('rating-component')).toBeInTheDocument();
+        expect(screen.getByText(TV_DETAIL.overview || '')).toBeInTheDocument();
+        expect(screen.getByTestId('actor-card-component')).toBeInTheDocument();
+        expect(screen.getByTestId('season-card-component')).toBeInTheDocument();
+        await act(async () => {
+            fireEvent.click(await screen.findByRole('link', { name: 'View All Seasons' }));
+            expect(tvRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}/seasons`);
+            await tvRouter.navigate(`/details/tv/${TV_DETAIL.id}}`);
+        });
     });
     it('shows recommendation carousel when recommendation data is returned', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);

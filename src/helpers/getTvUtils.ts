@@ -1,5 +1,14 @@
 import Logger from '../logger';
-import { ShowData, TvDetailsData, TvResults, ShowProviders, DiscoverTv, TvData } from '../types';
+import {
+    ShowData,
+    TvDetailsData,
+    TvResults,
+    ShowProviders,
+    DiscoverTv,
+    TvData,
+    SeasonDetails,
+    EpisodeDetails,
+} from '../types';
 import { convertDetailsToShowType, convertResultsToShowType } from './showTypeUtils';
 
 const LOG = new Logger('getTvUtils');
@@ -151,6 +160,45 @@ const getTvRating = (arr: TvDetailsData) => {
     return 'No rating available';
 };
 
+/**
+ * Provides more details of an individual season
+ * @param showId
+ * @param season_num
+ * @returns {Promise<SeasonDetails>}
+ */
+const getTvSeasonDetails = async (showId: number, season_num: number): Promise<SeasonDetails> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${showId}/season/${season_num}?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
+    );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
+    const data: SeasonDetails = await response.json();
+    return data;
+};
+
+/**
+ * Provides additional Episode details that are not provided by Season Details
+ * @param showId
+ * @param season_num
+ * @param episode_num
+ * @returns {Promise<EpisodeDetails>}
+ */
+const getTvEpisodeDetails = async (
+    showId: number,
+    season_num: number,
+    episode_num: number
+): Promise<EpisodeDetails> => {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/tv/${showId}/season/${season_num}/episode/${episode_num}?api_key=${import.meta.env.VITE_MOVIEDB_KEY}&append_to_response=images,videos,credits`
+    );
+    if (!response.ok) {
+        LOG.error('Fetch request failed with a status of ' + response.status);
+    }
+    const data: EpisodeDetails = await response.json();
+    return data;
+};
+
 export {
     getTvByName,
     getTvDetails,
@@ -159,4 +207,6 @@ export {
     getTvRecommendations,
     getDiscoverTv,
     getTvRating,
+    getTvSeasonDetails,
+    getTvEpisodeDetails,
 };

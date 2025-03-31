@@ -1,21 +1,57 @@
-@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap);
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap)
+layer(base);
+@import 'tailwindcss';
 
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --color-background: rgb(220 220 220);
+  --color-foreground: rgb(184 184 184);
+  --color-primary: rgb(184 184 184);
+  --color-text: rgb(0 0 0);
+}
+
+:root[class='dark'] {
+  --color-background: rgb(36 36 36);
+  --color-foreground: rgb(63 63 63);
+  --color-primary: rgb(63 63 63);
+  --color-text: rgb(255 255 255);
+}
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1350px;
+  --breakpoint-2xl: 1536px;
+
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-primary: var(--color-primary);
+  --color-transprimary: var(--color-primary) / 0.5;
+  --color-text: var(--color-text);
+
+  --font-sans:
+    Inter, Avenir, Helvetica, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
 @layer base {
-  :root {
-    --color-background: 220 220 220;
-    --color-foreground: 184 184 184;
-    --color-primary: 184 184 184;
-    --color-text: 0 0 0;
-  }
-
-  :root[class='dark'] {
-    --color-background: 36 36 36;
-    --color-foreground: 63 63 63;
-    --color-primary: 63 63 63;
-    --color-text: 255 255 255;
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
   }
 }
 
@@ -34,7 +70,7 @@ input:-webkit-autofill:active {
 }
 
 .hidden-bg-scrollbar::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-background));
+  background: var(--color-background);
   border-radius: 10px;
   padding: 1px;
 }
@@ -44,7 +80,7 @@ input:-webkit-autofill:active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-foreground));; 
+  background: var(--color-foreground);
   border-radius: 6px; 
 }
 
@@ -53,7 +89,7 @@ input:-webkit-autofill:active {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(var(--color-background));; 
+  background: var(--color-background);
   border-radius: 6px; 
 }
 /* Inverted corners for carousel tabs
@@ -82,10 +118,10 @@ input:-webkit-autofill:active {
   height: 25px;
   width: 25px;
   border-top-right-radius: 50%;
-  background: rgb(var(--color-background));
+  background: var(--color-background);
   transform: rotate(180deg);
 }
 
 #carousel-tab:after {
-  box-shadow: 10px 0 0 0 rgb(var(--color-foreground));
+  box-shadow: 10px 0 0 0 var(--color-foreground);
 }

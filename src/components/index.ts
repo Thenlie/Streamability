@@ -8,6 +8,7 @@ import ShowListCard, { ShowListCardProps } from './ShowListCard';
 import ShowPoster from './ShowPoster';
 import ShowCarousel from './ShowCarousel';
 import SearchInput from './SearchInput';
+import SeasonCard from './SeasonCard';
 import Providers from './Providers';
 import Navigation from './Navigation';
 import Rating from './Rating';
@@ -19,6 +20,7 @@ import OfflineSnackbar from './OfflineSnackbar';
 import Footer from './Footer';
 import TextInput from './TextInput';
 import Banner from './Banner';
+import EpisodeCard from './EpisodeCard';
 
 export {
     ActorCard,
@@ -27,6 +29,7 @@ export {
     ShowPoster,
     ShowCarousel,
     SearchInput,
+    SeasonCard,
     Providers,
     Navigation,
     Rating,
@@ -38,6 +41,7 @@ export {
     Footer,
     TextInput,
     Banner,
+    EpisodeCard,
 };
 export * from './loaders';
 export * from './modals';

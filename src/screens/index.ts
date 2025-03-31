@@ -8,6 +8,8 @@ import FeaturedSearchScreen from './FeaturedSearchScreen';
 import PageNotFoundScreen from './PageNotFoundScreen';
 import ShowDetailsScreen from './ShowDetailsScreen';
 import ActorDetailScreen from './ActorDetailScreen';
+import SeasonsScreen from './SeasonsScreen';
+import SeasonDetailsScreen from './SeasonDetailsScreen';
 
 export * from './auth';
 export * from './dashboard';
@@ -20,4 +22,6 @@ export {
     PageNotFoundScreen,
     ShowDetailsScreen,
     DiscoverDetailScreen,
+    SeasonsScreen,
+    SeasonDetailsScreen,
 };

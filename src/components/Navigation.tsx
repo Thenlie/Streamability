@@ -89,7 +89,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
         // TODO: #162 Use MUI ThemeProvider
         <AppBar position='static'>
             <Toolbar className='flex flex-col sm:flex-row items-center justify-between bg-foreground px-8 py-3 flex-wrap'>
-                <Link to='/' className='!text-text flex items-center'>
+                <Link to='/' className='text-text! flex items-center'>
                     <img
                         src='/images/logo-transparent.png'
                         className='w-16 inline'
@@ -113,7 +113,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                         // 768px Tailwind breakpoint prefix `md`
                         <IconButton
                             aria-label='search'
-                            className='!text-text'
+                            className='text-text!'
                             onClick={() => setExpandedSearch(!expandedSearch)}
                         >
                             <Search />
@@ -131,11 +131,11 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                                 aria-controls={open ? 'menu-appbar' : undefined}
                                 aria-expanded={open ? 'true' : undefined}
                             >
-                                <AccountCircle fontSize='inherit' className='!fill-text' />
+                                <AccountCircle fontSize='inherit' className='fill-text!' />
                                 {expandedMenu ? (
-                                    <ExpandLess className='!fill-text' />
+                                    <ExpandLess className='fill-text!' />
                                 ) : (
-                                    <ExpandMore className='!fill-text' />
+                                    <ExpandMore className='fill-text!' />
                                 )}
                             </IconButton>
                         </Tooltip>
@@ -154,7 +154,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             onClose={() => toggleUserMenu(null, false)}
                             // TODO: Fix deprecated prop
                             PaperProps={{
-                                className: '!bg-background',
+                                className: 'bg-background!',
                                 sx: {
                                     overflow: 'visible',
                                     filter: 'drop-shadow(0px 1px 16px rgba(5,0,10,0.30))',
@@ -165,12 +165,12 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             {session ? (
                                 <div>
                                     <MenuItem
-                                        className='!p-2'
+                                        className='p-2!'
                                         onClick={() => toggleUserMenu(null, false)}
                                         component={Link}
                                         to='/dashboard'
                                     >
-                                        <ListItemIcon className='!text-text'>
+                                        <ListItemIcon className='text-text!'>
                                             <Settings className='mr-2' />
                                             Dashboard
                                         </ListItemIcon>
@@ -179,23 +179,23 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             ) : (
                                 <div>
                                     <MenuItem
-                                        className='!p-2'
+                                        className='p-2!'
                                         onClick={() => toggleUserMenu(null, false)}
                                         component={Link}
                                         to='/login'
                                     >
-                                        <ListItemIcon className='!text-text'>
+                                        <ListItemIcon className='text-text!'>
                                             <Login className='mr-2' />
                                             Login
                                         </ListItemIcon>
                                     </MenuItem>
                                     <MenuItem
-                                        className='!p-2'
+                                        className='p-2!'
                                         onClick={() => toggleUserMenu(null, false)}
                                         component={Link}
                                         to='/signup'
                                     >
-                                        <ListItemIcon className='!text-text'>
+                                        <ListItemIcon className='text-text!'>
                                             <PersonAddAlt className='mr-2' />
                                             Sign Up
                                         </ListItemIcon>
@@ -204,31 +204,31 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
                             )}
                             <Divider />
                             <MenuItem
-                                className='!p-2'
+                                className='p-2!'
                                 onClick={() => toggleUserMenu(null, false)}
                                 component={Link}
                                 to='/discover'
                             >
-                                <ListItemIcon className='!text-text'>
+                                <ListItemIcon className='text-text!'>
                                     <Explore className='mr-2' />
                                     Discover
                                 </ListItemIcon>
                             </MenuItem>
-                            <MenuItem className='!p-2' onClick={switchTheme}>
-                                <ListItemIcon className='!text-text'>
+                            <MenuItem className='p-2!' onClick={switchTheme}>
+                                <ListItemIcon className='text-text!'>
                                     {themeIcon}
                                     Switch Theme
                                 </ListItemIcon>
                             </MenuItem>
                             {session && (
                                 <MenuItem
-                                    className='!p-2'
+                                    className='p-2!'
                                     onClick={() => {
                                         logoutHandler();
                                         toggleUserMenu(null, false);
                                     }}
                                 >
-                                    <ListItemIcon className='!text-text'>
+                                    <ListItemIcon className='text-text!'>
                                         <Logout className='mr-2' />
                                         Logout
                                     </ListItemIcon>
@@ -241,7 +241,7 @@ const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }):
             {/* TODO: Add a transition when search is expanded or collapsed */}
             {expandedSearch && (
                 <div className='flex items-center justify-center bg-foreground px-8 py-3'>
-                    <SearchInput />
+                    <SearchInput autoFocus />
                 </div>
             )}
         </AppBar>

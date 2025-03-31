@@ -1,6 +1,6 @@
 import { Actor } from './actor';
 import { MovieData } from './movie';
-import { TvData } from './tv';
+import { TvData, Season } from './tv';
 
 /**
  * Object containing genre as string and TMDB genre id
@@ -87,17 +87,6 @@ export interface ShowProviders {
         VE?: ShowProviderDetails;
         ZA?: ShowProviderDetails;
     };
-}
-
-export interface Season {
-    air_date: string;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string;
-    season_number: number;
-    vote_average: number;
 }
 
 /**

@@ -1,4 +1,14 @@
-import { Profile, ProfileActions, Session, ShowData } from '../types';
+import {
+    Profile,
+    ProfileActions,
+    Session,
+    ShowData,
+    SeasonDetails,
+    Episode,
+    EpisodeDetails,
+} from '../types';
+
+export const TMDB_IMG_BASE_PATH = 'https://image.tmdb.org/t/p/w500';
 
 /* eslint-disable prettier/prettier */
 export const TRENDING_DATA: ShowData[] = [
@@ -64,7 +74,26 @@ export const MOVIE_DETAIL: ShowData = {
             origin_country: 'US',
         },
     ],
-    seasons: null,
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 3223,
+                known_for_department: 'Acting',
+                name: 'Robert Downey Jr.',
+                original_name: 'Robert Downey Jr.',
+                popularity: 57.084,
+                profile_path: '/im9SAqJPZKEbVZGmjXuLI4O7RvM.jpg',
+                cast_id: 19,
+                character: 'Tony Stark / Iron Man',
+                credit_id: '52fe4311c3a36847f8037ee9',
+                order: 0
+            }
+        ],
+        crew: []
+    },
+    seasons: undefined,
     end_date: null,
     next_air_date: null,
 };
@@ -101,6 +130,25 @@ export const TV_DETAIL: ShowData = {
             origin_country: 'US',
         },
     ],
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 22970,
+                known_for_department: 'Acting',
+                name: 'Peter Dinklage',
+                original_name: 'Peter Dinklage',
+                popularity: 29.051,
+                profile_path: '/9CAd7wr8QZyIN0E7nm8v1B6WkGn.jpg',
+                cast_id: 0,
+                character: 'Tyrion \'The Halfman\' Lannister',
+                credit_id: '5256c8b219c2956ff6047cd8',
+                order: 0
+            }
+        ],
+        crew: []
+    },
     seasons: [
         {
             air_date: '2010-12-05',
@@ -195,12 +243,12 @@ export const PROFILE: Profile = {
 };
 
 export const PROFILE_ACTIONS: ProfileActions = {
-    removeFromFavorites: async () => {},
-    removeFromQueue: async () => {},
-    removeFromWatched: async () => {},
-    addToFavorites: async () => {},
-    addToQueue: async () => {},
-    addToWatched: async () => {},
+    removeFromFavorites: async () => { },
+    removeFromQueue: async () => { },
+    removeFromWatched: async () => { },
+    addToFavorites: async () => { },
+    addToQueue: async () => { },
+    addToWatched: async () => { },
     queueLoading: false,
     favoritesLoading: false,
     watchedLoading: false,
@@ -219,4 +267,212 @@ export const ACTOR = {
     character: 'Tony Stark / Iron Man',
     credit_id: '52fe4311c3a36847f8037ee9',
     order: 0
+};
+
+export const SEASON: SeasonDetails = {
+    air_date: '2011-04-17',
+    episode_count: 1,
+    id: 3624,
+    name: 'Season 1',
+    overview:
+        'Trouble is brewing in the Seven Kingdoms of Westeros. For the driven inhabitants of this visionary world, control of Westeros\' Iron Throne holds the lure of great power. But in a land where the seasons can last a lifetime, winter is coming...and beyond the Great Wall that protects them, an ancient evil has returned. In Season One, the story centers on three primary areas: the Stark and the Lannister families, whose designs on controlling the throne threaten a tenuous peace; the dragon princess Daenerys, heir to the former dynasty, who waits just over the Narrow Sea with her malevolent brother Viserys; and the Great Wall--a massive barrier of ice where a forgotten danger is stirring.',
+    poster_path: '/wgfKiqzuMrFIkU1M68DDDY8kGC1.jpg',
+    season_number: 1,
+    vote_average: 8.3,
+    _id: '5256c89f19c2956ff6046d47',
+    episodes: [
+        {
+            air_date: '2011-04-17',
+            episode_number: 1,
+            id: 63056,
+            name: 'Winter Is Coming',
+            overview: 'Jon Arryn, the Hand of the King, is dead. King Robert Baratheon plans to ask his oldest friend, Eddard Stark, to take Jon\'s place. Across the sea, Viserys Targaryen plans to wed his sister to a nomadic warlord in exchange for an army.',
+            production_code: '101',
+            runtime: 62,
+            season_number: 1,
+            show_id: 1399,
+            still_path: '/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg',
+            vote_average: 8.033,
+            vote_count: 361,
+            crew: [],
+            guest_stars: [],
+        }
+    ]
+};
+
+export const EPISODE: Episode = {
+    air_date: '2011-04-17',
+    episode_number: 1,
+    id: 63056,
+    name: 'Winter Is Coming',
+    overview: 'Jon Arryn, the Hand of the King, is dead. King Robert Baratheon plans to ask his oldest friend, Eddard Stark, to take Jon\'s place. Across the sea, Viserys Targaryen plans to wed his sister to a nomadic warlord in exchange for an army.',
+    production_code: '101',
+    runtime: 62,
+    season_number: 1,
+    show_id: 1399,
+    still_path: '/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg',
+    vote_average: 8.033,
+    vote_count: 361,
+    crew: [
+        {
+            job: 'Writer',
+            department: 'Writing',
+            credit_id: '5256c8a019c2956ff6046e2b',
+            adult: false,
+            gender: 2,
+            id: 9813,
+            known_for_department: 'Writing',
+            name: 'David Benioff',
+            original_name: 'David Benioff',
+            popularity: 0.066,
+            profile_path: '/bOlW8pymCeQLfwPIvc2D1MRcUoF.jpg'
+        },
+        {
+            department: 'Directing',
+            job: 'Director',
+            credit_id: '5256c8a219c2956ff6046e77',
+            adult: false,
+            gender: 2,
+            id: 44797,
+            known_for_department: 'Directing',
+            name: 'Tim Van Patten',
+            original_name: 'Tim Van Patten',
+            popularity: 0.058,
+            profile_path: '/vwcARZBg4PEzOwnPsXdjRWeUVrZ.jpg'
+        },
+        {
+            job: 'Writer',
+            department: 'Writing',
+            credit_id: '5256c8a219c2956ff6046e4b',
+            adult: false,
+            gender: 2,
+            id: 228068,
+            known_for_department: 'Writing',
+            name: 'D. B. Weiss',
+            original_name: 'D. B. Weiss',
+            popularity: 0.043,
+            profile_path: '/2RMejaT793U9KRk2IEbFfteQntE.jpg'
+        }
+    ],
+    guest_stars: [
+        {
+            character: 'Benjen Stark',
+            credit_id: '5256c8b919c2956ff604836a',
+            order: 61,
+            adult: false,
+            gender: 2,
+            id: 119783,
+            known_for_department: 'Acting',
+            name: 'Joseph Mawle',
+            original_name: 'Joseph Mawle',
+            popularity: 0.101,
+            profile_path: '/1Ocb9v3h54beGVoJMm4w50UQhLf.jpg'
+        },
+        {
+            character: 'Rickon Stark',
+            credit_id: '566a83bcc3a3683f56003604',
+            order: 80,
+            adult: false,
+            gender: 2,
+            id: 1050248,
+            known_for_department: 'Acting',
+            name: 'Art Parkinson',
+            original_name: 'Art Parkinson',
+            popularity: 0.041,
+            profile_path: '/ejAKOJME1DsvHECLWdQ7dEtXyyc.jpg'
+        },
+        {
+            character: 'Hodor',
+            credit_id: '5256c8be19c2956ff6048446',
+            order: 81,
+            adult: false,
+            gender: 2,
+            id: 1223792,
+            known_for_department: 'Acting',
+            name: 'Kristian Nairn',
+            original_name: 'Kristian Nairn',
+            popularity: 0.028,
+            profile_path: '/dlbq6cCW0xdpFY15q6flP6lDXWV.jpg'
+        }
+    ]
+};
+
+export const EPISODE_DETAILS: EpisodeDetails = {
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 22970,
+                known_for_department: 'Acting',
+                name: 'Peter Dinklage',
+                original_name: 'Peter Dinklage',
+                popularity: 0.327,
+                profile_path: '/9CAd7wr8QZyIN0E7nm8v1B6WkGn.jpg',
+                character: 'Tyrion \'The Halfman\' Lannister',
+                credit_id: '5256c8b219c2956ff6047cd8',
+                order: 0
+            },
+            {
+                adult: false,
+                gender: 2,
+                id: 239019,
+                known_for_department: 'Acting',
+                name: 'Kit Harington',
+                original_name: 'Kit Harington',
+                popularity: 0.188,
+                profile_path: '/4MqUjb1SYrzHmFSyGiXnlZWLvBs.jpg',
+                character: 'Jon Snow',
+                credit_id: '5256c8af19c2956ff6047af6',
+                order: 1
+            },
+            {
+                adult: false,
+                gender: 2,
+                id: 48,
+                known_for_department: 'Acting',
+                name: 'Sean Bean',
+                original_name: 'Sean Bean',
+                popularity: 0.298,
+                profile_path: '/kTjiABk3TJ3yI0Cto5RsvyT6V3o.jpg',
+                character: 'Lord Eddard \'Ned\' Stark',
+                credit_id: '58c7134792514179d20011a9',
+                order: 2
+            }
+        ]
+    },
+    images: {
+        stills: [
+            {
+                aspect_ratio: 1.778,
+                height: 1080,
+                iso_639_1: 'en',
+                file_path: '/9hGF3WUkBf7cSjMg0cdMDHJkByd.jpg',
+                vote_average: 6.312,
+                vote_count: 8,
+                width: 1920
+            },
+            {
+                aspect_ratio: 1.778,
+                height: 1080,
+                iso_639_1: 'en',
+                file_path: '/wrGWeW4WKxnaeA8sxJb2T9O6ryo.jpg',
+                vote_average: 5.06,
+                vote_count: 11,
+                width: 1920
+            },
+            {
+                aspect_ratio: 1.777,
+                height: 995,
+                iso_639_1: 'en',
+                file_path: '/c05nayHjwQR2uPwkQwNy4UVVQlt.jpg',
+                vote_average: 3.334,
+                vote_count: 1,
+                width: 1768
+            }
+        ]
+    },
+    videos: {
+        results: []
+    }
 };

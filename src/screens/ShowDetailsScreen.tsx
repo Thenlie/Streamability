@@ -7,13 +7,22 @@ import {
     getTvRecommendations,
     getReleaseDate,
     getRuntime,
+    filterValidSeasons,
 } from '../helpers';
+import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import { ShowData } from '../types';
-import { Providers, ShowCarousel, Rating, Button, OfflineSnackbar, ActorCard } from '../components';
+import {
+    Providers,
+    ShowCarousel,
+    Rating,
+    Button,
+    OfflineSnackbar,
+    SeasonCard,
+} from '../components';
+import { ShowDetailsLoader } from './loaders';
+import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
 import Tooltip from '@mui/material/Tooltip';
 import Typ from '@mui/material/Typography';
-import { ShowDetailsLoader } from './loaders';
-import { useProfileContext, useIsInProfileArray, useProfileActions } from '../hooks';
 import AddToQueue from '@mui/icons-material/AddToQueue';
 import Cancel from '@mui/icons-material/Cancel';
 import CheckCircle from '@mui/icons-material/CheckCircle';
@@ -21,7 +30,8 @@ import Favorite from '@mui/icons-material/Favorite';
 import HeartBroken from '@mui/icons-material/HeartBroken';
 import PersonAddAltRounded from '@mui/icons-material/PersonAddAltRounded';
 import RemoveFromQueue from '@mui/icons-material/RemoveFromQueue';
-import EmptyShowDetailsScreen from './EmptyShowDetailsScreen';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import CastCrewCarousel from '../components/CastCrewCarousel';
 
 /**
  * Buttons to alter the show in a logged in users profile.
@@ -132,17 +142,16 @@ const ShowDetailsScreen: React.FC = () => {
 
     useEffect(() => {
         const handler = async () => {
-            setLoading(true);
             if (showType === 'movie') {
                 const movieDetails = await getMovieDetails(showId);
                 setDetails(movieDetails);
                 const recommendation = await getMovieRecommendations(showId);
-                if (recommendation) setRecommendation(recommendation);
+                setRecommendation(recommendation);
             } else {
                 const tvDetails = await getTvDetails(showId);
                 setDetails(tvDetails);
                 const recommendation = await getTvRecommendations(showId);
-                if (recommendation) setRecommendation(recommendation);
+                setRecommendation(recommendation);
             }
             setLoading(false);
         };
@@ -202,26 +211,31 @@ const ShowDetailsScreen: React.FC = () => {
                 </div>
             </section>
             {details.credits && details.credits.cast.length > 0 && (
-                <section className='max-w-full px-6 md:px-12 mx-auto'>
-                    <Typ variant='h5'>Cast</Typ>
-                    <div className='flex flex-nowrap overflow-x-auto w-full'>
-                        {details.credits.cast.map((actor, i) => {
-                            return <ActorCard key={i} details={actor} />;
-                        })}
-                    </div>
-                </section>
+                <CastCrewCarousel title='Cast' castCrew={details.credits.cast} isCrew={false} />
             )}
             {details.credits && details.credits.crew.length > 0 && (
-                <section className='max-w-full px-6 md:px-12 mt-3 mx-auto'>
-                    <Typ variant='h5'>Crew</Typ>
-                    <div className='flex flex-nowrap overflow-x-auto w-full'>
-                        {details.credits.crew.map((actor, i) => {
-                            return <ActorCard key={i} details={actor} isCrew={true} />;
-                        })}
-                    </div>
+                <CastCrewCarousel title='Crew' castCrew={details.credits.crew} isCrew />
+            )}
+            {details.seasons && (
+                <section className='flex flex-col items-center sm:items-start my-6 w-[65svw] max-w-[1090px]'>
+                    <Typ className='sm:px-1' variant='h5'>
+                        Latest Season
+                    </Typ>
+                    <SeasonCard
+                        details={filterValidSeasons(details.seasons).slice(-1)[0]}
+                        showId={details.id}
+                    />
+                    <Link
+                        className='sm:px-1 mt-3 hover:text-blue-500 cursor-pointer'
+                        to={'seasons'}
+                        state={{ details: details }}
+                    >
+                        View All Seasons
+                        <ArrowForwardRoundedIcon />
+                    </Link>
                 </section>
             )}
-            <section className='py-8'>
+            <section className='my-8'>
                 <ShowCarousel
                     data={recommendations}
                     fallbackText={carouselFallbackText}

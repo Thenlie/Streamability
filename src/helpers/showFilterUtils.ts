@@ -1,4 +1,4 @@
-import { ShowData } from '../types';
+import type { ShowData, Season } from '../types';
 
 /**
  * Filters an array of shows based on a specified genre ID
@@ -271,6 +271,16 @@ const filterShowsByRatingCountBetween = (
     return filteredShows;
 };
 
+/**
+ * Returns valid list of seasons by removing untraditional entries provided by TMDB
+ * I.E. 'Specials' and unreleased seasons
+ * @param seasons
+ * @returns {Season[]}
+ */
+const filterValidSeasons = (seasons: Season[]): Season[] => {
+    return seasons.filter((item) => item.season_number != 0 && item.air_date);
+};
+
 export {
     filterShowsByGenre,
     filterShowsByType,
@@ -283,4 +293,5 @@ export {
     filterShowsByRatingCountAbove,
     filterShowsByRatingCountBelow,
     filterShowsByRatingCountBetween,
+    filterValidSeasons,
 };

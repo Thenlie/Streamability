@@ -392,3 +392,106 @@ export const SHOW_DATA_ARRAY: ShowData[] = [
         genre_ids: [16],
     },
 ];
+
+export const SEASONS_VALID: Season[] = [
+    {
+        air_date: '2013-12-02',
+        episode_count: 11,
+        id: 60059,
+        name: 'Season 1',
+        overview:
+            'Rick and Morty visit a pawn shop in space, encounter various alternate and virtual realities, and meet the devil at his antique shop.',
+        poster_path: '/h9RUEsA6BROWcg0QF6ngNPX5FFh.jpg',
+        season_number: 1,
+        vote_average: 8,
+    },
+    {
+        air_date: '2015-07-26',
+        episode_count: 10,
+        id: 66738,
+        name: 'Season 2',
+        overview:
+            'After Rick and Morty decided to unfreeze time, they must deal with alien parasites, alternate Jerrys and a decaying, possibly non-existent dimension.',
+        poster_path: '/zkhGdE29umuKwa6u6mm7e4cXvYY.jpg',
+        season_number: 2,
+        vote_average: 8.3,
+    },
+    {
+        air_date: '2017-04-01',
+        episode_count: 10,
+        id: 86926,
+        name: 'Season 3',
+        overview:
+            'Rick and Morty travel to Atlantis and take some time to relax, plus Rick turns himself into a pickle and faces off against the president.',
+        poster_path: '/7kP0ykqRPyY5anbCOMlR1PtLj8Y.jpg',
+        season_number: 3,
+        vote_average: 8.2,
+    },
+    {
+        air_date: '2019-11-10',
+        episode_count: 10,
+        id: 128112,
+        name: 'Season 4',
+        overview:
+            'Everything and nothing makes sense when bizarre genius Rick and his grandson Morty take more interdimensional journeys that bend time and space.',
+        poster_path: '/87abbwoOfm5MMCWoFewN8pNGZxW.jpg',
+        season_number: 4,
+        vote_average: 7.8,
+    },
+    {
+        air_date: '2021-06-20',
+        episode_count: 10,
+        id: 188470,
+        name: 'Season 5',
+        overview:
+            'Hold onto your butts — it’s season five, baby! Rick, Morty and the fam are back with ten all-new episodes that consume unheld butts. Sex, romance, testicle monsters… a guy named Mr. Nimbus… It’s everything you want, get your butt ready!',
+        poster_path: '/8KdHdOAP8mM4TmykkXnpr6qkyUU.jpg',
+        season_number: 5,
+        vote_average: 7.2,
+    },
+    {
+        air_date: '2022-09-04',
+        episode_count: 10,
+        id: 302503,
+        name: 'Season 6',
+        overview:
+            'It’s season six and Rick and Morty are back! Pick up where we left them, worse for wear and down on their luck. Will they manage to bounce back for more adventures? Or will they get swept up in an ocean of piss! Who knows?! Piss! Family! Intrigue! A bunch of dinosaurs! More piss! Another can’t miss season of your favorite show.',
+        poster_path: '/cvhNj9eoRBe5SxjCbQTkh05UP5K.jpg',
+        season_number: 6,
+        vote_average: 7.5,
+    },
+    {
+        air_date: '2023-10-15',
+        episode_count: 10,
+        id: 354041,
+        name: 'Season 7',
+        overview:
+            "Rick and Morty are back and sounding more like themselves than ever! It's season seven, and the possibilities are endless: what's up with Jerry? EVIL Summer?! And will they ever go back to the high school?! Maybe not! But let's find out! There's probably less piss than last season. \"Rick and Morty,\" 100 years! Or at least until season 10!",
+        poster_path: '/OXy96OFiLDZIz9jT4Byxk1Hk6b.jpg',
+        season_number: 7,
+        vote_average: 7.3,
+    },
+];
+
+export const SEASONS_INVALID: Season[] = [
+    {
+        air_date: '2016-10-25',
+        episode_count: 35,
+        id: 106178,
+        name: 'Specials',
+        overview: '',
+        poster_path: '/3my0MrOKCSYMw8VfLiiM9k00bdF.jpg',
+        season_number: 0,
+        vote_average: 0,
+    },
+    {
+        air_date: null,
+        episode_count: 0,
+        id: 424080,
+        name: 'Season 8',
+        overview: '',
+        poster_path: null,
+        season_number: 8,
+        vote_average: 0,
+    },
+];

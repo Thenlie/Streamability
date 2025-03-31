@@ -13,6 +13,8 @@ import {
     DashboardGalleryScreen,
     DashboardLayout,
     ActorDetailScreen,
+    SeasonsScreen,
+    SeasonDetailsScreen,
 } from './screens';
 import { loader as searchLoader } from './screens/search_results/SearchResultsScreen';
 import { loader as dashGalleryLoader } from './screens/dashboard/DashboardGalleryScreen';
@@ -89,6 +91,14 @@ export const routes: RouteObject[] = [
                     {
                         path: 'tv/:id',
                         element: <ShowDetailsScreen />,
+                    },
+                    {
+                        path: 'tv/:id/seasons',
+                        element: <SeasonsScreen />,
+                    },
+                    {
+                        path: 'tv/:id/seasons/:num',
+                        element: <SeasonDetailsScreen />,
                     },
                     {
                         path: 'actor/:id',
