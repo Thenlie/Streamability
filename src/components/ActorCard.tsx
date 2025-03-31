@@ -46,7 +46,18 @@ const ActorCard: React.FC<ActorCardProps> = ({ details, isCrew = false }) => {
             </Link>
             <div className='flex flex-col justify-between p-2'>
                 <Typ fontWeight={'bold'}>{details.name}</Typ>
-                <Typ>{isCrew ? details.job : details.character}</Typ>
+                <Typ
+                    fontWeight={'light'}
+                    sx={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: '3',
+                        WebkitBoxOrient: 'vertical',
+                    }}
+                >
+                    {isCrew ? details.job : details.character}
+                </Typ>
             </div>
         </div>
     );

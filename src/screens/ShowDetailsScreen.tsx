@@ -211,10 +211,10 @@ const ShowDetailsScreen: React.FC = () => {
                 </div>
             </section>
             {details.credits && details.credits.cast.length > 0 && (
-                <CastCrewCarousel title='Cast' castCrew={details.credits.cast} />
+                <CastCrewCarousel title='Cast' castCrew={details.credits.cast} isCrew={false} />
             )}
             {details.credits && details.credits.crew.length > 0 && (
-                <CastCrewCarousel title='Crew' castCrew={details.credits.crew} />
+                <CastCrewCarousel title='Crew' castCrew={details.credits.crew} isCrew />
             )}
             {details.seasons && (
                 <section className='flex flex-col items-center sm:items-start my-6 w-[65svw] max-w-[1090px]'>
