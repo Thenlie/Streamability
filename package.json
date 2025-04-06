@@ -69,7 +69,7 @@
     "babel-plugin-direct-import": "^1.0.0",
     "chalk": "^5.4.1",
     "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
+    "eslint": "^9.24.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-storybook": "^0.11.4",
