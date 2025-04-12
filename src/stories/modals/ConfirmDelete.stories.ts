@@ -15,7 +15,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         deleteProfile: () => {},
         loading: false,
     },

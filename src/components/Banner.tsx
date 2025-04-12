@@ -43,7 +43,9 @@ const Banner: React.FC<BannerProps> = ({
     useEffect(() => {
         if (data) {
             const rand = Math.floor((Math.random() * data.length) / 2);
-            const path = `https://image.tmdb.org/t/p/original${data?.[rand]?.banner_path}` || null;
+            const path = data?.[rand]?.banner_path
+                ? `https://image.tmdb.org/t/p/original${data?.[rand]?.banner_path}`
+                : null;
             setBannerPath(path);
             setLoading(false);
         } else if (!dataLoading) {

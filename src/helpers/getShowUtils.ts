@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Logger from '../logger';
 import { ShowData, ShowResults } from '../types';
 import { convertResultsToShowType } from './showTypeUtils';
