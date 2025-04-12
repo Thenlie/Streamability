@@ -4,8 +4,5 @@
     "singleQuote": true,
     "jsxSingleQuote": true,
     "printWidth": 100,
-    "semi": true,
-    "parser": "typescript",
-    "plugins": [],
-    "insert_final_newline": true
+    "parser": "typescript"
 }

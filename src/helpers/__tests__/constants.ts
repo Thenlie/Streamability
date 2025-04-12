@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import { Season, ShowData } from '../../types';
 
 const fakeSeason: Season = {
