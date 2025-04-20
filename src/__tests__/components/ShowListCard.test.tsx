@@ -5,7 +5,9 @@ import { describe, vi } from 'vitest';
 import { ShowListCard } from '../../components';
 import { MOVIE_DETAIL, PROFILE, TMDB_IMG_BASE_PATH } from '../constants';
 import { DateSize, formatReleaseDate } from '../../helpers';
+import { Profile } from '../../types';
 
+let mockProfile: Profile;
 const mockedUseNavigate = vi.fn();
 const mockSetProfile = vi.fn();
 
@@ -99,5 +101,68 @@ describe('Show List Card Component', () => {
         expect(mockedUseNavigate).toHaveBeenCalledWith(
             `/details/${MOVIE_DETAIL.media_type}/${MOVIE_DETAIL.id}`
         );
+    });
+    describe('Queue Button', () => {
+        it('does not render the queue button when not logged in', () => {
+            render(
+                <MemoryRouter>
+                    <ShowListCard
+                        details={MOVIE_DETAIL}
+                        profile={null}
+                        setProfile={mockSetProfile}
+                    />
+                </MemoryRouter>
+            );
+            expect(screen.queryByText('Add to queue')).not.toBeInTheDocument();
+            expect(screen.queryByText('Remove from queue')).not.toBeInTheDocument();
+        });
+        it('renders the "add to queue" button when logged in and show not in queue list', async () => {
+            render(
+                <MemoryRouter>
+                    <ShowListCard
+                        details={MOVIE_DETAIL}
+                        profile={{ ...PROFILE, queue: [] }}
+                        setProfile={mockSetProfile}
+                    />
+                </MemoryRouter>
+            );
+            expect(screen.getByText('Add to queue')).toBeInTheDocument();
+        });
+        it('renders the "remove from queue" button when logged in and show in queue list', async () => {
+            render(
+                <MemoryRouter>
+                    <ShowListCard
+                        details={MOVIE_DETAIL}
+                        profile={PROFILE}
+                        setProfile={mockSetProfile}
+                    />
+                </MemoryRouter>
+            );
+            expect(screen.getByText('Remove from queue')).toBeInTheDocument();
+        });
+        it('updates queue button text when show is added to queue list', async () => {
+            mockProfile = { ...PROFILE, queue: [] };
+            const { rerender } = render(
+                <MemoryRouter>
+                    <ShowListCard
+                        details={MOVIE_DETAIL}
+                        profile={mockProfile}
+                        setProfile={mockSetProfile}
+                    />
+                </MemoryRouter>
+            );
+            expect(screen.getByText('Add to queue')).toBeInTheDocument();
+            mockProfile = PROFILE;
+            rerender(
+                <MemoryRouter>
+                    <ShowListCard
+                        details={MOVIE_DETAIL}
+                        profile={mockProfile}
+                        setProfile={mockSetProfile}
+                    />
+                </MemoryRouter>
+            );
+            expect(screen.getByText('Remove from queue')).toBeInTheDocument();
+        });
     });
 });

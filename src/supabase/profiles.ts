@@ -136,7 +136,7 @@ export const addToProfileArray = async (
             .single();
 
         if (error) {
-            LOG.error(error);
+            LOG.error(JSON.stringify(error));
         } else if (data) {
             return data as Profile;
         }
