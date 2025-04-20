@@ -3,6 +3,8 @@ import { ShowProviders } from '../types';
 import { getMovieProviders, getTvProviders } from '../helpers';
 import { ProvidersLoader } from './loaders';
 import { useWindowSize, useDebounceValue } from '../hooks';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { Typography as Typ } from '@mui/material';
 
 interface ProviderProps {
     id: number;
@@ -57,9 +59,9 @@ const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
     return (
         <div
             id='provider-container'
-            className={`flex items-center bg-foreground p-1 rounded-sm ${
-                isOverflow ? 'overflow-x-scroll h-[90px]' : 'h-[70px]'
-            }  overflow-y-hidden hidden-bg-scrollbar`}
+            className={`flex items-center bg-background p-3 rounded-sm ${
+                isOverflow ? 'overflow-x-scroll h-[100px]' : 'h-[80px]'
+            }  overflow-y-hidden`}
         >
             {providers?.results?.US?.flatrate ? (
                 providers.results.US.flatrate.map((item, i) => (
@@ -71,8 +73,9 @@ const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
                     ></img>
                 ))
             ) : (
-                <span className='p-2 w-full text-center'>
-                    Sorry, no providers available for this show.
+                <span className='p-2 w-full text-center flex items-center justify-center'>
+                    <ErrorOutlineIcon fontSize='large' className='mr-1' />
+                    <Typ fontWeight='light'>Sorry! No providers available for this show.</Typ>
                 </span>
             )}
         </div>

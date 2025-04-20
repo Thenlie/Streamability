@@ -204,7 +204,7 @@ const ShowDetailsScreen: React.FC = () => {
                             {details.overview}
                         </Typ>
                     </div>
-                    <div className='bg-foreground rounded-md my-3 p-2'>
+                    <div className='bg-background rounded-md my-3'>
                         <Providers id={details.id} showType={showType} />
                     </div>
                     <ProfileButtonSection showId={showId} showType={showType} />
