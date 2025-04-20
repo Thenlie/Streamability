@@ -29,7 +29,6 @@ const makeRequest = async ({ path, params, outputFile }: MakeRequestProps) => {
                 mode: 0o666,
                 flag: 'w',
             };
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             fs.writeFileSync(`${__dirname}/${outputFile}`, data, writeOptions);
             // eslint-disable-next-line no-console
             console.log('File written successfully!');
@@ -55,7 +54,6 @@ const fetchTMDB = async (
     params: Array<{ param: string; value: string; path: boolean }>
 ): Promise<object> => {
     const BASE_PATH = 'https://api.themoviedb.org';
-    // eslint-disable-next-line no-undef
     const API_KEY = '?api_key=' + process.env.VITE_MOVIEDB_KEY;
     let PARAMS = '';
     if (params.length > 0) {
