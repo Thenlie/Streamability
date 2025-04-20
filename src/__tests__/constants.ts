@@ -229,7 +229,7 @@ export const SESSION: Session = {
 };
 
 export const PROFILE: Profile = {
-    id: '1234',
+    id: '35b95b23-5613-442d-a65f-4ea9650d1eda',
     username: 'TestUser',
     email: 'example@no.mail',
     avatar_url: null,
