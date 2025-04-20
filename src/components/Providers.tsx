@@ -26,7 +26,7 @@ const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
     useEffect(() => {
         const containerWidth =
             document.getElementById('provider-container')?.getBoundingClientRect().width || 0;
-        const providerWidth = (providers?.results.US?.flatrate?.length || 0) * 73.1;
+        const providerWidth = (providers?.results?.US?.flatrate?.length || 0) * 73.1;
         if (providerWidth > containerWidth) setIsOverflow(true);
         else setIsOverflow(false);
     }, [debouncedWindowSize, providers]);

@@ -13,10 +13,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const PrimaryMovie: Story = {
     args: {
-        id: 136797,
+        id: 157336,
         showType: 'movie',
+    },
+};
+
+export const PrimaryTv: Story = {
+    args: {
+        id: 90462,
+        showType: 'tv',
     },
 };
 
