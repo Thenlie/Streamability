@@ -7,7 +7,7 @@ import globals from 'globals';
 
 export default tsEslint.config(
     {
-        ignores: ['**/*.css', '**/*.cjs', '.storybook', '**/build/**', '**/dist/**'],
+        ignores: ['**/*.css', '**/*.cjs', '**/build/**', '**/dist/**'],
     },
     eslint.configs.recommended,
     tsEslint.configs.recommended,
