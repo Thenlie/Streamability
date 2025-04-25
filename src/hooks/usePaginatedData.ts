@@ -46,7 +46,11 @@ const usePaginatedData = ({ query }: PaginatedDataProps) => {
                 return;
             }
 
-            const nextPage: ShowData[] = json.results.map((show) => {
+            const filteredData = json.results.filter(
+                (result) => (result.media_type as string) !== 'person'
+            );
+
+            const nextPage: ShowData[] = filteredData.map((show) => {
                 return {
                     id: show.id,
                     poster_path: show.poster_path,
