@@ -82,7 +82,7 @@
     "prettier": "^3.5.3",
     "storybook": "^8.6.12",
     "storybook-addon-remix-react-router": "^4.0.1",
-    "supabase": "^2.20.12",
+    "supabase": "^2.22.6",
     "tailwindcss": "^4.0.17",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
