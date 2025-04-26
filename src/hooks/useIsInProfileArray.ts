@@ -16,9 +16,21 @@ const useIsInProfileArray = (
     isInFavorites: boolean;
     isInWatched: boolean;
 } => {
-    const [isInQueue, setIsInQueue] = useState(false);
-    const [isInFavorites, setIsInFavorites] = useState(false);
-    const [isInWatched, setIsInWatched] = useState(false);
+    const [isInQueue, setIsInQueue] = useState(
+        profile?.queue?.includes('movie-' + showId.toString()) ||
+            profile?.queue?.includes('tv-' + showId.toString()) ||
+            false
+    );
+    const [isInFavorites, setIsInFavorites] = useState(
+        profile?.queue?.includes('movie-' + showId.toString()) ||
+            profile?.queue?.includes('tv-' + showId.toString()) ||
+            false
+    );
+    const [isInWatched, setIsInWatched] = useState(
+        profile?.queue?.includes('movie-' + showId.toString()) ||
+            profile?.queue?.includes('tv-' + showId.toString()) ||
+            false
+    );
 
     useEffect(() => {
         const isInQueue =
