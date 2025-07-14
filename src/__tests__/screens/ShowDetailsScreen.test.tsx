@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
-import { act, fireEvent, render, screen, cleanup } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import {
@@ -35,9 +35,6 @@ const tvRouter = createMemoryRouter(routes, {
 });
 
 describe('Show Details Screen', () => {
-    afterAll(() => {
-        cleanup();
-    });
     it('No details found page when nothing is returned from details query', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(null as unknown as ShowData);
 
