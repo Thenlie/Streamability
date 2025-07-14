@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from '../../components';
 import Check from '@mui/icons-material/Check';
 import CloseSharp from '@mui/icons-material/CloseSharp';

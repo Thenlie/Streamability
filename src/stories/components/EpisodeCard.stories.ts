@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { EpisodeCard } from '../../components';
 import { EPISODE } from '../constants';
 import { withRouter, reactRouterParameters } from 'storybook-addon-remix-react-router';
