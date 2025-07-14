@@ -33,13 +33,13 @@ export interface ShowListCardProps {
  * the user is navigated to the `ShowDetailsPage`.
  *
  * @param props | returns details object passed from SearchResultScreen.tsx
- * @returns {JSX.Element} | Single show card
+ * @returns {React.JSX.Element} | Single show card
  */
 const ShowListCard: React.FC<ShowListCardProps> = ({
     details,
     profile,
     setProfile,
-}): JSX.Element => {
+}): React.JSX.Element => {
     const { isInQueue } = useIsInProfileArray(details.id, profile);
     const navigate = useNavigate();
 

@@ -16,9 +16,9 @@ const LOG = new Logger('AppWrapper');
  * The main app function, wrapping all other screens and components
  * This wraps the entire front end application and will be shown on every screen
  *
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-export default function AppWrapper(): JSX.Element {
+export default function AppWrapper(): React.JSX.Element {
     const [session, setSession] = useState<Session | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [theme, setTheme] = useState<Theme>(darkTheme);

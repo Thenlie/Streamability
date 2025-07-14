@@ -1,5 +1,6 @@
 import { fetch, Request, Response } from '@remix-run/web-fetch';
-import { vi } from 'vitest';
+import { vi, afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
 if (!globalThis.fetch) {
     // Built-in lib.dom.d.ts expects `fetch(Request | string, ...)` but the web
@@ -39,5 +40,9 @@ const ResizeObserverMock = vi.fn(() => ({
     unobserve: vi.fn(),
     disconnect: vi.fn(),
 }));
+
+afterEach(() => {
+    cleanup();
+});
 
 vi.stubGlobal('ResizeObserver', ResizeObserverMock);

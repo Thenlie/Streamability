@@ -13,9 +13,9 @@ interface ShowCardLoaderProps {
  * A skeleton loader of the show poster component. To be rendered while
  * main component is loading.
  * @param count | number of poster placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const ShowPosterLoader: React.FC<ShowCardLoaderProps> = ({ count }): JSX.Element => {
+const ShowPosterLoader: React.FC<ShowCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <>
             <div className='flex justify-center mx-1 my-2'>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Banner } from '../../components';
 import { MOVIE_DATA_ARRAY } from '../constants';
 import { withRouter } from 'storybook-addon-remix-react-router';

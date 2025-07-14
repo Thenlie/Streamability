@@ -14,9 +14,9 @@ interface ShowListCardLoaderProps {
  * the main component is loading.
  *
  * @param count | number of card placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const ShowListCardLoader: React.FC<ShowListCardLoaderProps> = ({ count }): JSX.Element => {
+const ShowListCardLoader: React.FC<ShowListCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <div className='m-3 grid grid-cols-1 xl:grid-cols-2'>
             {[...Array(count)].map((x, i) => (

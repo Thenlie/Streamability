@@ -34,13 +34,13 @@ interface EditProfileModalProps {
  *
  * This will render to the screen as a button that
  * will open the modal when clicked.
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
     session,
     profile,
     setProfile,
-}): JSX.Element => {
+}): React.JSX.Element => {
     const [open, setOpen] = useState(false);
     const [snackBarOptions, setSnackBarOptions] = useState<SnackbarProps>({
         isOpen: false,
@@ -135,7 +135,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         }
     };
 
-    const DropDownItems: JSX.Element[] = useMemo(() => {
+    const DropDownItems: React.JSX.Element[] = useMemo(() => {
         // Sort countries alphabetically before displaying
         const sortedCountries = COUNTRIES.sort((a, b) => a.country.localeCompare(b.country));
         return sortedCountries.map((item, i) => (

@@ -13,9 +13,9 @@ interface ShowCardLoaderProps {
  * A skeleton loader of the show card component. To be rendered while
  * main component is loading.
  * @param count | number of card placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const ShowCardLoader: React.FC<ShowCardLoaderProps> = ({ count }): JSX.Element => {
+const ShowCardLoader: React.FC<ShowCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <>
             {[...Array(count)].map((x, i) => (

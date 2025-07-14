@@ -13,9 +13,9 @@ interface SeasonCardLoaderProps {
  * A skeleton loader of the season card component. To be rendered while
  * main component is loading.
  * @param count | number of card placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const SeasonCardLoader: React.FC<SeasonCardLoaderProps> = ({ count }): JSX.Element => {
+const SeasonCardLoader: React.FC<SeasonCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <>
             {[...Array(count)].map((x, i) => (

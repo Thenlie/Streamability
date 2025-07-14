@@ -13,9 +13,9 @@ interface ActorCardLoaderProps {
  * A skeleton loader of the actor card component. To be rendered while
  * main component is loading.
  * @param count | number of card placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const ActorCardLoader: React.FC<ActorCardLoaderProps> = ({ count }): JSX.Element => {
+const ActorCardLoader: React.FC<ActorCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <>
             {[...Array(count)].map((x, i) => (

@@ -87,9 +87,8 @@ describe('Show Details Screen', () => {
         expect(screen.getByTestId('season-card-component')).toBeInTheDocument();
         await act(async () => {
             fireEvent.click(await screen.findByRole('link', { name: 'View All Seasons' }));
-            expect(tvRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}/seasons`);
-            await tvRouter.navigate(`/details/tv/${TV_DETAIL.id}}`);
         });
+        expect(tvRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}/seasons`);
     });
     it('shows recommendation carousel when recommendation data is returned', async () => {
         vi.mocked(getMovieDetails).mockResolvedValue(MOVIE_DETAIL);
@@ -97,6 +96,9 @@ describe('Show Details Screen', () => {
 
         render(<RouterProvider router={movieRouter} />);
 
+        await act(async () => {
+            await tvRouter.navigate(`/details/tv/${TV_DETAIL.id}}`);
+        });
         await screen.findByTestId('show-details-screen');
         expect(screen.getByTestId('show-carousel')).toBeInTheDocument();
         const posters = screen.getAllByTestId('show-poster-component');

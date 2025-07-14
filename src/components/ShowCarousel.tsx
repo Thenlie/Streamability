@@ -90,7 +90,7 @@ const CarouselChildren: React.FC<{
     showQueueButton?: boolean;
     showFavoritesButton?: boolean;
     showWatchedButton?: boolean;
-}> = ({ data, profile = null, ...rest }): JSX.Element => {
+}> = ({ data, profile = null, ...rest }): React.JSX.Element => {
     return (
         <div className='flex justify-center'>
             {data?.map((item, i) => (
@@ -138,7 +138,7 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     fallbackText,
     headerProps,
     ...rest
-}): JSX.Element => {
+}): React.JSX.Element => {
     const windowSize = useWindowSize();
     const initialCarouselSteps = getCarouselSteps({
         width: window.innerWidth,
@@ -174,10 +174,10 @@ const ShowCarousel: React.FC<ShowCarouselProps> = ({
     /**
      * Splits an array of shows into an array of CarouselChildren
      * @param data Array of shows
-     * @returns {JSX.Element[]}
+     * @returns {React.JSX.Element[]}
      */
-    const handleDataSlice = (data: ShowData[] | null): JSX.Element[] => {
-        const arr: JSX.Element[] = [];
+    const handleDataSlice = (data: ShowData[] | null): React.JSX.Element[] => {
+        const arr: React.JSX.Element[] = [];
         if (!data) return arr;
         const filteredArray = data.filter((show) => show.poster_path);
         if (data) {
