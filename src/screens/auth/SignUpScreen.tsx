@@ -174,7 +174,7 @@ const SignUpScreen: React.FC = () => {
     /**
      * The options of the drop down menu
      */
-    const DropDownItems: JSX.Element[] = useMemo(() => {
+    const DropDownItems: React.JSX.Element[] = useMemo(() => {
         return COUNTRIES.map((item, i) => (
             <MenuItem key={i} value={item.country}>
                 {item.country}

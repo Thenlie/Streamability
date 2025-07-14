@@ -16,9 +16,9 @@ interface ProviderProps {
  *
  * @param id | TMDB id
  * @param showType | 'movie' or 'tv'
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const Providers: React.FC<ProviderProps> = ({ id, showType }): JSX.Element => {
+const Providers: React.FC<ProviderProps> = ({ id, showType }): React.JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
     const [providers, setProviders] = useState<ShowProviders>();

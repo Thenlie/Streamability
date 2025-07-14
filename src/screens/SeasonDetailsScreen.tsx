@@ -10,7 +10,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 /**
  * Screen to render a TV Show's Season's Episodes
  */
-const SeasonDetailsScreen: React.FC = (): JSX.Element => {
+const SeasonDetailsScreen: React.FC = (): React.JSX.Element => {
     const location: Location = useLocation();
     const showId = parseInt(location.pathname.split('/')[3]);
     const seasonNum = parseInt(location.pathname.split('/')[5]);
@@ -64,7 +64,9 @@ const SeasonDetailsScreen: React.FC = (): JSX.Element => {
                 </div>
             </div>
 
-            {details?.episodes.map((item, i) => <EpisodeCard details={item} key={i} />)}
+            {details?.episodes.map((item, i) => (
+                <EpisodeCard details={item} key={i} />
+            ))}
         </section>
     );
 };

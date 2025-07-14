@@ -35,9 +35,13 @@ interface NavigationProps {
 /**
  * This component will be rendered in AppWrapper.tsx - on every page.
  * Navigation elements are placeholder for the time being for development purposes.
- * @returns {JSX.Element} | Navigation
+ * @returns {React.JSX.Element} | Navigation
  */
-const Navigation: React.FC<NavigationProps> = ({ session, theme, switchTheme }): JSX.Element => {
+const Navigation: React.FC<NavigationProps> = ({
+    session,
+    theme,
+    switchTheme,
+}): React.JSX.Element => {
     const [themeIcon, setThemeIcon] = useState(<DarkMode />);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const [expandedMenu, setExpandedMenu] = useState(false);

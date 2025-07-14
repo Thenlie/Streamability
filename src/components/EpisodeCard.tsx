@@ -18,9 +18,9 @@ interface EpisodeCardProps {
 /**
  * Renders episode details for a TV Show
  * @param details
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
+const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): React.JSX.Element => {
     const [episodeDetails, setEpisodeDetails] = useState<EpisodeDetails | null>(null);
     const [expand, setExpand] = useState<boolean>(false);
     const windowSize = useWindowSize();
@@ -42,12 +42,12 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
      * @param actors
      * @param title
      * @param isCrew
-     * @returns {JSX.Element}
+     * @returns {React.JSX.Element}
      */
     const renderActors = (
         actors: Actor[] | Crew[],
         title: 'Cast' | 'Guest Stars' | 'Crew'
-    ): JSX.Element => {
+    ): React.JSX.Element => {
         return (
             <div className='my-2'>
                 <Typ fontWeight={'bold'} variant='body2' textAlign={'left'}>
@@ -100,9 +100,9 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({ details }): JSX.Element => {
     /**
      * Renders a Episode's metadata
      * @param details
-     * @returns {JSX.Element}
+     * @returns {React.JSX.Element}
      */
-    const renderMetaData = (details: Episode): JSX.Element => {
+    const renderMetaData = (details: Episode): React.JSX.Element => {
         return (
             <div>
                 {details.air_date && (

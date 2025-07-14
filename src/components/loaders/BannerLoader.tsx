@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useWindowSize } from '../../hooks';
 
-const BannerLoader: React.FC = (): JSX.Element => {
+const BannerLoader: React.FC = (): React.JSX.Element => {
     const windowSize = useWindowSize();
     const [loaderWidth, setLoaderWidth] = useState<number>(1200);
 

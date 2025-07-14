@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import Typ from '@mui/material/Typography';
 import { useWindowSize } from '../hooks';
 
-const Footer: React.FC = (): JSX.Element => {
+const Footer: React.FC = (): React.JSX.Element => {
     const windowSize = useWindowSize();
     return (
         <footer

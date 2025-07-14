@@ -24,12 +24,12 @@ interface ConfirmDeleteModalProps {
  *
  * This will render to the screen as a button that
  * will open the modal when clicked.
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     deleteProfile,
     loading,
-}): JSX.Element => {
+}): React.JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
