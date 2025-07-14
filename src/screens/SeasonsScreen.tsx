@@ -10,7 +10,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 /**
  * Screen to render all of a TV Show's Seasons
  */
-const SeasonsScreen: React.FC = (): JSX.Element => {
+const SeasonsScreen: React.FC = (): React.JSX.Element => {
     const location: Location = useLocation();
     const showId = parseInt(location.pathname.split('/')[3]);
     const [details, setDetails] = useState<ShowData>(

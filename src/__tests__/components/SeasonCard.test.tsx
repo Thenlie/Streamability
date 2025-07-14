@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { SeasonCard } from '../../components/';
 import { SEASON, TV_DETAIL, TMDB_IMG_BASE_PATH } from '../constants';
 import { MemoryRouter, Router } from 'react-router';
@@ -66,11 +66,9 @@ describe('Season Card', () => {
             'href',
             `/details/tv/${TV_DETAIL.id}/seasons/${SEASON.season_number}`
         );
-        await act(async () => {
-            fireEvent.click(screen.getByRole('link'));
-            expect(history.location.pathname).toBe(
-                `/details/tv/${TV_DETAIL.id}/seasons/${SEASON.season_number}`
-            );
-        });
+        fireEvent.click(screen.getByRole('link'));
+        expect(history.location.pathname).toBe(
+            `/details/tv/${TV_DETAIL.id}/seasons/${SEASON.season_number}`
+        );
     });
 });

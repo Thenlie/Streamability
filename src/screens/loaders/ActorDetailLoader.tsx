@@ -2,7 +2,7 @@ import Skeleton from 'react-loading-skeleton';
 import { ShowCarouselLoader } from '../../components';
 import React from 'react';
 
-const ActorDetailLoader: React.FC = (): JSX.Element => {
+const ActorDetailLoader: React.FC = (): React.JSX.Element => {
     return (
         <>
             <section className='m-6 flex flex-col lg:flex-row'>

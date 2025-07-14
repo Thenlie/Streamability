@@ -29,9 +29,9 @@ export interface ShowCardProps {
  * or intended to be on every single show card
  *
  * @param props | returns details object passed from SearchResultScreen.tsx
- * @returns {JSX.Element} | Single show card
+ * @returns {React.JSX.Element} | Single show card
  */
-const ShowCard: React.FC<ShowCardProps> = ({ details, profile, setProfile }): JSX.Element => {
+const ShowCard: React.FC<ShowCardProps> = ({ details, profile, setProfile }): React.JSX.Element => {
     const profileActions = useProfileActions(profile, setProfile);
     const navigate = useNavigate();
 

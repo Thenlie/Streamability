@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ShowCarouselLoader } from '../../components';
 import { withRouter } from 'storybook-addon-remix-react-router';
 

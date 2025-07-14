@@ -13,9 +13,9 @@ interface SeasonCardProps {
 /**
  * A card that displays TV Show Season data: season name, average rating, number of episodes, release date, season overview, and the season's poster
  * @param details | Season details
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const SeasonCard: React.FC<SeasonCardProps> = ({ details, title, showId }): JSX.Element => {
+const SeasonCard: React.FC<SeasonCardProps> = ({ details, title, showId }): React.JSX.Element => {
     return (
         <Link
             data-testid='season-card-component'

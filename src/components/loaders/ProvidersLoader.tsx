@@ -13,9 +13,9 @@ interface ProvidersLoaderProps {
  * A skeleton loader of the providers component. To be rendered while
  * main component is loading.
  * @param count | number placeholders to be rendered
- * @returns {JSX.Element}
+ * @returns {React.JSX.Element}
  */
-const ProvidersLoader: React.FC<ProvidersLoaderProps> = ({ count }): JSX.Element => {
+const ProvidersLoader: React.FC<ProvidersLoaderProps> = ({ count }): React.JSX.Element => {
     return (
         <div className='m-3 flex flex-wrap justify-center bg-foreground rounded-xs p-1'>
             {[...Array(count)].map((x, i) => (

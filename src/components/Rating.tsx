@@ -21,9 +21,9 @@ interface RatingProps {
  * Text below stars reads '`vote_count` rating(s)'
  *
  * @param props | vote count and average rating
- * @returns {JSX.Element} | Stars with text below
+ * @returns {React.JSX.Element} | Stars with text below
  */
-const Rating: React.FC<RatingProps> = ({ vote_average, vote_count }): JSX.Element => {
+const Rating: React.FC<RatingProps> = ({ vote_average, vote_count }): React.JSX.Element => {
     const [rating, setRating] = useState(vote_average ? vote_average / 2 : 0);
 
     useEffect(() => {

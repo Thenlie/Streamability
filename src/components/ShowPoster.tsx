@@ -210,7 +210,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
     containerStyleOverride,
     imageStyleOverride,
     ...rest
-}): JSX.Element => {
+}): React.JSX.Element => {
     const [hover, setHover] = useState(false);
 
     const hoverHandler = (hovering: boolean) => {

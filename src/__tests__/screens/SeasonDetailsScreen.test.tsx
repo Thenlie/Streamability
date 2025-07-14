@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, it, vi } from 'vitest';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { routes } from '../../routes';
 import { getTvSeasonDetails } from '../../helpers';
@@ -50,9 +50,7 @@ describe('Season Details Screen', () => {
         render(<RouterProvider router={seasonRouter} />);
 
         await screen.findByTestId('season-details-screen');
-        await act(async () => {
-            fireEvent.click(await screen.findByRole('link', { name: 'Back to Seasons' }));
-        });
+        fireEvent.click(await screen.findByRole('link', { name: 'Back to Seasons' }));
         expect(seasonRouter.state.location.pathname).toBe(`/details/tv/${TV_DETAIL.id}/seasons`);
     });
 });
