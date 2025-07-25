@@ -222,7 +222,7 @@ const ShowPoster: React.FC<ShowPosterProps> = ({
             onMouseEnter={() => hoverHandler(true)}
             onMouseLeave={() => hoverHandler(false)}
             data-testid='show-poster-component'
-            className={`m-1 flex w-[180px] rounded-xs ${containerStyleOverride}`}
+            className={`m-1 flex w-[180px] rounded-xs ${containerStyleOverride} ${hover && 'scale-102'}`}
         >
             <ShowPosterButtons visible={hover} details={details} {...rest} />
             <Link to={`/details/${details.media_type}/${details.id}`} state={details}>

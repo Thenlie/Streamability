@@ -130,7 +130,7 @@ const Navigation: React.FC<NavigationProps> = ({
                             <IconButton
                                 onClick={(event) => toggleUserMenu(event, true)}
                                 size='large'
-                                sx={{ ml: 2 }}
+                                sx={{ ml: 2, borderRadius: '5px' }}
                                 aria-haspopup='true'
                                 aria-controls={open ? 'menu-appbar' : undefined}
                                 aria-expanded={open ? 'true' : undefined}

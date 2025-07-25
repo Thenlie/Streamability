@@ -161,6 +161,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='filter by tv shows'
                             onClick={() => setFilterState({ showType: 'tv' })}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <Tv />
                         </ToggleButton>
@@ -169,6 +170,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='filter by movies'
                             onClick={() => setFilterState({ showType: 'movie' })}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <Movie />
                         </ToggleButton>
@@ -177,6 +179,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='Remove filter'
                             onClick={() => setFilterState({ showType: 'none' })}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <FilterAltOff />
                         </ToggleButton>
@@ -190,6 +193,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='sort results alphabetically'
                             onClick={() => setSortState('alpha')}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <SvgIcon>
                                 <svg
@@ -207,6 +211,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='sort results reverse alphabetically'
                             onClick={() => setSortState('rev')}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <SvgIcon>
                                 <svg
@@ -224,6 +229,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                             aria-label='Remove sort'
                             onClick={() => setSortState('none')}
                             disabled={disableControls}
+                            className='hover:scale-105'
                         >
                             <SvgIcon>
                                 <svg
@@ -249,6 +255,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                         aria-label='switch to grid view'
                         onClick={() => handleViewToggle('grid')}
                         disabled={disableControls}
+                        className='hover:scale-105'
                     >
                         <ViewModule />
                     </ToggleButton>
@@ -257,6 +264,7 @@ const SortFilterHeader: React.FC<SortFilterHeaderProps> = ({
                         aria-label='switch to list view'
                         onClick={() => handleViewToggle('list')}
                         disabled={disableControls}
+                        className='hover:scale-105'
                     >
                         <ViewList />
                     </ToggleButton>
