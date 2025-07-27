@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet, ScrollRestoration, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { SUPABASE } from './supabase/supabaseClient';
 import type { Session, Profile } from './types';
@@ -132,6 +132,9 @@ export default function AppWrapper(): React.JSX.Element {
                 baseColor={theme.palette.loader.base}
                 highlightColor={theme.palette.loader.highlight}
             >
+                {/* Scroll to top on page change */}
+                {/* Disable with `preventScrollReset` https://reactrouter.com/api/hooks/useNavigate#prevent-scroll-reset */}
+                <ScrollRestoration />
                 <main className='flex min-h-screen flex-col place-items-center bg-background'>
                     <Navigation session={session} switchTheme={themeSwitcher} theme={theme} />
                     <div className='flex flex-auto flex-col items-center text-center w-full'>
