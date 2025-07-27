@@ -131,7 +131,7 @@ const ShowDetailsScreen: React.FC = () => {
     const showId = parseInt(location.pathname.split('/')[3]);
     const showType = location.pathname.split('/')[2];
     const { profile } = useProfileContext();
-    const [details, setDetails] = useState<ShowData>(
+    const [details, setDetails] = useState<ShowData | null>(
         location.state ? location.state.details : null
     );
     const [recommendations, setRecommendation] = useState<ShowData[] | null>(null);
@@ -158,7 +158,7 @@ const ShowDetailsScreen: React.FC = () => {
         handler();
     }, [location]);
 
-    if (loading) {
+    if (loading || (details?.id && showId !== details.id)) {
         return <ShowDetailsLoader />;
     }
 

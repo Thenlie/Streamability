@@ -32,10 +32,10 @@ const useGetProfileArray = (
             for (let i = 0; i < array.length; i++) {
                 if (array[i].includes('tv-')) {
                     const tvShow = await getTvDetails(parseInt(array[i].slice(3)));
-                    arr.push(tvShow);
+                    if (tvShow) arr.push(tvShow);
                 } else {
                     const movie = await getMovieDetails(parseInt(array[i].slice(6)));
-                    arr.push(movie);
+                    if (movie) arr.push(movie);
                 }
             }
             setData(arr);

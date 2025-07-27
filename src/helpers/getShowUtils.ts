@@ -1,6 +1,8 @@
 import Logger from '../logger';
 import { ShowData, ShowResults } from '../types';
 import { convertResultsToShowType } from './showTypeUtils';
+import { TMDB_API_PATH } from './constants';
+import { makeFetchRequest } from './fetch';
 
 const LOG = new Logger('getShowUtils');
 
@@ -10,18 +12,11 @@ const LOG = new Logger('getShowUtils');
  * @returns {Promise<ShowData[]>} | List of movies by searched query.
  */
 const getShowsByName = async (query: string): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }&language=en-US&query=${query}&page=1&include_adult=false`
+    const data = await makeFetchRequest<ShowResults>(
+        `${TMDB_API_PATH}search/multi?language=en-US&query=${query}&page=1&include_adult=false`,
+        LOG
     );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-        return null;
-    }
-
-    const data = (await response.json()) as ShowResults;
-    if (!data.results) {
+    if (!data?.results) {
         LOG.error('No results found');
         return null;
     }

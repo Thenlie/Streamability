@@ -10,9 +10,11 @@ import {
 import { MOVIE_RATINGS } from './constants';
 import {
     convertDetailsToShowType,
-    convertResultsForIntheaters,
+    convertResultsForInTheaters,
     convertResultsToShowType,
 } from './showTypeUtils';
+import { TMDB_API_PATH } from './constants';
+import { makeFetchRequest } from './fetch';
 
 const LOG = new Logger('getMovieUtils');
 
@@ -22,16 +24,11 @@ const LOG = new Logger('getMovieUtils');
  * @returns {Promise<ShowData[]>} | List of movies
  */
 const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }&language=en-US&query=${name}&page=1&include_adult=false`
+    const data = await makeFetchRequest<MovieResults>(
+        `${TMDB_API_PATH}search/movie?language=en-US&query=${name}&page=1&include_adult=false`,
+        LOG
     );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    const data = (await response.json()) as MovieResults;
-    if (!data.results) return null;
+    if (!data?.results) return null;
     return convertResultsToShowType(data);
 };
 
@@ -40,16 +37,12 @@ const getMoviesByName = async (name: string): Promise<ShowData[] | null> => {
  * @param id | MovieDB id of movie being queried
  * @returns {Promise<ShowData>} | Movie details
  */
-const getMovieDetails = async (id: number): Promise<ShowData> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }&append_to_response=images,release_dates,watch/providers,credits&language=en-US`
+const getMovieDetails = async (id: number): Promise<ShowData | null> => {
+    const data = await makeFetchRequest<MovieDetailsData>(
+        `${TMDB_API_PATH}movie/${id}?append_to_response=images,release_dates,watch/providers,credits&language=en-US`,
+        LOG
     );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    const data = (await response.json()) as MovieDetailsData;
+    if (!data) return null;
     return convertDetailsToShowType(data, 'movie');
 };
 
@@ -58,16 +51,12 @@ const getMovieDetails = async (id: number): Promise<ShowData> => {
  * @param id | MovieDB id of movie being queried
  * @returns {Promise<ShowProviders>} | List of streaming services.
  */
-const getMovieProviders = async (id: number): Promise<ShowProviders> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }`
+const getMovieProviders = async (id: number): Promise<ShowProviders | null> => {
+    const data = await makeFetchRequest<ShowProviders>(
+        `${TMDB_API_PATH}movie/${id}/watch/providers?`,
+        LOG
     );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    return response.json() as Promise<ShowProviders>;
+    return data;
 };
 
 /**
@@ -75,16 +64,8 @@ const getMovieProviders = async (id: number): Promise<ShowProviders> => {
  * @returns {Promise<MovieResults>} | Trending movies
  */
 const getMovieTrending = async (): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/trending/movie/week?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }`
-    );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    const data = (await response.json()) as MovieResults;
-    if (!data.results) return null;
+    const data = await makeFetchRequest<MovieResults>(`${TMDB_API_PATH}trending/movie/week?`, LOG);
+    if (!data?.results) return null;
     return convertResultsToShowType(data);
 };
 
@@ -92,16 +73,9 @@ const getMovieTrending = async (): Promise<ShowData[] | null> => {
  * Returns a list of movies currently playing in theaters
  */
 const getMovieInTheaters = async (): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_MOVIEDB_KEY}`
-    );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    const data = (await response.json()) as MovieResults;
-    if (!data.results) return null;
-
-    return convertResultsForIntheaters(data);
+    const data = await makeFetchRequest<MovieResults>(`${TMDB_API_PATH}movie/now_playing?`, LOG);
+    if (!data?.results) return null;
+    return convertResultsForInTheaters(data);
 };
 /**
  * Returns recommended movies based off of a given movie
@@ -109,16 +83,11 @@ const getMovieInTheaters = async (): Promise<ShowData[] | null> => {
  * @returns {Promise<ShowData[] | null>} | Array of recommended movies
  */
 const getMovieRecommendations = async (id: number): Promise<ShowData[] | null> => {
-    const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
-            import.meta.env.VITE_MOVIEDB_KEY
-        }`
+    const data = await makeFetchRequest<MovieResults>(
+        `${TMDB_API_PATH}movie/${id}/recommendations?`,
+        LOG
     );
-    if (!response.ok) {
-        LOG.error('Fetch request failed with a status of ' + response.status);
-    }
-    const data = (await response.json()) as MovieResults;
-    if (!data.results || data.results.length < 1) return null;
+    if (!data?.results || data.results.length < 1) return null;
     return convertResultsToShowType(data);
 };
 
@@ -143,9 +112,7 @@ const getDiscoverMovies = async ({
     include_adult = false,
     ...params
 }: DiscoverMovie): Promise<ShowData[] | null> => {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${
-        import.meta.env.VITE_MOVIEDB_KEY
-    }&include_adult=${include_adult}&language=en-US&page=${params.pages}`;
+    let url = `${TMDB_API_PATH}discover/movie?include_adult=${include_adult}&language=en-US&page=${params.pages}`;
 
     if (params.with_genres) url += `&with_genres=${params.with_genres}`;
     if (params.sort_by) url += `&sort_by=${params.sort_by}`;
@@ -158,10 +125,8 @@ const getDiscoverMovies = async ({
     if (params.watch_region) url += `&watch_region=${params.watch_region}`;
     if (params.with_watch_providers) url += `&with_watch_providers=${params.with_watch_providers}`;
 
-    const response = await fetch(url);
-
-    const data = (await response.json()) as MovieResults;
-    if (!data.results || data.results.length < 1) return null;
+    const data = await makeFetchRequest<MovieResults>(url, LOG);
+    if (!data?.results || data.results.length < 1) return null;
     const dataWithType: MovieData[] = data.results.map((d) => ({ ...d, media_type: 'movie' }));
     data.results = dataWithType;
     return convertResultsToShowType(data);

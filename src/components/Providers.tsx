@@ -21,7 +21,7 @@ interface ProviderProps {
 const Providers: React.FC<ProviderProps> = ({ id, showType }): React.JSX.Element => {
     const windowSize = useWindowSize();
     const debouncedWindowSize = useDebounceValue(windowSize, 250);
-    const [providers, setProviders] = useState<ShowProviders>();
+    const [providers, setProviders] = useState<ShowProviders | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [isOverflow, setIsOverflow] = useState(false);
 

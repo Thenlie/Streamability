@@ -44,7 +44,7 @@ const convertResultsToShowType = (
     return filterShowsByType(showData, 'both');
 };
 
-const convertResultsForIntheaters = (
+const convertResultsForInTheaters = (
     data: MovieResults | TvResults | ShowResults
 ): ShowData[] | null => {
     if (!data || !data.results) return null;
@@ -152,5 +152,5 @@ export {
     convertResultsToShowType,
     convertDetailsToShowType,
     convertDataToShowType,
-    convertResultsForIntheaters,
+    convertResultsForInTheaters,
 };

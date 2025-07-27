@@ -1,3 +1,5 @@
+export const TMDB_API_PATH = 'https://api.themoviedb.org/3/';
+
 export enum MOVIE_RATINGS {
     'G',
     'PG',
