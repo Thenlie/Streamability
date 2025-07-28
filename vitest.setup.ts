@@ -33,6 +33,9 @@ Object.defineProperty(window, 'matchMedia', {
         dispatchEvent: vi.fn(),
     })),
 });
+beforeAll(() => {
+    window.scrollTo = vi.fn();
+});
 
 // Mocking use-resize-observer which is used by nuka-carousel
 const ResizeObserverMock = vi.fn(() => ({

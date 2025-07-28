@@ -13,7 +13,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 const SeasonsScreen: React.FC = (): React.JSX.Element => {
     const location: Location = useLocation();
     const showId = parseInt(location.pathname.split('/')[3]);
-    const [details, setDetails] = useState<ShowData>(
+    const [details, setDetails] = useState<ShowData | null>(
         location.state ? location.state.details : null
     );
     const [loading, setLoading] = useState(details ? false : true);
@@ -46,24 +46,24 @@ const SeasonsScreen: React.FC = (): React.JSX.Element => {
                         height: 87,
                     }}
                     image={
-                        details.poster_path
+                        details?.poster_path
                             ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
                             : '/poster-placeholder.jpeg'
                     }
-                    alt={details.title + ' poster'}
+                    alt={details?.title + ' poster'}
                 />
                 <div className='flex flex-col sm:items-start'>
                     <div className='flex flex-col sm:flex-row items-center'>
                         <Typ className='sm:pl-2' fontWeight={'bold'} variant='h4'>
-                            {details.title}
+                            {details?.title}
                         </Typ>
                         <Typ className='sm:pl-2'>
-                            {'(' + details.release_date?.slice(0, 4) + ')'}
+                            {'(' + details?.release_date?.slice(0, 4) + ')'}
                         </Typ>
                     </div>
                     <Link
                         className='sm:pl-2 hover:text-blue-500 cursor-pointer'
-                        to={`/details/tv/${details.id}`}
+                        to={`/details/tv/${details?.id}`}
                         state={{ details: details }}
                     >
                         <ArrowBackRoundedIcon />
@@ -72,7 +72,7 @@ const SeasonsScreen: React.FC = (): React.JSX.Element => {
                 </div>
             </div>
 
-            {details.seasons?.map((item, i) => (
+            {details?.seasons?.map((item, i) => (
                 <SeasonCard key={i} details={item} title={details.title} showId={details.id} />
             ))}
         </section>

@@ -11,7 +11,7 @@ import EmptyActorDetailScreen from './EmptyActorDetailScreen';
 const ActorDetailScreen: React.FC = () => {
     const location: Location = useLocation();
     const actorId = location.pathname.split('/')[3];
-    const [details, setDetails] = useState<ActorDetail>(
+    const [details, setDetails] = useState<ActorDetail | null>(
         location.state ? location.state.details : null
     );
     const [loading, setLoading] = useState(true);

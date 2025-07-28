@@ -18,7 +18,7 @@ interface ShowListCardLoaderProps {
  */
 const ShowListCardLoader: React.FC<ShowListCardLoaderProps> = ({ count }): React.JSX.Element => {
     return (
-        <div className='m-3 grid grid-cols-1 xl:grid-cols-2'>
+        <div className='flex flex-wrap justify-center'>
             {[...Array(count)].map((x, i) => (
                 <div key={i} className='w-[700px] h-[177px] flex m-1'>
                     <Skeleton width={100} height={175} />
