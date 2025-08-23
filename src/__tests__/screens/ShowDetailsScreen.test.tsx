@@ -12,13 +12,13 @@ import {
     getTvRecommendations,
 } from '../../helpers';
 import { MOVIE_DETAIL, TRENDING_DATA, TV_DETAIL } from '../constants';
-import { ShowData } from '../../types';
 
 vi.mock('../../helpers', async () => {
     const actual = await vi.importActual('../../helpers');
 
     return {
         ...(actual as object),
+        getMovieProviders: vi.fn(),
         getMovieDetails: vi.fn(),
         getTvDetails: vi.fn(),
         getMovieRecommendations: vi.fn(),
@@ -36,7 +36,7 @@ const tvRouter = createMemoryRouter(routes, {
 
 describe('Show Details Screen', () => {
     it('No details found page when nothing is returned from details query', async () => {
-        vi.mocked(getMovieDetails).mockResolvedValue(null as unknown as ShowData);
+        vi.mocked(getMovieDetails).mockResolvedValue(null);
 
         const router = createMemoryRouter(routes, {
             initialEntries: ['/details/movie/1'],
