@@ -67,7 +67,7 @@
     "dotenv": "^16.5.0",
     "eslint": "^9.25.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-storybook": "^9.1.5",
     "globals": "^16.0.0",
