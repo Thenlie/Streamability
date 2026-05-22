@@ -75,7 +75,7 @@
     "leasot": "^14.4.0",
     "markdownlint-cli": "^0.44.0",
     "patch-package": "^8.0.0",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.15",
     "prettier": "^3.5.3",
     "storybook": "^9.0.16",
     "storybook-addon-remix-react-router": "^5.0.0",
