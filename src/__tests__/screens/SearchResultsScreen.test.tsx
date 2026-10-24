@@ -30,11 +30,16 @@ const router = createMemoryRouter(routes, {
 describe('Search Results Screen', () => {
     beforeEach(() => {
         // IntersectionObserver isn't available in test environment
-        const mockIntersectionObserver = vi.fn();
-        mockIntersectionObserver.mockReturnValue({
-            observe: () => null,
-            unobserve: () => null,
-            disconnect: () => null,
+        const mockIntersectionObserver = vi.fn(function () {
+            return {
+                root: null,
+                rootMargin: '0px',
+                thresholds: [0],
+                observe: () => null,
+                unobserve: () => null,
+                disconnect: () => null,
+                takeRecords: () => [],
+            };
         });
         window.IntersectionObserver = mockIntersectionObserver;
         window.history.pushState({}, '', 'search?q=iron+man');
